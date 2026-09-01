@@ -1,0 +1,10 @@
+{
+  "$schema": "research-studies-v1",
+  "version": "1.0",
+  "project": {
+    "name": "PII_Extraction",
+    "path": "/Users/xuqiluo/PycharmProjects/PII_Extraction",
+    "registered_at": "2026-08-31T21:41:37-05:00"
+  },
+  "studies": []
+}

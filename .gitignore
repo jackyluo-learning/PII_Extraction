@@ -26,3 +26,14 @@ slurm/logs/*
 
 # OS
 .DS_Store
+
+# Research harness artifacts (ledger + manifests are committed; the bytes are not)
+artifacts/
+*.ckpt
+*.pt
+*.pth
+*.safetensors
+*.parquet
+
+# IDE
+.idea/
