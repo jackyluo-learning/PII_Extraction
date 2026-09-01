@@ -1,0 +1,8 @@
+{
+  "study_id": "capacity_response_20260831",
+  "type": "experiment",
+  "status": "backlog",
+  "created_at": "2026-08-31T22:04:53-05:00",
+  "updated_at": "2026-09-01T18:30:42-05:00",
+  "description": "Capacity-forcing response curve: sweep the GCG probe's free-token count k, measure how the forcing floor and the calibrated signal respond, and densify k=20 to >=3 seeds to replace the paper's current Table 4."
+}

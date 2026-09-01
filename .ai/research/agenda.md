@@ -1,108 +1,127 @@
-# 研究议程 — 校准基于优化的记忆审计
+# Research Agenda — Calibrating Optimization-Based Memorization Audits
 
-_Calibrating Optimization-Based Memorization Audits_
+## Statement
 
-## 陈述
+When an optimizer succeeds in making a language model emit a PII record verbatim, that is consistent
+with two very different worlds: the model memorized the record, or the optimizer is simply expressive
+enough to force an arbitrary target out of it. This lab exists to determine under what conditions
+those two can be told apart, with what instrument, and — where they cannot — what an audit should
+report instead.
 
-当一个优化器成功让语言模型逐字吐出某条 PII，这既可能是模型记住了它，也可能只是优化器的
-表达能力足以强行造出任意目标。本 lab 要确定这两者在什么条件下可分、用什么工具分、以及
-分不开时审计应当报告什么。
+The core instrument is the **never-trained negative control**: attack it under an identical
+optimizer, budget, and decision rule, and the resulting success rate is the attack method's own
+**forcing floor** `α_k`. The calibrated signal is `τ̂rec = EMR(D) − EMR(C)`, which is simultaneously
+the advantage of the induced membership distinguisher and the average treatment effect of corpus
+inclusion.
 
-核心工具是**从未训练过的负对照**：在完全相同的优化器、预算与判定规则下攻击它们，得到的
-成功率就是攻击方法自带的 **forcing floor** `α_k`。校准后的记忆信号是
-`τ̂rec = EMR(D) − EMR(C)`，它同时等于成员区分器的 advantage，也等于语料纳入的平均因果效应。
+## Driving questions
 
-## 驱动问题
+1. **The identifiability boundary.** Under what conditions may a successful optimization be read as
+   "the model retained this record"? Proposition 2 proves non-identifiability when
+   `H∞(D₀) ≤ k·log₂|V|` — where does that boundary actually sit?
+2. **Capacity versus floor.** How does `α_k` respond to probe capacity `k`? Is there an operating
+   point `k⋆` whose floor is low enough to retain dynamic range? What steering rate `β`
+   (bits per prompt token) does the model actually realize?
+3. **Measurability of the signal.** How many seeds, fields, and models are needed before `τ̂rec` can
+   be distinguished from zero? The current 4 models × single seed × 2 fields yields confidence
+   intervals that all straddle zero.
+4. **Efficacy of the defenses.** At a fixed benign false-positive rate, what detection rate do
+   capacity limiting and forcing honeytokens achieve? How much does perplexity filtering retain
+   against an adaptive adversary?
 
-1. **可识别性的边界。** 一次成功的优化提取，在什么条件下可以被解读为「模型记住了这条
-   记录」？Prop. 2 证明在 `H∞(D₀) ≤ k·log₂|V|` 时不可识别——这个区间的实际边界在哪？
-2. **容量与 floor 的关系。** `α_k` 如何随探针容量 `k` 变化？是否存在一个 floor 足够低、
-   仍保有动态范围的操作点 `k⋆`？模型实际实现的引导率 `β`（bits/prompt token）是多少？
-3. **信号的可测性。** 校准后的 `τ̂rec` 需要多大样本量、多少字段、多少模型，才能与零区分开？
-   现有的 4 模型 × 单 seed × 2 字段给出的置信区间全部跨零。
-4. **防御的实效。** 容量限制与 forcing honeytoken，在固定的良性误报率下实际检出率是多少？
-   困惑度过滤在自适应对手面前还剩多少作用？
+## Claims the lab wants to be able to make
 
-## 希望能够做出的论断
+- The forcing floor is **large and measurable**, and rises **monotonically** with probe expressivity
+  (from 0% for fixed prompts to 100% for an unconstrained soft prompt)
+- A raw extraction rate **is not a privacy measurement** — without a floor, no `ε` lower bound follows
+- The `(rate, floor)` pair, together with `TPR@α` and `ε̂`, should become the **minimum publishable
+  standard** for this class of audit
+- Auditing at a measured `k⋆` restores the dynamic range that a high floor destroys
 
-- forcing floor 是**大的、可测的**，且随探针表达能力**单调上升**（从固定 prompt 的 0%
-  到无约束 soft prompt 的 100%）
-- 原始提取率**不是隐私测量**——没有 floor 就推不出任何 `ε` 下界
-- `(rate, floor)` 配对，连同 `TPR@α` 与 `ε̂`，应成为该类审计的**最低可发表标准**
-- 在实测的 `k⋆` 上审计，能把被高 floor 压缩掉的动态范围还回来
+## Scope
 
-## 范围
+- **Data**: a controlled synthetic corpus (Faker-generated fictitious PII embedded in nine document
+  templates, mixed into public-domain passages from Wikipedia / PG-19 / arXiv) with complete ground
+  truth
+- **Models**: self-fine-tuned open models — GPT-2 124M / 355M (full fine-tune), Pythia 1.4B / 2.8B
+  (LoRA)
+- **Setting**: white-box, **confirmation audit** (the auditor holds the target record)
+- **Fields**: high-entropy PII, currently SSN and email, extensible to phone / credit_card / address
+- **Probes**: eight points along the capacity axis, from a fixed prompt to an unconstrained soft
+  prompt
 
-- **数据**：受控合成语料（Faker 生成的虚构 PII 嵌入 9 种文档模板，混入 Wikipedia / PG-19 /
-  arXiv 公开段落），完整 ground truth
-- **模型**：自行微调的开源模型 —— GPT-2 124M / 355M（全量微调）、Pythia 1.4B / 2.8B（LoRA）
-- **设定**：白盒、**confirmation 审计**（审计者已知目标记录）
-- **字段**：高熵 PII，现为 SSN 与 email，可扩展到 phone / credit_card / address
-- **探针**：容量轴上的 8 个点，从固定 prompt 到无约束 soft prompt
+## Explicit non-goals
 
-## 明确的非目标
+- **Not a stronger attack.** The contribution is measurement validity, not attack capability. A
+  stronger optimizer only raises the floor, which tightens rather than loosens the constraint on
+  what counts as an informative audit.
+- **Not a re-audit of any specific published result.** The claim concerns the *class* of
+  optimization-based extraction rates.
+- **Not discovery attacks** (unknown targets). Different setting, different metrics.
+- **No production APIs.** Only models we fine-tune ourselves from open weights.
+- **The IEEE IRI 2026 paper** (`IRI_paper.tex` / `IRI_outline.md`) **is out of scope** — a separate
+  second paper whose claims are not merged with these.
 
-- **不做更强的攻击。** 贡献是测量效度，不是攻击能力。更强的优化器只会抬高 floor，
-  反而收紧对「什么审计算有信息量」的约束。
-- **不重新审计某个具体的已发表结果。** 论断针对的是这一**类**优化提取率。
-- **不做 discovery 攻击**（目标未知的场景）。那是另一个设定，指标也不同。
-- **不碰生产 API。** 只攻击自己从开源权重微调出来的模型。
-- **IEEE IRI 2026 那篇**（`IRI_paper.tex` / `IRI_outline.md`）**不在本 lab 范围内**，
-  是独立的第二篇论文，结论不互相合并。
+## What answers would change
 
-## 什么样的答案会改变决策
+This is the test of whether the agenda is worth running at all:
 
-这条是议程能否成立的检验：
+- **If the floor is high and rises with capacity** — the extraction rates that compliance teams act
+  on need recomputing, and the probe's `k` must be chosen deliberately rather than inherited from
+  jailbreaking's 20. That changes audit practice directly.
+- **If the floor is low** — existing audits are broadly sound and this work reduces to a
+  methodological footnote. That outcome is **an equally complete study** and gets a lab-notebook
+  entry of the same standing.
 
-- **若 floor 确实高且随容量单调** —— 合规团队据以行动的提取率数字需要重新计算；审计探针的
-  `k` 需要主动选择，而不是从越狱工作沿用 20。这直接改变审计实践。
-- **若 floor 很低** —— 现有审计基本成立，本工作退化为一个方法学脚注。这个方向的结果**同样
-  是完成的研究**，同样进实验记录本。
+## Publication target
 
-## 发表目标
+**IEEE SaTML 2027** (5th edition, early May 2027, Reykjavik, Iceland).
 
-**IEEE SaTML 2027**（第 5 届，2027 年 5 月初，冰岛雷克雅未克）。
+### Schedule (all AoE / UTC−12)
 
-### 日程（全部 AoE / UTC−12）
-
-| 里程碑 | 日期 |
+| Milestone | Date |
 |---|---|
-| 摘要注册 | **2026-09-22** |
-| **论文投稿** | **2026-09-29** |
-| 早期拒稿通知 | 2026-11-04 |
-| 互动讨论期 | 2026-11-25 → 2026-12-09 |
-| 录用通知 | 2026-12-16 |
-| **修订稿截止** | **2027-01-21** |
-| Camera-ready | 2027 年 2 月中（待定） |
+| Abstract registration | **2026-09-22** |
+| **Paper submission** | **2026-09-29** |
+| Early reject notification | 2026-11-04 |
+| Interactive discussion | 2026-11-25 → 2026-12-09 |
+| Decision notification | 2026-12-16 |
+| **Revision deadline** | **2027-01-21** |
+| Camera-ready | mid-Feb 2027 (TBC) |
 
-**日程里最重要的一条不是 9/29，而是修订轮。** 12/16 通知 → 1/21 修订，约五周，
-外加 11/25–12/09 的互动讨论期。所以九月投的稿**不必是完成品**——它要强到不被 11/4 的
-早期拒稿刷掉，剩下的实验在修订窗口里针对审稿人真正提出的问题去补，而不是现在凭猜测烧算力。
+**The load-bearing date is not 09-29 but the revision round.** Notification 12-16 → revision 01-21
+is roughly five weeks, on top of the 11-25 → 12-09 interactive discussion. So the September
+submission **need not be complete** — it needs to be strong enough to survive the 11-04 early
+rejection, with the remaining experiments added during the revision window against what reviewers
+actually asked for, rather than guessed at now.
 
-**九月窗口的倒推**：末尾留约 5 天做写作与 USENIX→IEEE 格式转换 ⇒ 实验须在 **9/24** 前落地
-⇒ 扣掉设计与协议阶段，实际算力窗口约 **20 天**。
+**Working backwards from the September window**: writing plus the USENIX→IEEE format conversion take
+roughly the last 5 days ⇒ experiments must land by **09-24** ⇒ net of the design and protocol
+stages, about **20 days** of compute.
 
-**为什么是这个场子**：本文的贡献是**测量效度**，不是更强的攻击或系统。SaTML 的读者正是
-研究安全与可信 ML 的人，天然理解 forcing floor 要解决什么问题；而在偏系统的评审池里，
-「我们没有提出更强的攻击」容易被误读为缺乏贡献。
+### Why this venue
 
-**两个待处理的后果**：
+The contribution is **measurement validity**, not a system or an attack. SaTML's readership studies
+secure and trustworthy ML and will recognize what the forcing floor is for; in a systems-leaning
+review pool, "we do not propose a stronger attack" is easily misread as a lack of contribution.
 
-1. **格式**：现有草稿是 USENIX 格式，需转 **IEEE 双栏**。仓库里 `IRI_paper.tex` 已是 IEEE
-   格式，模板可复用。
-2. **篇幅**：IEEE 双栏的页数上限会压缩理论与实验的配比。当前草稿理论重（Prop 1–5、
-   Cor 1–5、Algorithm 1）、实证轻（仅 E1），转场时这个失衡会更突出——要么补实验，
-   要么把部分形式化下沉到附录。
+**Two consequences to handle**:
 
-证据标准：需要多 seed（下限 3）、容量扫描给出实测 `α_k` 曲线、以及至少一项外部效度证据。
-当前 run2（4 模型 × **单 seed** × 2 字段 × n=12–25）达不到，差距记录在
-`CODE_MAP.md` §3 与 §8。
+1. **Format** — the draft is in USENIX format and must move to **IEEE two-column**. `IRI_paper.tex`
+   is already IEEE, so the template can be reused.
+2. **Length** — an IEEE page limit will squeeze the theory-to-experiment ratio. The draft is
+   theory-heavy (Prop. 1–5, Cor. 1–5, Algorithm 1) and evidence-light (E1 only); the conversion will
+   make that imbalance more visible. Either add experiments or move some formalism to an appendix.
 
-> 待确认：SaTML 的投稿截止日期与页数上限。这两项决定补哪些实验来得及。
+Evidence bar: multiple seeds (floor 3), a measured `α_k` curve from a capacity sweep, and at least
+one piece of external-validity evidence. run2 (4 models × **single seed** × 2 fields × n=12–25) does
+not meet it; the gaps are recorded in `CODE_MAP.md` §3 and §8.
 
-## 现状锚点
+> Unconfirmed: SaTML's page limit — not listed on the site; check the CFP before submitting.
 
-- 权威草稿：`~/Documents/Phd/UAB/Research/usenix_PromptExtraction_PrivacyAuditing.pdf`
-  （仓库内的 `usenix_paper.tex` 是过期骨架）
-- 代码与实验状态：`CODE_MAP.md`
-- 已有结果：仅 E1 跑过（run2），产出论文的 Table 4 / Table 5 / Figure 2 / Figure 3
+## Current anchors
+
+- Authoritative draft: `~/Documents/Phd/UAB/Research/usenix_PromptExtraction_PrivacyAuditing.pdf`
+  (the repo's `usenix_paper.tex` is a stale scaffold)
+- Code and experiment status: `CODE_MAP.md`
+- Existing results: E1 only (run2), producing the paper's Table 4 / Table 5 / Figure 2 / Figure 3

@@ -6,5 +6,27 @@
     "path": "/Users/xuqiluo/PycharmProjects/PII_Extraction",
     "registered_at": "2026-08-31T21:41:37-05:00"
   },
-  "studies": []
+  "studies": [
+    {
+      "study_id": "capacity_response_20260831",
+      "type": "experiment",
+      "status": "backlog",
+      "question": "How do the forcing floor alpha_k and the calibrated signal tau_rec each respond as probe capacity k increases, and does an operating point k* exist whose floor is low enough to retain dynamic range?",
+      "description": "Capacity-forcing response curve: sweep the GCG probe's free-token count k, measure how the forcing floor and the calibrated signal respond, and densify k=20 to >=3 seeds to replace the paper's current Table 4.",
+      "design_path": ".ai/research/studies/capacity_response_20260831/design.md",
+      "verdict": "pending",
+      "phases_summary": [],
+      "progress": {
+        "tasks_total": 0,
+        "tasks_done": 0
+      },
+      "compute": {
+        "accelerator_hours": 0,
+        "est_cost_usd": 0,
+        "runs": 0
+      },
+      "created_at": "2026-08-31T22:04:53-05:00",
+      "updated_at": "2026-09-01T18:30:42-05:00"
+    }
+  ]
 }
