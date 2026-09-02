@@ -5,6 +5,9 @@
 - [Compute Environment](./compute.md)
 - [Reporting Guidelines](./reporting.md)
 
+## Codebase
+- [Code Map](../../CODE_MAP.md)
+
 ## Methodology
 - [Methodology](./methodology.md)
 - [Code Style Guides](./code_styleguides/)

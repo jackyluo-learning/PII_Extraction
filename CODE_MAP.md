@@ -342,14 +342,15 @@ Ten markdown files of very different vintage. When they conflict, the "current" 
 | `WRITING_GUIDE.md` | **current** | section-by-section guide with run2 numbers and paste-ready LaTeX |
 | `EXPERIMENTS.md` | **current** | E-suite design and tier order (but the full E1–E21 spec is not in the repo) |
 | `RUN.md` | **current** | SLURM runbook |
-| `IMPROVEMENT_PLAN.md` | historical | round-1 revision strategy, pre-forcing-pivot |
-| `CHANGES.md` | historical | round-1 changelog, points at IMPROVEMENT_PLAN |
-| `PAPER_UPDATE_PLAN.md` | historical | written for an **earlier** run (GPT-2 × 3 seeds); superseded by run2 |
-| `Reviews.md` | historical | reviewer comments on the older ACL-era submission |
-| `IRI_outline.md` | **a different paper** | IEEE IRI 2026, 6 pages, "afterlife of personal data" framing, paired with `IRI_paper.tex`. **Not the forcing paper — do not merge its claims.** |
+| `docs/archive/IMPROVEMENT_PLAN.md` | historical | round-1 revision strategy, pre-forcing-pivot |
+| `docs/archive/CHANGES.md` | historical | round-1 changelog, points at IMPROVEMENT_PLAN |
+| `docs/archive/PAPER_UPDATE_PLAN.md` | historical | written for an **earlier** run (GPT-2 × 3 seeds); superseded by run2 |
+| `docs/archive/Reviews.md` | historical | reviewer comments on the older ACL-era submission |
+| `docs/iri/` | **a different paper** | IEEE IRI 2026, 6 pages, "afterlife of personal data" framing, paired with `IRI_paper.tex`. **Not the forcing paper — do not merge its claims.** |
 
-Every plan in the historical group targets `usenix_paper.tex` as its working file and cites results
-that no longer stand; following them reintroduces stale numbers.
+The historical group now lives under `docs/archive/` and the IRI pair under `docs/iri/`, each with a
+README. Every plan in the historical group targets `usenix_paper.tex` as its working file and cites
+results that no longer stand; following them reintroduces stale numbers.
 
 ---
 
@@ -448,14 +449,16 @@ The repo has 10 markdown files of very different vintage.
 4 models, seed 42, ssn+email), `EXPERIMENTS.md` (E-suite design), `RUN.md`
 (SLURM howto).
 
-**Historical, do not act on** — `IMPROVEMENT_PLAN.md` and `CHANGES.md`
-(round-1 revision, pre-forcing-pivot), `PAPER_UPDATE_PLAN.md` (written for an
-earlier run of GPT-2 × 3 seeds, superseded by run2), `Reviews.md` (reviewer
-comments on the older ACL-era submission).
+**Historical, do not act on** — moved to `docs/archive/` (with a README) on
+2026-09-02: `IMPROVEMENT_PLAN.md` and `CHANGES.md` (round-1 revision,
+pre-forcing-pivot), `PAPER_UPDATE_PLAN.md` (written for an earlier run of
+GPT-2 × 3 seeds, superseded by run2), `Reviews.md` (reviewer comments on the
+older ACL-era submission).
 
-**`IRI_outline.md` + `IRI_paper.tex` are a SEPARATE second paper** — IEEE IRI
-2026, 6 pages, "afterlife of personal data / data-reuse" framing. Not the
-forcing paper; don't merge their claims.
+**`docs/iri/` is a SEPARATE second paper** — IEEE IRI 2026, 6 pages, "afterlife
+of personal data / data-reuse" framing, holding `IRI_outline.md` and
+`IRI_paper.tex`. Not the forcing paper; don't merge their claims. Its .tex is
+also the repo's only IEEE-format template, useful for the USENIX→IEEE conversion.
 
 **Why:** several plans target `usenix_paper.tex` and cite numbers from runs that
 no longer stand, so following them silently reintroduces stale results.

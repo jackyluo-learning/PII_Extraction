@@ -4,7 +4,7 @@ _Target venue: **IEEE SaTML**. This is a style guide, not a manual._
 
 ## Format
 
-- **IEEE two-column.** The current draft is in USENIX format and must be converted; `IRI_paper.tex`
+- **IEEE two-column.** The current draft is in USENIX format and must be converted; `docs/iri/IRI_paper.tex`
   is already IEEE and its template can be reused.
 - Terminology follows the draft: **forcing floor**, `τ̂rec`, **EMR**, **capacity**, **probe**,
   `α_k`, `k⋆`, `β`. Keep the English terms verbatim in discussion; do not invent translations.

@@ -1,7 +1,7 @@
 # RUN — how to run the experiments on a SLURM cluster
 
 One-line flow: **B find cluster params → C build env → D smoke test → E submit full sweep → F collect + fill paper.**
-Deeper SLURM details in [slurm/README.md](slurm/README.md); what changed in [CHANGES.md](CHANGES.md); the research plan in [IMPROVEMENT_PLAN.md](IMPROVEMENT_PLAN.md).
+Deeper SLURM details in [slurm/README.md](slurm/README.md); historical context in [docs/archive/](docs/archive/); the current map in [CODE_MAP.md](CODE_MAP.md).
 
 > Nothing is hard-coded: every number in [usenix_paper.tex](usenix_paper.tex) is a `\todo{}`
 > filled from a REAL run's `results/`. Run it, then fill the placeholders.

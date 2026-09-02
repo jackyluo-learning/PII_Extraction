@@ -59,7 +59,7 @@ inclusion.
   optimization-based extraction rates.
 - **Not discovery attacks** (unknown targets). Different setting, different metrics.
 - **No production APIs.** Only models we fine-tune ourselves from open weights.
-- **The IEEE IRI 2026 paper** (`IRI_paper.tex` / `IRI_outline.md`) **is out of scope** — a separate
+- **The IEEE IRI 2026 paper** (`docs/iri/`) **is out of scope** — a separate
   second paper whose claims are not merged with these.
 
 ## What answers would change
@@ -107,7 +107,7 @@ review pool, "we do not propose a stronger attack" is easily misread as a lack o
 
 **Two consequences to handle**:
 
-1. **Format** — the draft is in USENIX format and must move to **IEEE two-column**. `IRI_paper.tex`
+1. **Format** — the draft is in USENIX format and must move to **IEEE two-column**. `docs/iri/IRI_paper.tex`
    is already IEEE, so the template can be reused.
 2. **Length** — an IEEE page limit will squeeze the theory-to-experiment ratio. The draft is
    theory-heavy (Prop. 1–5, Cor. 1–5, Algorithm 1) and evidence-light (E1 only); the conversion will
