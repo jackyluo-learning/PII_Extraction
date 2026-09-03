@@ -219,7 +219,7 @@ becomes unexecutable. That is the negative result the archived design already id
 "unfavourable but highly valuable".
 
 **On the 1% threshold.** It is retained verbatim but **does not drive the budget**. The study reports
-the whole `α → k*(α)` mapping over the resolvable range (α ≥ 4.5% at 50 control persons) and scores
+the whole `α → k*(α)` mapping over the resolvable range (**α ≥ 9.0% at 25 control persons**) and scores
 H2 at the resolution limit. Reason: none of the three deliverables — shape, `β`, procedure — depends
 on α being resolved at 1%; α belongs to the auditor, not to this paper. Buying 1% costs ~8 A100-h via
 tiered allocation and can be added later without retraining.
@@ -496,9 +496,10 @@ at large `k` the floor is expected to be large.
 
 ### The control pool stays at the default 50
 
-`n_negative_controls = 50`, unchanged. At 50 control persons the smallest resolvable α is **4.5%**
-(see Analysis Plan), and that is accepted: the study reports the `α → k*(α)` mapping over the
-resolvable range rather than chasing a fixed threshold.
+`n_negative_controls = 50`, unchanged — but **the control arm attacks 25 of them**, matching run2
+(`matched[:n_t]`, `n_t = 25`). The smallest resolvable α is therefore **9.0%**, not the 4.5% that 50
+attacked controls would give (see Analysis Plan). That is accepted: the study reports the
+`α → k*(α)` mapping over the resolvable range rather than chasing a fixed threshold.
 
 **Enlarging it later is free of retraining**, which is why this is a reversible decision rather than
 a constraint. `build_corpus` assembles `corpus = pii_docs + public` from `individuals` only;
@@ -552,8 +553,8 @@ exactly what E17 implements — **this is not one of the paper/code mismatches.*
 
 H2 is preregistered at α = 1% and that text stays. But the auditor, not this paper, chooses the
 tolerable false-positive rate, so the primary deliverable is the **whole mapping α → k\*(α)** across
-every α the data can resolve. It degrades gracefully: at 50 control persons the mapping is published
-from α = 4.5% upward, with the resolution floor stated.
+every α the data can resolve. It degrades gracefully: at **25 attacked controls** the mapping is
+published from **α = 9.0%** upward, with the resolution floor stated.
 
 **A floor condition by itself does not define a usable point.** "Smallest `k` with `α_k ≤ α`" is
 satisfied by `k = 0`, where the floor is 0 and the signal is also 0. `k*(α)` therefore carries both
@@ -565,7 +566,7 @@ largest element — within it, the largest `k` maximises raw TPR while a smaller
 likelihood ratio `TPR/α_k` and hence the certifiable `ε`. **Both optima are reported**; which one an
 auditor wants depends on whether they are detecting or certifying.
 
-### Precision on `α_k` — what 50 control persons can and cannot resolve
+### Precision on `α_k` — what 25 attacked controls can and cannot resolve
 
 The smallest α a zero-count control arm can resolve is the rule-of-three bound `3/n_eff`, with
 `n_eff = 2·n_persons / DEFF` (2 fields per person, DEFF = 1.5 at ICC ≈ 0.5):
@@ -581,9 +582,9 @@ The smallest α a zero-count control arm can resolve is the rule-of-three bound 
 **Correcting the revival note**: `PII_N_CONTROLS=150` reaches **1.5%, not 1.0%** — the archived
 design's rule-of-three arithmetic did not carry the clustering design effect.
 
-**This table is context, not a justification for the arm size.** The control arm is 50 because that
-is the whole pool (see Variables); 4.5% is the resolution that follows, not a target that was aimed
-at. The three deliverables do not depend on resolving α at 1%: the shape is a trend over 13 points, `β` comes from `k_min ~ H` where α never
+**This table is context, not a justification for the arm size.** The control arm is **25** because
+that matches run2 (see Variables); **9.0%** is the resolution that follows, not a target that was
+aimed at. The three deliverables do not depend on resolving α at 1%: the shape is a trend over 13 points, `β` comes from `k_min ~ H` where α never
 enters, and the procedure hands the auditor a method rather than a threshold. Letting a carried
 threshold drive a 25% cost increase would be letting a legacy hypothesis, not the research question,
 decide the budget. A tiered allocation (225 controls at `k ≤ 4`, where precision matters and attacks
@@ -596,9 +597,7 @@ replacement, then `_matched_control_entries` de-duplicates by person — so the 
 matched controls is bounded by the trained-record count and is smaller still after dedup. **The
 matched subset may well not reach 50 persons.**
 
-**Attack all 50, report both.** The control pool holds exactly 50 people and the matched subset is a
-subset of it, so attacking the whole pool is a **superset** costing at most a handful of extra
-persons — and it makes both estimands recoverable from one run:
+**The control arm is `matched[:25]` — run2's rule, unchanged, and no code change.**
 
 **The control arm is the E17-matched subset, capped at 25 — exactly run2's rule.** `α_k` is therefore
 the paper's own `α`: Algorithm 1 step 1 defines `C` as records *matched* to D, so an unmatched floor
@@ -718,7 +717,7 @@ censored model's estimate (which corrects for it) and by an explicit statement o
 |---|---|
 | **Sanity `α_0 ≈ 0`** | Read **first**. `fixed`-probe control EMR; a non-trivial value means the decision rule is matching spuriously and blocks the study |
 | **H1** monotone rise | Spearman's ρ over `(k, α_k)`, person-clustered bootstrap CI; refuted if the CI contains 0 or ρ is significantly negative |
-| **H2** usable operating point | Does any `k` satisfy **both** `α_k`'s 95% upper bound ≤ tolerance **and** `τ̂rec(k)`'s CI excluding 0? Scored across the resolvable range (α ≥ 4.5%); refuted if the two never co-occur. The carried 1% form is reported alongside, marked unresolved below 4.5% |
+| **H2** usable operating point | Does any `k` satisfy **both** `α_k`'s 95% upper bound ≤ tolerance **and** `τ̂rec(k)`'s CI excluding 0? Scored across the resolvable range (**α ≥ 9.0%**); refuted if the two never co-occur. The carried 1% form is reported alongside, marked unresolved below 9.0% |
 | **H3** `τ̂rec` at `k=20` | 95% CI of `τ̂rec(20)` from 3 seeds; refuted (as a null) if the CI excludes 0 |
 | **H4** forcing model holds | Censored regression of `k_min` on `H_bits`, clustered on `person_id`. Refuted if the slope's CI contains 0 **or the intercept differs significantly from 0** — the model is proportional, so a non-zero intercept falsifies it |
 | **H5** interior peak in `τ̂rec(k)` | `τ̂rec` at all 13 levels from one joint bootstrap; refuted if it is still rising at `k=64` or flat throughout |
@@ -932,11 +931,11 @@ widths it is a tautology.
 
 | Threat | Handling |
 |---|---|
-| **H2's threshold may be unresolvable** | 50 controls resolve only α ≥ 4.5%; 225 are needed for 1%, available later for ~8 h via tiered allocation. The study reports the resolvable range rather than chasing the carried threshold |
+| **H2's threshold may be unresolvable** | **25 attacked controls resolve only α ≥ 9.0%**; 50 would give 4.5%, 225 would give 1%. Both are deferred extensions. The study reports the resolvable range rather than chasing the carried threshold |
 | **The matched subset may be small** | E17 de-duplicates by person, so `\|C_matched\|` may fall well below 50 and the primary `α_k` loses precision. Mitigated by attacking all 50 and reporting the full-pool floor beside it; the pilot must report `\|C_matched\|` |
 | **Spurious monotonicity failure** | The code's zero-tolerance `np.diff >= 0` check will fail almost surely under sampling noise. Replaced by Spearman's ρ with a clustered bootstrap CI, plus an isotonic summary |
 | **`k*` mis-read at the boundary** | `_crossing_k` returns `ks[0]` both when `k=1` is the crossing and when the floor is *already* above threshold at `k=1` — opposite findings. A distinct sentinel is required before H2 can be scored |
-| **13 correlated intervals invite cherry-picking** | The confirmatory family is 3 hypotheses, Holm-corrected. The per-`k` intervals are explicitly descriptive; no `k` is promoted to a finding after the fact |
+| **13 correlated intervals invite cherry-picking** | The confirmatory family is **5 hypotheses (H1–H5)**, Holm-corrected. The per-`k` intervals are explicitly descriptive; no `k` is promoted to a finding after the fact |
 | **Curve shape read from one bootstrap** | One resample serves all 13 levels, so shape questions have honest intervals. Thirteen independent bootstraps would not support any statement about the curve |
 | **Environment not pinned** | `pip freeze` hash recorded; listed as a threat at analysis time |
 
