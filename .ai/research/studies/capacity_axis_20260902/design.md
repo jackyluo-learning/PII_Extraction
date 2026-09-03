@@ -91,12 +91,6 @@ which is what the paper actually needs (see `## What the Answer Changes`).
 
 H1 and H2 are publishable findings whether supported or refuted.
 
-
-
-## What the Answer Changes`).
-
-H1 and H2 are publishable findings whether supported or refuted.
-
 ## Prediction
 
 _Recorded before any run. Its value lies precisely in being falsifiable after the fact._
