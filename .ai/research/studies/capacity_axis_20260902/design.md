@@ -582,12 +582,21 @@ replacement, then `_matched_control_entries` de-duplicates by person — so the 
 matched controls is bounded by the trained-record count and is smaller still after dedup. **The
 matched subset may well not reach 50 persons.**
 
-The floor does not need matching. Exchangeability with D is what `τ̂rec` requires; `α_k` is simply
-"how often the attack forces a never-trained record". So:
+**Attack all 50, report both.** The control pool holds exactly 50 people and the matched subset is a
+subset of it, so attacking the whole pool is a **superset** costing at most a handful of extra
+persons — and it makes both estimands recoverable from one run:
 
-- **H1 / H2 / H5 / `k*(α)` use the full control pool** (`controls[:n]`, not `matched[:n]`)
-- **H3 / `τ̂rec(k)` uses the E17-matched subset**, identified at analysis time by joining
-  `results/e17_matches_*.json` on `(person_id, field)` — **no log-schema change**
+| Estimand | Sample | Role |
+|---|---|---|
+| **`α_k` on the E17-matched subset** | matched only | **Primary.** This is the paper's own `α`: Algorithm 1 step 1 defines `C` as records *matched* to D, so an unmatched floor is a different quantity |
+| `α_k` on the full pool | all 50 | Supplementary — tighter intervals, and it shows whether matching moved the floor |
+
+The matched subset is recovered at analysis time by joining `results/e17_matches_*.json` on
+`(person_id, field)` — **no log-schema change**. `τ̂rec(k)` uses the matched subset, as E1 does.
+
+Reporting both is itself informative: a gap between them means E17's matching selects controls that
+are systematically easier or harder to force than the pool at large, which is a **direct check on
+A1** alongside the covariate balance table.
 
 Because every `k` uses the same full pool, the control arm's composition is **constant across the
 grid**, which is what the paired design needs. The change to `run_E3_capacity_sweep` is
@@ -889,7 +898,8 @@ widths it is a tautology.
 
 | Threat | Handling |
 |---|---|
-| **H2's threshold may be unresolvable** | 50 controls resolve only α ≥ 4.5%; 225 are needed for 1%. Tiered allocation buys this for ~8 h. If the matched set cannot supply 225, the floor is computed on the **full control pool** — matching is required for `τ̂rec`, not for `α_k` |
+| **H2's threshold may be unresolvable** | 50 controls resolve only α ≥ 4.5%; 225 are needed for 1%, available later for ~8 h via tiered allocation. The study reports the resolvable range rather than chasing the carried threshold |
+| **The matched subset may be small** | E17 de-duplicates by person, so `\|C_matched\|` may fall well below 50 and the primary `α_k` loses precision. Mitigated by attacking all 50 and reporting the full-pool floor beside it; the pilot must report `\|C_matched\|` |
 | **Spurious monotonicity failure** | The code's zero-tolerance `np.diff >= 0` check will fail almost surely under sampling noise. Replaced by Spearman's ρ with a clustered bootstrap CI, plus an isotonic summary |
 | **`k*` mis-read at the boundary** | `_crossing_k` returns `ks[0]` both when `k=1` is the crossing and when the floor is *already* above threshold at `k=1` — opposite findings. A distinct sentinel is required before H2 can be scored |
 | **13 correlated intervals invite cherry-picking** | The confirmatory family is 3 hypotheses, Holm-corrected. The per-`k` intervals are explicitly descriptive; no `k` is promoted to a finding after the fact |
@@ -937,11 +947,11 @@ reportable result; none is a failure of this study.
    computes tokens/bit and then validates it against `log₂|V|`, which only type-checks for
    bits/token. **E3 produces this number the moment it runs.** This design adopts the paper's
    definition and corrects the code — confirm that is the intended direction.
-2. **Confirm the control-arm split.** E17 matches 1-NN per trained record with replacement and then
-   de-duplicates by person, so the distinct matched set may not reach 50. The floor is therefore
-   computed on the **full control pool** and `τ̂rec` on the matched subset — a **one-line** change to
-   `run_E3_capacity_sweep` (`matched[:n_t]` → `controls[:n_t]`), with the matched subset recovered at
-   analysis time from `e17_matches_*.json`. Confirm this is the intended split.
+2. **Confirm the control-arm decision.** Attack **all 50** controls (`matched[:n_t]` →
+   `controls[:n_t]`, one line), then report `α_k` on the **E17-matched subset as primary** — that is
+   the paper's own `α` per Algorithm 1 step 1 — with the full-pool floor beside it. Attacking the
+   superset costs at most a few persons and makes both recoverable from one run; the gap between them
+   is a direct check on A1. Confirm this rather than the earlier full-pool-only split.
 3. **`PII_GCG_ITERS = 200`, fixed** — run2's own value for `gpt2`, held constant across every `k` by
    the code. No longer a pilot decision: with one model in scope there is nothing to reconcile. It
    still interacts with the `1/k` coverage threat (a larger `N` would partially compensate at large
