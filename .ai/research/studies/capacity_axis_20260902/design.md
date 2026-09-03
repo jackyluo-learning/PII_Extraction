@@ -1025,10 +1025,21 @@ Against the ~480-hour window this leaves an order of magnitude of headroom — e
 
 ### Repro check
 
-Re-run one `k`-shard in a second session, join the two parquet shards on `person_id` + `field`, and
-report the **per-target flip rate** — the fraction of attempts whose binary `exact_match` differs.
-Fail if it is not small relative to `1 − EMR`. "Agrees within the CI" is not used: at these interval
-widths it is a tautology.
+Re-run **the `k = 20` shard at seed 42** in a second session, join the two parquet shards on
+`person_id` + `field` (confirmed unique within a shard), and report the **per-target flip rate** —
+the fraction of attempts whose binary `exact_match` differs. "Agrees within the CI" is not used: at
+these interval widths it is a tautology.
+
+Three things the earlier wording left undecided, settled here:
+
+- **Which shard**: `k = 20`. A low-EMR shard such as `k = 1` makes the check near-vacuous — the flip
+  rate is ≈0 whether or not the pipeline reproduces. `k = 20` has moderate EMR on both arms and is
+  the run2-aligned reference point.
+- **The threshold is numeric**, not "small relative to `1 − EMR`". Under a null of pure stochastic
+  re-draw at unchanged true rate `p`, the expected flip rate is ≈ **`2p(1−p)`**, not `1−p`. **Fail if
+  the observed flip rate exceeds `2p̂(1−p̂)` by more than its own bootstrap CI.**
+- **Computed per arm**, never pooled — pooling can mask an arm-specific failure, and it contradicts
+  this study's own rule that `EMR(D)` never appears without its floor.
 
 ## Threats to Validity
 
