@@ -1,0 +1,292 @@
+{
+  "$schema": "research-plan-v1",
+  "study_id": "capacity_axis_20260902",
+  "compute_budget": {
+    "accelerator_hours": 24,
+    "est_cost_usd": 0,
+    "approved_at": "2026-09-03T00:00:00-05:00"
+  },
+  "phases": [
+    {
+      "id": "phase-0",
+      "name": "Harness — eight code gates and the corpus",
+      "kind": "harness",
+      "status": "backlog",
+      "tasks": [
+        {
+          "id": "t0-1",
+          "name": "Stratified trained-subset selection",
+          "description": "Replace trained[:n_t] in run_E3_capacity_sweep with proportional selection across frequency tiers, and record the realized composition.",
+          "status": "backlog",
+          "prediction": "The current prefix yields {f=1:10, f=5:15, f=20:0}; the fix yields roughly {3, 7, 15}.",
+          "falsification": "The fixed selection still returns zero f=20 persons, or changes |D| away from 25."
+        },
+        {
+          "id": "t0-2",
+          "name": "k=0 anchor code path",
+          "description": "Branch on k==0 to _run_fixed_probe, passing capacity_k=0 explicitly; verify _shard_tag emits a distinct _k0 tag.",
+          "status": "backlog",
+          "prediction": "A k=0 shard writes 100 rows with capacity_k=0 and does not collide with any gcg shard.",
+          "falsification": "capacity_k=0 is dropped by _log_attempt's None-check, or the shard tag collides."
+        },
+        {
+          "id": "t0-3",
+          "name": "Per-person AttemptLogger flushing",
+          "description": "Flush inside the subset loop instead of once per sweep, so a killed shard loses one person rather than 100 attacks.",
+          "status": "backlog",
+          "prediction": "Killing a shard mid-run leaves a parquet with the persons completed so far.",
+          "falsification": "The parquet is empty or corrupt after an interrupted shard."
+        },
+        {
+          "id": "t0-4",
+          "name": "Run manifest with target_subset_hash",
+          "description": "Write git SHA + dirty flag, resolved config, Faker version, GPU model, pip-freeze hash, realized tier composition, and a hash of the sorted (person_id, field) pairs for both arms.",
+          "status": "backlog",
+          "prediction": "All 42 shards emit an identical target_subset_hash.",
+          "falsification": "Any two shards disagree — which would mean the paired design across k does not hold."
+        },
+        {
+          "id": "t0-5",
+          "name": "effective_eval_batch reads measured VRAM",
+          "description": "Gate on HW['gpu_mem_gb'] instead of the literal string 'colab_free', which _auto_hw never sets.",
+          "status": "backlog",
+          "prediction": "On a simulated 16GB profile the eval batch drops below 512.",
+          "falsification": "The batch stays at 512 regardless of reported VRAM."
+        },
+        {
+          "id": "t0-6",
+          "name": "Corpus safety gates",
+          "description": "Raise inside fetch_public_passages when C4 contributes anything; assert SSN/email disjointness between the trained and control Faker pools.",
+          "status": "backlog",
+          "prediction": "The corpus regenerates from Wikipedia alone, C4 count zero, assertions pass.",
+          "falsification": "C4 contributes any passage, or a duplicate SSN/email exists across pools."
+        },
+        {
+          "id": "t0-7",
+          "name": "Pin lifelines; analysis hard-fails without it",
+          "description": "Add lifelines at an exact version to requirements.txt and setup_env.sh. No silent fallback to the complete-case linregress.",
+          "status": "backlog",
+          "prediction": "Importing the analysis module without lifelines raises rather than degrading.",
+          "falsification": "The analysis path silently falls back to linregress."
+        },
+        {
+          "id": "t0-8",
+          "name": "Regenerate corpus and retrain gpt2-124M",
+          "description": "PII_N_CONTROLS=50; then train.py --model gpt2.",
+          "status": "backlog",
+          "prediction": "PII eval loss falls to near zero on the PII documents, as in run2.",
+          "falsification": "Training diverges, or the corpus metadata shows any C4 contribution.",
+          "est_accelerator_hours": 0.3
+        },
+        {
+          "id": "t0-cp",
+          "name": "Phase checkpoint",
+          "description": "All eight gates land; corpus and checkpoint exist; commit the harness state.",
+          "status": "backlog",
+          "prediction": "Every gate's test passes and the tree is clean.",
+          "falsification": "Any gate is skipped or left untested."
+        }
+      ]
+    },
+    {
+      "id": "phase-1",
+      "name": "Pilot — three shards at the grid extremes",
+      "kind": "pilot",
+      "status": "backlog",
+      "tasks": [
+        {
+          "id": "t1-1",
+          "name": "Sanity gate: alpha_0",
+          "description": "Run the k=0 shard at seed 42 and read the control-arm EMR BEFORE anything else.",
+          "status": "backlog",
+          "prediction": "alpha_0 is not detectably above 0 — run2's own gpt2 fixed-probe EMR was 0.0.",
+          "falsification": "alpha_0's CI excludes 0, meaning exact_match fires spuriously. BLOCKS the study.",
+          "arms": [
+            "trained",
+            "control"
+          ],
+          "seeds": [
+            42
+          ],
+          "est_accelerator_hours": 0.01
+        },
+        {
+          "id": "t1-2",
+          "name": "Cost at both grid extremes",
+          "description": "Run k=1 and k=64 at seed 42 and measure per-attack wall-clock. Mid-grid alone cannot reveal the O(k) construction term.",
+          "status": "backlog",
+          "prediction": "k=64 costs materially more than the linear-in-(k+T) model predicts; k=1 evaluates 256 candidates, not 512.",
+          "falsification": "Extrapolated total exceeds the approved 24 A100-h — re-scope rather than proceed.",
+          "arms": [
+            "trained",
+            "control"
+          ],
+          "seeds": [
+            42
+          ],
+          "est_accelerator_hours": 1.3
+        },
+        {
+          "id": "t1-3",
+          "name": "Realized arm sizes",
+          "description": "Report |D| and |C| from the pilot shards. E17 de-duplicates by person, so |C| may fall below 25.",
+          "status": "backlog",
+          "prediction": "|D| = 25 with all three frequency tiers present; |C| between 15 and 25.",
+          "falsification": "|C| < 15 — the control arm is too thin and the protocol pauses.",
+          "arms": [
+            "trained",
+            "control"
+          ],
+          "seeds": [
+            42
+          ],
+          "est_accelerator_hours": 0.0
+        },
+        {
+          "id": "t1-4",
+          "name": "Reproducibility check",
+          "description": "Re-run the k=20 shard at seed 42 in a second session; join on (person_id, field); compute the per-arm flip rate.",
+          "status": "backlog",
+          "prediction": "Per-arm flip rate does not exceed 2*p_hat*(1-p_hat) beyond its bootstrap CI.",
+          "falsification": "It does — residual nondeterminism is larger than stochastic re-draw explains.",
+          "arms": [
+            "trained",
+            "control"
+          ],
+          "seeds": [
+            42
+          ],
+          "est_accelerator_hours": 0.5
+        },
+        {
+          "id": "t1-cp",
+          "name": "Phase checkpoint",
+          "description": "Sanity gate passed, cost extrapolation within budget, arm sizes acceptable, repro check passed.",
+          "status": "backlog",
+          "prediction": "All four pilot criteria met.",
+          "falsification": "Any one fails — the main sweep does not launch."
+        }
+      ]
+    },
+    {
+      "id": "phase-2",
+      "name": "Main sweep — 42 shards",
+      "kind": "main",
+      "status": "backlog",
+      "tasks": [
+        {
+          "id": "t2-1",
+          "name": "Seed 42: full 14-point curve",
+          "description": "All k in {0,1,2,3,4,6,8,12,16,20,24,32,48,64} at seed 42. Pilot shards are reused, not repeated.",
+          "status": "backlog",
+          "prediction": "alpha_k rises monotonically from near 0 toward run2's 52% at k=20 and beyond.",
+          "falsification": "The curve is flat across k — which would refute H1 and the capacity-axis framing.",
+          "arms": [
+            "trained",
+            "control"
+          ],
+          "seeds": [
+            42
+          ],
+          "est_accelerator_hours": 5.5
+        },
+        {
+          "id": "t2-2",
+          "name": "Seed 1337: full 14-point curve",
+          "description": "Same grid, second seed.",
+          "status": "backlog",
+          "prediction": "The curve's shape reproduces seed 42's within its intervals.",
+          "falsification": "The two seeds disagree on the direction of the trend.",
+          "arms": [
+            "trained",
+            "control"
+          ],
+          "seeds": [
+            1337
+          ],
+          "est_accelerator_hours": 5.5
+        },
+        {
+          "id": "t2-3",
+          "name": "Seed 2024: full 14-point curve",
+          "description": "Same grid, third seed.",
+          "status": "backlog",
+          "prediction": "The curve's shape reproduces the first two.",
+          "falsification": "Seed-to-seed variation swamps the k effect, which would mean 3 seeds is too few for the shape.",
+          "arms": [
+            "trained",
+            "control"
+          ],
+          "seeds": [
+            2024
+          ],
+          "est_accelerator_hours": 5.5
+        },
+        {
+          "id": "t2-2b",
+          "name": "Invariant assertions across all 42 shards",
+          "description": "Compare target_subset_hash and configured PII_GCG_ITERS across every shard.",
+          "status": "backlog",
+          "prediction": "All 42 agree on both.",
+          "falsification": "Any disagreement — BLOCKS analysis; the paired design across k is gone."
+        },
+        {
+          "id": "t2-cp",
+          "name": "Phase checkpoint",
+          "description": "42 shards complete or explicitly accounted; invariants asserted; per-shard hours and GPU model recorded.",
+          "status": "backlog",
+          "prediction": "The ledger is complete and the invariants hold.",
+          "falsification": "Any shard is missing without a recorded run_status and reason."
+        }
+      ]
+    },
+    {
+      "id": "phase-3",
+      "name": "Analysis",
+      "kind": "analysis",
+      "status": "backlog",
+      "tasks": [
+        {
+          "id": "t3-1",
+          "name": "Analysis code gates",
+          "description": "Two-block joint bootstrap retaining raw replicate vectors; Wilson on n_eff plus Newcombe/MOVER; interval- and right-censored log-log AFT for k_min, bootstrapped; _crossing_k sentinel; Spearman/isotonic monotonicity.",
+          "status": "backlog",
+          "prediction": "Each is unit-tested against a worked example before any table is generated.",
+          "falsification": "A table is produced before these exist — which would repeat the hand-computed-interval error the draft already carries."
+        },
+        {
+          "id": "t3-2",
+          "name": "Covariate balance table (zero GPU)",
+          "description": "Both SMD variants per field from e17_matches_*.json: matched-pair, and deduplicated-control-marginal vs D-marginal.",
+          "status": "backlog",
+          "prediction": "The pair-wise SMD is small by construction; the marginal SMD is the one that can fail.",
+          "falsification": "The marginal SMD exceeds 0.1, which would put A1 in question."
+        },
+        {
+          "id": "t3-3",
+          "name": "H1-H4 confirmatory, H5 exploratory",
+          "description": "Holm over {H1,H2,H3,H4}; H5 reported outside the family with its argmax CI and underpowered caveat.",
+          "status": "backlog",
+          "prediction": "Recorded: H1 supported; H2 undetermined below alpha=9%; H3's CI contains 0 but narrows; H4 undecided.",
+          "falsification": "Any hypothesis is reported without the resolution limit named in the same sentence as a null."
+        },
+        {
+          "id": "t3-4",
+          "name": "beta with its caveats",
+          "description": "Report beta in bits/token with beta/log2|V|, from the censored log-log fit on the CONTROL arm, plus the complete-case linregress beside it, the non-monotone hit/miss fraction, and the grid's downward bias direction.",
+          "status": "backlog",
+          "prediction": "The censored estimate exceeds the complete-case one, since censoring drops the hardest targets.",
+          "falsification": "Right-censoring exceeds 60-70% — fall back to a Turnbull summary rather than a point estimate."
+        },
+        {
+          "id": "t3-cp",
+          "name": "Phase checkpoint",
+          "description": "analysis.md written with a verdict per hypothesis and every deviation declared.",
+          "status": "backlog",
+          "prediction": "Every hypothesis has a verdict or an explicit undecidable.",
+          "falsification": "Any exploratory result is presented as confirmatory."
+        }
+      ]
+    }
+  ]
+}
