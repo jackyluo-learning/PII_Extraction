@@ -41,7 +41,7 @@ inclusion.
 ## Scope
 
 - **Data**: a controlled synthetic corpus (Faker-generated fictitious PII embedded in nine document
-  templates, mixed into public-domain passages from Wikipedia / PG-19 / arXiv) with complete ground
+  templates, mixed into public-domain passages from Wikipedia (`20231101.en`) / arXiv, C4 fallback) with complete ground
   truth
 - **Models**: self-fine-tuned open models — GPT-2 124M / 355M (full fine-tune), Pythia 1.4B / 2.8B
   (LoRA)
