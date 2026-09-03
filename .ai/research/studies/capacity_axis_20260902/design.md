@@ -165,6 +165,53 @@ written on 2026-08-31.
 
 ## Variables
 
+### Alignment with run2 (E1) — match everything that does not kill a hypothesis
+
+The first pass runs **one model**, so the "uniform budget across models" problem that dominated the
+deferred E2 design **does not arise here**. Every parameter that can be aligned with run2's `gpt2`
+configuration is aligned:
+
+| Parameter | run2 (`gpt2`) | This study | Aligned? |
+|---|---|---|---|
+| Model / state | gpt2-124M, finetuned | same | ✓ |
+| **`PII_GCG_ITERS`** | **200** | **200** | ✓ — run2's own value for this model |
+| Fields | `ssn`, `email` | same | ✓ |
+| Decision rule | greedy generate `T+20`, `exact_match` | same | ✓ |
+| Control selection | E17 matching | same | ✓ |
+| GCG hyperparameters | `B=256`, 512 sampled evals | same | ✓ |
+| **Seed 42** | the only seed | **one of the three** | ✓ |
+| `k = 20` | the only capacity | one grid point | ✓ |
+| Persons per arm | 25 | **50** | ✗ — see below |
+| Seeds | 1 | **3** | ✗ — corrects a known defect |
+| Probes | 8 | 1 (+ `k=0` anchor) | ✗ — the axis exists only for `gcg_free` |
+
+**Why persons per arm cannot match.** The rule-of-three floor on a zero-count control arm is
+`3/n_eff` with `n_eff = 2n/DEFF`:
+
+| Persons per arm | Smallest resolvable α |
+|---|---|
+| 12 | 18.8% |
+| **25 — run2's `gpt2` value** | **9.0%** |
+| **50** | **4.5%** |
+| 100 | 2.2% |
+
+At 25 persons **no threshold at or below 5% can be resolved**, so H2 dies outright — which is exactly
+the first of the three reasons `capacity_response_20260831` was abandoned. 50 is the smallest value
+that supports H2 at a 5% threshold. This is a hard constraint, not a preference for more power.
+
+**Why seeds cannot match.** `agenda.md` sets a seed floor of 3 and `reporting.md` records that every
+run2 result is exploratory because it is single-seed. Matching run2 here would mean deliberately
+reproducing a known defect. The 3-seed measurement at `k=20` **is H3**.
+
+**Why probes cannot match.** Of the eight, four have no `k` at all (`fixed`, `piicompass`,
+`piiscope`, `random_restart`) and `softprompt` is a continuous prefix (`capacity_k = -1`). The
+capacity axis is defined on `gcg_free`.
+
+> **Exact numerical comparability with run2 is unavailable regardless of these choices**, because the
+> checkpoints are gone: the corpus is regenerated and the model retrained, so even a byte-identical
+> configuration yields a different model. This weakens the case for matching `n = 25` at the cost of
+> H2 — the comparability it would buy is already out of reach.
+
 ### Scope decision — two fields, first pass (researcher, 2026-09-02)
 
 **Fields stay at `ssn` and `email`**, exactly as run2 (`slurm/submit_per_model.sh:27`,
@@ -775,10 +822,13 @@ excluding 0 would each be a major result; none of them is a failure of this stud
    so distinct matched controls are bounded by 200 and likely far fewer. The design resolves this by
    computing the floor on the **full control pool** and `τ̂rec` on the matched subset — which needs a
    small change to `run_E3_capacity_sweep` (currently `matched[:n_t]` only). Confirm the split.
-3. **Which three seeds?** Fix the values so the preregistration is checkable.
-4. **What uniform `PII_GCG_ITERS`?** Held constant across `k` by the code, but the *value* is a free
-   parameter set from the pilot. It interacts with the `1/k` coverage threat: a larger `N` partially
-   compensates at large `k`.
+4. **`PII_GCG_ITERS = 200`, fixed** — run2's own value for `gpt2`, held constant across every `k` by
+   the code. No longer a pilot decision: with one model in scope there is nothing to reconcile. It
+   still interacts with the `1/k` coverage threat (a larger `N` would partially compensate at large
+   `k`), and that interaction is a limitation, not a tuning knob.
+   **Seeds: `42` plus two others**, values fixed in the protocol. 42 is run2's seed and is retained
+   so the `k=20` point sits on the same seed as the published number, even though the retrained model
+   makes exact reproduction impossible.
 5. **Add the `k = 0` anchor to `run_E3_capacity_sweep`**, or join it from a separate `fixed`-probe
    run. It is the sanity condition and currently has no code path in E3.
 6. **Code gates before launch** — none of these exist today: per-`k` `AttemptLogger` flushing; the
