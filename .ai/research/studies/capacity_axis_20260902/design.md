@@ -240,6 +240,18 @@ are corrected here rather than by editing the preregistered text:
    grid, so running the sweep at 3 seeds densifies it for free. H3's null, direction, metric, and
    refutation criterion are unchanged.
 
+3. **The designer-estimate table's `α_20 ≈ 39%` refers to a population this study no longer covers.**
+   39.1% is run2's **four-model pooled** figure (`CODE_MAP.md` Table 5). GPT-2 124M's **own**
+   `EMR(C)` at k=20 is **52.0%** (Table 4, n=25, τ̂rec = +0.0 [−26, 26]). The carried text was correct
+   when the study spanned four models; narrowing to GPT-2 124M is what makes it refer to the wrong
+   population. **The preregistered text is not edited** — the correction is recorded here, and the
+   post-hoc comparison uses **52.0%**.
+
+   **This propagates to Figure 4.** The existing red point at "k=20, 39%" is the *pooled* value.
+   Redrawing the figure with a GPT-2-124M-only measured curve beside an unrelabelled pooled dot would
+   silently cross a model-pooling boundary. Either drop that point or label it
+   "4-model pooled (run2)" as distinct from the new single-model curve.
+
 Everything else — including the recorded prediction and its designer-estimate table — stands as
 written on 2026-08-31.
 
@@ -749,6 +761,19 @@ Corollary 1 makes a falsifiable claim.
   already measured in run2's Table 5, and re-running it here would buy nothing.
 - **No other attacks.** `piicompass` / `piiscope` sit on the probe spectrum, not the capacity axis.
   Adding them would answer a different question at proportional cost.
+- **`gcg_anchored` and `gcg_fluent` are excluded even though they do carry a `k`.** This is the one
+  exclusion a reviewer will press, and run2 already shows why it matters: at the **same nominal
+  k=20**, `EMR(C)` is **39.1%** for `gcg_free` but **62.3%** for `gcg_anchored` (`CODE_MAP.md`
+  Table 5, pooled) — a 23-point swing at fixed token count, driven by the natural-language anchor
+  rather than by capacity. **Capacity is therefore confounded with probe structure**, and this study
+  measures the axis *for the unconstrained variant only*. That limitation is stated rather than
+  glossed: `α_k` here is `α_k(gcg_free)`, and the curve must be labelled that way on every axis.
+
+  > **A cheap partial answer exists.** `run_E4_anchored_gcg` (`experiments.py`) was written to log
+  > `gcg_anchored` beside `gcg_free` at the *same* `k`, and has never run (`CODE_MAP.md`: E4
+  > pending). Running it at **2–3 grid points** — not a full 13-point sweep — would show whether the
+  > rise-with-`k` *direction* survives the anchor, at roughly `3/13` of one probe's sweep cost. Recorded
+  > as a costed option, not adopted.
 - **No cross-model capacity comparison.** Only GPT-2 124M is in scope initially. Any claim that the
   `α_k` curve shifts with model size is **out of scope**, and the write-up must not imply it.
 
@@ -770,6 +795,12 @@ Corollary 1 makes a falsifiable claim.
 Comparing any `α_k` here to a published extraction rate elsewhere. Different corpus, budget, and
 decision rule — the paper's whole thesis is that such rates are incomparable without a floor. Every
 comparison in this study is internal, on one fixed target subset, at one constant step budget.
+
+**And the comparison most likely to be made by accident**: this study's new `α_20` against run2's own
+published `α_20`. It looks internal, but **the checkpoints are gone** — the corpus is regenerated and
+the model retrained, so it is a different model. Any such comparison is indicative only and must
+carry the checkpoint-identity caveat in the same sentence. The target-selection rule also differs
+(`cap_targets` even subsample in E1 versus `[:n]` in E3).
 
 ## Reproducibility & Execution
 
@@ -962,8 +993,13 @@ reportable result; none is a failure of this study.
    **Seeds: `42` plus two others**, values fixed in the protocol. 42 is run2's seed and is retained
    so the `k=20` point sits on the same seed as the published number, even though the retrained model
    makes exact reproduction impossible.
-4. **Add the `k = 0` anchor to `run_E3_capacity_sweep`**, or join it from a separate `fixed`-probe
-   run. It is the sanity condition and currently has no code path in E3.
+4. **The `k = 0` anchor is measured *in-run*, never joined.** Add the `fixed` probe to
+   `run_E3_capacity_sweep`; it currently has no code path there. The two options are **not**
+   equivalent: the Intervals section requires one person-clustered draw applied across every level of
+   `k`, so an `α_0` joined from a separate run — or worse from run2, whose checkpoint no longer
+   exists — would come from different persons or a different model and would invalidate H1's Spearman
+   ρ at its own left endpoint and corrupt the redrawn Figure 4. The `fixed` probe runs no
+   optimization, so there is no budget reason to take that risk.
 5. **Code gates before launch** — none of these exist today: per-`k` `AttemptLogger` flushing; the
    run manifest; the `effective_eval_batch` / `effective_minibatch` fix; the Faker disjointness
    assertion; the C4-fallback halt check.
@@ -981,7 +1017,13 @@ reportable result; none is a failure of this study.
     the standard deviation of **two** numbers, so whether `β` transfers across field types cannot be
     established — and that is what licenses `k_force = H/β` as auditor guidance rather than as an
     observation about two fields. Widening needs no retraining. Decide after the first curve.
-11. **Which `H` goes into `k_force = H/β`?** The paper uses `H∞(D₀)` (format min-entropy, constant
+11. **Verify where `k = 20` actually comes from before asserting it in print.** The repo does not
+    support the claim either way: `prompt_length_k = 20` entered `config.py` in a single commit with
+    no comment or citation. Check the GCG paper (Zou et al.) for whether 20 was a stated choice for
+    their objective or an ambient default that propagated. If unconfirmed, the safe phrasing is
+    "widely used in the jailbreaking literature for a different objective", **not** "chosen there and
+    carried into privacy auditing without re-derivation".
+12. **Which `H` goes into `k_force = H/β`?** The paper uses `H∞(D₀)` (format min-entropy, constant
     within a field) in Corollary 1 and `H(t)` (per-string self-information, what the code computes)
     in Definition 3. An auditor must be told which, and whether to take the minimum or the median
     across their targets — low-`H(t)` targets are the easiest to force, so a policy set on the median
