@@ -149,6 +149,9 @@ unimplemented to computable.
 The three carried hypotheses were written before this study's deliverables were named. Mapping each
 deliverable back to the hypothesis that licenses it leaves **two gaps and one mis-aimed test**:
 
+**"Shape" covers two curves, not one** — `α_k`'s and `τ̂rec(k)`'s — which is why it appears twice
+below and why H5 is not redundant with H1.
+
 | Deliverable | Rests on | Carried? |
 |---|---|---|
 | Shape — the floor rises with capacity | `α_k` monotone non-decreasing | **H1**, verbatim |
@@ -212,6 +215,10 @@ condition the deliverable actually needs:
 >
 > **Refuted by**: the two conditions never co-occurring at any `k` — the floor is always too high
 > wherever signal exists, or signal is absent wherever the floor is low.
+
+**Which criterion governs, stated once**: the **joint** criterion above decides H2 in
+`## What the Answer Changes` and `## Success Criteria`. The carried floor-only form is reported
+beside it for traceability to the preregistration, **not** as the governing decision rule.
 
 Refuting this is **the most consequential outcome available to the study**: it would say this class
 of audit cannot be calibrated to a usable dynamic range at any capacity, and Algorithm 1's step 3
@@ -365,11 +372,22 @@ target subset — the same fixed set of individuals is carried through every `k`
 the design paired · the decision rule (greedy generate, `T+20`, `exact_match`) · `B = 256`
 candidates per position · 512 sampled candidate evaluations per step · fields (SSN, email) · seeds.
 
-> **A conservative bias, worth stating up front.** Candidates evaluated per step is fixed at 512
-> while the candidate space is `k · |V|`, so search coverage falls as `1/k`. At large `k` the
-> optimizer is *relatively* weaker per unit of search space. This biases `α_k` **downward at large
-> `k`**, which makes H1 (monotone rise) harder to support, not easier — the measured curve is a
-> lower bound on what a `k`-scaled budget would achieve.
+> **A search-coverage bias, and its direction differs by hypothesis.** `_get_top_candidates` builds
+> a per-position top-`B` pool (`neg_grads[pos].topk(B)`, B = 256), so the pool is **`k · B`** — not
+> `k · |V|`, a 196x difference — and `_eval_candidates` then samples a fixed 512 from it. Coverage
+> therefore falls as `1/k`.
+>
+> **For H1 this is conservative.** It biases `α_k` **downward at large `k`**, making the monotone
+> rise harder to support, not easier; the measured curve is a lower bound on what a `k`-scaled budget
+> would achieve.
+>
+> **For H5 the direction is undetermined, and that is a real problem.** `τ̂rec` is a *difference*, and
+> the shrinking coverage degrades the attack in **both** arms. If never-trained control targets need
+> denser search than partly-memorised trained ones, the same squeeze suppresses `α_k` more than
+> `EMR(D)` at large `k` — **inflating `τ̂rec` exactly where H5 predicts it should be falling**. The
+> confound could therefore either manufacture or mask the interior peak.
+> **Diagnostic required before the peak is offered as auditor guidance**: re-run one large `k` (say
+> 48) with the evaluation budget scaled to `k`, and check whether the peak moves.
 
 ### Uncontrolled but recorded
 
@@ -556,8 +574,11 @@ tolerable false-positive rate, so the primary deliverable is the **whole mapping
 every α the data can resolve. It degrades gracefully: at **25 attacked controls** the mapping is
 published from **α = 9.0%** upward, with the resolution floor stated.
 
-**A floor condition by itself does not define a usable point.** "Smallest `k` with `α_k ≤ α`" is
-satisfied by `k = 0`, where the floor is 0 and the signal is also 0. `k*(α)` therefore carries both
+**A floor condition by itself does not define a usable point.** The carried H2 quantifies over
+`k ≥ 1`, so the degenerate case is not `k = 0` but **`k = 1`**: with one free token the floor may sit
+at or near 0 while `τ̂rec` is also at or near 0, and a floor-only criterion would call that a usable
+operating point. (`k = 0` shows the same failure more starkly but lies outside the carried
+hypothesis's own domain.) `k*(α)` therefore carries both
 conditions — floor below tolerance **and** `τ̂rec(k)`'s CI excluding 0 — which is the re-aimed H2.
 
 **And `τ̂rec(k)` is not monotone** (H5): both arms saturate toward 100% at large `k`, so the signal
@@ -599,23 +620,20 @@ matched subset may well not reach 50 persons.**
 
 **The control arm is `matched[:25]` — run2's rule, unchanged, and no code change.**
 
-**The control arm is the E17-matched subset, capped at 25 — exactly run2's rule.** `α_k` is therefore
-the paper's own `α`: Algorithm 1 step 1 defines `C` as records *matched* to D, so an unmatched floor
-would be a different quantity and not comparable to run2's 39%.
+`α_k` is therefore the paper's own `α`: Algorithm 1 step 1 defines `C` as records *matched* to D, so
+an unmatched floor would be a different quantity, not comparable to run2's GPT-2 124M value of 52.0%.
 
-`|C_matched|` being unknown needs no special handling: `cap_targets` takes `min(|matched|, 25)`, the
-same as run2. **The pilot reports the realized `|C|`**, which is a fact to record rather than a risk
-to engineer around.
+`|C_matched|` needs no special handling: `cap_targets` takes `min(|matched|, 25)`, exactly as run2
+did. **The pilot reports the realized `|D|` and `|C|`** — a fact to record, not a risk to engineer
+around, and they are not assumed equal.
 
-> A full-pool floor, and the full-pool-vs-matched gap as a second A1 check, are a **deferred
-> extension** (+8.2 A100-h, mergeable into the same log). No deliverable requires them, and the
-> covariate balance table already checks A1 at zero cost.
+Because the subset is built once before the `k` loop, the arm's composition is **constant across the
+grid**, which is what the paired design needs.
 
-Because every `k` uses the same full pool, the control arm's composition is **constant across the
-grid**, which is what the paired design needs. The change to `run_E3_capacity_sweep` is
-`matched[:n_t]` → `controls[:n_t]`.
-
-**The pilot must report realized `|D|` and `|C|`.** They are not assumed equal.
+> A full-pool floor (50 controls, α ≥ 4.5%) and the full-pool-vs-matched gap as a second A1 check are
+> a **deferred extension** (+8.2 A100-h, mergeable into the same log, since `controls[:25]` is a
+> subset of `controls[:50]`). No deliverable requires them, and the covariate balance table already
+> checks A1 at zero cost.
 
 ### Intervals
 
@@ -653,6 +671,14 @@ mismatches.
 |---|---|---|
 | **Right** | Never forced by `k = 64` | The observation is `k_min > 64`, not missing |
 | **Interval** | The grid jumps 4→6→8→12… | A target first seen at `k=6` has `k_min ∈ (4, 6]`, not `= 6` |
+
+> **The survival model assumes something this design elsewhere denies.** An AFT threshold model
+> treats "forced at `k`" as absorbing — once crossed, always crossed. But `_kmin_table` takes `min`
+> over hits and GCG is stochastic, so a target may hit at `k=8` and miss at `k=12`. The assumption is
+> **violated to an unknown degree**, and this feeds `β`, the study's central deliverable.
+> **Required alongside `β`**: report the fraction of targets showing a non-monotone hit/miss pattern
+> across the grid. That number *is* the measure of how far the assumption is violated; if it is
+> large, the AFT estimate carries an explicit caveat rather than being quoted as a threshold.
 
 **Analysis**: fit `k_min` with an interval-censored, right-censored parametric survival model (AFT on
 `log k`) with `H_bits` as the covariate, clustered on `person_id`. Report the covariate effect with a
@@ -844,7 +870,7 @@ GPT-2 124M is a **~0.3 A100-h** full fine-tune (corpus ≈ 1,360 PII documents +
 
 ```mermaid
 flowchart TD
-  C0["step 0: code gates<br/>manifest · per-k flush · batch-size fix<br/>beta dimension settled<br/>interval methods unit-tested"] --> C1
+  C0["step 0: code gates<br/>manifest · per-k flush · batch-size fix<br/>k=0 anchor code path<br/>beta dimension settled<br/>interval methods unit-tested"] --> C1
   C1["step 1: regenerate corpus<br/>PII_N_CONTROLS=50 (default)<br/>HALT if C4 contributed"] --> C2
   C2["step 2: retrain gpt2-124M<br/>~0.3 A100-h"] --> C3
   C3["step 3: PILOT<br/>one k-shard, k=20, 1 seed<br/>MEASURES per-attack cost"] --> G{"cost within<br/>confirm_above?"}
