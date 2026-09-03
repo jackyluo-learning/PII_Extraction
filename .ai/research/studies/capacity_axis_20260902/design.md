@@ -165,12 +165,38 @@ written on 2026-08-31.
 
 ## Variables
 
+### Scope decision — two fields, first pass (researcher, 2026-09-02)
+
+**Fields stay at `ssn` and `email`**, exactly as run2 (`slurm/submit_per_model.sh:27`,
+`CODE_MAP.md` §3). The corpus generates nine fields and `TARGET_FORMATS` defines six, so widening is
+an env-var change (`PII_FIELDS`) with no corpus regeneration — but it is **deliberately not done in
+this first pass**. Two benefits: cost stays at ~33 A100-h, and the field dimension stays identical to
+run2 so old and new numbers are comparable on that axis.
+
+**The cost of that decision, stated rather than dropped:**
+
+| Deliverable | Two fields | Needs more fields |
+|---|---|---|
+| `α_k` curve, `k*(α)` mapping, `τ̂rec(k)` | **Yes** | — |
+| `β` point estimate | **Yes** — within-field `H(t)` variance drives the regression | — |
+| **Whether `β` transfers across field types** | **No** | Yes — `beta_disp` is the std of per-field betas, and two fields give two numbers |
+
+`capacity_e3` computes per-field betas and their dispersion, but a standard deviation of **two**
+values is not an estimate. So the auditor-facing rule `k_force ≈ H / β` is **derivable but not
+validated** by this study: it can be stated as a mechanism with a measured `β` for SSN and email, and
+it must **not** be presented as a transferable constant across field types. That validation is a
+follow-up (4 fields ≈ 66 A100-h, 6 fields ≈ 99 A100-h, no retraining required).
+
 ### Independent (manipulated)
 
 | Variable | Levels | Note |
 |---|---|---|
 | **Capacity `k`** | `{1, 2, 3, 4, 6, 8, 12, 16, 20, 24, 32, 48, 64}` — 13 levels, plus a **`k=0` anchor** | `exp_cfg.capacity_k_grid`. Deliberately dense at small `k`: Corollary 1 puts `k*_thy ≈ 1.49` for SSN at α=1%, so four of the thirteen points sit inside the region the theory makes a claim about |
 | **Membership** | `trained` (D) / `control` (C) | Retained from E1, so the sweep yields `τ̂rec(k)` as well as `α_k` |
+
+**Fields are held constant, not manipulated**: `ssn`, `email` (`PII_FIELDS=ssn,email`). They supply
+the `H(t)` spread the `β` regression needs, but with only two levels they cannot establish
+cross-field stability — see the scope decision above.
 
 The `k=0` anchor is the `fixed` probe — a natural prompt with no free tokens. It is not part of
 `run_E3_capacity_sweep` today and must be added (or joined in from a separate cheap run).
