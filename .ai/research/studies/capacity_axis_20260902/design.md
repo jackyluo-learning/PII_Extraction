@@ -634,7 +634,10 @@ matched subset may well not reach 50 persons.**
 an unmatched floor would be a different quantity, not comparable to run2's GPT-2 124M value of 52.0%.
 
 `|C_matched|` needs no special handling: `cap_targets` takes `min(|matched|, 25)`, exactly as run2
-did. **The pilot reports the realized `|D|` and `|C|`** — a fact to record, not a risk to engineer
+did. Note that **E17 matches across all six `TARGET_FORMATS` fields** — name, ssn, email, phone,
+address, credit_card — not just this study's active two, and unions the matches before de-duplicating
+by person. The wide natural variance of `address` and `name` is what makes the matched set likely to
+approach the full 50 even though SSN's own feature space is near-degenerate by format. **The pilot reports the realized `|D|` and `|C|`** — a fact to record, not a risk to engineer
 around, and they are not assumed equal.
 
 Because the subset is built once before the `k` loop, the arm's composition is **constant across the
@@ -786,6 +789,27 @@ Under `k_min = H/β` the two are reciprocal views of one number:
 They agree only when the intercept is ≈ 0 — which is exactly **H4**. So the regression's intercept is
 **not a nuisance parameter to be discarded but the test of whether the formula exists at all**, and
 disagreement between the two estimators is itself the diagnostic. Both are reported.
+
+#### The two entropies must never be mixed
+
+`β` is fitted against **`H(t)`** — per-string self-information under the held-out reference model
+`gpt2` (`attempt_log.py:123`), varying per target. Corollary 1's `k*_thy` uses **`H∞(D₀)`** — the
+format's combinatorial min-entropy, constant within a field and model-independent (SSN ≈ 29.7 bits).
+**They are not numerically interchangeable**: a string's `H(t)` sits above or below its field's `H∞`
+depending on how predictable GPT-2 happens to find it.
+
+Substituting `H∞` into a `β` calibrated on `H(t)` would plug an unvalidated covariate into the
+formula. That is a substitution decision, not a data decision, so it is **settled here rather than
+deferred** — before any numbers exist:
+
+| Reported quantity | Formula | Nature |
+|---|---|---|
+| `k_force(t)` | `H(t) / β̂` | Measured, per-target, **model-conditioned** |
+| `k*_thy` | `H∞(D₀) / log₂\|V\|` | Theory-only, from Corollary 1, **never the fitted `β̂`** |
+
+**A fitted `β̂` is never combined with `H∞`.** Across a target set the auditor takes the **minimum**
+`H(t)`, not the median: `k_force` increases in `H`, so a low-`H(t)` target crosses its own threshold
+at a *smaller* `k`, and a median-based policy leaves roughly half the targets already past theirs.
 
 #### The grid biases `β` downward, and that is the dangerous direction
 
@@ -1017,6 +1041,8 @@ widths it is a tautology.
 | **Different targets at different `k`** | Fatal if it happens | Would make `k_min(t)` undefined. The subset is built before the `k` loop; assert the target set is identical across shards |
 | **`k_min` is not a true threshold** | Medium | GCG is stochastic, so a target may hit at `k=8` and miss at `k=12`. `_kmin_table` takes the minimum over hits, so `k_min` is "first `k` at which it was ever forced", not a monotone crossing. State this definition explicitly rather than implying a threshold |
 | **Right- and interval-censoring dropped** | **High — a live defect** | `capacity_e3` filters non-finite `k_min` before regressing, silently discarding the hardest targets and biasing `β`. Replaced by a censored survival model; see Analysis Plan |
+| **The trained arm's frequency composition** | High — **fixed before launch** | `trained[:25]` holds 10 f=1 and 15 f=5 persons and **zero** f=20, the tier that is 60% of the trained population. Replaced by stratified selection; the realized composition goes in the manifest regardless |
+| **`H(t)`'s range may be two clusters, not a continuum** | Medium | SSN strings are fixed-length near-uniform digits, so within-field `H(t)` variance should be small; email local-parts vary far more. `H_bits.std() > 0` passes trivially on two point-clusters, giving false confidence that H4's slope has continuous identifying variation. **Go/no-go**: report the within-field versus between-field variance decomposition of `H_bits` on the control arm; a near-degenerate within-field spread means H4 carries the same "exploratory at this n" caveat H5 does |
 | **Grid coarseness biases `β` toward the unsafe side** | High | `k_min` is over-estimated to the next grid point, so `β` is under-estimated and `k_force = H/β` comes out **too large** — an auditor following it picks a probe deeper into the forcing region than intended. The censored model corrects for it; the direction is stated wherever `β` appears |
 | **The `τ̂rec` peak may lie outside the grid** | Medium | If `τ̂rec` is still rising at `k=64`, saturation was not reached and the operating point cannot be located from this data (H5 refuted upward). Reported as a limit, not extrapolated |
 
@@ -1111,12 +1137,17 @@ reportable result; none is a failure of this study.
    exists — would come from different persons or a different model and would invalidate H1's Spearman
    ρ at its own left endpoint and corrupt the redrawn Figure 4. The `fixed` probe runs no
    optimization, so there is no budget reason to take that risk.
-5. **Code gates before launch** — none of these exist today: per-`k` `AttemptLogger` flushing; the
-   run manifest; the `effective_eval_batch` / `effective_minibatch` fix; the Faker disjointness
-   assertion; the C4-fallback halt check.
-6. **Code gates before any table**: the two-block bootstrap applied across `k`; the three
-   degenerate-arm interval methods; the interval- and right-censored survival model for `k_min`; the
-   `_crossing_k` sentinel; the Spearman/isotonic replacement for the monotonicity check.
+5. **Code gates before launch** — none of these exist today: **stratified trained-subset selection**
+   (`trained[:n_t]` contains no f=20 people at all); the `k=0` anchor code path; per-`k`
+   `AttemptLogger` flushing; the run manifest (git SHA, resolved config, **Faker version**, GPU
+   model, `pip freeze` hash, and **the realized frequency-tier composition of both arms**); the
+   `effective_eval_batch` / `effective_minibatch` fix; the Faker disjointness assertion; the
+   C4-fallback halt check.
+6. **Code gates before any table**: the two-block bootstrap applied across `k` **retaining the raw
+   replicate vectors**; Wilson wired on `n_eff` plus Newcombe/MOVER; the interval- and
+   right-censored **log-log** AFT for `k_min` (needs `lifelines`, absent from the environment),
+   bootstrapped rather than sandwich-SE'd; the `_crossing_k` sentinel; the Spearman/isotonic
+   replacement for the monotonicity check.
 7. **Does the corpus regenerate?** Wikipedia's `20231101.en` snapshot must still resolve and **C4
    must not activate**. Verify before retraining, since the corpus determines everything downstream.
 8. **Is GPT-2-medium worth +97 A100-h?** Deferred until the pilot and the shape of the first curve.
@@ -1134,12 +1165,8 @@ reportable result; none is a failure of this study.
     their objective or an ambient default that propagated. If unconfirmed, the safe phrasing is
     "widely used in the jailbreaking literature for a different objective", **not** "chosen there and
     carried into privacy auditing without re-derivation".
-12. **Which `H` goes into `k_force = H/β`?** The paper uses `H∞(D₀)` (format min-entropy, constant
-    within a field) in Corollary 1 and `H(t)` (per-string self-information, what the code computes)
-    in Definition 3. An auditor must be told which, and whether to take the minimum or the median
-    across their targets — low-`H(t)` targets are the easiest to force, so a policy set on the median
-    protects nothing. More insidious than the units question: the wrong `H` yields a
-    plausible-looking but systematically large `k`.
+12. *(settled — kept as a pointer)* Which `H` goes into `k_force`: see
+    `## Analysis Plan → The two entropies must never be mixed`.
 
 ## Deviations
 
