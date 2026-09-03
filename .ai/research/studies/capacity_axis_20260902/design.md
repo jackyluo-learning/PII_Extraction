@@ -793,8 +793,11 @@ that makes the whole capacity contrast interpretable.
 
 The checkpoints are gone, so the study starts from corpus generation. **This is not the constraint**:
 GPT-2 124M is a **~0.3 A100-h** full fine-tune (corpus ≈ 1,360 PII documents + 100k public passages,
-3 epochs at seq 512 ≈ 156M token-passes). Generate the corpus at `PII_N_CONTROLS=225` in the same
-pass — free, since controls never enter the corpus.
+3 epochs at seq 512 ≈ 156M token-passes). Generate the corpus at the **default `PII_N_CONTROLS=50`**.
+
+> Enlarging the control pool later costs **no retraining** — controls never enter the corpus — so a
+> follow-up wanting α = 1% regenerates the registry alone. That is why 50 is a reversible choice
+> rather than a commitment.
 
 ### Execution
 
