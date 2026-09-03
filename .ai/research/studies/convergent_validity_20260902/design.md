@@ -1,6 +1,10 @@
 # Preregistration — convergent_validity_20260902
 
-_Convergent-validity check on the calibrated memorization signal (E2 + E5). Type: `experiment`.
+_Convergent-validity check on the calibrated memorization signal, via the model-side route (E2).
+Type: `experiment`._
+
+_Superseded framing: an earlier draft paired E2 with a frequency dose-response arm (E5); E5 was
+dropped before compute — see `## Question`. Type: `experiment`.
 Status: in design._
 
 > Written section by section during the design stage; each confirmed section replaces one
@@ -165,9 +169,41 @@ ground. If the sanity condition fails, nothing else in the project proceeds unti
 
 ### Controlled (held constant across all four cells)
 
-Attack (`gcg_free`, k=20, 200 steps, B=256 candidates, 512 sampled evaluations) · decision rule (greedy generate, `T+20` tokens, `exact_match`) · target registry and the E17-matched control set · fields (SSN, email) · seeds · `PII_MAX_TARGETS`.
+Attack (`gcg_free`, k=20, B=256 candidates, 512 sampled evaluations) · decision rule (greedy
+generate, `T+20` tokens, `exact_match`) · target registry and the E17-matched control set · fields
+(SSN, email) · seeds · **`PII_GCG_ITERS`** · **`PII_MAX_TARGETS`**.
 
-**Budget equality across cells is the load-bearing control.** The paper's central invariant is that D and C receive an identical budget; this study extends it to the model axis. A cheaper attack on the base model would manufacture `τ̂mod` out of nothing.
+**Budget equality across cells is the load-bearing control.** The paper's central invariant is that D
+and C receive an identical budget; this study extends it to the model axis. A cheaper attack on the
+base model would manufacture `τ̂mod` out of nothing.
+
+### The uniform-budget commitment (a correction to run2)
+
+run2 did **not** hold the budget constant. `slurm/submit_per_model.sh` and `CODE_MAP.md` §3 record
+per-model values:
+
+| Model | run2 `PII_MAX_TARGETS` | run2 `PII_GCG_ITERS` |
+|---|---|---|
+| gpt2 124M | 25 | 200 |
+| gpt2-medium 355M | 12 | 120 |
+| pythia-1.4b | 20 | 150 |
+| pythia-2.8b | 12 | 120 |
+
+`CODE_MAP.md` states the consequence outright: **"τ̂ is not comparable across models."**
+
+This study therefore commits to a **single uniform configuration across all four models and all four
+cells** — one `PII_GCG_ITERS`, one `PII_MAX_TARGETS`, for both rows of the 2 x 2. Two consequences,
+both accepted deliberately:
+
+1. **The top row must be re-run.** Reusing run2's numbers against a fresh uniform bottom row would
+   give the base model *more* optimization budget than the fine-tuned model for three of four
+   models — exactly the failure the Threats table calls fatal. This makes the E1 re-run
+   unconditional, not contingent on the target cap.
+2. **It repairs a defect the paper already carries.** Cross-model comparability is restored as a side
+   effect, which is worth more to the revision than the compute it costs.
+
+The uniform step count is set at the protocol stage from the measured pilot; it is **not** assumed to
+be 200. Whatever value is chosen is identical everywhere.
 
 ### Uncontrolled but recorded
 
@@ -227,7 +263,7 @@ flowchart LR
   MB[["M_base = pretrained checkpoint<br/>loaded by name"]] --> A3
   MB --> A4
 
-  ATK["gcg_free probe<br/>k=20, 200 steps, B=256<br/>IDENTICAL BUDGET (held constant)"] --> A1 & A2 & A3 & A4
+  ATK["gcg_free probe<br/>k=20, B=256, UNIFORM iters<br/>IDENTICAL BUDGET across all 4 cells<br/>AND all 4 models (unlike run2)"] --> A1 & A2 & A3 & A4
 
   A1 --> L[("results/attempts/*.parquet<br/>one row per attempt")]
   A2 --> L
@@ -327,12 +363,17 @@ gives, exactly and by construction:
 tau_mod = tau_rec + Delta_A3 - tau_base
 ```
 
-**Consequence 1.** Once the sanity condition holds (`τ̂_base ≈ 0`), the gap between the two sandwich
-bounds *is* the A3 slack:
+**Consequence 1.** Exactly, `τ̂mod − τ̂rec = Δ_A3 − τ̂_base`. The sanity gate does not make `τ̂_base`
+*zero* — it only fails loudly when `τ̂_base` is detectably non-zero — so the clean reading
 
 ```
-tau_mod - tau_rec  =  Delta_A3
+tau_mod - tau_rec  ~=  Delta_A3          (approximately; exactly, minus tau_base)
 ```
+
+is an **approximation whose error is `τ̂_base`**, and `τ̂_base` is bounded only by the gate's 24 pp
+detection threshold, not by 0. The confirmatory quantity is therefore `Δ_A3` itself — which the
+two-block bootstrap estimates directly — and `τ̂_base` is carried as a reported correction term, not
+silently assumed away.
 
 So H1 and H2 are not two independent questions — **H1 holds if and only if H2 holds**, given the
 sanity condition. That is a feature, not a redundancy: it means the sandwich's *width* has a
@@ -349,72 +390,163 @@ one of the two predictions gives ground — which is exactly what makes recordin
 - **Estimator**: cell means are unweighted target-level exact-match rates; contrasts are differences
   of cell means.
 - **Intervals**: person-clustered bootstrap, resampling unit `person_id`, **N = 10000**, seed
-  `20240601` — the convention in `reporting.md`, implemented by `_cluster_emr_ci` /
-  `_cluster_diff_ci`.
-- **One joint bootstrap, not four.** Each replicate resamples persons **once** and recomputes all
-  four cells on that same resample. This preserves the identity above inside every replicate, gives
-  correct intervals for the *differences* between contrasts, and is the only way `τ̂mod − τ̂rec` gets
-  an honest interval. Four independent bootstraps would not.
-- **Degenerate arms**: where a cell is 0/n (run2 already has one: Pythia-2.8B's `EMR(C)` = 0/12), the
-  bootstrap collapses. Switch that row to Newcombe (Wilson-score) and **mark it in the table note**,
-  per `reporting.md`.
+  `20240601` — the convention in `reporting.md`.
+
+#### The joint bootstrap is TWO-BLOCK, and it does not exist yet
+
+The four cells do not share one person pool. D-persons and C-persons are **disjoint individuals**;
+the `M_ft` / `M_base` axis is **paired on the same persons**. So the contrasts split into two kinds:
+
+| Contrast | Structure | Correct resampling |
+|---|---|---|
+| `τ̂rec`, `τ̂_base` | disjoint persons (D vs C) | two independent draws |
+| `τ̂mod`, `Δ_A3` | **same persons, two models** | paired — one draw, both columns |
+
+Per replicate:
+
+1. Draw one index over **D-persons** (size \|D\|, with replacement); apply it to **both** cell 1 and
+   cell 3.
+2. Draw one **independent** index over **C-persons** (size \|C\|, with replacement); apply it to
+   **both** cell 2 and cell 4.
+3. Compute all four cell means, then all four contrasts, from those two draws.
+
+This keeps the identity exact inside every replicate and gives a valid joint distribution for
+`τ̂mod − τ̂rec`.
+
+> **This is new code.** `_cluster_diff_ci` (`make_tables.py:138`) resamples its two arms
+> *independently* — its own docstring says so — which is right for `τ̂rec`/`τ̂_base` and **wrong** for
+> `τ̂mod`/`Δ_A3`: it has no notion of "same person, different model-state column", so it cannot
+> compute the paired contrasts at all. Treating those as independent would ignore the positive
+> within-target correlation across models and break the per-replicate identity. Writing the two-block
+> bootstrap is a **protocol deliverable with unit tests**, not an existing capability.
+
+#### Degenerate arms — three cases, and no implementation exists
+
+`grep -i "newcombe\|wilson" make_tables.py` returns **nothing**. The convention in `reporting.md` has
+never been implemented; the draft's existing Newcombe intervals were computed by hand, which is where
+two of its inconsistencies came from. Preregistering "switch to Newcombe" without the function is
+repeating that mistake, so the switch rule is specified in full here and implemented before any table
+is generated:
+
+| What is degenerate | Method |
+|---|---|
+| A single cell, 0/n (run2 already has one: Pythia-2.8B `EMR(C)` = 0/12) | Wilson score interval |
+| An **independent** contrast touching it (`τ̂rec`, `τ̂_base`) | Newcombe hybrid / MOVER on two Wilson intervals |
+| A **paired** contrast touching it (`τ̂mod`, `Δ_A3`) | Exact/score interval for matched binary data |
+
+Every row using any of the three is marked in the table note. **Protocol deliverable**: implement and
+unit-test all three against published worked examples before use.
 
 ### Tests
 
 | Hypothesis | Test |
 |---|---|
-| Sanity `τ̂_base ≈ 0` | Equivalence check: is the 95% CI contained in ±5 pp? Read **first**; failure blocks the study |
+| **Sanity `τ̂_base`** | **Detection check** (not equivalence — see below): does the 95% CI *exclude* 0? If it does, the study is blocked. Read **first** |
 | H1 `τ̂rec ≤ τ̂mod` | One-sided: does the CI for `τ̂mod − τ̂rec` exclude 0 from below? |
-| H2 `EMR(C) ≥ EMR_base(C)` | One-sided on `Δ_A3`; identical to H1 by the identity, reported for interpretability |
+| H2 `EMR(C) ≥ EMR_base(C)` | Same event as H1 by the identity; reported as a derived interpretation, **not** a second family member |
 | Balance (A1) | Standardized mean difference per covariate per field; balance threshold \|SMD\| < 0.1 |
 
-**Multiple comparisons**: the confirmatory family is {H1, H2} x {4 models} = 8 tests. **Holm** within
-the family. The primary model is prespecified as **GPT-2 124M** (the smallest, hence the one with the
-most targets completed per accelerator-hour); the other three are reported with corrected intervals
-as supporting evidence.
+#### The sanity gate is a detection check, not an equivalence test
+
+An earlier draft specified "is the 95% CI contained in ±5 pp". **That gate is unreachable and was
+removed.** `τ̂_base` is a disjoint-person contrast, so its 95% half-width is
+`1.96 · sqrt(0.375 / n_persons)` at worst-case p:
+
+| Persons/arm | Half-width | | Persons/arm | Half-width |
+|---|---|---|---|---|
+| 25 | 24.0 pp | | 200 | 8.5 pp |
+| 100 | **12.0 pp** | | **577** | **5.0 pp** |
+
+Reaching ±5 pp needs ~**577 persons per arm** — five times the largest configuration considered, and
+nearly triple the entire registry. A gate that reads "cannot demonstrate equivalence" no matter what
+the data say is not a gate.
+
+What the gate is actually for is catching a **broken harness** — control records leaking into the
+trained arm, E17 matching silently returning the wrong set, a shard-tag collision mixing model
+states. Those failures produce effects on the order of `τ̂rec` itself (tens of pp), not 5 pp. So the
+gate is: **does `τ̂_base`'s CI exclude 0?** If yes, something is wrong and the study stops.
+
+**Stated honestly**: this gate has power only against gross breakage (MDE 24 pp at 100 persons/arm).
+It cannot certify that `τ̂_base` is *small*, and the write-up must say so rather than reporting a pass
+as evidence of correctness. The achieved half-width is reported next to the estimate every time.
+
+**Multiple comparisons**: because the identity makes H1 and H2 the same event, the confirmatory
+family is **`Δ_A3` (equivalently `τ̂mod − τ̂rec`) x {4 models} = 4 tests**, Holm-corrected — not 8.
+Counting the near-duplicate would have spent per-test α for nothing in a design that is already
+tight. H1's own ordering and CI are reported as a diagnostic alongside each. The primary model is
+prespecified as **GPT-2 124M** (smallest, so the most targets per accelerator-hour); the other three
+are supporting evidence with corrected intervals.
 
 ### Power — read this before approving the budget
 
 Approximate two-sided MDE at 80% power, α = 0.05, worst-case p = 0.5, with a design effect of 1.5
 (two targets per person, ICC ≈ 0.5):
 
-| Persons per arm | Independent contrast (`Δ_A3`) | Paired across models (`τ̂mod`), discordance 0.2 / 0.4 |
+| Persons per arm | **Independent** contrasts `τ̂rec`, `τ̂_base` | **Paired** contrasts `τ̂mod`, `Δ_A3`, discordance 0.2 / 0.4 |
 |---|---|---|
-| 12 *(run2, Pythia-2.8B)* | **49.5 pp** | — |
-| 25 *(run2, GPT-2)* | **34.3 pp** | 21.7 / 30.7 pp |
+| 12 *(run2, Pythia-2.8B & GPT-2-M)* | **49.5 pp** | 31.5 / 44.5 pp |
+| 25 *(run2, GPT-2 124M)* | **34.3 pp** | 21.7 / 30.7 pp |
 | 50 | 24.3 pp | 15.3 / 21.7 pp |
 | 100 | 17.2 pp | 10.9 / 15.3 pp |
 | 200 *(full registry)* | 12.1 pp | 7.7 / 10.9 pp |
 
+**Column assignment corrected.** An earlier draft put `Δ_A3` in the independent column. It is not:
+`Δ_A3 = EMR(C) − EMR_base(C)` is the **right column of the 2 x 2** — the same C-persons under two
+models — so it is paired, exactly like `τ̂mod`. Since H2 is tested on `Δ_A3`, and `Δ_A3` is the
+confirmatory family, this is the column that matters, and it is the *more* favourable one. The two
+paired contrasts may have **different discordance rates** (`π_d` on the D-arm need not equal `π_d` on
+the C-arm), so they are estimated separately, not assumed equal.
+
 **At run2's target count this design can only detect very large effects.** That is a design problem,
 not a caveat to be written up afterwards, and it drives the budget decision below.
 
-The paired column matters: `τ̂mod` compares the **same records** on two models, so it is the more
-powerful of the two contrasts and is the one to lean on. `Δ_A3` is between-arm and therefore weaker,
-even though the identity ties them together.
+> **`ICC = 0.5` (hence `DEFF = 1.5`) and `π_d` are assumed, not measured — and run2 already contains
+> the data to measure them.** run2's attempt log holds per-person, per-field outcomes for D and C on
+> four models: the within-person SSN/email correlation gives the ICC directly, and `M_ft`-vs-`M_base`
+> agreement gives `π_d` once the bottom row exists. Since these two numbers set the achievable
+> half-widths this whole section argues from, estimating them is a **required protocol step before
+> the budget option is finalized**, at zero GPU cost — the same free-check logic as the covariate
+> balance table. It is gated on recovering the run2 log (Open Question 1).
+
+The composite of a McNemar-type paired MDE with a clustering design effect is a heuristic, not a
+derivation — the two variance sources are not obviously separable. Once the two-block bootstrap
+exists it should be validated by direct simulation (generate synthetic replicates under assumed
+parameters, run the actual CI procedure, measure empirical power) rather than trusted in closed
+form.
 
 ### The budget decision this forces
 
 Cost scales as `targets x seeds x models x probes`. Three ways to spend the same compute, relative to
 one run2-scale E1 pass (25 persons/arm, 1 seed, 4 models, 8 probes):
 
-| Option | Config | Relative cost | MDE (paired, π_d=0.4) |
-|---|---|---|---|
-| **A — mirror run2** | 25 persons, 1 seed, 4 models, 8 probes | 1.0x | 30.7 pp |
-| **B — trade probes for targets** *(recommended)* | 100 persons, 3 seeds, 4 models, **2 probes** (`gcg_free`, `fixed`) | 3.0x | **15.3 pp** |
-| **C — seeds only** | 25 persons, 3 seeds, 4 models, 8 probes | 3.0x | 30.7 pp |
+| Option | Config | MDE (paired, π_d=0.4) |
+|---|---|---|
+| **A — mirror run2** | 25 persons, 1 seed, 4 models, 8 probes | 30.7 pp |
+| **B — trade probes for targets** *(recommended)* | 100 persons, 3 seeds, 4 models, **3 probes** | **15.3 pp** |
+| **C — seeds only** | 25 persons, 3 seeds, 4 models, 8 probes | 30.7 pp |
 
-**Option B is recommended and C is rejected.** Extra seeds re-draw GCG's candidate sampling; they do
-**not** reduce person-level variance, which is the dominant term here. Option C triples the cost and
-moves the MDE by nothing. The eight-probe capacity axis is already E1's and E3's job — this study
-needs the two endpoints, not the whole sweep.
+**Option B is recommended and C is rejected.** Person-level variance is the dominant term, and extra
+seeds do not reduce it — they re-draw GCG's candidate sampling within a fixed set of people. Option C
+triples the cost and moves the MDE hardly at all. The eight-probe capacity axis is E1's and E3's job;
+this study needs endpoints, not the whole sweep.
 
-Option B still satisfies the agenda's seed floor of 3, so no seed is being cut to buy targets.
+> **The "seeds change nothing" claim is softened deliberately.** It is not exactly zero: under
+> `_person_groups` a person's cluster vector holds one 0/1 entry per (field x seed) attempt, so more
+> seeds per person reduce the noise in each person's cluster mean, which propagates as a
+> **second-order** effect into the person-cluster bootstrap SE. The claim is that this is small
+> relative to the between-person term — plausible from first principles, **not yet measured**. The
+> variance-components estimate required above settles it, and it is the deciding argument for a 3x
+> allocation, so it should not rest on assertion.
 
-> **If the top row must be re-run** (run2's log unrecoverable, or the target cap raised, which
-> under Option B it is), E1 must be re-run at the identical configuration or the contrast is not
-> paired. Budget Option B as **2 x 3.0x** = 6 run2-equivalents in that case. This is the single
-> largest cost item in the study and it is decided by whether the run2 log is found.
+Option B satisfies the agenda's seed floor of 3, so no seed is being cut to buy targets.
+
+**Both rows are budgeted.** The uniform-budget commitment makes the E1 re-run unconditional, so
+Option B's cost covers `M_ft` and `M_base` alike — the 2 x 2 is run whole, at one configuration.
+
+> **Absolute cost is not yet known.** No run has ever been measured, so the relative multipliers
+> above are the only honest currency. Converting them to accelerator-hours, and confirming Option B
+> fits the ~20-day window before the **2026-09-24** experiment deadline, is the pilot's job. If it
+> does not fit, targets are cut before seeds are.
 
 ### Reporting
 
@@ -432,11 +564,35 @@ This study makes no claim of the form "our method beats theirs", so the relevant
 | Baseline | Role |
 |---|---|
 | `fixed` probe (zero-capacity) | The natural-prompt lower endpoint. Without it, a low `EMR_base` cannot be distinguished from "the base model emits nothing useful at all" |
+| `random_restart` probe (non-gradient) | **Disambiguates the mechanism** — see below |
 | `EMR_base(C)` | General forcibility of the untrained model — answers "the base model is just worse at everything" without a new arm |
 | `τ̂_base` | The known-answer sanity condition |
 
 `fixed` is the trivial baseline the design would otherwise be missing, which is why Option B keeps
-two probes rather than one.
+more than one probe.
+
+#### Why `random_restart` is kept, at the cost of a third probe
+
+H2's recorded prediction commits to a **mechanism**: fine-tuning raises `EMR(C)` "plausibly because
+it has learned the surface form of the PII documents ... even for records it never saw." But
+`gcg_free` is gradient-guided, and gradient search can behave differently against a fine-tuned loss
+landscape than a pretrained one **for reasons unrelated to content** — sharper, more informative
+gradients after fine-tuning, whatever the fine-tuning was on. A positive `Δ_A3` measured only with
+`gcg_free` is therefore consistent with two stories: content-shaped forcibility, or an optimizer
+artifact.
+
+`random_restart` uses no gradients. If `Δ_A3` survives on it, the optimizer-artifact story is ruled
+out; if it vanishes, the mechanistic claim in `## Prediction` must be withdrawn. It is run
+**non-confirmatory** — not in the Holm family, reported as an interpretability check — and it is
+cheap relative to `gcg_free` (512 generations against 200 x 512 batched forwards).
+
+> **Caveat that must be stated wherever it is reported**: despite its role, `random_restart` is
+> **not** budget-matched in the current code. `n_random_restarts = 512` against `gcg_free`'s ~61,440
+> forward passes is a ~120x gap — a mismatch already logged in `CODE_MAP.md`. It is a *qualitative*
+> mechanism check, not an equal-budget control, and calling it the latter would repeat the paper's
+> own error.
+
+The final probe set is therefore **`gcg_free`, `fixed`, `random_restart`**.
 
 ### Prior art this study sits against
 
@@ -444,10 +600,21 @@ two probes rather than one.
   as unmeasured (◦) in Table 2. This study supplies the missing measurement. The novelty claim is
   therefore modest and checkable — *first empirical execution of our own Proposition 4* — not a claim
   about the literature.
-- **Placebo / negative-control designs** in causal inference are the general template for the
-  base-model arm; the framing as a placebo cell is stated in `experiments.py`'s own docstring for E2.
+- **Counterfactual memorization** — comparing the same example under a model trained with it against
+  one trained without it — is the closest structural antecedent to `τ̂mod`, and closer than the
+  generic causal-inference framing. Cite it where the model-swap is introduced.
+- **Shadow-model / likelihood-ratio MIA calibration** (LiRA-style) compares a target model against
+  reference models that never saw the example. That is mechanically what the base-model arm does,
+  and a SaTML reviewer working this subfield will expect it cited.
+- **Placebo / negative-control designs** in causal inference are the general template; the framing as
+  a placebo cell is stated in `experiments.py`'s own docstring for E2. Correct but generic — it is
+  the altitude, not the antecedent.
 - **Membership-inference calibration** work motivates `τ̂rec` as a distinguisher advantage. This study
   does not extend that literature; it validates one estimator against another within a fixed setup.
+
+Citing the two closer antecedents does **not** weaken the novelty claim, which stays exactly as
+scoped: *first empirical execution of our own Proposition 4*, not a new finding about the
+literature.
 
 ### What would make the claim illegitimate
 
@@ -463,7 +630,7 @@ records.
 | Pin | Status | Action |
 |---|---|---|
 | **Code** | git SHA of `exp/e2-e5`, clean tree enforced | Recorded per run in `results.json` |
-| **Config** | `PII_PROBES`, `PII_MAX_TARGETS`, `PII_DEVICE_PROFILE`, `run_id` | Written to `configs/` and echoed into every run record |
+| **Config** | `PII_PROBES`, `PII_MAX_TARGETS`, **`PII_GCG_ITERS`**, `PII_DEVICE_PROFILE`, `run_id`. `PII_GCG_ITERS` is the pin run2 varied per model and this study fixes | Written to `configs/` and echoed into every run record |
 | **Data** | corpus + registry, content-hashed | **See the blocking dependency** — the artifacts are not local |
 | **Seed** | 3 seeds, values fixed in the protocol | Seeds `Faker`, `random`, `torch` |
 | **Environment** | **NOT PINNED** | `requirements.txt` uses lower bounds only; record a `pip freeze` hash and list it as a threat |
@@ -522,7 +689,8 @@ from).
 | Threat | Severity | Handling |
 |---|---|---|
 | **Tokenizer mismatch between `M_ft` and `M_base`** | Medium | Fine-tuning does not change the vocabulary for these four models, so the tokenizer is identical and targets tokenize identically. **Verify in the pilot** rather than assuming |
-| **Budget not actually equal across cells** | High | The whole contrast dies if the base model gets a cheaper attack. Assert `forward_passes` distributions match across cells; report as a table |
+| **Budget not actually equal across cells** | High | Split into two checks. **(a) Configured budget**: `k`, `PII_GCG_ITERS`, `B`, `n_candidates_per_step` must be *identical* across all cells and all models — a hard equality on the config hash, and the fix for run2's per-model budgets. **(b) Realized `forward_passes`**: reported as a **descriptive diagnostic, not a gate**. `InstrumentedGCG` breaks on hit, so realized cost is a function of success rate; if `M_base` is harder to force it will legitimately burn more of the cap, and treating that as a violation would flag a correct run as broken |
+| **Optimizer-landscape artifact** | High | A positive `Δ_A3` may reflect sharper post-fine-tuning gradients rather than learned document form. `random_restart` (gradient-free) is kept specifically to disambiguate; the mechanistic claim in `## Prediction` is withdrawn if `Δ_A3` does not survive on it |
 | **LoRA vs full fine-tune confound** | Medium | GPT-2s are fully fine-tuned, Pythias use LoRA (a paper/code mismatch already logged in `CODE_MAP.md`). `Δ_A3` may differ in kind between the two families; analyze per model, never pooled |
 | **Padding enters the loss unmasked** | Low here | A known defect affecting both cells identically, so it does not bias the contrast; it does affect absolute rates |
 
@@ -547,8 +715,10 @@ from).
 
 | Threat | Handling |
 |---|---|
-| **Underpowered at run2's target count** (MDE 34 pp) | **Addressed in the design**, not deferred: Option B raises targets to 100/arm. If the budget forces Option A, the study reports the MDE alongside every null and makes no "no difference" claim |
-| **8 tests in the confirmatory family** | Holm correction; primary model prespecified |
+| **Underpowered at run2's target count** (MDE 34 pp independent / 30.7 pp paired) | **Addressed in the design**, not deferred: Option B raises targets to 100/arm, and the confirmatory contrast `Δ_A3` is the *paired* one (15.3 pp at π_d=0.4). If the budget forces Option A, the study reports the MDE alongside every null and makes no "no difference" claim |
+| **The sanity gate cannot certify smallness** | It is a detection check with a 24 pp MDE at 100 persons/arm, not an equivalence test. A pass means "no gross breakage detected", never "the harness is correct", and the write-up says so with the achieved half-width attached |
+| **ICC and π_d are assumed, not measured** | Every half-width in this design rests on `ICC = 0.5`. Estimating both from run2 is a required protocol step at zero GPU cost; if the realized ICC is materially higher, the budget option is re-decided before launch |
+| **Multiplicity** | Family reduced to 4 (`Δ_A3` x 4 models) once the identity showed H1 and H2 are the same event; Holm within the family; primary model prespecified. `random_restart` results are non-confirmatory and outside the family |
 | **Control-selection variance is invisible to seeding** | E17 matching is deterministic, so re-seeding does not perturb the control set. Every interval here conditions on one matched set. Sensitivity check: recompute with the 2nd-nearest neighbour and report whether conclusions move |
 | **Environment not pinned** | `requirements.txt` uses lower bounds; a `pip freeze` hash is recorded, and "environment not pinned" is listed as a threat at analysis time |
 | **Reading results before the sanity gate** | The gate is read first, by protocol. If `τ̂_base` is significantly non-zero the study is blocked, not reinterpreted |
@@ -560,10 +730,13 @@ trustworthy answer, not a favourable one.
 
 1. **The sanity gate is read and reported** — `τ̂_base` with its CI, for every model, before any other
    contrast. Whether it passes or fails, it is in the write-up.
-2. **All four cells are populated** at the agreed configuration, with matched `forward_passes`
-   distributions demonstrated across cells.
-3. **`τ̂mod` gets a point estimate and a person-clustered CI** for every model, from the joint
-   bootstrap — enough to move it from ◦ to ✓ in Table 2 regardless of which direction it points.
+2. **All four cells are populated at one uniform configuration** — same `PII_GCG_ITERS`, same
+   `PII_MAX_TARGETS`, every model, both rows — with the configured budget shown identical across
+   cells and realized `forward_passes` reported as a diagnostic.
+3. **`τ̂mod` gets a point estimate and a person-clustered CI** for every model, from the **two-block**
+   joint bootstrap — enough to move it from ◦ to ✓ in Table 2 regardless of which direction it
+   points. The bootstrap and the three degenerate-arm interval methods are implemented and
+   unit-tested before any table is generated.
 4. **H1 and H2 are decided or explicitly declared undecidable at the achieved n**, with the MDE stated
    in the same sentence as any null result. "No detectable difference, MDE 24 pp" is a success;
    "no difference" is not.
@@ -573,6 +746,8 @@ trustworthy answer, not a favourable one.
 6. **The repro check passes** — one cell re-run in a second session agrees within its CI.
 7. **The cost is accounted** — accelerator-hours and GPU model per run, failed-run cost reported
    separately.
+8. **The mechanism is checked, not assumed** — `Δ_A3` is reported on `random_restart` alongside
+   `gcg_free`, and the `## Prediction` mechanism claim is upheld or withdrawn accordingly.
 
 ### Explicitly not success criteria
 
@@ -603,6 +778,15 @@ trustworthy answer, not a favourable one.
    rates first; if they are 0/n, switch those rows to Newcombe and say so in the table note.
 7. **`ε̂` has no implementation.** Table 2 marks it ✓ but no code computes it. Out of scope here, but
    it is ~10 lines and this study's outputs are exactly its inputs — flag for the follow-up.
+8. **What uniform `PII_GCG_ITERS`?** run2 ranged 120–200 across models. The uniform value is set from
+   the pilot's measured cost, not assumed. Picking 200 for all four models raises cost well above
+   run2's per-model budgeting, which existed precisely to keep the large models affordable.
+9. **Two pieces of analysis code must be written and unit-tested before any table**: the two-block
+   joint bootstrap, and the three degenerate-arm interval methods (Wilson, Newcombe/MOVER, paired
+   exact/score). Neither exists today. Schedule them ahead of the sweep, not after it.
+10. **Does `|C| = |D|`?** E17 matches with replacement and `_matched_control_entries` de-duplicates by
+    person, so the control arm may be smaller than the trained arm. The power table assumes equal
+    arm sizes; the realized sizes must be checked and the MDEs recomputed if they differ.
 
 ## Deviations
 
