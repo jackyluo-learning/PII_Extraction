@@ -680,8 +680,48 @@ mismatches.
 > across the grid. That number *is* the measure of how far the assumption is violated; if it is
 > large, the AFT estimate carries an explicit caveat rather than being quoted as a threshold.
 
-**Analysis**: fit `k_min` with an interval-censored, right-censored parametric survival model (AFT on
-`log k`) with `H_bits` as the covariate, clustered on `person_id`. Report the covariate effect with a
+**Analysis**: fit `k_min` with an interval- and right-censored parametric survival model, **log-log**:
+
+```
+log k_min  =  −log β  +  γ · log H(t)  +  σ·ε
+```
+
+**The specification had to be corrected.** An earlier draft wrote an AFT on `log k` with `H_bits`
+entering at **level**, then tested the intercept for proportionality. That combination does not work:
+`log k_min = b₀ + b₁·H` means `k_min = e^{b₀}·e^{b₁H}` — **exponential in `H`, not proportional** — and
+`b₀ = 0` gives `k_min = e^{b₁H}`, which is **1** at `H = 0`, not 0. The intercept there tests nothing
+about `k_min = H/β`.
+
+Under the log-log form the theory maps cleanly:
+
+| Quantity | Where it lives | H4's test |
+|---|---|---|
+| Proportionality `k_min ∝ H` | the **slope** `γ` | **`γ = 1`** — this is H4 |
+| `β` | the intercept | `β = exp(−intercept)` — a scale parameter, **not** the test |
+
+So **H4 is a slope test, not an intercept test.** (The alternative that keeps the intercept as the
+test is a level-scale censored Tobit regression of `k_min` directly on `H_bits`; it is reported as a
+secondary specification, and the two disagreeing is itself diagnostic.)
+
+**Fit on the control arm alone.** Proposition 1's forcing model is a property of the optimizer and
+the vocabulary, so its clean test is on records the model never saw. Pooling the trained arm in
+without a membership term would let memorisation — trained targets forced at lower `k` than entropy
+predicts — appear as a level shift **indistinguishable from a violation of proportionality**, so a
+real `τ̂rec` effect could refute H4 for the wrong reason and entangle it with H3/H5. Any systematic
+D-vs-C gap in the fitted relationship is reported as a **separate finding** about memorisation's
+effect on forcing capacity, not folded into H4's verdict.
+
+**Implementation.** `lifelines`, `statsmodels` and `scikit-survival` are **all absent from the
+environment** despite `requirements.txt` listing `statsmodels>=0.14.0`, and statsmodels has no
+interval-censored AFT with covariates in any case. Add `lifelines` and use
+`*AFTFitter.fit_interval_censoring`. **Do not use its model-based sandwich SEs**: only 25 clusters
+are available, far below the ~40–50 that cluster-robust asymptotics want. Wrap the fit in the same
+person-clustered bootstrap used everywhere else — resample persons, refit per replicate, take
+percentile CIs on `γ` and on `β`.
+
+**Go/no-go on censoring.** If the pilot shows right-censoring above roughly 60–70% of targets, the
+likelihood surface for `γ` is fragile at this `n`; **pre-committed fallback**: report a nonparametric
+(Turnbull) interval-censored survival summary instead of a point estimate for `β`. Report the covariate effect with a
 CI. `linregress` on the complete cases is retained only as the comparison that shows how much the
 censoring mattered — never as the headline.
 
@@ -745,12 +785,21 @@ censored model's estimate (which corrects for it) and by an explicit statement o
 | **H1** monotone rise | Spearman's ρ over `(k, α_k)`, person-clustered bootstrap CI; refuted if the CI contains 0 or ρ is significantly negative |
 | **H2** usable operating point | Does any `k` satisfy **both** `α_k`'s 95% upper bound ≤ tolerance **and** `τ̂rec(k)`'s CI excluding 0? Scored across the resolvable range (**α ≥ 9.0%**); refuted if the two never co-occur. The carried 1% form is reported alongside, marked unresolved below 9.0% |
 | **H3** `τ̂rec` at `k=20` | 95% CI of `τ̂rec(20)` from 3 seeds; refuted (as a null) if the CI excludes 0 |
-| **H4** forcing model holds | Censored regression of `k_min` on `H_bits`, clustered on `person_id`. Refuted if the slope's CI contains 0 **or the intercept differs significantly from 0** — the model is proportional, so a non-zero intercept falsifies it |
-| **H5** interior peak in `τ̂rec(k)` | `τ̂rec` at all 13 levels from one joint bootstrap; refuted if it is still rising at `k=64` or flat throughout |
+| **H4** forcing model holds | Interval- and right-censored **log-log** regression `log k_min ~ log H(t)` on the **control arm**, person-clustered bootstrap CIs. **Refuted if the slope `γ`'s CI excludes 1** — proportionality lives in the slope, not the intercept. `β = exp(−intercept)` |
+| **H5** interior peak in `τ̂rec(k)` — **exploratory at this n** | **Statistic**: per bootstrap replicate, record `argmax_k τ̂rec(k)`; the 95% percentile CI of that location must exclude **both** endpoints {1, 64}. Secondary: person-clustered quadratic fit `τ̂rec ~ a·log k + b·(log k)²`, testing `b < 0`. Refuted if the argmax CI touches an endpoint or the curve is flat |
 | Balance (A1) | Two SMDs per field against \|SMD\| < 0.1 |
 
-**Multiple comparisons**: the confirmatory family is **{H1, H2, H3, H4, H5} = 5 tests**,
-Holm-corrected. The 13 per-`k` intervals are **descriptive**, not family members — they are the
+**H5 is labelled exploratory, not confirmatory, and the reason is arithmetic.** At `n_eff ≈ 33` per
+arm, `SE(τ̂rec)` per point is ≈ 12 pp worst case. The only prior magnitude anywhere on the curve is
+H3's own prediction that `τ̂rec`'s CI **contains 0** at `k = 20`. A genuine peak rising ~15 pp above
+its shoulders would sit near 1× that SE — nowhere near the ~2× needed for reasonable power. Declaring
+H5 confirmatory at this `n` would be eyeballing a bump in a noisy curve, which is exactly the failure
+the Spearman replacement for `np.diff >= 0` was introduced to avoid. **It is reported with its argmax
+CI and an explicit underpowered caveat**; confirming it needs more persons, which is the deferred
+extension.
+
+**Multiple comparisons**: the confirmatory family is **{H1, H2, H3, H4} = 4 tests**, Holm-corrected;
+H5 is reported outside the family as exploratory. The 13 per-`k` intervals are **descriptive**, not family members — they are the
 curve, and correcting them individually would be a category error. The `α → k*(α)` mapping is
 likewise descriptive.
 
