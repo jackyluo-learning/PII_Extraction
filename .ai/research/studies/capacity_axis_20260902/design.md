@@ -259,6 +259,16 @@ are corrected here rather than by editing the preregistered text:
    silently cross a model-pooling boundary. Either drop that point or label it
    "4-model pooled (run2)" as distinct from the new single-model curve.
 
+4. **The designer estimate's "`τ̂rec` CI width narrows to about 0.58x (1/√3)" is wrong for a
+   clustered design.** `1/√3` would hold if three seeds tripled the number of **persons** — the
+   resampling unit. They do not: seeds add repeat attempts on the *same* 25 persons, growing the
+   within-person replicate count `m` from 2 (fields) to 6 (fields × seeds). Under the design's own
+   `ICC ≈ 0.5`, `DEFF = 1 + (m−1)·0.5` goes 1.5 → 3.5, so `n_eff` goes `25·2/1.5 = 33.3` →
+   `25·6/3.5 = 42.9`, and the width ratio is `√(33.3/42.9) ≈` **0.88**. **Three seeds buy roughly a
+   12% narrower interval, not 42%**, because the bottleneck is the 25 persons, which seeds do not
+   change. The preregistered text is not edited; this correction governs, and it is why H5 is
+   exploratory and why the deferred extension is *more persons*, not more seeds.
+
 Everything else — including the recorded prediction and its designer-estimate table — stands as
 written on 2026-08-31.
 
@@ -649,12 +659,35 @@ The two-block structure inherited from `archive/convergent_validity_20260902` ap
 C-persons are disjoint, so they are drawn independently; but within each block, **one draw is applied
 across all levels of `k`**, because the same people are measured at every level.
 
+> **The current code appears to do this by accident, and must not be relied on.** `_cluster_emr_ci`
+> and `_cluster_diff_ci` each call `np.random.default_rng(seed)` with a hardcoded default, re-seeded
+> on **every** call. Since `capacity_e3` calls them once per `k` and the same persons are present at
+> every `k`, each call regenerates a bit-identical index draw. That coincidence breaks the moment any
+> `k` has a different number of person-groups — one failed attempt desynchronises index↔person with
+> no error raised — and more decisively, **nothing retains the raw 10,000-length replicate vector**:
+> each call takes percentiles and discards it. **There is no code path today that computes a Spearman
+> ρ, an argmax location, or a gap statistic *per replicate* across the 13 `k`.** Restructure so the
+> person indices are drawn once per replicate per block, `k` is looped *inside* the replicate, and
+> the full 13-vector is retained for the curve statistics H1 and H5 need. **This is new code.**
+
 **Degenerate arms are the normal case here, not the exception.** At small `k` the control arm is
-expected to be 0/n, which collapses the bootstrap. The three-method rule inherited from the deferred
-study applies — Wilson for a single cell, Newcombe/MOVER for an independent difference, paired
-exact/score for a within-person difference — and **none of the three exists in the code**
-(`grep -i "newcombe\|wilson" make_tables.py` returns nothing). Implementing and unit-testing them is
-a gate before any table is produced.
+expected to be 0/n. A percentile bootstrap on an all-zero sample does **not** crash — it silently
+returns `[0, 0]`, and that is the failure being guarded against. **The trigger is mechanical**: a
+group's successes equal `0` or `n`.
+
+| Case | Method | Status in code |
+|---|---|---|
+| A single cell, 0/n — the normal case at small `k` | Wilson score interval, computed on **`n_eff = 2n/DEFF`**, not the raw target count | `wilson_ci` **exists** (`stats.py:141`) but `make_tables.py` never calls it, and it takes a raw `n` with **no clustering adjustment** |
+| The between-arm contrast `τ̂rec(k)` | Newcombe hybrid / MOVER on two Wilson intervals | **Absent** |
+
+**Two corrections to the earlier draft.** `wilson_ci` is not missing — it is *unwired*, and calling
+it as written would pass the raw target count, **silently dropping the clustering correction exactly
+where the study makes its most cautious claims** (zero-count control arms at small `k`), producing
+intervals that are too narrow.
+
+And the **paired-exact method is dropped**: every planned comparison is either single-arm (`α_k`) or
+between-arm at one `k` (`τ̂rec(k)`), and D and C are **disjoint persons**. No named estimand is a
+within-person across-`k` paired difference, so it was unused inherited boilerplate.
 
 ### `k_min(t)` is censored twice, and the existing code ignores both
 
@@ -799,7 +832,11 @@ CI and an explicit underpowered caveat**; confirming it needs more persons, whic
 extension.
 
 **Multiple comparisons**: the confirmatory family is **{H1, H2, H3, H4} = 4 tests**, Holm-corrected;
-H5 is reported outside the family as exploratory. The 13 per-`k` intervals are **descriptive**, not family members — they are the
+H5 is reported outside the family as exploratory. Holm's FWER guarantee holds under arbitrary
+dependence, so it is valid here — but H1, H2 and H4 are functionals of the *same* bootstrap
+replicates, which makes it conservative. **Optional upgrade at zero extra compute**: a
+resampling-based joint correction (max-statistic / Westfall–Young free step-down) reusing those same
+replicates. An upgrade, not a requirement. The 13 per-`k` intervals are **descriptive**, not family members — they are the
 curve, and correcting them individually would be a category error. The `α → k*(α)` mapping is
 likewise descriptive.
 
