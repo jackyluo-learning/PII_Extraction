@@ -23,7 +23,7 @@ What has changed is that all three abandonment reasons now have concrete fixes:
 
 | Abandonment reason (2026-09-01) | Status now |
 |---|---|
-| **1.** H2 needed `α_k ≤ 1%`, but 50 control individuals cap the rule-of-three upper bound at 2.95% — the threshold could be neither met nor refuted | **Fixed, at zero compute cost.** Controls never enter the training corpus (`corpus = pii_docs + public`; `neg_controls` go only into `target_registry`), so raising `PII_N_CONTROLS` to 150 requires **no retraining**. 150 individuals x 2 fields = 300 control targets ⇒ rule-of-three bound 1.0%, exactly at the threshold |
+| **1.** H2 needed `α_k ≤ 1%`, but 50 control individuals cap the rule-of-three upper bound — the threshold could be neither met nor refuted | **Dissolved, not bought.** The threshold was never load-bearing: none of this study's three deliverables — the shape, `β`, the auditor procedure — depends on α being resolved at 1%, and α belongs to the auditor rather than to this paper. The 1% text is retained verbatim and scored at the resolution limit; the study delivers the whole `α → k*(α)` mapping instead. (The archived note's arithmetic was also optimistic: person-clustered, 150 controls reach 1.5%, and 1.0% needs ~225. Buying it costs ~8 A100-h and can be added later without retraining.) |
 | **2.** Scope was ~3x the budget: 4 models x 13 k x 3 seeds ≈ 1040 accelerator-hours against ~312 available (never validated by a pilot) | **Fixed by scope, and now costed bottom-up.** The 13-point grid costs **12.3x one k=20 attack** per target, not 13x, because per-attack cost scales with sequence length `k+T`. GPT-2 124M alone at 50/arm x 3 seeds = **~33 A100-h**; adding GPT-2-medium = **~130 A100-h** |
 | **3.** The study mixed a new experiment (the sweep) with densifying `k=20` to ≥3 seeds, which carried H3; the project then shifted to breadth over depth | **Dissolved.** `k=20` is *in* the grid, so running the sweep at 3 seeds densifies `k=20` as a **by-product at no additional cost**. H3 is now free rather than a competing objective |
 
@@ -481,19 +481,17 @@ corpus-build time (`CODE_MAP.md` #14). **A non-zero `α_k` is the forcing phenom
 exists to measure, never evidence of contamination** — that sentence has to be in the paper, because
 at large `k` the floor is expected to be large.
 
-### The control pool must be regenerated at 150 — this is what unblocks H2
+### The control pool stays at the default 50
 
-`n_negative_controls` defaults to **50**. H2 asks whether `α_k ≤ 1%`, and with 50 control individuals
-(100 targets) the rule-of-three upper bound on a zero-count arm is **2.95%** — the 1% threshold can
-be neither met nor refuted. **This is precisely what killed the study's first incarnation.**
+`n_negative_controls = 50`, unchanged. At 50 control persons the smallest resolvable α is **4.5%**
+(see Analysis Plan), and that is accepted: the study reports the `α → k*(α)` mapping over the
+resolvable range rather than chasing a fixed threshold.
 
-Set `PII_N_CONTROLS=150`: 150 individuals x 2 fields = **300 control targets**, giving a
-rule-of-three bound of **1.0%**, exactly at the threshold.
-
-**This costs no retraining.** `build_corpus` assembles `corpus = pii_docs + public` from
-`individuals` only; `neg_controls` are appended to `target_registry` and never to the corpus
-(`data_generation.py:842-861`). Enlarging the control pool changes the evaluation set, not the
-training set.
+**Enlarging it later is free of retraining**, which is why this is a reversible decision rather than
+a constraint. `build_corpus` assembles `corpus = pii_docs + public` from `individuals` only;
+`neg_controls` are appended to `target_registry` and never to the corpus
+(`data_generation.py:842-861`). So `PII_N_CONTROLS` changes the evaluation set, not the training set,
+and a follow-up wanting α = 1% can regenerate the registry alone.
 
 ### The target subset, and how it differs from E1/E2
 
@@ -535,60 +533,67 @@ exactly what E17 implements — **this is not one of the paper/code mismatches.*
 | `τ̂rec(k)` | `EMR(D, k) − EMR(C, k)` | H3, the operating point |
 | `k_min(t)` | Smallest grid `k` at which target `t` is forced | `β`, Def. 3, E13 |
 | `β` | Realized steering rate | Table 2 ◦ → ✓ |
-| **`k*(α)`** | **The largest `k` whose floor stays at or below `α`** | **The auditor-facing deliverable** |
+| **`k*(α)`** | **The largest `k` at which the floor stays at or below `α` *and* `τ̂rec(k)` remains detectable** | **The auditor-facing deliverable** |
 
-### `k*(α)` is reported as a curve, not a single number
+### `k*(α)` is a curve, and a floor condition alone does not define it
 
-H2 is preregistered at α = 1% and stays there. But the auditor, not this paper, chooses the tolerable
-false-positive rate, so the primary deliverable is the **whole mapping α → k\*(α)** across every α the
-data can resolve. That answers "at my tolerance, how expressive may my probe be?" without this study
-having to guess the auditor's α, and it degrades gracefully: if 1% turns out to be unresolvable, the
-mapping is still publishable from its resolvable floor upward.
+H2 is preregistered at α = 1% and that text stays. But the auditor, not this paper, chooses the
+tolerable false-positive rate, so the primary deliverable is the **whole mapping α → k\*(α)** across
+every α the data can resolve. It degrades gracefully: at 50 control persons the mapping is published
+from α = 4.5% upward, with the resolution floor stated.
 
-### Precision on `α_k`, and the fix that unblocks H2
+**A floor condition by itself does not define a usable point.** "Smallest `k` with `α_k ≤ α`" is
+satisfied by `k = 0`, where the floor is 0 and the signal is also 0. `k*(α)` therefore carries both
+conditions — floor below tolerance **and** `τ̂rec(k)`'s CI excluding 0 — which is the re-aimed H2.
+
+**And `τ̂rec(k)` is not monotone** (H5): both arms saturate toward 100% at large `k`, so the signal
+rises and then falls. The feasible set `{k : α_k ≤ α}` is therefore not resolved by taking its
+largest element — within it, the largest `k` maximises raw TPR while a smaller `k` may maximise the
+likelihood ratio `TPR/α_k` and hence the certifiable `ε`. **Both optima are reported**; which one an
+auditor wants depends on whether they are detecting or certifying.
+
+### Precision on `α_k` — what 50 control persons can and cannot resolve
 
 The smallest α a zero-count control arm can resolve is the rule-of-three bound `3/n_eff`, with
 `n_eff = 2·n_persons / DEFF` (2 fields per person, DEFF = 1.5 at ICC ≈ 0.5):
 
 | Control persons | Targets | `n_eff` | Smallest resolvable α |
 |---|---|---|---|
-| 50 *(current default)* | 100 | 67 | **4.50%** |
+| 25 *(run2's `gpt2` value)* | 50 | 33 | 9.00% |
+| **50 — this study** | **100** | **67** | **4.50%** |
 | 100 | 200 | 133 | 2.25% |
 | 150 | 300 | 200 | 1.50% |
-| **225** | **450** | **300** | **1.00%** |
-| 300 | 600 | 400 | 0.75% |
+| 225 | 450 | 300 | 1.00% |
 
 **Correcting the revival note**: `PII_N_CONTROLS=150` reaches **1.5%, not 1.0%** — the archived
-design's rule-of-three arithmetic did not carry the clustering design effect. Reaching 1% needs
-**~225 control persons**.
+design's rule-of-three arithmetic did not carry the clustering design effect.
 
-#### Tiered allocation — 1% costs +8 accelerator-hours, not +58
+**50 is chosen, and 225 is deliberately not bought.** The three deliverables do not depend on
+resolving α at 1%: the shape is a trend over 13 points, `β` comes from `k_min ~ H` where α never
+enters, and the procedure hands the auditor a method rather than a threshold. Letting a carried
+threshold drive a 25% cost increase would be letting a legacy hypothesis, not the research question,
+decide the budget. A tiered allocation (225 controls at `k ≤ 4`, where precision matters and attacks
+are cheapest) buys α = 1% for ~+8 A100-h and remains available as a follow-up.
 
-A large control arm is only needed where `α_k` is near zero, which is small `k` — and small `k` is
-also the **cheapest** end of the grid, since per-attack cost scales with sequence length `k+T`. The
-four points `k ∈ {1,2,3,4}` carry weight 1.67 out of the grid's 12.33.
+#### The control arm is the full pool, not the E17-matched subset
 
-| Allocation | GPT-2 124M, 3 seeds | Resolves |
-|---|---|---|
-| 50/arm flat, all 13 `k` | **32.9 h** | α ≥ 4.5% only |
-| **225 controls at `k ≤ 4`, 50 elsewhere; 50 trained throughout** | **40.7 h** | **α ≥ 1.0% where it matters** |
-| 225 controls flat across all 13 `k` | 90.4 h | α ≥ 1.0% everywhere (wasteful) |
+**One line, and for a reason independent of precision.** E17 matches 1-NN *per trained record* with
+replacement, then `_matched_control_entries` de-duplicates by person — so the number of *distinct*
+matched controls is bounded by the trained-record count and is smaller still after dedup. **The
+matched subset may well not reach 50 persons.**
 
-**Tiered is the design.** Prespecified extension rule, so this stays confirmatory rather than
-look-and-decide: *if `α_4`'s 95% upper bound is still below 1%, extend the 225-control arm to the
-next grid point, and repeat until the floor crosses.* Corollary 1 puts the crossing at
-`k*_thy ≈ 1.49`, so the dense region is expected to suffice; each extra point costs ~7 h.
+The floor does not need matching. Exchangeability with D is what `τ̂rec` requires; `α_k` is simply
+"how often the attack forces a never-trained record". So:
 
-> **Open risk — E17 may not be able to supply 225 matched controls.** Matching runs 1-NN *per trained
-> record*, so the number of distinct controls selected is bounded by the number of trained records
-> (100 individuals x 2 fields = 200) and is smaller still because matching is with replacement.
-> Enlarging `PII_N_CONTROLS` enlarges the *pool*, not necessarily the *matched set*.
-> **Resolution**: the floor does not require matching. Exchangeability with D is what `τ̂rec` needs;
-> `α_k` is just "how often the attack forces a never-trained record". So —
-> - **H1 / H2 / `k*(α)` use the full control pool** (`controls`, not `matched`),
-> - **H3 / `τ̂rec(k)` uses the E17-matched subset**, as E1 does.
->
-> This needs a small change to `run_E3_capacity_sweep`, which currently uses `matched[:n_t]` only.
+- **H1 / H2 / H5 / `k*(α)` use the full control pool** (`controls[:n]`, not `matched[:n]`)
+- **H3 / `τ̂rec(k)` uses the E17-matched subset**, identified at analysis time by joining
+  `results/e17_matches_*.json` on `(person_id, field)` — **no log-schema change**
+
+Because every `k` uses the same full pool, the control arm's composition is **constant across the
+grid**, which is what the paired design needs. The change to `run_E3_capacity_sweep` is
+`matched[:n_t]` → `controls[:n_t]`.
+
+**The pilot must report realized `|D|` and `|C|`.** They are not assumed equal.
 
 ### Intervals
 
@@ -648,6 +653,29 @@ other. **The definition is fixed before the sweep launches**, and this design ad
 `β` is **bits per token**, and `β / log₂|V| ∈ [0,1]` is the fraction of the nominal channel the
 optimizer realizes. `capacity_e3` is corrected to match, not the other way round.
 
+#### Two estimators of the same quantity, and the intercept is the model test
+
+Under `k_min = H/β` the two are reciprocal views of one number:
+
+| Estimator | Form | Assumes |
+|---|---|---|
+| Def. 3 | `median(H(t) / k_min(t))` | proportionality (line through the origin) |
+| Regression | `1 / slope` of `k_min ~ H` | a line, **intercept free** |
+
+They agree only when the intercept is ≈ 0 — which is exactly **H4**. So the regression's intercept is
+**not a nuisance parameter to be discarded but the test of whether the formula exists at all**, and
+disagreement between the two estimators is itself the diagnostic. Both are reported.
+
+#### The grid biases `β` downward, and that is the dangerous direction
+
+`k_min` is only observed to the resolution of the grid: a target whose true threshold is 6.2 is
+recorded at the next grid point, 8. Thresholds are therefore **systematically over-estimated**, so
+`β = H/k_min` is **under-estimated** — and `k_force = H/β` comes out **too large**.
+
+An auditor following a `k_force` that is too large **selects a probe deeper into the forcing region
+than intended**. The bias runs toward the unsafe side, so the reported `β` must be accompanied by the
+censored model's estimate (which corrects for it) and by an explicit statement of the direction.
+
 ### Two acceptance checks in the existing code are wrong and must be replaced
 
 1. **`monotone = np.all(np.diff(alpha_vec) >= -1e-9)`** tests monotonicity of 13 *point estimates*
@@ -667,13 +695,16 @@ optimizer realizes. `capacity_e3` is corrected to match, not the other way round
 |---|---|
 | **Sanity `α_0 ≈ 0`** | Read **first**. `fixed`-probe control EMR; a non-trivial value means the decision rule is matching spuriously and blocks the study |
 | **H1** monotone rise | Spearman's ρ over `(k, α_k)`, person-clustered bootstrap CI; refuted if the CI contains 0 or ρ is significantly negative |
-| **H2** usable `k*` | Smallest `k` whose `α_k` 95% **upper** bound is below 1%; refuted if `α_1`'s **lower** bound already exceeds 1% |
+| **H2** usable operating point | Does any `k` satisfy **both** `α_k`'s 95% upper bound ≤ tolerance **and** `τ̂rec(k)`'s CI excluding 0? Scored across the resolvable range (α ≥ 4.5%); refuted if the two never co-occur. The carried 1% form is reported alongside, marked unresolved below 4.5% |
 | **H3** `τ̂rec` at `k=20` | 95% CI of `τ̂rec(20)` from 3 seeds; refuted (as a null) if the CI excludes 0 |
+| **H4** forcing model holds | Censored regression of `k_min` on `H_bits`, clustered on `person_id`. Refuted if the slope's CI contains 0 **or the intercept differs significantly from 0** — the model is proportional, so a non-zero intercept falsifies it |
+| **H5** interior peak in `τ̂rec(k)` | `τ̂rec` at all 13 levels from one joint bootstrap; refuted if it is still rising at `k=64` or flat throughout |
 | Balance (A1) | Two SMDs per field against \|SMD\| < 0.1 |
 
-**Multiple comparisons**: the confirmatory family is **{H1, H2, H3} = 3 tests**, Holm-corrected. The
-13 per-`k` intervals are **descriptive**, not family members — they are the curve, and correcting
-them individually would be a category error. The `α → k*(α)` mapping is likewise descriptive.
+**Multiple comparisons**: the confirmatory family is **{H1, H2, H3, H4, H5} = 5 tests**,
+Holm-corrected. The 13 per-`k` intervals are **descriptive**, not family members — they are the
+curve, and correcting them individually would be a category error. The `α → k*(α)` mapping is
+likewise descriptive.
 
 ### Reporting
 
@@ -770,17 +801,14 @@ pass — free, since controls never enter the corpus.
 ```mermaid
 flowchart TD
   C0["step 0: code gates<br/>manifest · per-k flush · batch-size fix<br/>beta dimension settled<br/>interval methods unit-tested"] --> C1
-  C1["step 1: regenerate corpus<br/>PII_N_CONTROLS=225<br/>HALT if C4 contributed"] --> C2
+  C1["step 1: regenerate corpus<br/>PII_N_CONTROLS=50 (default)<br/>HALT if C4 contributed"] --> C2
   C2["step 2: retrain gpt2-124M<br/>~0.3 A100-h"] --> C3
   C3["step 3: PILOT<br/>one k-shard, k=20, 1 seed<br/>MEASURES per-attack cost"] --> G{"cost within<br/>confirm_above?"}
   G -->|no| RS["re-scope with the user"]
   G -->|yes| C4
   RS --> C4["step 4: sweep, sharded by PII_CAP_K<br/>13 k x 3 seeds = 39 jobs"]
-  C4 --> C5["step 5: alpha_4 upper bound < 1%?<br/>PRESPECIFIED extension rule"]
-  C5 -->|yes| C6["extend dense arm to next k"]
-  C5 -->|no| C7
-  C6 --> C7["step 6: balance table (zero GPU)"]
-  C7 --> C8["step 7: analysis"]
+  C4 --> C7["step 5: balance table (zero GPU)"]
+  C7 --> C8["step 6: analysis"]
   style C3 fill:#fff4e0,stroke:#cc8800
   style C0 fill:#ffe8e8,stroke:#cc3333
 ```
@@ -801,11 +829,15 @@ flowchart TD
 
 | Scope | GPT-2 124M, 3 seeds |
 |---|---|
-| Tiered allocation (225 controls at `k ≤ 4`, 50 elsewhere; 50 trained) | **~41 A100-h** |
+| Sweep: 50 persons/arm, both arms, 13 `k`, 2 fields | **~32.9 A100-h** |
 | + retraining | ~0.3 A100-h |
 | + pilot and repro check | ~2 A100-h |
-| **Total, first pass** | **~43 A100-h** |
-| GPT-2-medium as a second model, gated on the pilot | +~97 A100-h |
+| **Total, first pass** | **~35 A100-h** |
+| *Optional later:* tiered allocation to resolve α = 1% | +~8 A100-h |
+| *Optional later:* GPT-2-medium as a second model | +~97 A100-h |
+| *Optional later:* 4 fields instead of 2 (validates `β`'s transferability) | 2x the sweep |
+
+7,800 GCG attacks: 50 persons x 2 arms x 2 fields x 13 `k` x 3 seeds.
 
 Against the ~480-hour window this leaves an order of magnitude of headroom — enough to absorb the
 10x uncertainty band that made the deferred study infeasible, and enough to revive E2 afterwards.
@@ -828,6 +860,8 @@ widths it is a tautology.
 | **Different targets at different `k`** | Fatal if it happens | Would make `k_min(t)` undefined. The subset is built before the `k` loop; assert the target set is identical across shards |
 | **`k_min` is not a true threshold** | Medium | GCG is stochastic, so a target may hit at `k=8` and miss at `k=12`. `_kmin_table` takes the minimum over hits, so `k_min` is "first `k` at which it was ever forced", not a monotone crossing. State this definition explicitly rather than implying a threshold |
 | **Right- and interval-censoring dropped** | **High — a live defect** | `capacity_e3` filters non-finite `k_min` before regressing, silently discarding the hardest targets and biasing `β`. Replaced by a censored survival model; see Analysis Plan |
+| **Grid coarseness biases `β` toward the unsafe side** | High | `k_min` is over-estimated to the next grid point, so `β` is under-estimated and `k_force = H/β` comes out **too large** — an auditor following it picks a probe deeper into the forcing region than intended. The censored model corrects for it; the direction is stated wherever `β` appears |
+| **The `τ̂rec` peak may lie outside the grid** | Medium | If `τ̂rec` is still rising at `k=64`, saturation was not reached and the operating point cannot be located from this data (H5 refuted upward). Reported as a limit, not extrapolated |
 
 ### External
 
@@ -861,8 +895,9 @@ widths it is a tautology.
 
 ## Success Criteria
 
-**Every criterion is satisfiable by a refuted hypothesis.** H1 refuted, H2 refuted, and H3's CI
-excluding 0 would each be a major result; none of them is a failure of this study.
+**Every criterion is satisfiable by a refuted hypothesis.** H1 refuted, H2 refuted, H3's CI excluding
+0, H4 refuted (no transferable formula) and H5 refuted (peak outside the grid) would each be a
+reportable result; none is a failure of this study.
 
 1. **The `k = 0` anchor is read and reported first.** Pass or fail, it appears in the write-up with
    its CI.
@@ -874,11 +909,12 @@ excluding 0 would each be a major result; none of them is a failure of this stud
    analytic bound and `k*_thy ≈ 1.49` marked.
 4. **The `α → k*(α)` mapping is published across every resolvable α**, with the resolution floor
    stated. If 1% is unresolvable, that is reported as a measurement limit, not omitted.
-5. **H1, H2, H3 are each decided or explicitly declared undecidable at the achieved n**, with the
+5. **H1–H5 are each decided or explicitly declared undecidable at the achieved n**, with the
    resolution limit named in the same sentence as any null.
 6. **`β` is reported in settled units** — bits per token, with `β / log₂|V|` alongside — from a
-   **censored** model, with the complete-case `linregress` shown beside it to quantify what the
-   censoring was doing.
+   **censored** model, with both estimators (median-of-ratios and `1/slope`) and **the intercept**
+   shown, since the intercept is H4's test and the complete-case `linregress` quantifies what the
+   censoring was doing. The downward grid bias is stated with its direction.
 7. **The covariate balance table is produced**, both SMD variants, per field.
 8. **The repro check passes** on per-target flip rate.
 9. **The cost is accounted** — accelerator-hours and GPU model per shard, failed/preempted shard cost
@@ -898,32 +934,43 @@ excluding 0 would each be a major result; none of them is a failure of this stud
    computes tokens/bit and then validates it against `log₂|V|`, which only type-checks for
    bits/token. **E3 produces this number the moment it runs.** This design adopts the paper's
    definition and corrects the code — confirm that is the intended direction.
-2. **Can E17 supply enough matched controls?** Matching is 1-NN per trained record with replacement,
-   so distinct matched controls are bounded by 200 and likely far fewer. The design resolves this by
-   computing the floor on the **full control pool** and `τ̂rec` on the matched subset — which needs a
-   small change to `run_E3_capacity_sweep` (currently `matched[:n_t]` only). Confirm the split.
-4. **`PII_GCG_ITERS = 200`, fixed** — run2's own value for `gpt2`, held constant across every `k` by
+2. **Confirm the control-arm split.** E17 matches 1-NN per trained record with replacement and then
+   de-duplicates by person, so the distinct matched set may not reach 50. The floor is therefore
+   computed on the **full control pool** and `τ̂rec` on the matched subset — a **one-line** change to
+   `run_E3_capacity_sweep` (`matched[:n_t]` → `controls[:n_t]`), with the matched subset recovered at
+   analysis time from `e17_matches_*.json`. Confirm this is the intended split.
+3. **`PII_GCG_ITERS = 200`, fixed** — run2's own value for `gpt2`, held constant across every `k` by
    the code. No longer a pilot decision: with one model in scope there is nothing to reconcile. It
    still interacts with the `1/k` coverage threat (a larger `N` would partially compensate at large
    `k`), and that interaction is a limitation, not a tuning knob.
    **Seeds: `42` plus two others**, values fixed in the protocol. 42 is run2's seed and is retained
    so the `k=20` point sits on the same seed as the published number, even though the retrained model
    makes exact reproduction impossible.
-5. **Add the `k = 0` anchor to `run_E3_capacity_sweep`**, or join it from a separate `fixed`-probe
+4. **Add the `k = 0` anchor to `run_E3_capacity_sweep`**, or join it from a separate `fixed`-probe
    run. It is the sanity condition and currently has no code path in E3.
-6. **Code gates before launch** — none of these exist today: per-`k` `AttemptLogger` flushing; the
+5. **Code gates before launch** — none of these exist today: per-`k` `AttemptLogger` flushing; the
    run manifest; the `effective_eval_batch` / `effective_minibatch` fix; the Faker disjointness
    assertion; the C4-fallback halt check.
-7. **Code gates before any table**: the two-block bootstrap applied across `k`; the three
+6. **Code gates before any table**: the two-block bootstrap applied across `k`; the three
    degenerate-arm interval methods; the interval- and right-censored survival model for `k_min`; the
    `_crossing_k` sentinel; the Spearman/isotonic replacement for the monotonicity check.
-8. **Does the corpus regenerate?** Wikipedia's `20231101.en` snapshot must still resolve and **C4
+7. **Does the corpus regenerate?** Wikipedia's `20231101.en` snapshot must still resolve and **C4
    must not activate**. Verify before retraining, since the corpus determines everything downstream.
-9. **Is GPT-2-medium worth +97 A100-h?** Deferred until the pilot and the shape of the first curve.
+8. **Is GPT-2-medium worth +97 A100-h?** Deferred until the pilot and the shape of the first curve.
    It is the only route to any statement about model-size dependence, which is otherwise out of
    scope.
-10. **E13 (ACR) becomes computable** the moment `k_min` exists. Out of scope here, but the follow-up
+9. **E13 (ACR) becomes computable** the moment `k_min` exists. Out of scope here, but the follow-up
     should be queued rather than rediscovered.
+10. **Is 4 fields worth 2x the sweep?** With only `ssn` and `email`, `capacity_e3`'s `beta_disp` is
+    the standard deviation of **two** numbers, so whether `β` transfers across field types cannot be
+    established — and that is what licenses `k_force = H/β` as auditor guidance rather than as an
+    observation about two fields. Widening needs no retraining. Decide after the first curve.
+11. **Which `H` goes into `k_force = H/β`?** The paper uses `H∞(D₀)` (format min-entropy, constant
+    within a field) in Corollary 1 and `H(t)` (per-string self-information, what the code computes)
+    in Definition 3. An auditor must be told which, and whether to take the minimum or the median
+    across their targets — low-`H(t)` targets are the easiest to force, so a policy set on the median
+    protects nothing. More insidious than the units question: the wrong `H` yields a
+    plausible-looking but systematically large `k`.
 
 ## Deviations
 
