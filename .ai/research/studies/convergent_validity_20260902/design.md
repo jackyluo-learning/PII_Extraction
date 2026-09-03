@@ -809,6 +809,20 @@ pythia-2.8b ≈**247 h** → **≈430 accelerator-hours worst case**, ≈260 h w
 > settles it. Note also that cost should be tracked in **GCG-attack count**, not probe count: of the
 > eight probes only the three GCG-family ones and `softprompt` are expensive.
 
+#### Where the cost actually sits
+
+| Model | Attack cost (Option B, A100, worst case) | Share |
+|---|---|---|
+| gpt2 124M | ~11 h | 3% |
+| gpt2-medium 355M | ~31 h | 7% |
+| pythia-1.4b | ~123 h | 29% |
+| pythia-2.8b | ~247 h | **57%** |
+
+**Cutting models is a far bigger lever than cutting targets or probes**, and it is the lever that
+costs the least evidence per hour saved: `pythia-2.8b` alone is 57% of the budget, exceeds Cheaha's
+48 h cap fivefold, and had run2's smallest arm (12 persons → 49.5 pp MDE), making it simultaneously
+the most expensive and the least informative cell in the square.
+
 #### Option B′ — the fallback if the pilot lands high
 
 Keep uniform N=200 and the probe set; keep 100/arm for the two GPT-2 models (~42 h combined) but drop
@@ -900,13 +914,30 @@ trustworthy answer, not a favourable one.
 
 ## Open Questions for the Protocol
 
-1. **Where are the four fine-tuned checkpoints?** `data/`, `models/`, and `results/` are all empty
-   locally. **This is the one real blocker**: without the checkpoints both rows need full retraining
-   before any attack can run. *Asked twice, unanswered.*
-   - **Split off from it, and now low-value: run2's `results/attempts/*.parquet`.** The uniform-budget
-     commitment forces the top row to be re-run anyway, so the old log is worth having only as a
-     cross-check — plus one real use: estimating ICC and `π_d` (see Analysis Plan), which cannot be
-     done without it.
+1. **RESOLVED — the checkpoints are gone. Retraining is required.** Confirmed by the researcher on
+   2026-09-02. Both rows therefore start from scratch: regenerate the corpus, retrain every model,
+   then attack.
+   **This is cheaper than it sounds and does not drive the budget.** Corpus = 1,360 PII documents +
+   100k public passages, 3 epochs at seq 512 ≈ 156M token-passes:
+
+   | Model | Regime | Retrain cost |
+   |---|---|---|
+   | gpt2 124M | full fine-tune | ~0.3 A100-h |
+   | gpt2-medium 355M | full fine-tune | ~0.8 A100-h |
+   | pythia-1.4b | LoRA | ~2.6 A100-h |
+   | pythia-2.8b | LoRA | ~5.2 A100-h |
+   | **total** | | **~9 A100-h** |
+
+   Against the attack phase's ~430 A100-h that is **~2%**. Retraining is not the constraint; GCG is.
+   It does, however, add two hard pre-launch requirements: the corpus must regenerate (Wikipedia's
+   `20231101.en` snapshot must still resolve, and **C4 must not activate**), and the control pool
+   should be generated at `PII_N_CONTROLS=150` in the same pass — free, since controls never enter
+   the corpus.
+   - **run2's `results/attempts/*.parquet` — now the only reason to go looking.** The top row is
+     re-run regardless, so the old log's sole remaining value is estimating **ICC** and `π_d` for the
+     power calculation (see Analysis Plan). If it is also gone, those must come from the pilot
+     instead, and the budget option cannot be finalized until the pilot lands.
+   - **Seed 42 reuse is now moot** — with no checkpoints, nothing from run2 is reusable as evidence.
    - **`results/e17_matches_*.json` is not a blocker at all**: E17 matching is deterministic, so it
      regenerates exactly from the registry at the same seed.
    - **The corpus is partially recoverable**: the Wikipedia source is snapshot-pinned
@@ -944,9 +975,10 @@ trustworthy answer, not a favourable one.
 11. **Option B or B′?** The compute estimate carries a 10x band (~250 h to 2,000+ h) and Option B has
     no slack in the 480-hour window. B′ drops both Pythia models to 40 persons/arm — ~190 h, but the
     paired MDE rises 15.3 → ~27 pp. **This is the user's call, and the pilot informs it.**
-12. **Is one of the three seeds `42`?** run2 ran at seed 42. Since cap=100 does no capping and the
-    run2 target set is a strict subset, choosing 42 as one of the three seeds makes run2's gpt2 rows
-    (the only model whose run2 `N` was already 200) reusable rather than repeated.
+12. **How many models?** The two Pythia models are **86% of the attack cost** (123 h + 247 h of
+    ~430 h) while carrying run2's smallest arms and the LoRA-vs-full-fine-tune confound. Model count
+    is the largest single lever on feasibility and is decided before the pilot — see the recommended
+    scope below.
 
 ## Deviations
 
