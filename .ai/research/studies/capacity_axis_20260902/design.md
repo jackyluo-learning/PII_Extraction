@@ -144,6 +144,86 @@ otherwise the paper can say "your current practice is broken" but offer no repla
 becomes computable immediately (it depends on `k_min`), and `Mem(t)` (Def. 5) moves from
 unimplemented to computable.
 
+### Hypotheses re-derived from the deliverables (2026-09-02)
+
+The three carried hypotheses were written before this study's deliverables were named. Mapping each
+deliverable back to the hypothesis that licenses it leaves **two gaps and one mis-aimed test**:
+
+| Deliverable | Rests on | Carried? |
+|---|---|---|
+| Shape — the floor rises with capacity | `α_k` monotone non-decreasing | **H1**, verbatim |
+| Shape — an operating point is there to choose | `τ̂rec(k)` has an **interior** maximum | **missing → H5** |
+| Formula — `k_force ≈ H/β` | the model `k_min = H/β` actually **holds** | **missing → H4** |
+| Procedure — the auditor can execute it | a usable operating point exists | **H2**, aimed at the wrong quantity |
+| (the paper's existing claim) | `τ̂rec` at `k=20` | **H3**, verbatim |
+
+H1 and H3 stand as written. H2 is re-aimed below. **H4 and H5 are additions, and both are computed
+from the same sweep — they cost no extra compute.**
+
+#### H4 — the forcing model holds (NEW; the formula depends on it)
+
+`k_force ≈ H/β` is this study's main auditor-facing output, and **nothing currently tests whether it
+is true.** `capacity_e3` runs `linregress(H_bits → k_min)` and takes the slope; a slope comes back
+whether or not `k_min` is actually linear in `H`.
+
+| | |
+|---|---|
+| **H0** | `k_min(t)` is independent of `H(t)` |
+| **Direction** | `k_min` increases with `H`, proportionally — a line **through the origin** |
+| **Metric** | Censored regression of `k_min` on `H_bits`, clustered on `person_id`: slope, **intercept**, and fit |
+| **Refuted by** | the slope's CI containing 0, **or** the intercept differing significantly from 0 |
+
+**The intercept is the model check, not a nuisance parameter.** `k_min = H/β` is proportional, so a
+non-zero intercept means capacity and entropy do not trade off the way Proposition 1 assumes, and
+`k_force = H/β` must not be published as auditor guidance.
+
+Refuting H4 does not kill the study — the `α_k` curve and `k*` survive — but it removes the
+transferable formula and leaves only "measure your own floor".
+
+#### H5 — the calibrated signal peaks inside the grid (NEW; the operating point depends on it)
+
+At large `k` **both** arms saturate toward 100%: everything is forcible, memorised or not, so
+`τ̂rec → 0`. At `k = 0` there is no signal either. So `τ̂rec(k)` should rise and then fall, and the
+prescription "choose `k` deliberately" only means something if the maximum is somewhere a person can
+choose.
+
+| | |
+|---|---|
+| **H0** | `τ̂rec(k)` is monotone in `k` over `[1, 64]` |
+| **Direction** | interior maximum — rises, then falls |
+| **Metric** | `τ̂rec(k)` at all 13 levels, one joint person-clustered bootstrap |
+| **Refuted by** | `τ̂rec` still rising at `k = 64` (peak outside the observed range), or flat throughout |
+
+If refuted upward, the grid does not reach saturation and the operating point cannot be located from
+this data — a real possibility, since run2's floor at `k=20` was 39% and `k=64` may still be well
+short of 100%.
+
+#### H2 re-aimed — a *usable* point needs low floor **and** surviving signal
+
+The carried H2 tests the floor alone: *does some `k` satisfy `α_k ≤ 1%`?* Taken literally that is
+satisfied by **`k = 0`**, where the floor is 0 and the signal is also 0. A floor condition by itself
+cannot express "usable".
+
+**The text of the carried H2 is not edited.** It is scored as written, and this study adds the
+condition the deliverable actually needs:
+
+> **A usable operating point exists**: some `k` at which `α_k`'s 95% upper bound is below the
+> auditor's tolerance **and** `τ̂rec(k)`'s CI excludes 0.
+>
+> **Refuted by**: the two conditions never co-occurring at any `k` — the floor is always too high
+> wherever signal exists, or signal is absent wherever the floor is low.
+
+Refuting this is **the most consequential outcome available to the study**: it would say this class
+of audit cannot be calibrated to a usable dynamic range at any capacity, and Algorithm 1's step 3
+becomes unexecutable. That is the negative result the archived design already identified as
+"unfavourable but highly valuable".
+
+**On the 1% threshold.** It is retained verbatim but **does not drive the budget**. The study reports
+the whole `α → k*(α)` mapping over the resolvable range (α ≥ 4.5% at 50 control persons) and scores
+H2 at the resolution limit. Reason: none of the three deliverables — shape, `β`, procedure — depends
+on α being resolved at 1%; α belongs to the auditor, not to this paper. Buying 1% costs ~8 A100-h via
+tiered allocation and can be added later without retraining.
+
 ### Deviations from the carried-over text
 
 The hypotheses above are verbatim. Two things they say are no longer true of this study's scope, and
