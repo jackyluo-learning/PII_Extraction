@@ -1,0 +1,8 @@
+{
+  "study_id": "convergent_validity_20260902",
+  "type": "experiment",
+  "status": "backlog",
+  "created_at": "2026-09-02T18:28:49-05:00",
+  "updated_at": "2026-09-02T21:05:00-05:00",
+  "description": "First empirical execution of Proposition 4's sandwich. E2 populates the base-model row of a 2x2 (model state x membership), yielding tau_mod as an upper bound on tau_rec and, from the same square, a direct test of A3 (Delta_A3 = EMR(C) - EMR_base(C)) plus a known-answer sanity cell (tau_base = 0 by construction). Adds the covariate-balance table required by Algorithm 1 step 2 at zero GPU cost. E5 (frequency dose-response) was designed and dropped -- see design.md."
+}
