@@ -86,7 +86,10 @@ class AttemptLogger:
         row.update(kw)
         self.rows.append(row)
 
-    def flush(self) -> str:
+    def flush(self, verbose: bool = True) -> str:
+        """Write every row accumulated so far. Full rewrite, so it is idempotent
+        and safe to call per person -- which is what makes a preempted shard lose
+        one person's attempts instead of the whole shard's in-memory buffer."""
         import pandas as pd
         df = pd.DataFrame(self.rows, columns=_COL_NAMES)
         # best-effort dtype coercion (parquet is fine with objects/NaN otherwise)
@@ -97,7 +100,8 @@ class AttemptLogger:
                 except (TypeError, ValueError):
                     pass
         df.to_parquet(self.path, index=False)
-        print(f"  [attempt_log] wrote {len(df)} rows -> {self.path}")
+        if verbose:
+            print(f"  [attempt_log] wrote {len(df)} rows -> {self.path}")
         return self.path
 
 

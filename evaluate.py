@@ -47,7 +47,22 @@ def cap_targets(targets: List[Dict]) -> List[Dict]:
     m = os.environ.get("PII_MAX_TARGETS")
     if not m:
         return targets
-    n = int(m)
+    return even_subset(targets, int(m))
+
+
+def even_subset(targets: List[Dict], n: int) -> List[Dict]:
+    """
+    Pick `n` entries spaced EVENLY across `targets`, preserving order.
+
+    The registry is laid out in frequency-tier blocks (data_generation assigns
+    tiers in ascending order and create_pii_documents walks that order), so a
+    raw prefix `targets[:n]` silently drops whole tiers: at n=25 of 100 it
+    yields 10 people at f=1, 15 at f=5, and NONE at f=20 -- 60% of the trained
+    population, and the most-memorised tier. Even spacing keeps every tier
+    represented in proportion.
+
+    n <= 0 or n >= len(targets) returns the list unchanged.
+    """
     if n <= 0 or n >= len(targets):
         return targets
     if n == 1:

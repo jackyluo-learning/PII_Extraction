@@ -49,6 +49,7 @@ import math
 import os
 import random
 import time
+from collections import Counter
 from typing import Dict, List, Optional, Tuple
 
 import torch
@@ -60,7 +61,7 @@ from config import (
     DEVICE, DATA_DIR, MODEL_DIR, RESULTS_DIR, TARGET_FIELDS,
 )
 from attempt_log import AttemptLogger, target_self_information
-from evaluate import exact_match, cap_targets
+from evaluate import exact_match, cap_targets, even_subset
 from gcg_attack import GCGAttack, format_target, TARGET_FORMATS, attack_fields
 from discovery_attacks import (
     _compass_prompts, _multiquery_prompts, _batched_generate,
@@ -860,9 +861,17 @@ def run_E3_capacity_sweep(model_name: str, seed: int) -> str:
     trained, controls = _split_registry(registry)
     matched = _matched_control_entries(ctx, seed, controls) or controls
 
+    # Even spacing, NOT a raw prefix: the registry is laid out in frequency-tier
+    # blocks, so trained[:25] would contain 10 people at f=1, 15 at f=5 and NONE
+    # at f=20 -- 60% of the trained population and the most-memorised tier.
     n_t = exp_cfg.capacity_sweep_n_targets
-    subset = ([(e, "trained", int(e["frequency"])) for e in trained[:n_t]]
-              + [(e, "control", 0) for e in matched[:n_t]])
+    d_subset = even_subset(trained, n_t)
+    c_subset = even_subset(matched, n_t)
+    subset = ([(e, "trained", int(e["frequency"])) for e in d_subset]
+              + [(e, "control", 0) for e in c_subset])
+    _tiers = Counter(int(e["frequency"]) for e in d_subset)
+    print(f"  [E3] |D|={len(d_subset)} tiers={dict(sorted(_tiers.items()))} "
+          f"|C|={len(c_subset)}")
 
     pinned = os.environ.get("PII_CAP_K")
     k_grid = [int(pinned)] if pinned else exp_cfg.capacity_k_grid
@@ -873,17 +882,28 @@ def run_E3_capacity_sweep(model_name: str, seed: int) -> str:
     N = gcg_cfg.max_iterations_N
     n = 0
     for k in k_grid:
+        # k=0 is the ZERO-CAPACITY ANCHOR: no free tokens means nothing to
+        # optimize, so the attack degenerates to a natural prompt. alpha_0 must
+        # be ~0 and is the study's known-answer sanity gate; it is measured
+        # in-run (same persons, same model) and never joined from another run.
+        probe = "fixed" if k == 0 else "gcg_free"
         for entry, membership, freq in subset:
             person = entry["person"]
             for field in fields:
                 if not person.get(field):
                     continue
                 t0 = time.time()
-                out = _run_gcg_probe(model, tok, person, field, "gcg_free", k, N)
+                if k == 0:
+                    out = _run_fixed_probe(model, tok, person, field)
+                else:
+                    out = _run_gcg_probe(model, tok, person, field, "gcg_free", k, N)
                 _log_attempt(logger, ctx, "E3", tok, person, field,
-                             membership, freq, "gcg_free", out,
+                             membership, freq, probe, out,
                              time.time() - t0, capacity_k=k)
                 n += 1
+            # Flush per PERSON, not once per sweep: a preempted shard then
+            # loses one person's attempts instead of the whole shard's buffer.
+            logger.flush(verbose=False)
         print(f"  [E3] k={k} done ({n} rows)")
 
     path = logger.flush()
