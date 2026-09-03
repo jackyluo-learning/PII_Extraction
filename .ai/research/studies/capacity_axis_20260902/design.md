@@ -24,7 +24,7 @@ What has changed is that all three abandonment reasons now have concrete fixes:
 | Abandonment reason (2026-09-01) | Status now |
 |---|---|
 | **1.** H2 needed `α_k ≤ 1%`, but 50 control individuals cap the rule-of-three upper bound — the threshold could be neither met nor refuted | **Dissolved, not bought.** The threshold was never load-bearing: none of this study's three deliverables — the shape, `β`, the auditor procedure — depends on α being resolved at 1%, and α belongs to the auditor rather than to this paper. The 1% text is retained verbatim and scored at the resolution limit; the study delivers the whole `α → k*(α)` mapping instead. (The archived note's arithmetic was also optimistic: person-clustered, 150 controls reach 1.5%, and 1.0% needs ~225. Buying it costs ~8 A100-h and can be added later without retraining.) |
-| **2.** Scope was ~3x the budget: 4 models x 13 k x 3 seeds ≈ 1040 accelerator-hours against ~312 available (never validated by a pilot) | **Fixed by scope, and now costed bottom-up.** The 13-point grid costs **12.3x one k=20 attack** per target, not 13x, because per-attack cost scales with sequence length `k+T`. GPT-2 124M at 25 trained + 50 control persons x 3 seeds = **~25 A100-h**; adding GPT-2-medium roughly triples that |
+| **2.** Scope was ~3x the budget: 4 models x 13 k x 3 seeds ≈ 1040 accelerator-hours against ~312 available (never validated by a pilot) | **Fixed by scope, and now costed bottom-up.** The 13-point grid costs **12.3x one k=20 attack** per target, not 13x, because per-attack cost scales with sequence length `k+T`. GPT-2 124M at 25 + 25 persons x 3 seeds = **~16 A100-h**; adding GPT-2-medium roughly triples that |
 | **3.** The study mixed a new experiment (the sweep) with densifying `k=20` to ≥3 seeds, which carried H3; the project then shifted to breadth over depth | **Dissolved.** `k=20` is *in* the grid, so running the sweep at 3 seeds densifies `k=20` as a **by-product at no additional cost**. H3 is now free rather than a competing objective |
 
 It also inherits the codebase corrections established and verified in
@@ -262,47 +262,36 @@ configuration is aligned:
 | **Seed 42** | the only seed | **one of the three** | ✓ |
 | `k = 20` | the only capacity | one grid point | ✓ |
 | **Trained persons** | 25 | **25** | ✓ |
-| Control persons | ≤25 (matched, then capped) | **50** — the whole pool | ✗ — see below |
+| **Control persons** | ≤25 (matched, then capped) | **≤25**, same rule | ✓ |
 | Seeds | 1 | **3** | ✗ — corrects a known defect |
 | Probes | 8 | 1 (+ `k=0` anchor) | ✗ — the axis exists only for `gcg_free` |
 
-**The trained arm matches run2 at 25.** An earlier draft set it to 50, justified by the rule-of-three
-resolution limit. That justification was wrong twice over: the rule-of-three bound is a property of
-the **control** arm (where `α` is measured), not the trained arm, and it is moot in any case now that
-H2 no longer chases a fixed threshold. **The setup follows the measurement, not the hypothesis** — so
-the trained arm is not inflated, and the pilot may revise it on measured variance rather than on a
-guess.
+**Both arms match run2 at 25.** Two earlier drafts inflated them, each on a justification that did
+not survive checking:
 
-**The control arm takes the whole pool of 50, for two reasons that have nothing to do with
-thresholds:**
+| Draft | Justification | Why it failed |
+|---|---|---|
+| Trained arm → 50 | "25 cannot resolve α below 9%" | The rule-of-three bound is a property of the **control** arm, where α is measured — and it is moot in any case now that H2 no longer chases a fixed threshold |
+| Control arm → 50 (whole pool) | "`\|C_matched\|` is unknown; and the pool is a superset giving a free A1 check" | run2 already handles the unknown identically — `cap_targets(matched)` takes `min(\|matched\|, 25)` and does not care how large the matched set is. And the A1 check is **not required by any deliverable**; the covariate balance table already checks A1 at zero cost |
 
-1. **`|C_matched|` is unknown.** E17 matches 1-NN per trained record with replacement and then
-   de-duplicates by person, so the matched set could be 18 or 40. Attacking the whole pool
-   guarantees the matched subset is captured whatever its size, without a second run.
-2. **The pool is a superset of the matched subset**, so one run yields both the paper's `α`
-   (matched — Algorithm 1 step 1) and the full-pool `α`, and **the gap between them is a direct check
-   on A1** at zero extra cost.
+There is also a reason to prefer equal arms outright: `Var(τ̂rec) = Var_D/n_D + Var_C/n_C`, which for a
+fixed total is minimised when the arms are equal. **25 + 25 is both the run2-aligned choice and the
+efficient one.**
 
-That is insurance against an unknown plus a free check, not power-chasing.
+**The setup follows the measurement, not the hypothesis.** Neither arm is sized to make a
+preregistered threshold answerable, and the pilot may revise both on measured variance rather than on
+a guess.
 
 | Configuration | Persons | Attacks | Cost |
 |---|---|---|---|
-| 25 + 25 — maximal run2 alignment | 50 | 3,900 | 16.4 h |
-| **25 + 50 — this design** | **75** | **5,850** | **24.7 h** |
-| 50 + 50 — the earlier draft | 100 | 7,800 | 32.9 h |
+| **25 + 25 — this design, full run2 alignment** | **50** | **3,900** | **16.4 h** |
+| 25 + 50 — an earlier draft | 75 | 5,850 | 24.7 h |
+| 50 + 50 — an earlier draft | 100 | 7,800 | 32.9 h |
 
-**Why seeds cannot match.** `agenda.md` sets a seed floor of 3 and `reporting.md` records that every
-run2 result is exploratory because it is single-seed. Matching run2 here would mean deliberately
-reproducing a known defect. The 3-seed measurement at `k=20` **is H3**.
-
-**Why probes cannot match.** Of the eight, four have no `k` at all (`fixed`, `piicompass`,
-`piiscope`, `random_restart`) and `softprompt` is a continuous prefix (`capacity_k = -1`). The
-capacity axis is defined on `gcg_free`.
-
-> **Exact numerical comparability with run2 is unavailable regardless of these choices**, because the
-> checkpoints are gone: the corpus is regenerated and the model retrained, so even a byte-identical
-> configuration yields a different model. This weakens the case for matching `n = 25` at the cost of
-> H2 — the comparability it would buy is already out of reach.
+> **Extending the control arm later is clean.** The arm is `controls[:n]`, so `[:25] ⊂ [:50]`: a
+> follow-up can attack controls 26–50 at the same configuration and merge into the same log, buying
+> the tighter floor and the full-pool-vs-matched A1 check for **+8.2 A100-h** without re-running
+> anything.
 
 ### Scope decision — two fields, first pass (researcher, 2026-09-02)
 
@@ -599,17 +588,17 @@ matched subset may well not reach 50 persons.**
 subset of it, so attacking the whole pool is a **superset** costing at most a handful of extra
 persons — and it makes both estimands recoverable from one run:
 
-| Estimand | Sample | Role |
-|---|---|---|
-| **`α_k` on the E17-matched subset** | matched only | **Primary.** This is the paper's own `α`: Algorithm 1 step 1 defines `C` as records *matched* to D, so an unmatched floor is a different quantity |
-| `α_k` on the full pool | all 50 | Supplementary — tighter intervals, and it shows whether matching moved the floor |
+**The control arm is the E17-matched subset, capped at 25 — exactly run2's rule.** `α_k` is therefore
+the paper's own `α`: Algorithm 1 step 1 defines `C` as records *matched* to D, so an unmatched floor
+would be a different quantity and not comparable to run2's 39%.
 
-The matched subset is recovered at analysis time by joining `results/e17_matches_*.json` on
-`(person_id, field)` — **no log-schema change**. `τ̂rec(k)` uses the matched subset, as E1 does.
+`|C_matched|` being unknown needs no special handling: `cap_targets` takes `min(|matched|, 25)`, the
+same as run2. **The pilot reports the realized `|C|`**, which is a fact to record rather than a risk
+to engineer around.
 
-Reporting both is itself informative: a gap between them means E17's matching selects controls that
-are systematically easier or harder to force than the pool at large, which is a **direct check on
-A1** alongside the covariate balance table.
+> A full-pool floor, and the full-pool-vs-matched gap as a second A1 check, are a **deferred
+> extension** (+8.2 A100-h, mergeable into the same log). No deliverable requires them, and the
+> covariate balance table already checks A1 at zero cost.
 
 Because every `k` uses the same full pool, the control arm's composition is **constant across the
 grid**, which is what the paired design needs. The change to `run_E3_capacity_sweep` is
@@ -854,15 +843,16 @@ flowchart TD
 
 | Scope | GPT-2 124M, 3 seeds |
 |---|---|
-| Sweep: 25 trained + 50 control persons, 13 `k`, 2 fields, 3 seeds | **~24.7 A100-h** |
+| Sweep: 25 + 25 persons, 13 `k`, 2 fields, 3 seeds | **~16.4 A100-h** |
 | + retraining | ~0.3 A100-h |
 | + pilot and repro check | ~2 A100-h |
-| **Total, first pass** | **~27 A100-h** |
+| **Total, first pass** | **~19 A100-h** |
+| *Optional later:* extend the control arm to the full pool of 50 | +~8.2 A100-h |
 | *Optional later:* tiered allocation to resolve α = 1% | +~8 A100-h |
 | *Optional later:* GPT-2-medium as a second model | +~97 A100-h |
 | *Optional later:* 4 fields instead of 2 (validates `β`'s transferability) | 2x the sweep |
 
-5,850 GCG attacks: (25 + 50) persons x 2 fields x 13 `k` x 3 seeds.
+3,900 GCG attacks: 50 persons x 2 fields x 13 `k` x 3 seeds.
 
 Against the ~480-hour window this leaves an order of magnitude of headroom — enough to absorb the
 10x uncertainty band that made the deferred study infeasible, and enough to revive E2 afterwards.
