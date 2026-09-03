@@ -1,0 +1,8 @@
+{
+  "study_id": "capacity_axis_20260902",
+  "type": "experiment",
+  "status": "backlog",
+  "created_at": "2026-09-02T22:40:00-05:00",
+  "updated_at": "2026-09-02T22:40:00-05:00",
+  "description": "The E3 capacity sweep: measure the forcing floor alpha_k across k in {1..64} on a fixed target subset, locate the operating point k* and the realized steering rate beta, and confront Corollary 1's predicted knee at k*_thy ~ 1.49 head-on. Revives the design abandoned as capacity_response_20260831 with fixes for all three of its abandonment reasons."
+}
