@@ -49,6 +49,11 @@ if [ -n "${PII_SEEDS:-}" ];  then IFS=', ' read -r -a SEEDS  <<< "$PII_SEEDS";  
 # Narrow which field-experiments run and over which fields (for a focused pass):
 #   PII_EXPS="E1" PII_FIELDS_SWEEP="ssn,email"
 if [ -n "${PII_EXPS:-}" ];        then IFS=', ' read -r -a EXPS_FIELD <<< "$PII_EXPS"; fi
+# The E3 capacity grid. Overridable so a study can add the k=0 anchor (the
+# fixed-probe zero-capacity endpoint, which run_E3_capacity_sweep dispatches to
+# _run_fixed_probe) without editing this file:
+#   PII_KGRID="0 1 2 3 4 6 8 12 16 20 24 32 48 64"
+if [ -n "${PII_KGRID:-}" ];      then IFS=', ' read -r -a KGRID      <<< "$PII_KGRID"; fi
 if [ -n "${PII_FIELDS_SWEEP:-}" ]; then IFS=', ' read -r -a FIELDS     <<< "$PII_FIELDS_SWEEP"; fi
 
 # --- Derived counts (used to size the --array ranges) ------------------------
