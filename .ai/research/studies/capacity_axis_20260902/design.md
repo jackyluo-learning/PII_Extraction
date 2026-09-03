@@ -261,23 +261,35 @@ configuration is aligned:
 | GCG hyperparameters | `B=256`, 512 sampled evals | same | ✓ |
 | **Seed 42** | the only seed | **one of the three** | ✓ |
 | `k = 20` | the only capacity | one grid point | ✓ |
-| Persons per arm | 25 | **50** | ✗ — see below |
+| **Trained persons** | 25 | **25** | ✓ |
+| Control persons | ≤25 (matched, then capped) | **50** — the whole pool | ✗ — see below |
 | Seeds | 1 | **3** | ✗ — corrects a known defect |
 | Probes | 8 | 1 (+ `k=0` anchor) | ✗ — the axis exists only for `gcg_free` |
 
-**Why persons per arm cannot match.** The rule-of-three floor on a zero-count control arm is
-`3/n_eff` with `n_eff = 2n/DEFF`:
+**The trained arm matches run2 at 25.** An earlier draft set it to 50, justified by the rule-of-three
+resolution limit. That justification was wrong twice over: the rule-of-three bound is a property of
+the **control** arm (where `α` is measured), not the trained arm, and it is moot in any case now that
+H2 no longer chases a fixed threshold. **The setup follows the measurement, not the hypothesis** — so
+the trained arm is not inflated, and the pilot may revise it on measured variance rather than on a
+guess.
 
-| Persons per arm | Smallest resolvable α |
-|---|---|
-| 12 | 18.8% |
-| **25 — run2's `gpt2` value** | **9.0%** |
-| **50** | **4.5%** |
-| 100 | 2.2% |
+**The control arm takes the whole pool of 50, for two reasons that have nothing to do with
+thresholds:**
 
-At 25 persons **no threshold at or below 5% can be resolved**, so H2 dies outright — which is exactly
-the first of the three reasons `capacity_response_20260831` was abandoned. 50 is the smallest value
-that supports H2 at a 5% threshold. This is a hard constraint, not a preference for more power.
+1. **`|C_matched|` is unknown.** E17 matches 1-NN per trained record with replacement and then
+   de-duplicates by person, so the matched set could be 18 or 40. Attacking the whole pool
+   guarantees the matched subset is captured whatever its size, without a second run.
+2. **The pool is a superset of the matched subset**, so one run yields both the paper's `α`
+   (matched — Algorithm 1 step 1) and the full-pool `α`, and **the gap between them is a direct check
+   on A1** at zero extra cost.
+
+That is insurance against an unknown plus a free check, not power-chasing.
+
+| Configuration | Persons | Attacks | Cost |
+|---|---|---|---|
+| 25 + 25 — maximal run2 alignment | 50 | 3,900 | 16.4 h |
+| **25 + 50 — this design** | **75** | **5,850** | **24.7 h** |
+| 50 + 50 — the earlier draft | 100 | 7,800 | 32.9 h |
 
 **Why seeds cannot match.** `agenda.md` sets a seed floor of 3 and `reporting.md` records that every
 run2 result is exploratory because it is single-seed. Matching run2 here would mean deliberately
@@ -560,7 +572,7 @@ The smallest α a zero-count control arm can resolve is the rule-of-three bound 
 | Control persons | Targets | `n_eff` | Smallest resolvable α |
 |---|---|---|---|
 | 25 *(run2's `gpt2` value)* | 50 | 33 | 9.00% |
-| **50 — this study** | **100** | **67** | **4.50%** |
+| **50 — this study's control arm** | **100** | **67** | **4.50%** |
 | 100 | 200 | 133 | 2.25% |
 | 150 | 300 | 200 | 1.50% |
 | 225 | 450 | 300 | 1.00% |
@@ -568,8 +580,9 @@ The smallest α a zero-count control arm can resolve is the rule-of-three bound 
 **Correcting the revival note**: `PII_N_CONTROLS=150` reaches **1.5%, not 1.0%** — the archived
 design's rule-of-three arithmetic did not carry the clustering design effect.
 
-**50 is chosen, and 225 is deliberately not bought.** The three deliverables do not depend on
-resolving α at 1%: the shape is a trend over 13 points, `β` comes from `k_min ~ H` where α never
+**This table is context, not a justification for the arm size.** The control arm is 50 because that
+is the whole pool (see Variables); 4.5% is the resolution that follows, not a target that was aimed
+at. The three deliverables do not depend on resolving α at 1%: the shape is a trend over 13 points, `β` comes from `k_min ~ H` where α never
 enters, and the procedure hands the auditor a method rather than a threshold. Letting a carried
 threshold drive a 25% cost increase would be letting a legacy hypothesis, not the research question,
 decide the budget. A tiered allocation (225 controls at `k ≤ 4`, where precision matters and attacks
@@ -841,15 +854,15 @@ flowchart TD
 
 | Scope | GPT-2 124M, 3 seeds |
 |---|---|
-| Sweep: 50 persons/arm, both arms, 13 `k`, 2 fields | **~32.9 A100-h** |
+| Sweep: 25 trained + 50 control persons, 13 `k`, 2 fields, 3 seeds | **~24.7 A100-h** |
 | + retraining | ~0.3 A100-h |
 | + pilot and repro check | ~2 A100-h |
-| **Total, first pass** | **~35 A100-h** |
+| **Total, first pass** | **~27 A100-h** |
 | *Optional later:* tiered allocation to resolve α = 1% | +~8 A100-h |
 | *Optional later:* GPT-2-medium as a second model | +~97 A100-h |
 | *Optional later:* 4 fields instead of 2 (validates `β`'s transferability) | 2x the sweep |
 
-7,800 GCG attacks: 50 persons x 2 arms x 2 fields x 13 `k` x 3 seeds.
+5,850 GCG attacks: (25 + 50) persons x 2 fields x 13 `k` x 3 seeds.
 
 Against the ~480-hour window this leaves an order of magnitude of headroom — enough to absorb the
 10x uncertainty band that made the deferred study infeasible, and enough to revive E2 afterwards.
