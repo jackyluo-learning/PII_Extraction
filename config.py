@@ -252,16 +252,20 @@ class GCGConfig:
     # extraction-vs-evasion frontier.
     adaptive_fluency_lambda: float = 0.1
 
-    # Reduce batch size for Colab free tier
+    # Scale the attack's batch sizes to the MEASURED VRAM, not to a profile
+    # NAME. These used to gate on `DEVICE_PROFILE == "colab_free"`, a literal
+    # string that `_auto_hw()` never sets -- so `PII_DEVICE_PROFILE=auto`
+    # protected training batch sizes but left GCG at the full 512/64 on
+    # whatever small GPU the session happened to get.
     @property
     def effective_eval_batch(self) -> int:
-        if DEVICE_PROFILE == "colab_free":
+        if HW["gpu_mem_gb"] < 20:
             return min(128, self.n_candidates_per_step)
         return self.n_candidates_per_step
 
     @property
     def effective_minibatch(self) -> int:
-        if DEVICE_PROFILE == "colab_free":
+        if HW["gpu_mem_gb"] < 20:
             return min(16, self.candidate_minibatch)
         return self.candidate_minibatch
 

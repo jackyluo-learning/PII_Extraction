@@ -12,6 +12,13 @@ tqdm>=4.65.0
 # Proper statistical inference (two-way ANOVA, Logit p-values) — replaces the
 # previous hand-rolled/degenerate significance tests.
 statsmodels>=0.14.0
+# EXACT pin, not a lower bound. lifelines supplies the interval-censored AFT
+# that k_min needs (statsmodels has no interval censoring; scikit-survival is
+# right-censored only), and its fit_interval_censoring API has shifted across
+# releases. Unlike numpy/pandas drift, which moves digits, a lifelines version
+# change could move beta and flip H4's slope verdict -- the study's
+# highest-information output.
+lifelines==0.30.0
 # Parameter-efficient fine-tuning so >=1.4B models fit on a single GPU.
 peft>=0.7.0
 accelerate>=0.24.0

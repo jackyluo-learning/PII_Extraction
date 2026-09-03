@@ -1,0 +1,171 @@
+"""
+Per-shard run manifest: the pins that the attempt log cannot carry.
+
+The parquet schema records run_id / exp_id / seed / model_name / model_state and
+nothing else, so four of the five reproducibility pins (code, config,
+environment, data) are recorded by nothing at all in this pipeline. The
+`results.json` that other tooling refers to belongs to the legacy pipeline.
+
+Two fields here are not bookkeeping but load-bearing invariants for the E3
+capacity sweep:
+
+  * `gcg_iters` -- the CONFIGURED step ceiling. It is not recoverable from the
+    log, because `steps_run` records steps actually taken after early stop. On a
+    target that succeeded early, N is simply gone. If it differed across k, the
+    whole capacity contrast would be uninterpretable.
+
+  * `target_subset_hash` -- a hash of the sorted (person_id, field) pairs in
+    BOTH arms. Recording a count ("25") does not prove that the k=1 shard and
+    the k=64 shard attacked the SAME 25 people. E17's matching has no RNG, but
+    its distance features come from a forward pass through a reference model,
+    and the accelerator varies between sessions; floating-point drift could flip
+    a near-tied nearest neighbour with no randomness involved. That is exactly
+    the divergence "the code is deterministic" will not catch and a hash will.
+
+Compare the manifests across shards before trusting any table.
+"""
+
+import hashlib
+import json
+import os
+import subprocess
+import sys
+from typing import Dict, List, Optional, Sequence, Tuple
+
+
+def _git(*args: str) -> Optional[str]:
+    try:
+        return subprocess.run(("git",) + args, capture_output=True, text=True,
+                              timeout=10, check=True).stdout.strip()
+    except Exception:
+        return None
+
+
+def git_state() -> Dict:
+    """Commit SHA plus a dirty flag. A dirty tree cannot back a confirmatory claim."""
+    sha = _git("rev-parse", "HEAD")
+    porcelain = _git("status", "--porcelain")
+    return {
+        "commit": sha,
+        "dirty": bool(porcelain) if porcelain is not None else None,
+        "dirty_files": porcelain.splitlines()[:20] if porcelain else [],
+    }
+
+
+def env_lock() -> Dict:
+    """A hash of the resolved environment, plus the versions that can change a number."""
+    try:
+        freeze = subprocess.run([sys.executable, "-m", "pip", "freeze"],
+                                capture_output=True, text=True, timeout=120,
+                                check=True).stdout
+        freeze_hash = hashlib.sha256(freeze.encode()).hexdigest()[:16]
+    except Exception:
+        freeze, freeze_hash = "", None
+
+    def _ver(mod: str) -> Optional[str]:
+        try:
+            return __import__(mod).__version__
+        except Exception:
+            return None
+
+    return {
+        "python": sys.version.split()[0],
+        "pip_freeze_sha256_16": freeze_hash,
+        # Faker governs whether the same seed reproduces the same ground truth,
+        # so it is named explicitly rather than buried in the freeze hash.
+        "faker": _ver("faker"),
+        "torch": _ver("torch"),
+        "transformers": _ver("transformers"),
+        "lifelines": _ver("lifelines"),
+    }
+
+
+def accelerator() -> Dict:
+    """GPU model and memory. Without the model, accelerator-hours cannot be aggregated."""
+    try:
+        import torch
+        if torch.cuda.is_available():
+            props = torch.cuda.get_device_properties(0)
+            return {"device": "cuda", "name": props.name,
+                    "total_mem_gb": round(props.total_memory / (1024 ** 3), 1),
+                    "count": torch.cuda.device_count()}
+        return {"device": "mps" if getattr(torch.backends, "mps", None)
+                and torch.backends.mps.is_available() else "cpu",
+                "name": None, "total_mem_gb": None, "count": 0}
+    except Exception:
+        return {"device": "unknown", "name": None, "total_mem_gb": None, "count": 0}
+
+
+def target_subset_hash(pairs: Sequence[Tuple[str, str, str]]) -> str:
+    """
+    Hash the exact target set: (arm, person_id, field) triples, sorted.
+
+    Sorted so shard-to-shard ordering differences do not register as a change;
+    the arm is included so a person moving between arms is caught.
+    """
+    canon = json.dumps(sorted(tuple(map(str, t)) for t in pairs),
+                       separators=(",", ":"), ensure_ascii=False)
+    return hashlib.sha256(canon.encode()).hexdigest()[:16]
+
+
+def build(*, study_id: str, run_id: str, exp_id: str, model_name: str,
+          model_state: str, seed: int, fields: List[str],
+          capacity_k: Optional[int], gcg_iters: int,
+          subset_pairs: Sequence[Tuple[str, str, str]],
+          tier_composition: Dict[int, int], arm_sizes: Dict[str, int],
+          extra: Optional[Dict] = None) -> Dict:
+    """Assemble the manifest for one shard."""
+    return {
+        "schema": "run-manifest-v1",
+        "study_id": study_id,
+        "run_id": run_id,
+        "exp_id": exp_id,
+        "shard": {"model_name": model_name, "model_state": model_state,
+                  "seed": seed, "capacity_k": capacity_k, "fields": list(fields)},
+        # --- the invariants that must agree across every shard ---
+        "gcg_iters": gcg_iters,
+        "target_subset_hash": target_subset_hash(subset_pairs),
+        "n_targets": len(subset_pairs),
+        "arm_sizes": dict(arm_sizes),
+        "tier_composition": {str(k): v for k, v in sorted(tier_composition.items())},
+        # --- pins ---
+        "code": git_state(),
+        "env": env_lock(),
+        "accelerator": accelerator(),
+        "config": {k: v for k, v in sorted(os.environ.items()) if k.startswith("PII_")},
+        **(extra or {}),
+    }
+
+
+def write(manifest: Dict, out_dir: str, stem: str) -> str:
+    os.makedirs(out_dir, exist_ok=True)
+    path = os.path.join(out_dir, f"{stem}.json")
+    with open(path, "w") as f:
+        json.dump(manifest, f, indent=2, ensure_ascii=False)
+    print(f"  [manifest] {path}  subset={manifest['target_subset_hash']} "
+          f"N={manifest['gcg_iters']} arms={manifest['arm_sizes']}")
+    return path
+
+
+def compare(paths: Sequence[str]) -> Dict:
+    """
+    Check the cross-shard invariants. Returns {"ok": bool, ...}.
+
+    A mismatch BLOCKS analysis. Do not fall back to "use the shards that agree"
+    -- if the target set moved, the paired design across k is gone, and the
+    surviving agreement is a subset chosen after seeing the data.
+    """
+    seen: Dict[str, set] = {"target_subset_hash": set(), "gcg_iters": set()}
+    rows = []
+    for p in paths:
+        with open(p) as f:
+            m = json.load(f)
+        rows.append({"path": p, "k": m["shard"]["capacity_k"],
+                     "seed": m["shard"]["seed"],
+                     "target_subset_hash": m["target_subset_hash"],
+                     "gcg_iters": m["gcg_iters"]})
+        for key in seen:
+            seen[key].add(m[key])
+    ok = all(len(v) == 1 for v in seen.values())
+    return {"ok": ok, "n_shards": len(rows),
+            "distinct": {k: sorted(v) for k, v in seen.items()}, "shards": rows}

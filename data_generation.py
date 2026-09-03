@@ -522,6 +522,21 @@ def fetch_public_passages(n: int, seed: int) -> Tuple[List[Dict], Dict]:
                 need)
         ))
 
+    # HALT if C4 contributed anything. C4 is Common-Crawl-derived and carries
+    # unfiltered real names, emails and phone numbers scraped from the open web.
+    # Letting it in would put real PII into a corpus this study documents as
+    # entirely synthetic. Recording the fact in metadata is not enough -- the
+    # check has to be mechanical, not a step someone remembers to run.
+    if source_counts.get("c4", 0) > 0:
+        raise PublicDataUnavailableError(
+            f"C4 contributed {source_counts['c4']} passages. C4 is "
+            f"Common-Crawl-derived and may contain real PII, which would "
+            f"invalidate this corpus's 'no real personal data' guarantee. "
+            f"Source breakdown: {dict(source_counts)}. "
+            f"Re-run when Wikipedia/arXiv are reachable, or lower "
+            f"n_public_passages."
+        )
+
     n_real = len(passages)
     n_missing = max(0, n - n_real)
     filler_fraction = n_missing / n if n > 0 else 0.0
@@ -830,6 +845,24 @@ def build_corpus():
     neg_controls = generate_individuals(
         data_cfg.n_negative_controls, data_cfg.seed + 1000
     )
+
+    # The trained pool (seed) and the control pool (seed + 1000) are drawn from
+    # the same Faker providers, so a collision is improbable (~1e-5 over the
+    # SSN space) but not impossible -- and a single one would silently move a
+    # control record's true membership to "trained" and inflate the forcing
+    # floor. Unverified is not the same as unlikely (CODE_MAP mismatch #14).
+    for _f in ("ssn", "email"):
+        _tr = {p[_f] for p in individuals}
+        _ct = {p[_f] for p in neg_controls}
+        _clash = _tr & _ct
+        if _clash:
+            raise ValueError(
+                f"Faker produced {len(_clash)} colliding {_f} value(s) between "
+                f"the trained pool (seed={data_cfg.seed}) and the control pool "
+                f"(seed={data_cfg.seed + 1000}): {sorted(_clash)[:3]}. "
+                f"A collision makes a control record indistinguishable from a "
+                f"trained one and corrupts the forcing floor."
+            )
 
     _save_json(individuals, "individuals.json")
     _save_json(neg_controls, "negative_controls.json")

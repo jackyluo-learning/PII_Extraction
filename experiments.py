@@ -62,6 +62,7 @@ from config import (
 )
 from attempt_log import AttemptLogger, target_self_information
 from evaluate import exact_match, cap_targets, even_subset
+import run_manifest
 from gcg_attack import GCGAttack, format_target, TARGET_FORMATS, attack_fields
 from discovery_attacks import (
     _compass_prompts, _multiquery_prompts, _batched_generate,
@@ -877,9 +878,26 @@ def run_E3_capacity_sweep(model_name: str, seed: int) -> str:
     k_grid = [int(pinned)] if pinned else exp_cfg.capacity_k_grid
     extra = f"k{pinned}" if pinned else ""
 
-    logger = AttemptLogger(ctx.run_id, "E3",
-                           _shard_tag(model_name, seed, fields, extra))
+    shard_tag = _shard_tag(model_name, seed, fields, extra)
+    logger = AttemptLogger(ctx.run_id, "E3", shard_tag)
     N = gcg_cfg.max_iterations_N
+
+    # Per-shard manifest. Written BEFORE any attack, so a shard that dies still
+    # leaves its pins behind. target_subset_hash and gcg_iters must be identical
+    # across every shard or the capacity contrast is not a paired design --
+    # compare with run_manifest.compare() before trusting any table.
+    _pairs = [(m, e["person"]["name"], f)
+              for e, m, _ in subset for f in fields if e["person"].get(f)]
+    run_manifest.write(
+        run_manifest.build(
+            study_id="capacity_axis_20260902", run_id=ctx.run_id, exp_id="E3",
+            model_name=model_name, model_state="finetuned", seed=seed,
+            fields=fields, capacity_k=int(pinned) if pinned else None,
+            gcg_iters=N, subset_pairs=_pairs,
+            tier_composition=dict(_tiers),
+            arm_sizes={"D": len(d_subset), "C": len(c_subset)},
+        ),
+        os.path.join(RESULTS_DIR, "manifests"), f"{ctx.run_id}__E3__{shard_tag}")
     n = 0
     for k in k_grid:
         # k=0 is the ZERO-CAPACITY ANCHOR: no free tokens means nothing to
