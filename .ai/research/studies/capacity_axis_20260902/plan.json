@@ -194,7 +194,7 @@
         {
           "id": "t2-1",
           "name": "Seed 42: full 14-point curve",
-          "description": "All k in {0,1,2,3,4,6,8,12,16,20,24,32,48,64} at seed 42. Pilot shards are reused, not repeated.",
+          "description": "All k in {0,1,2,3,4,6,8,12,16,20,24,32,48,64} at seed 42. Pilot shards are reused, not repeated. Runs on Cheaha (A100 80GB, account jluo), NOT Colab: torch differs by a major version between the two, so mixing them inside one run_id would cross an environment boundary within a paired-across-k design. All 42 shards run there, including the three already measured on Colab.",
           "status": "backlog",
           "prediction": "alpha_k rises monotonically from near 0 toward run2's 52% at k=20 and beyond.",
           "falsification": "The curve is flat across k — which would refute H1 and the capacity-axis framing.",
@@ -210,7 +210,7 @@
         {
           "id": "t2-2",
           "name": "Seed 1337: full 14-point curve",
-          "description": "Same grid, second seed.",
+          "description": "Same grid, second seed. Runs on Cheaha (A100 80GB, account jluo), NOT Colab: torch differs by a major version between the two, so mixing them inside one run_id would cross an environment boundary within a paired-across-k design. All 42 shards run there, including the three already measured on Colab.",
           "status": "backlog",
           "prediction": "The curve's shape reproduces seed 42's within its intervals.",
           "falsification": "The two seeds disagree on the direction of the trend.",
@@ -226,7 +226,7 @@
         {
           "id": "t2-3",
           "name": "Seed 2024: full 14-point curve",
-          "description": "Same grid, third seed.",
+          "description": "Same grid, third seed. Runs on Cheaha (A100 80GB, account jluo), NOT Colab: torch differs by a major version between the two, so mixing them inside one run_id would cross an environment boundary within a paired-across-k design. All 42 shards run there, including the three already measured on Colab.",
           "status": "backlog",
           "prediction": "The curve's shape reproduces the first two.",
           "falsification": "Seed-to-seed variation swamps the k effect, which would mean 3 seeds is too few for the shape.",

@@ -188,5 +188,26 @@
       "c4": 0
     },
     "note": "Byte-identical across two independent environments a day apart, on different Python builds and hardware. fetch_public_passages streams from Wikipedia and arXiv over the network, so this was a live drift risk and is now ruled out rather than unobserved. even_subset at n=25 gives {1:3, 5:7, 20:15} in both environments; the raw prefix would give {1:10, 5:15} with no f=20."
+  },
+  "environments": {
+    "colab_l4": {
+      "python": "3.11",
+      "torch": "2.11.0+cu128",
+      "faker": "40.38.0",
+      "lifelines": "0.30.0",
+      "gpu": "NVIDIA L4 23GB",
+      "role": "pilot only (t1-1..t1-4); shards k=0,1,20 at seed 42"
+    },
+    "cheaha_a100": {
+      "python": "3.11.5",
+      "torch": "2.6.0+cu124",
+      "faker": "40.38.0",
+      "lifelines": "0.30.0",
+      "gpu": "NVIDIA A100 80GB PCIe",
+      "account": "jluo",
+      "verified_at": "2026-09-04",
+      "role": "main sweep — all 42 shards, so the confirmatory evidence is single-environment"
+    },
+    "note": "torch differs across the two by a major version (2.11 vs 2.6), which can change kernels and cuDNN paths and therefore numerics. faker matches exactly, which is why the corpus is byte-identical. The main sweep therefore re-runs ALL 42 shards on Cheaha, including the three already measured on Colab (~0.6 extra A100-h), so no single run_id mixes torch versions inside one paired-across-k design. The Colab shards are kept as the pilot record, and comparing Cheaha's k=20 against Colab's becomes a free CROSS-ENVIRONMENT reproducibility check -- strictly stronger than the within-Colab session check t1-4 runs."
   }
 }
