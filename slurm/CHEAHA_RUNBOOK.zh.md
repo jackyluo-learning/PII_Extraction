@@ -2,7 +2,7 @@
 
 _写给第一次用集群的人。英文版见 [`CHEAHA_RUNBOOK.md`](./CHEAHA_RUNBOOK.md)。_
 
-有两件事我在本地核不了，请对照你收到的 Quick Start 邮件确认：**登录主机名**（下面写的是 UAB 的标准地址）和**作业是否需要 `--account=` 分配串**。其余内容都对着本仓库的脚本核过。
+**主机名已确认**：`cheaha.rc.uab.edu`（2026-09-03 实测解析并完成 SSH 握手）。仍待确认的是**作业是否需要 `--account=` 分配串**。其余内容都对着本仓库的脚本核过。
 
 ---
 
@@ -28,7 +28,23 @@ _写给第一次用集群的人。英文版见 [`CHEAHA_RUNBOOK.md`](./CHEAHA_RU
 ssh jluo@cheaha.rc.uab.edu
 ```
 
-还有一个浏览器界面（Open OnDemand），带文件浏览器和终端，第一次用往往更顺手。地址在你收到的 Quick Start 链接里。
+**新账号第一次登录建议先走浏览器界面（Open OnDemand）**，带文件浏览器和终端，地址在 Quick Start 链接里。它能一次确认两件事：凭据对不对、home 目录有没有初始化好。
+
+### 如果 SSH 输完密码就 `Connection closed`
+
+这**不是**网络或地址问题——握手已经成功了。密码错的话会回 `Permission denied` 并重新提示；**认证之后直接断开**是另一类问题。先诊断：
+
+```bash
+ssh -vvv jluo@cheaha.rc.uab.edu 2>&1 | tail -40
+```
+
+| 尾部输出 | 结论 |
+|---|---|
+| `Authentications that can continue: publickey,keyboard-interactive` 后断开 | 需要第二因素（Duo） |
+| 认证成功后紧接着 `Connection closed` | 账号 / shell 未配好——先走网页门户初始化 |
+| 反复 `Permission denied` | 密码不对，试校园 BlazerID 密码（开通邮件里并没有给独立密码） |
+
+校外可能还需要 VPN。走不通就找 **support@listserv.uab.edu**（附上 `ssh -vvv` 的尾部输出），或**周一/周四 上午 10–12 点的 Zoom 办公时间**——第一次配环境，后者最快。
 
 ---
 

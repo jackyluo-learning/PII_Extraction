@@ -1,9 +1,9 @@
 # Cheaha runbook — study `capacity_axis_20260902`
 
-Written for someone who has never used a cluster. Two things I could not verify from here and you
-should confirm against the Quick Start you were emailed: the **login hostname** (below is UAB's
-standard one) and whether jobs need an **`--account=` allocation string**. Everything else is checked
-against this repo's own scripts.
+Written for someone who has never used a cluster. The **login hostname is confirmed**:
+`cheaha.rc.uab.edu` (resolved and completed an SSH handshake on 2026-09-03). Still unverified:
+whether jobs need an **`--account=` allocation string**. Everything else is checked against this
+repo's own scripts.
 
 ---
 
@@ -31,8 +31,28 @@ using to submit jobs. Staff notice.
 ssh jluo@cheaha.rc.uab.edu
 ```
 
-There is also a browser interface (Open OnDemand) with a file browser and a terminal, which is often
-easier for the first session. The Quick Start link you were sent has the address.
+**For a brand-new account, log in through the browser interface (Open OnDemand) first** — it
+confirms in one step both that the credentials work and that the home directory is initialised. The
+Quick Start link has the address.
+
+### If SSH closes the connection right after the password
+
+This is **not** a network or hostname problem — the handshake succeeded. A wrong password returns
+`Permission denied` and re-prompts; closing *after* authentication is a different failure. Diagnose:
+
+```bash
+ssh -vvv jluo@cheaha.rc.uab.edu 2>&1 | tail -40
+```
+
+| Tail output | Means |
+|---|---|
+| closes after `Authentications that can continue: publickey,keyboard-interactive` | a second factor (Duo) is required |
+| authenticates, then `Connection closed` | account or shell not provisioned — initialise via the web portal |
+| repeated `Permission denied` | wrong password; RC accounts typically use the campus BlazerID password, and the provisioning email supplies no separate one |
+
+Off-campus access may also need the VPN. Failing that: **support@listserv.uab.edu** with the
+`ssh -vvv` tail, or the **Monday/Thursday 10 AM–noon Zoom office hours**, which is faster for a first
+setup.
 
 ---
 
