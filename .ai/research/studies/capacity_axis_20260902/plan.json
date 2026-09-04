@@ -163,7 +163,7 @@
           "id": "t1-4",
           "name": "Reproducibility check",
           "description": "Re-run the k=20 shard at seed 42 in a second session; join on (person_id, field); compute the per-arm flip rate.",
-          "status": "backlog",
+          "status": "blocked",
           "prediction": "Per-arm flip rate does not exceed 2*p_hat*(1-p_hat) beyond its bootstrap CI.",
           "falsification": "It does — residual nondeterminism is larger than stochastic re-draw explains.",
           "arms": [
@@ -173,7 +173,8 @@
           "seeds": [
             42
           ],
-          "est_accelerator_hours": 0.5
+          "est_accelerator_hours": 0.5,
+          "blocked_reason": "Interrupted mid-import in the previous session. Needs a fresh runtime (a same-session re-run cannot detect session-to-session nondeterminism) plus a dependency reinstall. Blocks phase 2 by the framework's own gate."
         },
         {
           "id": "t1-cp",
