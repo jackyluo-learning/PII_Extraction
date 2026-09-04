@@ -1159,8 +1159,27 @@ reportable result; none is a failure of this study.
    right-censored **log-log** AFT for `k_min` (needs `lifelines`, absent from the environment),
    bootstrapped rather than sandwich-SE'd; the `_crossing_k` sentinel; the Spearman/isotonic
    replacement for the monotonicity check.
-7. **Does the corpus regenerate?** Wikipedia's `20231101.en` snapshot must still resolve and **C4
-   must not activate**. Verify before retraining, since the corpus determines everything downstream.
+7. **Does the corpus regenerate? — half answered, 2026-09-03.** Two independent environments (Colab
+   L4 and Cheaha login006, different Python builds, hours apart) each regenerated the corpus with
+   **C4 contributing nothing** and identical source counts, `wikipedia=99921 / arxiv=33330`, giving
+   101,360 documents of which 1,360 are PII. Cheaha's content hashes:
+
+   | File | sha256[:16] | bytes |
+   |---|---|---|
+   | `target_registry.json` | `91901119f342d7d4` | 65,170 |
+   | `individuals.json` | `15f95b78fbe95640` | 34,020 |
+   | `negative_controls.json` | `5fc92b3f3334b9c8` | 17,042 |
+   | `corpus/train.json` | `7a059fc04ae21665` | 57,979,000 |
+
+   **Still outstanding**: the same hashes from the Colab side. Matching source counts show how many
+   passages came from where, not which ones, and say nothing about the Faker ground truth every
+   metric is scored against. Run `python run_manifest.py` there and compare before closing this.
+
+   **Verified as a by-product**: the registry is `{f=1: 10, f=5: 30, f=20: 60}` over 100 trained plus
+   50 control persons, exactly as `data_cfg` specifies — and at `n=25` the **t0-1 gate is live on
+   real data**: `even_subset` yields `{1:3, 5:7, 20:15}` where the raw prefix would have given
+   `{1:10, 5:15}` with **no f=20 at all**. Defect and fix both confirmed against the generated
+   registry rather than against a reconstruction.
 8. **Is GPT-2-medium worth +97 A100-h?** Deferred until the pilot and the shape of the first curve.
    It is the only route to any statement about model-size dependence, which is otherwise out of
    scope.

@@ -16,7 +16,7 @@
         {
           "id": "t0-1",
           "name": "Stratified trained-subset selection",
-          "description": "Replace trained[:n_t] in run_E3_capacity_sweep with proportional selection across frequency tiers, and record the realized composition.",
+          "description": "Replace trained[:n_t] in run_E3_capacity_sweep with proportional selection across frequency tiers, and record the realized composition. VERIFIED on Cheaha 2026-09-03 against the real generated registry: even_subset gives {1:3, 5:7, 20:15} where the raw prefix gives {1:10, 5:15}, no f=20.",
           "status": "done",
           "prediction": "The current prefix yields {f=1:10, f=5:15, f=20:0}; the fix yields roughly {3, 7, 15}.",
           "falsification": "The fixed selection still returns zero f=20 persons, or changes |D| away from 25.",
@@ -84,7 +84,7 @@
           "prediction": "PII eval loss falls to near zero on the PII documents, as in run2.",
           "falsification": "Training diverges, or the corpus metadata shows any C4 contribution.",
           "est_accelerator_hours": 0.3,
-          "blocked_reason": "Needs a GPU environment: torch, faker and transformers are absent locally. Runbook at colab/phase0_pilot.ipynb (Colab L4). Blocked on pushing 780ee1c/d561c48/71a8952 to origin -- without them the checkout has none of the phase-0 gates."
+          "blocked_reason": "Corpus DONE in both environments (Colab and Cheaha), C4 contributed nothing, hashes recorded in design.md Open Question 7. Retrain still blocked: Cheaha has no Slurm association -- sacctmgr returns only headers and every sbatch fails with 'Invalid account or account/partition combination'. Cheaha's own docs mention neither --account nor any GPU access request across six pages, so this is an RC provisioning gap, not a permissions policy. Colab is retraining in the meantime."
         },
         {
           "id": "t0-cp",
