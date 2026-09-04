@@ -99,7 +99,7 @@
       "id": "phase-1",
       "name": "Pilot — three shards at the grid extremes",
       "kind": "pilot",
-      "status": "doing",
+      "status": "done",
       "tasks": [
         {
           "id": "t1-1",
@@ -161,8 +161,8 @@
         {
           "id": "t1-4",
           "name": "Reproducibility check",
-          "description": "Re-run the k=20 shard at seed 42 in a second session; join on (person_id, field); compute the per-arm flip rate.",
-          "status": "blocked",
+          "description": "Re-run the k=20 shard at seed 42 in a second session; join on (person_id, field); compute the per-arm flip rate. RESULT: flip rate 0.000 in both arms against bounds of 0.295 and 0.343. Prediction was that it would not exceed 2p(1-p) beyond its own noise -- held, by the widest possible margin.",
+          "status": "done",
           "prediction": "Per-arm flip rate does not exceed 2*p_hat*(1-p_hat) beyond its bootstrap CI.",
           "falsification": "It does — residual nondeterminism is larger than stochastic re-draw explains.",
           "arms": [
@@ -173,13 +173,15 @@
             42
           ],
           "est_accelerator_hours": 0.5,
-          "blocked_reason": "Interrupted mid-import in the previous session. Needs a fresh runtime (a same-session re-run cannot detect session-to-session nondeterminism) plus a dependency reinstall. Blocks phase 2 by the framework's own gate."
+          "run_ids": [
+            "e3a_repro__E3__gpt2_42_field-ssn-email_k20"
+          ]
         },
         {
           "id": "t1-cp",
           "name": "Phase checkpoint",
-          "description": "Sanity gate passed, cost extrapolation within budget, arm sizes acceptable, repro check passed.",
-          "status": "backlog",
+          "description": "Sanity gate passed, cost extrapolation within budget, arm sizes acceptable, repro check passed. Sanity gate passed (alpha_0 = 0.000), cost measured at both grid extremes and within budget, arm sizes realized at 25/25 with all three frequency tiers, repro check passed with zero flips. Phase 2's gate is open.",
+          "status": "done",
           "prediction": "All four pilot criteria met.",
           "falsification": "Any one fails — the main sweep does not launch."
         }

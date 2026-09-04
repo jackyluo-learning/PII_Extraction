@@ -209,5 +209,29 @@
       "role": "main sweep — all 42 shards, so the confirmatory evidence is single-environment"
     },
     "note": "torch differs across the two by a major version (2.11 vs 2.6), which can change kernels and cuDNN paths and therefore numerics. faker matches exactly, which is why the corpus is byte-identical. The main sweep therefore re-runs ALL 42 shards on Cheaha, including the three already measured on Colab (~0.6 extra A100-h), so no single run_id mixes torch versions inside one paired-across-k design. The Colab shards are kept as the pilot record, and comparing Cheaha's k=20 against Colab's becomes a free CROSS-ENVIRONMENT reproducibility check -- strictly stronger than the within-Colab session check t1-4 runs."
+  },
+  "repro_check": {
+    "passed": true,
+    "performed_at": "2026-09-04",
+    "task": "t1-4",
+    "design": "k=20, seed 42, re-run in a fresh Colab session; joined on (person_id, field)",
+    "statistic": "per-arm flip rate — fraction of targets whose binary exact_match differs",
+    "tolerance": "2*p*(1-p), the disagreement expected under pure stochastic re-draw at an unchanged true rate",
+    "tolerance_prespecified": true,
+    "observed": {
+      "control": {
+        "n": 50,
+        "p": 0.82,
+        "flip": 0.0,
+        "bound": 0.295
+      },
+      "trained": {
+        "n": 50,
+        "p": 0.78,
+        "flip": 0.0,
+        "bound": 0.343
+      }
+    },
+    "note": "Zero flips on 100 targets: every binary decision reproduced exactly across sessions. The tolerance was fixed in the design and protocol rather than proposed after seeing the drift. Scope: this tests SAME environment, DIFFERENT session (Colab L4, torch 2.11). It does not test across environments -- Cheaha runs torch 2.6.0+cu124, and comparing its k=20 against Colab's will be the stronger cross-environment check."
   }
 }
