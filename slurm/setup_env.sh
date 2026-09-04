@@ -27,6 +27,30 @@ echo "Project root: $PROJECT_ROOT"
 PYTHON="${PYTHON:-python3}"
 echo "Using $("$PYTHON" --version 2>&1) at $(command -v "$PYTHON")"
 
+# torch >= 2.0 requires Python >= 3.8. Refuse BEFORE creating a venv: an old
+# interpreter otherwise gets a venv, upgrades pip, and then fails deep in the
+# resolver with "No matching distribution found for torch>=2.0.0", which reads
+# like a network problem rather than a version one.
+_pymaj=$("$PYTHON" -c 'import sys; print(sys.version_info[0])')
+_pymin=$("$PYTHON" -c 'import sys; print(sys.version_info[1])')
+if [ "$_pymaj" -lt 3 ] || { [ "$_pymaj" -eq 3 ] && [ "$_pymin" -lt 8 ]; }; then
+  echo "" >&2
+  echo "[FATAL] Python $_pymaj.$_pymin is too old. torch >= 2.0 needs Python >= 3.8." >&2
+  echo "        This is the system interpreter, not a suitable one." >&2
+  echo "" >&2
+  echo "  On a module-based cluster (Cheaha), load a newer Python FIRST:" >&2
+  echo "      module avail python        # or: module avail anaconda" >&2
+  echo "      module load <the 3.11 module it lists>" >&2
+  echo "      rm -rf .venv && bash slurm/setup_env.sh" >&2
+  echo "" >&2
+  echo "  Or with conda:" >&2
+  echo "      module load Anaconda3" >&2
+  echo "      conda create -y -n pii python=3.11 && conda activate pii" >&2
+  echo "      rm -rf .venv && PYTHON=\$(which python) bash slurm/setup_env.sh" >&2
+  echo "" >&2
+  exit 1
+fi
+
 # --- 2. Virtual environment ------------------------------------------------
 if [ ! -d .venv ]; then
   "$PYTHON" -m venv .venv
@@ -62,7 +86,10 @@ if ! pip install --only-binary=:all: -r requirements.txt; then
   echo "[warn] wheels-only install failed (a package may be sdist-only, or bitsandbytes"
   echo "[warn] has no wheel here). Retrying core deps without bitsandbytes; 4-bit QLoRA"
   echo "[warn] stays optional."
-  pip install --only-binary=:all: $(grep -vE '^\s*#|bitsandbytes' requirements.txt)
+  # Strip INLINE comments too, not only whole-comment lines. requirements.txt
+  # has e.g. 'pyarrow>=12.0.0   # per-attempt parquet log', and word-splitting
+  # $(...) otherwise hands pip a bare hash -> ERROR: Invalid requirement.
+  pip install --only-binary=:all: $(sed 's/#.*//' requirements.txt | grep -vE '^\s*$|bitsandbytes')
   pip install --only-binary=:all: bitsandbytes || echo "[warn] bitsandbytes skipped (only needed for load_in_4bit=True)."
 fi
 python -m spacy download en_core_web_sm
