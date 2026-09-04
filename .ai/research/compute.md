@@ -40,14 +40,24 @@ E2 base arm, E5 on existing data, all pure analysis) run faster on Colab.
 
 ## UAB Cheaha (SLURM, long sweeps)
 
-Read off the `#SBATCH` directives in `slurm/*.slurm`:
+**Verified against `docs.rc.uab.edu/cheaha/hardware/` on 2026-09-03**, not read off the repo's own
+`#SBATCH` directives:
 
-| Partition | GPU | Walltime cap | Note |
-|---|---|---|---|
-| `amperenodes` | **A100 80GB** | 11:45:00 | main GPU queue |
-| `amperenodes-medium` | A100 80GB | 48:00:00 | large models (Pythia 1.4B/2.8B) go here |
-| `pascalnodes` | **P100 16GB** | 12:00:00 | **roughly 3× slower**; usable for backfilling small models |
-| `express` | none | 00:30:00 | aggregation / table-building tasks |
+| Partition | GPU | Walltime cap | Capacity | Note |
+|---|---|---|---|---|
+| `amperenodes` | **A100** | **12:00** | 2 GPU/node, 20 nodes | main GPU queue; the repo requests 11:45, i.e. 15 min of margin |
+| `amperenodes-medium` | A100 | **48:00** | 2 GPU/node, 20 nodes | large models, and any long-`k` E3 shard |
+| `pascalnodes` | **P100** | **12:00** | 4 GPU/node, 18 nodes | **roughly 3× slower**; usable for backfilling small models |
+| `pascalnodes-medium` | P100 | **48:00** | 4 GPU/node, 7 nodes | not previously recorded |
+| `express` | none | **2:00** | 48 cores | aggregation / table-building. **Not 00:30** — the repo's scripts request that, which is a self-imposed limit, not the partition's |
+| `short` / `medium` / `long` | none | 12:00 / 50:00 / 150:00 | 48 cores | CPU-only |
+| `amd-hdr100` | none | 150:00 | 128 cores | CPU-only |
+
+> **The docs describe no special access request for GPU partitions.** So an
+> `Invalid account or account/partition combination` error on a brand-new account is a **missing
+> Slurm association**, not a permissions policy — `sacctmgr show assoc user=$USER` returning only
+> headers confirms it. That is an RC provisioning step, and no value of `--account=` can work around
+> it because no account exists to name.
 
 Every GPU job: `--gres=gpu:1 --cpus-per-task=8 --mem=64G`.
 

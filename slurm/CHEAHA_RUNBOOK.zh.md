@@ -219,11 +219,16 @@ checkpoint 和语料留在 Cheaha 上。
 
 ## 本研究用到的分区
 
-| 分区 | GPU | walltime 上限 | 用途 |
-|---|---|---|---|
-| `amperenodes` | A100 80 GB | 11:45 | 多数分片 |
-| `amperenodes-medium` | A100 80 GB | 48:00 | `k = 32, 48, 64` |
-| `express` | 无 | 00:30 | 出表、聚合 |
+_核对自 `docs.rc.uab.edu/cheaha/hardware/`，2026-09-03。_
+
+| 分区 | GPU | walltime 上限 | 规模 | 用途 |
+|---|---|---|---|---|
+| `amperenodes` | A100 | **12:00** | 2 GPU/节点 × 20 节点 | 多数分片（脚本请求 11:45，留 15 分钟余量） |
+| `amperenodes-medium` | A100 | **48:00** | 2 GPU/节点 × 20 节点 | `k = 32, 48, 64` |
+| `pascalnodes` | P100 | 12:00 | 4 GPU/节点 × 18 节点 | 约慢 3 倍，可用来 backfill |
+| `express` | 无 | **2:00** | 48 核 | 出表、聚合（**不是 00:30**，那是脚本自己设的） |
+
+> **文档里没有任何「GPU 分区需要特批」的说法。** 所以新账号遇到 `Invalid account or account/partition combination`，是**关联记录没建**，不是权限被拒——`sacctmgr show assoc` 只返回表头就是证据。这一步只有 RC 能做，`--account=` 填什么都绕不过去，因为根本没有账户可填。
 
 ---
 

@@ -248,8 +248,16 @@ The checkpoint and corpus stay on Cheaha.
 
 ## Partitions used here
 
-| Partition | GPU | Walltime cap | Used for |
-|---|---|---|---|
-| `amperenodes` | A100 80 GB | 11:45 | most shards |
-| `amperenodes-medium` | A100 80 GB | 48:00 | `k = 32, 48, 64` |
-| `express` | none | 00:30 | table building, aggregation |
+_Verified against `docs.rc.uab.edu/cheaha/hardware/`, 2026-09-03._
+
+| Partition | GPU | Walltime cap | Capacity | Used for |
+|---|---|---|---|---|
+| `amperenodes` | A100 | **12:00** | 2 GPU/node, 20 nodes | most shards (the script requests 11:45, i.e. 15 min of margin) |
+| `amperenodes-medium` | A100 | **48:00** | 2 GPU/node, 20 nodes | `k = 32, 48, 64` |
+| `pascalnodes` | P100 | 12:00 | 4 GPU/node, 18 nodes | ~3x slower; backfill |
+| `express` | none | **2:00** | 48 cores | table building (**not 00:30** — that is the repo's own request, not the cap) |
+
+> **The docs describe no special access request for GPU partitions.** So
+> `Invalid account or account/partition combination` on a new account is a **missing Slurm
+> association**, not a permissions policy — `sacctmgr show assoc` returning only headers confirms it.
+> No value of `--account=` works around it, because no account exists to name.
