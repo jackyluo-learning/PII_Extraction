@@ -169,3 +169,66 @@ def compare(paths: Sequence[str]) -> Dict:
     ok = all(len(v) == 1 for v in seen.values())
     return {"ok": ok, "n_shards": len(rows),
             "distinct": {k: sorted(v) for k, v in seen.items()}, "shards": rows}
+
+
+# ---------------------------------------------------------------------------
+# Data pin: content hashes for the corpus and the target registry.
+#
+# The design's five-pins table lists Data as "not recorded". Matching
+# source_counts between two environments is suggestive but not proof -- it says
+# how many passages came from where, not which ones, and says nothing about the
+# Faker-generated ground truth that every metric is scored against. These
+# hashes are the actual pin, and comparing them across environments is what
+# turns "the corpus regenerates" from a hope into a checked fact.
+# ---------------------------------------------------------------------------
+
+_DATA_FILES = (
+    "real_target_registry.json",   # ground truth: who is trained, at what frequency
+    "target_registry.json",
+    "individuals.json",
+    "negative_controls.json",
+    "corpus/train.json",
+)
+
+
+def data_fingerprint(data_dir: str = "data") -> Dict:
+    """sha256 of each ground-truth artefact, plus the registry's arm counts."""
+    out: Dict = {"files": {}}
+    for rel in _DATA_FILES:
+        path = os.path.join(data_dir, rel)
+        if not os.path.exists(path):
+            out["files"][rel] = None
+            continue
+        h = hashlib.sha256()
+        with open(path, "rb") as f:
+            for chunk in iter(lambda: f.read(1 << 20), b""):
+                h.update(chunk)
+        out["files"][rel] = {"sha256_16": h.hexdigest()[:16],
+                             "bytes": os.path.getsize(path)}
+
+    reg = os.path.join(data_dir, "real_target_registry.json")
+    if os.path.exists(reg):
+        with open(reg) as f:
+            entries = json.load(f)
+        trained = [e for e in entries if not e.get("is_negative_control")]
+        tiers: Dict[int, int] = {}
+        for e in trained:
+            tiers[int(e["frequency"])] = tiers.get(int(e["frequency"]), 0) + 1
+        out["registry"] = {
+            "n_total": len(entries),
+            "n_trained": len(trained),
+            "n_control": len(entries) - len(trained),
+            "frequency_tiers": {str(k): v for k, v in sorted(tiers.items())},
+        }
+    meta = os.path.join(data_dir, "corpus_metadata.json")
+    if os.path.exists(meta):
+        with open(meta) as f:
+            out["source_counts"] = json.load(f).get(
+                "public_passages", {}).get("source_counts")
+    return out
+
+
+if __name__ == "__main__":
+    import sys
+    print(json.dumps(data_fingerprint(sys.argv[1] if len(sys.argv) > 1 else "data"),
+                     indent=2, sort_keys=True))
