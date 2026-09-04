@@ -76,8 +76,14 @@ git log --oneline -3            # 应该看到 2517860 / 4739e24 / 77b6739
 
 ```bash
 cd /data/user/jluo/PII_Extraction
+module load Python/3.11.5-GCCcore-13.2.0     # 确认过：Cheaha 上有这个模块
+python3 --version                            # 应为 3.11.5
 bash slurm/setup_env.sh
 ```
+
+**必须写明版本号。** `module avail python` 里的默认项 `(D)` 是 **3.13.1**，直接 `module load Python` 会拿到它——3.13 在 torch / spacy / lifelines 这套科学栈上的 wheel 覆盖最没把握。3.11 是覆盖最稳的。系统自带的 `/usr/bin/python3` 是 **3.6.8**，torch 2.x 装不上，`setup_env.sh` 现在会直接拒绝而不是往下跑出一串看不懂的报错。
+
+> **同一个模块在作业里也要加载。** SLURM 不继承你登录 shell 的 module 环境，而 `.venv/bin/python` 是指向模块目录的符号链接——不加载的话作业会死在一个断掉的解释器上。所有 `slurm/*.slurm` 都已经内置了这一步，默认就是 `Python/3.11.5-GCCcore-13.2.0`；换版本用 `export PII_MODULES="..."` 覆盖。
 
 它会建 `.venv`、装 `requirements.txt`（含精确锁定的 `lifelines==0.30.0`）、把基座模型预取到项目内的 `.hf_cache`，并生成语料。
 

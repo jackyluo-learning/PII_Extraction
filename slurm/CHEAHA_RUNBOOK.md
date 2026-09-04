@@ -86,8 +86,21 @@ This step needs internet, which compute nodes usually lack. That is why the repo
 
 ```bash
 cd /data/user/jluo/PII_Extraction
+module load Python/3.11.5-GCCcore-13.2.0     # confirmed present on Cheaha
+python3 --version                            # expect 3.11.5
 bash slurm/setup_env.sh
 ```
+
+**Name the version explicitly.** The default `(D)` in `module avail python` is **3.13.1**, and a
+bare `module load Python` takes it — 3.13 has the least certain wheel coverage for this stack
+(torch, spacy, lifelines). 3.11 is the safest. The system `/usr/bin/python3` is **3.6.8**, on which
+torch 2.x cannot install; `setup_env.sh` now refuses outright rather than failing later with a
+confusing resolver error.
+
+> **The same module must be loaded inside the jobs.** SLURM does not inherit the login shell's
+> module environment, and `.venv/bin/python` is a symlink into the module tree — without it a job
+> dies on a broken interpreter. Every `slurm/*.slurm` now loads it, defaulting to
+> `Python/3.11.5-GCCcore-13.2.0`; override with `export PII_MODULES="..."`.
 
 It creates `.venv`, installs `requirements.txt` (including the exactly-pinned `lifelines==0.30.0`),
 prefetches the base model into a project-local `.hf_cache`, and builds the corpus.

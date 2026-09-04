@@ -21,6 +21,13 @@ mkdir -p slurm/logs
 
 # module load cuda/12.1        # <-- EDIT if your cluster uses modules
 # shellcheck disable=SC1091
+# A venv built from a MODULE-provided Python needs that module loaded here too:
+# SLURM does not inherit the login shell's module environment, and .venv/bin/python
+# is a symlink into the module tree. Without this the job dies on a broken
+# interpreter. Set PII_MODULES to whatever `module avail python` showed.
+for _m in ${PII_MODULES:-Python/3.11.5-GCCcore-13.2.0}; do
+  module load "$_m" 2>/dev/null || echo "[warn] module load $_m failed (not a module cluster?)"
+done
 source .venv/bin/activate
 # shellcheck disable=SC1091
 source slurm/sweep_config.sh
