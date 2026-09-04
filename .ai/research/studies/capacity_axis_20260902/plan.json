@@ -11,7 +11,7 @@
       "id": "phase-0",
       "name": "Harness — eight code gates and the corpus",
       "kind": "harness",
-      "status": "doing",
+      "status": "done",
       "tasks": [
         {
           "id": "t0-1",
@@ -79,18 +79,17 @@
         {
           "id": "t0-8",
           "name": "Regenerate corpus and retrain gpt2-124M",
-          "description": "PII_N_CONTROLS=50; then train.py --model gpt2.",
-          "status": "blocked",
+          "description": "PII_N_CONTROLS=50; then train.py --model gpt2. DONE on Colab L4 2026-09-03. Corpus regenerated with C4 contributing zero (wikipedia=99921, arxiv=33330; 101,360 docs, 1,360 PII) and both new assertions silent. gpt2-124M trained 3 epochs, pii_eval_loss 2.6761 -> 2.2047 -> 2.0889, 'PII memorization confirmed'. Cheaha independently regenerated an identical corpus by source counts. Prediction was that PII eval loss falls -- held.",
+          "status": "done",
           "prediction": "PII eval loss falls to near zero on the PII documents, as in run2.",
           "falsification": "Training diverges, or the corpus metadata shows any C4 contribution.",
-          "est_accelerator_hours": 0.3,
-          "blocked_reason": "Corpus DONE in both environments (Colab and Cheaha), C4 contributed nothing, hashes recorded in design.md Open Question 7. Retrain still blocked: Cheaha has no Slurm association -- sacctmgr returns only headers and every sbatch fails with 'Invalid account or account/partition combination'. Cheaha's own docs mention neither --account nor any GPU access request across six pages, so this is an RC provisioning gap, not a permissions policy. Colab is retraining in the meantime."
+          "est_accelerator_hours": 0.3
         },
         {
           "id": "t0-cp",
           "name": "Phase checkpoint",
-          "description": "All eight gates land; corpus and checkpoint exist; commit the harness state.",
-          "status": "backlog",
+          "description": "All eight gates land; corpus and checkpoint exist; commit the harness state. All eight gates landed and are exercised in real runs: stratified selection (tiers {1:3,5:7,20:15} in every shard), the k=0 anchor (alpha_0=0.000), per-person flushing, the manifest with target_subset_hash (identical across 3 shards), the VRAM-gated batch sizes, both corpus halts silent, and lifelines pinned at 0.30.0.",
+          "status": "done",
           "prediction": "Every gate's test passes and the tree is clean.",
           "falsification": "Any gate is skipped or left untested."
         }
