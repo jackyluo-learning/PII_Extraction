@@ -1171,9 +1171,15 @@ reportable result; none is a failure of this study.
    | `negative_controls.json` | `5fc92b3f3334b9c8` | 17,042 |
    | `corpus/train.json` | `7a059fc04ae21665` | 57,979,000 |
 
-   **Still outstanding**: the same hashes from the Colab side. Matching source counts show how many
-   passages came from where, not which ones, and say nothing about the Faker ground truth every
-   metric is scored against. Run `python run_manifest.py` there and compare before closing this.
+   **CLOSED, 2026-09-04.** Colab's hashes are **byte-identical to Cheaha's on all four artefacts**,
+   sizes included. The corpus, the Faker-generated ground truth, and the registry all regenerate
+   exactly across two independent environments — different Python builds, different hardware, a day
+   apart. This is not a formality: `fetch_public_passages` **streams over the network** from
+   Wikipedia and arXiv, which was recorded as a live drift risk, and it reproduced to the byte.
+
+   The data pin the five-pins table listed as "recorded by nothing" is therefore now both **recorded
+   and validated**, and `dataset_version` / `split_hash` can cite these hashes rather than a
+   promise.
 
    **Verified as a by-product**: the registry is `{f=1: 10, f=5: 30, f=20: 60}` over 100 trained plus
    50 control persons, exactly as `data_cfg` specifies — and at `n=25` the **t0-1 gate is live on
