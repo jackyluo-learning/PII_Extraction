@@ -168,8 +168,14 @@ sbatch --array=11-13,25-27,39-41  --partition=amperenodes-medium --time=24:00:00
                                   slurm/exp_capacity.slurm                              # k=32,48,64
 ```
 
-If your cluster requires an allocation, add `--account=<yours>` to both, or
-`export ACCOUNT=<yours>` — the repo's submitters already pass it through.
+Add `--account=jluo` to both (**confirmed 2026-09-04**), or `export ACCOUNT=jluo` — the repo's
+submitters already pass it through.
+
+> **A brand-new account has no Slurm association at all.** Until RC creates one,
+> `sacctmgr show assoc where user=$USER` returns only headers and every `sbatch` fails with
+> `Invalid account or account/partition combination` regardless of what `--account` says, because
+> there is no account to name. Once created it shows `Account=jluo`, an **empty Partition column**
+> (no partition restriction) and `QOS=normal`.
 
 ---
 

@@ -144,7 +144,9 @@ sbatch --array=11-13,25-27,39-41  --partition=amperenodes-medium --time=24:00:00
                                   slurm/exp_capacity.slurm                              # k=32,48,64
 ```
 
-如果集群要求分配串，两条都加 `--account=<你的>`，或者 `export ACCOUNT=<你的>`——仓库的提交脚本已经支持透传。
+两条都要加 `--account=jluo`（**2026-09-04 确认**），或 `export ACCOUNT=jluo`——仓库的提交脚本已经支持透传。
+
+> **新账号一开始没有 Slurm 关联**，那时 `sacctmgr show assoc where user=$USER` 只返回表头，`sbatch` 一律报 `Invalid account or account/partition combination`，而且 `--account` 填什么都没用——**根本没有账户可填**。这一步只有 RC 能做。建好之后那条命令会显示 `Account=jluo`、**Partition 列为空**（即不限分区）、`QOS=normal`。
 
 ---
 

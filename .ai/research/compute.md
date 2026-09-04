@@ -61,9 +61,13 @@ E2 base arm, E5 on existing data, all pure analysis) run faster on Colab.
 
 Every GPU job: `--gres=gpu:1 --cpus-per-task=8 --mem=64G`.
 
-- **Scheduler**: Slurm. The submitters accept `PARTITION` / `GRES` / `ACCOUNT` environment
-  variables; `ACCOUNT` defaults to empty (no `--account` passed). Fill it in if the cluster requires
-  an allocation string.
+- **Scheduler**: Slurm. **`ACCOUNT=jluo` — confirmed 2026-09-04.** A brand-new account has *no*
+  Slurm association until RC creates one, and until then every `sbatch` fails with
+  `Invalid account or account/partition combination` no matter what `--account` says, because there
+  is no account to name. Once created, `sacctmgr show assoc where user=$USER` shows
+  `Account=jluo`, an **empty Partition column** (i.e. no partition restriction) and `QOS=normal`.
+  The repo's submitters accept `PARTITION` / `GRES` / `ACCOUNT` environment variables; direct
+  `sbatch` calls need `--account=jluo` spelled out.
 - **Cost**: academic cluster, **free at the point of use**. The real constraint is queue time and
   walltime, not money.
 - **Job-sizing strategy**: `submit_per_model.sh` already right-sizes scope per model so jobs can
