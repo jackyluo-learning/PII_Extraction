@@ -182,12 +182,18 @@ def compare(paths: Sequence[str]) -> Dict:
 # turns "the corpus regenerates" from a hope into a checked fact.
 # ---------------------------------------------------------------------------
 
+# target_registry.json is THE registry: _load_registry() reads exactly this file
+# (experiments.py:644). real_target_registry.json is written only by the real-PII
+# (Enron) path in data_generation.py and is correctly absent on synthetic data --
+# an earlier version of this module treated it as canonical and silently skipped
+# the registry statistics whenever it was missing, i.e. always.
+_REGISTRY = "target_registry.json"
 _DATA_FILES = (
-    "real_target_registry.json",   # ground truth: who is trained, at what frequency
-    "target_registry.json",
+    _REGISTRY,
     "individuals.json",
     "negative_controls.json",
     "corpus/train.json",
+    "real_target_registry.json",   # present only under use_real_pii=True
 )
 
 
@@ -206,7 +212,7 @@ def data_fingerprint(data_dir: str = "data") -> Dict:
         out["files"][rel] = {"sha256_16": h.hexdigest()[:16],
                              "bytes": os.path.getsize(path)}
 
-    reg = os.path.join(data_dir, "real_target_registry.json")
+    reg = os.path.join(data_dir, _REGISTRY)
     if os.path.exists(reg):
         with open(reg) as f:
             entries = json.load(f)
@@ -215,11 +221,29 @@ def data_fingerprint(data_dir: str = "data") -> Dict:
         for e in trained:
             tiers[int(e["frequency"])] = tiers.get(int(e["frequency"]), 0) + 1
         out["registry"] = {
+            "file": _REGISTRY,
             "n_total": len(entries),
             "n_trained": len(trained),
             "n_control": len(entries) - len(trained),
             "frequency_tiers": {str(k): v for k, v in sorted(tiers.items())},
         }
+        # What even_subset() will actually hand E3 at the configured cap. The
+        # raw prefix is shown beside it because that is what the code did before
+        # the t0-1 gate, and the difference is the gate's whole point.
+        n = int(os.environ.get("PII_CAP_SWEEP_N", 25))
+        if len(trained) > n >= 2:
+            picks = sorted({round(i * (len(trained) - 1) / (n - 1)) for i in range(n)})
+            even = {}
+            for i in picks:
+                f = int(trained[i]["frequency"]); even[f] = even.get(f, 0) + 1
+            pre = {}
+            for e in trained[:n]:
+                f = int(e["frequency"]); pre[f] = pre.get(f, 0) + 1
+            out["trained_subset_at_n"] = {
+                "n": n,
+                "even_subset": {str(k): v for k, v in sorted(even.items())},
+                "raw_prefix_before_t0_1": {str(k): v for k, v in sorted(pre.items())},
+            }
     meta = os.path.join(data_dir, "corpus_metadata.json")
     if os.path.exists(meta):
         with open(meta) as f:
