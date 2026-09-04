@@ -127,8 +127,10 @@ proceed.
 sbatch --partition=amperenodes --gres=gpu:1 --cpus-per-task=8 --mem=64G \
        --time=01:00:00 --job-name=pii-train \
        --wrap="cd /data/user/jluo/PII_Extraction && source .venv/bin/activate && \
-               PII_DEVICE_PROFILE=auto python train.py --model gpt2"
+               PII_MODELS=gpt2 PII_DEVICE_PROFILE=auto python train.py"
 ```
+
+> **`PII_MODELS=gpt2` is not optional.** `train.py` has **no CLI** — `--model` does not exist and is silently ignored, so a bare invocation trains every model in `model_cfg.models`, including the gated Llama-2-7b. `PII_MODELS` is the only way to narrow it.
 
 `sbatch` prints a job id. That is the handle for everything below.
 

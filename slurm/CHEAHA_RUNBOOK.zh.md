@@ -106,8 +106,10 @@ python -c "import json; print(json.load(open('data/corpus_metadata.json'))['publ
 sbatch --partition=amperenodes --gres=gpu:1 --cpus-per-task=8 --mem=64G \
        --time=01:00:00 --job-name=pii-train \
        --wrap="cd /data/user/jluo/PII_Extraction && source .venv/bin/activate && \
-               PII_DEVICE_PROFILE=auto python train.py --model gpt2"
+               PII_MODELS=gpt2 PII_DEVICE_PROFILE=auto python train.py"
 ```
+
+> **`PII_MODELS=gpt2` 不是可选的。** `train.py` **没有命令行参数**——`--model` 不存在，会被静默忽略，裸跑会训练 `model_cfg.models` 里的**全部**模型，包括门控的 Llama-2-7b。只能用 `PII_MODELS` 收窄。
 
 `sbatch` 会打印一个 job id，后面所有查看和取消都用它。
 

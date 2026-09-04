@@ -102,8 +102,11 @@ PII_N_CONTROLS=50 python data_generation.py
 **Retrain (once, ~0.3 A100-h):**
 
 ```bash
-python train.py --model gpt2
+PII_MODELS=gpt2 python train.py
 ```
+
+**`PII_MODELS` is not optional.** `train.py` has no CLI — `--model` does not exist and is silently
+ignored — so a bare invocation trains every model in `model_cfg.models`, gated Llama-2-7b included.
 
 **One shard** — this is the unit of execution:
 
