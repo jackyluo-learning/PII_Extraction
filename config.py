@@ -11,6 +11,7 @@ This revision adds the knobs required for a defensible USENIX-grade study:
   - A defense-evaluation config (benign-query FPR, adaptive-adversary eval)
 """
 
+import re
 import os
 import torch
 from dataclasses import dataclass, field
@@ -466,8 +467,16 @@ exp_cfg = ExperimentConfig()
 #   PII_ADAPTIVE_LAMBDA float, fluency-lambda for the adaptive attack
 # ---------------------------------------------------------------------------
 def _env_list(name):
+    """Split on commas AND whitespace.
+
+    slurm/sweep_config.sh documents these variables as "comma or space
+    separated" and parses them with IFS=', ', promising that "bash and Python
+    agree". Splitting on commas alone broke that promise: PII_SEEDS="42 1337
+    2024" gave bash three seeds and Python the single string '42 1337 2024',
+    which then died in int() far from the cause.
+    """
     v = os.environ.get(name)
-    return [x.strip() for x in v.split(",") if x.strip()] if v else None
+    return [x for x in re.split(r"[,\s]+", v.strip()) if x] if v else None
 
 def _env_int(name):
     v = os.environ.get(name)
