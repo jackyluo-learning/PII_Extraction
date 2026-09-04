@@ -133,6 +133,14 @@ effectively missing.
 **Recommended migration to uv**: dependencies declared in `pyproject.toml`, a committed `uv.lock`,
 and a `.venv/` in the project root. Both Colab and Cheaha support uv.
 
+> **The DATA pin, at least, is now demonstrated.** On 2026-09-04 the corpus regenerated
+> **byte-identically** on Colab L4 and on Cheaha login006 — `corpus/train.json` `7a059fc04ae21665`
+> (57,979,000 B), `target_registry.json` `91901119f342d7d4`, `individuals.json` `15f95b78fbe95640`,
+> `negative_controls.json` `5fc92b3f3334b9c8`. Notable because `fetch_public_passages` **streams
+> from Wikipedia and arXiv over the network**, which was on record as a live drift risk. Take these
+> with `python run_manifest.py` and record them in every study's ledger. The **environment** pin
+> remains unresolved.
+
 > But **this is a standalone chore, not a side effect of setup**. Migrating touches every job script
 > and the Colab notebook, and needs an end-to-end verification pass. Start it as its own task.
 > Until it is done, the environment pin in `results.json` can only be a `pip freeze` snapshot hash,

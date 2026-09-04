@@ -146,5 +146,47 @@
       ],
       "notes": "alpha_20 = 0.82, well above run2's 52% for this model. Raw diff is -0.04, i.e. 41/50 control against 39/50 trained -- two targets. run2's own tau_rec for gpt2 was +0.0 [-26, 26]. NOT tested here: the preregistered analysis belongs to research-analyze and needs all three seeds."
     }
-  ]
+  ],
+  "dataset_fingerprint": {
+    "verified_at": "2026-09-04",
+    "environments": [
+      "Colab L4",
+      "Cheaha login006"
+    ],
+    "identical": true,
+    "files": {
+      "corpus/train.json": {
+        "sha256_16": "7a059fc04ae21665",
+        "bytes": 57979000
+      },
+      "target_registry.json": {
+        "sha256_16": "91901119f342d7d4",
+        "bytes": 65170
+      },
+      "individuals.json": {
+        "sha256_16": "15f95b78fbe95640",
+        "bytes": 34020
+      },
+      "negative_controls.json": {
+        "sha256_16": "5fc92b3f3334b9c8",
+        "bytes": 17042
+      }
+    },
+    "registry": {
+      "n_total": 150,
+      "n_trained": 100,
+      "n_control": 50,
+      "frequency_tiers": {
+        "1": 10,
+        "5": 30,
+        "20": 60
+      }
+    },
+    "source_counts": {
+      "wikipedia": 99921,
+      "arxiv": 33330,
+      "c4": 0
+    },
+    "note": "Byte-identical across two independent environments a day apart, on different Python builds and hardware. fetch_public_passages streams from Wikipedia and arXiv over the network, so this was a live drift risk and is now ruled out rather than unobserved. even_subset at n=25 gives {1:3, 5:7, 20:15} in both environments; the raw prefix would give {1:10, 5:15} with no f=20."
+  }
 }
