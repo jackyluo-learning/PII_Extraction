@@ -233,5 +233,132 @@
       }
     },
     "note": "Zero flips on 100 targets: every binary decision reproduced exactly across sessions. The tolerance was fixed in the design and protocol rather than proposed after seeing the drift. Scope: this tests SAME environment, DIFFERENT session (Colab L4, torch 2.11). It does not test across environments -- Cheaha runs torch 2.6.0+cu124, and comparing its k=20 against Colab's will be the stronger cross-environment check."
+  },
+  "interim_curve": {
+    "recorded_at": "2026-09-04",
+    "environment": "Cheaha A100 80GB",
+    "status": "36 of 42 shards; k=32/48/64 are seed 42 only, the other six re-queued",
+    "n_rows": 3600,
+    "points": [
+      {
+        "k": 0,
+        "alpha_k": 0.0,
+        "emr_trained": 0.0,
+        "tau_rec_raw": 0.0,
+        "n_per_arm": 150,
+        "seeds": 3
+      },
+      {
+        "k": 1,
+        "alpha_k": 0.0,
+        "emr_trained": 0.0,
+        "tau_rec_raw": 0.0,
+        "n_per_arm": 150,
+        "seeds": 3
+      },
+      {
+        "k": 2,
+        "alpha_k": 0.0,
+        "emr_trained": 0.0,
+        "tau_rec_raw": 0.0,
+        "n_per_arm": 150,
+        "seeds": 3
+      },
+      {
+        "k": 3,
+        "alpha_k": 0.0,
+        "emr_trained": 0.0,
+        "tau_rec_raw": 0.0,
+        "n_per_arm": 150,
+        "seeds": 3
+      },
+      {
+        "k": 4,
+        "alpha_k": 0.013,
+        "emr_trained": 0.04,
+        "tau_rec_raw": 0.027,
+        "n_per_arm": 150,
+        "seeds": 3
+      },
+      {
+        "k": 6,
+        "alpha_k": 0.273,
+        "emr_trained": 0.2,
+        "tau_rec_raw": -0.073,
+        "n_per_arm": 150,
+        "seeds": 3
+      },
+      {
+        "k": 8,
+        "alpha_k": 0.473,
+        "emr_trained": 0.487,
+        "tau_rec_raw": 0.014,
+        "n_per_arm": 150,
+        "seeds": 3
+      },
+      {
+        "k": 12,
+        "alpha_k": 0.633,
+        "emr_trained": 0.66,
+        "tau_rec_raw": 0.027,
+        "n_per_arm": 150,
+        "seeds": 3
+      },
+      {
+        "k": 16,
+        "alpha_k": 0.747,
+        "emr_trained": 0.733,
+        "tau_rec_raw": -0.014,
+        "n_per_arm": 150,
+        "seeds": 3
+      },
+      {
+        "k": 20,
+        "alpha_k": 0.807,
+        "emr_trained": 0.82,
+        "tau_rec_raw": 0.013,
+        "n_per_arm": 150,
+        "seeds": 3
+      },
+      {
+        "k": 24,
+        "alpha_k": 0.86,
+        "emr_trained": 0.82,
+        "tau_rec_raw": -0.04,
+        "n_per_arm": 150,
+        "seeds": 3
+      },
+      {
+        "k": 32,
+        "alpha_k": 0.9,
+        "emr_trained": 0.94,
+        "tau_rec_raw": 0.04,
+        "n_per_arm": 50,
+        "seeds": 1
+      },
+      {
+        "k": 48,
+        "alpha_k": 0.98,
+        "emr_trained": 0.88,
+        "tau_rec_raw": -0.1,
+        "n_per_arm": 50,
+        "seeds": 1
+      },
+      {
+        "k": 64,
+        "alpha_k": 0.96,
+        "emr_trained": 0.88,
+        "tau_rec_raw": -0.08,
+        "n_per_arm": 50,
+        "seeds": 1
+      }
+    ],
+    "observations_not_tests": [
+      "alpha_k rises monotonically from 0.000 to about 0.96 and saturates short of 1.0.",
+      "THE KNEE SITS AT k=4-6, NOT AT k=2. Proposition 1 puts the threshold at H/log2|V| = 29.9/15.62 = 1.91, so two tokens. Measured: k=2 and k=3 are EXACTLY 0.000 on 150 targets each; the first non-zero is k=4 at 0.013 (2/150), and k=6 jumps to 0.273. The bound holds as a bound but is not attained -- the optimizer needs roughly 2x the information-theoretic minimum, and that gap is what beta measures.",
+      "Eyeball only: alpha crosses 0.5 near k=8.7, giving beta ~ 29.9/8.7 = 3.4 bits/token, about 22% of log2|V|. This is read off AGGREGATE rates over pooled ssn and email, which have different H -- it is not the per-target censored fit and must not be quoted as beta.",
+      "tau_rec is near zero at EVERY capacity, range -0.100 to +0.040, sign oscillating. No systematic separation between arms anywhere on the axis. Not tested here."
+    ],
+    "note": "Raw per-arm means only. The preregistered tests belong to research-analyze and are not run here; running them now against a growing set of shards would be optional stopping."
   }
 }
