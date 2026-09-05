@@ -268,6 +268,54 @@ def analyze(df: pd.DataFrame, n_shards: int, n_boot: int = cs.N_BOOT) -> dict:
                 "what governs forcing an actual rendered string; the alpha_to_kstar table uses "
                 "H_inf, which is what Corollary 1 is stated in."}
 
+    # ---- t3-2: covariate balance between the arms ----
+    # design.md promises E17-matched controls at |SMD| < 0.1. The matching runs
+    # on the full pools; the arms are then subset to 25 INDEPENDENTLY of each
+    # other (_matched_control_entries keeps only the control NAMES from E17's
+    # pairs and drops the pairing), so nothing preserves the match through the
+    # subset. This measures what actually survived.
+    def _smd(d, c):
+        d, c = np.asarray(d, float), np.asarray(c, float)
+        sp = np.sqrt((d.var(ddof=1) + c.var(ddof=1)) / 2)
+        return float((d.mean() - c.mean()) / sp) if sp > 0 else 0.0
+
+    tgt = df.drop_duplicates(["person_id", "field", "target_membership"])
+    bal, unbalanced = {}, []
+    for f, g in tgt.groupby("field"):
+        D, C = g[g.target_membership == "trained"], g[g.target_membership == "control"]
+        bal[f] = {}
+        for cov in ("target_H_bits", "target_len_tokens"):
+            v = _smd(D[cov].dropna(), C[cov].dropna())
+            bal[f][cov] = {"smd": v, "balanced": bool(abs(v) < 0.1),
+                           "mean_D": float(D[cov].mean()), "mean_C": float(C[cov].mean())}
+            if abs(v) >= 0.1:
+                unbalanced.append(f"{f}/{cov}={v:+.3f}")
+    R["balance"] = {
+        "threshold": 0.1, "by_field": bal, "unbalanced": unbalanced,
+        "passes": not unbalanced,
+        "note": "field is matched exactly by construction. char_len needs "
+                "results/e17_matches_*.json and is not checked here.",
+        "consequence": None if not unbalanced else
+        "Every D-vs-C quantity (H3, H5, the tau curve) is confounded in the affected field(s). "
+        "Control-arm-only results -- H1, H2's floor, H4, bound_tightness, beta_model_free -- "
+        "are untouched, because they never compare the arms."}
+
+    # ---- H3 stratified, so the confound's reach is visible ----
+    if H3_K in ks_pos:
+        R["H3_by_field"] = {}
+        for f, g in df[df.capacity_k == H3_K].groupby("field"):
+            c_ = g[g.target_membership == "control"].exact_match.fillna(False)
+            d_ = g[g.target_membership == "trained"].exact_match.fillna(False)
+            lo, hi = cs.newcombe_diff_ci(d_.sum(), len(d_), c_.sum(), len(c_))
+            R["H3_by_field"][f] = {
+                "alpha": float(c_.mean()), "emr_d": float(d_.mean()),
+                "tau": float(d_.mean() - c_.mean()), "tau_ci_mover": [lo, hi],
+                "n_per_arm": int(len(c_)),
+                "balanced": all(v["balanced"] for v in bal.get(f, {}).values())}
+        R["H3_by_field"]["_note"] = (
+            "ROBUSTNESS CHECK, not preregistered. Reported so the balance defect's reach is "
+            "visible; the preregistered H3 remains the pooled estimate above.")
+
     # ---- H5: exploratory ----
     R["H5"] = {**cs.peak_location(boot), "status": "EXPLORATORY -- outside the family"}
 
