@@ -133,15 +133,19 @@ def fit_loglog(k_min: Sequence[float], h_bits: Sequence[float],
     rng = np.random.default_rng(seed)
     persons = df["person"].unique()
     idx = {p: np.flatnonzero(df["person"].to_numpy() == p) for p in persons}
-    gs, bs = [], []
+    gs, bs, failures = [], [], {}
     for _ in range(n_boot):
         draw = rng.choice(persons, size=len(persons), replace=True)
         rows = np.concatenate([idx[p] for p in draw])
         try:
             g_, i_ = _one(df.iloc[rows])
             gs.append(g_); bs.append(np.exp(-i_))
-        except Exception:
-            continue                       # a degenerate resample, not a result
+        except Exception as e:
+            # A degenerate resample is not a result -- but swallowing the reason
+            # is how a fit that failed 2000/2000 times gets mistaken for a wide
+            # interval. Keep a census of causes so the failure is diagnosable.
+            key = f"{type(e).__name__}: {str(e).splitlines()[0][:160]}"
+            failures[key] = failures.get(key, 0) + 1
 
     def _ci(a):
         a = np.asarray(a, float)
@@ -156,5 +160,9 @@ def fit_loglog(k_min: Sequence[float], h_bits: Sequence[float],
         "right_censored_fraction": right_censored_fraction(k_min),
         "n_targets": int(len(df)), "n_persons": int(len(persons)),
         "n_boot_ok": len(gs),
+        "n_boot_failed": int(sum(failures.values())),
+        "failure_census": dict(sorted(failures.items(), key=lambda kv: -kv[1])[:5]),
+        "log_h_spread": float(np.log(h).max() - np.log(h).min()),
+        "identifiable": bool(len(gs) >= 0.5 * n_boot),
         "lifelines_version": ll.__version__,
     }
