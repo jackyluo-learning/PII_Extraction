@@ -400,5 +400,17 @@
       "why_it_matters": "The original text said the bound holds but is not attained. Against the matching per-target bound it IS attained -- minimum ratio 1.01 -- and the empirical zero-region is exactly what the bound predicts. That is a stronger result than the one first recorded, and it points the opposite way.",
       "design_basis": "design.md L793-808 settled before any data that k*_thy uses H_inf and k_force uses H(t), and that the two are never interchangeable. Both comparisons are legitimate; the first write-up simply used the H_inf one to score a claim about forcing actual strings, which is what H(t) governs."
     }
+  ],
+  "exploratory_findings": [
+    {
+      "date": "2026-09-05",
+      "status": "EXPLORATORY — not preregistered, not confirmatory",
+      "title": "A membership signal is present in final_target_nll exactly where exact_match is blind",
+      "what": "AUC of the continuous score (control nll > trained nll) on the SSN field, which is the balanced one: 0.670 / 0.672 / 0.678 at k = 1 / 2 / 3, decaying monotonically to 0.557 at k=8 and 0.517 at k=12. Those first three capacities are where exact_match is uniformly zero in BOTH arms and alpha = 0.000 — the region the preregistered analysis recorded as having no dynamic range to calibrate.",
+      "why_it_is_not_yet_a_finding": "Per-point CIs are wide at 25 persons per arm and the three that exclude 0.5 do so barely (lower bounds 0.510, 0.517, 0.528). They are 3 of 26 uncorrected intervals against 1.3 expected by chance, and being adjacent capacities on the same targets they are close to a single independent test.",
+      "why_it_is_still_worth_chasing": "The decay is smooth and monotone in k, which noise does not produce; it sits in the balanced field; and email points the same way (0.598/0.597/0.578) despite an imbalance that biases its AUC DOWNWARD, since its trained targets are the higher-entropy, longer ones.",
+      "what_it_changes": "The headline 'the usable-floor region and the forceable region are disjoint' is a statement about exact_match, and it stands for exact_match. It does not carry to the continuous score, where the floor is 0.000 and the arms may still separate. The right next study is an adequately powered AUC-based audit at k in [1,4], not more capacity.",
+      "provenance": "results/e3_nll_matrix.csv, computed from the committed shards; person-clustered bootstrap, 4000 replicates, seed 20240601."
+    }
   ]
 }
