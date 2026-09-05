@@ -191,13 +191,13 @@
       "id": "phase-2",
       "name": "Main sweep — 42 shards",
       "kind": "main",
-      "status": "backlog",
+      "status": "done",
       "tasks": [
         {
           "id": "t2-1",
           "name": "Seed 42: full 14-point curve",
           "description": "All k in {0,1,2,3,4,6,8,12,16,20,24,32,48,64} at seed 42. Pilot shards are reused, not repeated. Runs on Cheaha (A100 80GB, account jluo), NOT Colab: torch differs by a major version between the two, so mixing them inside one run_id would cross an environment boundary within a paired-across-k design. All 42 shards run there, including the three already measured on Colab.",
-          "status": "backlog",
+          "status": "done",
           "prediction": "alpha_k rises monotonically from near 0 toward run2's 52% at k=20 and beyond.",
           "falsification": "The curve is flat across k — which would refute H1 and the capacity-axis framing.",
           "arms": [
@@ -213,7 +213,7 @@
           "id": "t2-2",
           "name": "Seed 1337: full 14-point curve",
           "description": "Same grid, second seed. Runs on Cheaha (A100 80GB, account jluo), NOT Colab: torch differs by a major version between the two, so mixing them inside one run_id would cross an environment boundary within a paired-across-k design. All 42 shards run there, including the three already measured on Colab.",
-          "status": "backlog",
+          "status": "done",
           "prediction": "The curve's shape reproduces seed 42's within its intervals.",
           "falsification": "The two seeds disagree on the direction of the trend.",
           "arms": [
@@ -229,7 +229,7 @@
           "id": "t2-3",
           "name": "Seed 2024: full 14-point curve",
           "description": "Same grid, third seed. Runs on Cheaha (A100 80GB, account jluo), NOT Colab: torch differs by a major version between the two, so mixing them inside one run_id would cross an environment boundary within a paired-across-k design. All 42 shards run there, including the three already measured on Colab.",
-          "status": "backlog",
+          "status": "done",
           "prediction": "The curve's shape reproduces the first two.",
           "falsification": "Seed-to-seed variation swamps the k effect, which would mean 3 seeds is too few for the shape.",
           "arms": [
@@ -244,8 +244,8 @@
         {
           "id": "t2-2b",
           "name": "Invariant assertions across all 42 shards",
-          "description": "Compare target_subset_hash and configured PII_GCG_ITERS across every shard.",
-          "status": "backlog",
+          "description": "Compare target_subset_hash and configured PII_GCG_ITERS across every shard. RESULT: ok=True across all 42 shards — one target_subset_hash (791fb10a21ea726e, matching Colab) and one gcg_iters (200).",
+          "status": "done",
           "prediction": "All 42 agree on both.",
           "falsification": "Any disagreement — BLOCKS analysis; the paired design across k is gone."
         },
@@ -253,7 +253,7 @@
           "id": "t2-cp",
           "name": "Phase checkpoint",
           "description": "42 shards complete or explicitly accounted; invariants asserted; per-shard hours and GPU model recorded.",
-          "status": "backlog",
+          "status": "done",
           "prediction": "The ledger is complete and the invariants hold.",
           "falsification": "Any shard is missing without a recorded run_status and reason."
         }
