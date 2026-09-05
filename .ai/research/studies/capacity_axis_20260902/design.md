@@ -1084,7 +1084,7 @@ Three things the earlier wording left undecided, settled here:
 | **The matched subset may be small** | E17 de-duplicates by person, so `\|C_matched\|` may fall well below 50 and the primary `α_k` loses precision. Mitigated by attacking all 50 and reporting the full-pool floor beside it; the pilot must report `\|C_matched\|` |
 | **Spurious monotonicity failure** | The code's zero-tolerance `np.diff >= 0` check will fail almost surely under sampling noise. Replaced by Spearman's ρ with a clustered bootstrap CI, plus an isotonic summary |
 | **`k*` mis-read at the boundary** | `_crossing_k` returns `ks[0]` both when `k=1` is the crossing and when the floor is *already* above threshold at `k=1` — opposite findings. A distinct sentinel is required before H2 can be scored |
-| **13 correlated intervals invite cherry-picking** | The confirmatory family is **5 hypotheses (H1–H5)**, Holm-corrected. The per-`k` intervals are explicitly descriptive; no `k` is promoted to a finding after the fact |
+| **13 correlated intervals invite cherry-picking** | The confirmatory family is **4 hypotheses {H1, H2, H3, H4}**, Holm-corrected; H5 sits outside it as exploratory (see `### Reporting` and the H5 power arithmetic). The per-`k` intervals are explicitly descriptive; no `k` is promoted to a finding after the fact |
 | **Curve shape read from one bootstrap** | One resample serves all 13 levels, so shape questions have honest intervals. Thirteen independent bootstraps would not support any statement about the curve |
 | **Environment not pinned** | `pip freeze` hash recorded; listed as a threat at analysis time |
 

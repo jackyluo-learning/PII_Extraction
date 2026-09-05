@@ -376,5 +376,21 @@
       "tau_rec is near zero at EVERY capacity, range -0.073 to +0.027, sign oscillating. No systematic separation between arms anywhere on the axis. NOT TESTED here."
     ],
     "note": "Raw per-arm means. The preregistered tests belong to research-analyze."
-  }
+  },
+  "deviations": [
+    {
+      "date": "2026-09-05",
+      "stage": "analysis",
+      "kind": "preregistration text correction",
+      "what": "The threats table said the confirmatory family was 'H1-H5'. Three other places -- the analysis plan, the H5 row of the test table, and the H5 power paragraph -- say the family is {H1,H2,H3,H4} with H5 exploratory. The threats line was stale and has been corrected to match.",
+      "outcome_dependent": false,
+      "why_it_is_safe": "Made before any test was run; it changes Holm's m from 5 to 4. Scoring H5 as exploratory is the conservative choice about H5 itself -- it can never be claimed as confirmatory -- and H5 was labelled underpowered by design at n_eff = 33 per point, long before the data existed."
+    }
+  ],
+  "analysis_notes": [
+    {
+      "date": "2026-09-05",
+      "note": "Two defects found by smoke-testing analyze_e3.py on synthetic data, both fixed before the real data was touched. (1) The alpha -> k* deliverable was reporting the SMALLEST k meeting the floor tolerance, which is trivially k=1 at every tolerance and says nothing. alpha_k RISES with k, so the tolerance bounds k from ABOVE: the auditor's k*(alpha) is the LARGEST capacity whose floor still meets the tolerance -- an operating ceiling. (2) H2's bootstrap p-value tested the floor alone while its verdict required floor AND signal, so the number entering Holm did not test the stated hypothesis. H2 is now reported as the preregistered floor test (which carries the p) plus the re-aimed floor-and-signal overlay, kept separate."
+    }
+  ]
 }

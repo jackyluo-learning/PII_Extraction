@@ -1,0 +1,242 @@
+"""
+E3 capacity sweep — the preregistered analysis, run end to end.
+
+Every test here was specified in design.md and implemented in curve_stats.py /
+survival.py BEFORE the full curve was read. This driver only wires them to the
+data and writes one JSON; it decides nothing.
+
+Family: {H1, H2, H3, H4}, Holm-corrected at FWER 0.05. H5 is reported outside
+the family as exploratory -- design.md L846/L849/L858. (The threats table said
+"H1-H5" at L1087; that line was stale and is corrected in the same commit.)
+
+Usage:  python analyze_e3.py [--out results/e3_analysis.json]
+"""
+import argparse, glob, json, math
+import numpy as np
+import pandas as pd
+
+import curve_stats as cs
+import survival as sv
+
+ALPHA_TOL = 0.01          # H2 as preregistered
+H3_K = 20                 # the densified point named in H3
+ALPHA_MAP = [0.001, 0.005, 0.01, 0.02, 0.05, 0.10]   # the auditor-facing mapping
+FWER = 0.05
+H_INF = 29.9        # SSN format min-entropy (Prop. 1 / Cor. 1)
+LOG2_V = 15.62      # log2|V| for the GPT-2 vocabulary
+
+
+def load(pattern) -> pd.DataFrame:
+    files = sorted(glob.glob(pattern))
+    if not files:
+        raise SystemExit(f"no shards matched {pattern}")
+    df = pd.concat([pd.read_parquet(f) for f in files], ignore_index=True)
+    return df, len(files)
+
+
+def boot_p_two_sided(reps, null=0.0) -> float:
+    """Percentile bootstrap p: twice the smaller tail mass about `null`."""
+    a = np.asarray(reps, float)
+    a = a[np.isfinite(a)]
+    if a.size == 0:
+        return float("nan")
+    below = (a <= null).mean()
+    above = (a >= null).mean()
+    return float(min(1.0, 2 * min(below, above)))
+
+
+def holm(pvals: dict, fwer=FWER) -> dict:
+    """Holm-Bonferroni step-down. Returns adjusted p and the reject decision."""
+    items = [(k, v) for k, v in pvals.items() if np.isfinite(v)]
+    items.sort(key=lambda kv: kv[1])
+    m = len(items)
+    out, running = {}, 0.0
+    for i, (k, p) in enumerate(items):
+        adj = min(1.0, max(running, (m - i) * p))
+        running = adj
+        out[k] = {"p_raw": p, "p_holm": adj, "reject_at_%.2f" % fwer: bool(adj <= fwer)}
+    for k, v in pvals.items():
+        if not np.isfinite(v):
+            out[k] = {"p_raw": None, "p_holm": None,
+                      "reject_at_%.2f" % fwer: None,
+                      "note": "no p-value defined; scored by its CI rule instead"}
+    return out
+
+
+def kmin_table(e3: pd.DataFrame, ks_pos) -> pd.DataFrame:
+    """One row per target. k=0 is a DIFFERENT probe (fixed, no GCG) and is excluded."""
+    e = e3[e3["capacity_k"].isin(ks_pos)]
+    rows = []
+    for keyvals, g in e.groupby(["person_id", "field", "target_membership"], sort=True):
+        hit = g[g["exact_match"].fillna(False).astype(bool)]
+        rows.append({
+            "person_id": keyvals[0], "field": keyvals[1], "arm": keyvals[2],
+            "k_min": float(hit["capacity_k"].min()) if len(hit) else float("nan"),
+            "H_bits": float(g["target_H_bits"].dropna().iloc[0])
+            if g["target_H_bits"].notna().any() else float("nan"),
+            "len_tokens": float(g["target_len_tokens"].dropna().iloc[0])
+            if g["target_len_tokens"].notna().any() else float("nan"),
+        })
+    return pd.DataFrame(rows)
+
+
+def hits_by_k(e3: pd.DataFrame, ks_pos) -> dict:
+    """target -> {k: was it forced at any seed}. Feeds the absorbing-state check."""
+    e = e3[e3["capacity_k"].isin(ks_pos)]
+    out = {}
+    for keyvals, g in e.groupby(["person_id", "field", "target_membership"], sort=True):
+        key = "|".join(map(str, keyvals))
+        out[key] = {int(k): bool(gg["exact_match"].fillna(False).astype(bool).any())
+                    for k, gg in g.groupby("capacity_k")}
+    return out
+
+
+def analyze(df: pd.DataFrame, n_shards: int, n_boot: int = cs.N_BOOT) -> dict:
+    ks_all = sorted(int(k) for k in df["capacity_k"].dropna().unique())
+    ks_pos = [k for k in ks_all if k > 0]
+    R = {"meta": {"n_shards": n_shards, "n_rows": int(len(df)),
+                  "k_grid": ks_all, "k_grid_positive": ks_pos,
+                  "seeds": sorted(int(s) for s in df["seed"].unique()),
+                  "n_boot": n_boot, "alpha_tolerance": ALPHA_TOL,
+                  "family": ["H1", "H2", "H3", "H4"], "fwer": FWER,
+                  "h5": "exploratory, outside the family"}}
+
+    # ---- k=0 anchor, read and reported FIRST (success criterion 1) ----
+    z = df[df["capacity_k"] == 0]
+    R["k0_anchor"] = {
+        "alpha_0": float(z[z.target_membership == "control"].exact_match.mean()),
+        "emr_d_0": float(z[z.target_membership == "trained"].exact_match.mean()),
+        "n_per_arm": int(len(z[z.target_membership == "control"])),
+        "probe": "fixed (no GCG) -- a different probe from k>=1, excluded from k_min"}
+
+    # ---- the shared bootstrap: one person draw per block, all k ----
+    boot = cs.joint_bootstrap(df, ks_pos, n_boot=n_boot)
+    a_lo, a_hi = cs.pct_ci(boot["alpha"]); t_lo, t_hi = cs.pct_ci(boot["tau"])
+    R["curve"] = [{"k": int(k),
+                   "alpha": float(boot["alpha_point"][j]),
+                   "alpha_ci": [float(a_lo[j]), float(a_hi[j])],
+                   "emr_d": float(boot["emr_d_point"][j]),
+                   "tau": float(boot["emr_d_point"][j] - boot["alpha_point"][j]),
+                   "tau_ci": [float(t_lo[j]), float(t_hi[j])],
+                   "n_attempts_c": int(boot["n_attempts"]["control"][j]),
+                   "n_attempts_d": int(boot["n_attempts"]["trained"][j])}
+                  for j, k in enumerate(ks_pos)]
+    R["curve_isotonic_alpha"] = [float(v) for v in cs.isotonic(boot["alpha_point"])]
+    R["n_persons"] = boot["n_persons"]
+
+    # ---- H1: monotone trend in the floor ----
+    tt = cs.trend_test(boot)
+    rho_reps = np.array([cs.spearman(boot["ks"], boot["alpha"][b])
+                         for b in range(boot["n_boot"])])
+    R["H1"] = {**tt, "p_boot": boot_p_two_sided(rho_reps),
+               "supported": bool(tt["excludes_zero"] and tt["rho"] > 0)}
+
+    # ---- H2: a usable k exists (floor AND signal) ----
+    up = cs.usable_points(boot, ALPHA_TOL)
+    cross = cs.crossing_k(ks_pos, boot["alpha_point"], ALPHA_TOL)
+    # bootstrap p for the existence claim: replicates with NO k meeting the floor
+    none_meet = np.array([(boot["alpha"][b] > ALPHA_TOL).all()
+                          for b in range(boot["n_boot"])], float)
+    R["H2"] = {
+        # The PREREGISTERED H0 is about the floor alone: "no k >= 1 satisfies
+        # alpha_k <= 1%". That is what carries the p-value into Holm.
+        "preregistered": {
+            "criterion": "some k >= 1 has alpha_k <= %.3f" % ALPHA_TOL,
+            "any_k_meets_floor": bool((boot["alpha_point"] <= ALPHA_TOL).any()),
+            "k_meeting_floor_point": [int(k) for j, k in enumerate(ks_pos)
+                                      if boot["alpha_point"][j] <= ALPHA_TOL],
+            "k_meeting_floor_ci_upper": [int(k) for j, k in enumerate(ks_pos)
+                                         if a_hi[j] <= ALPHA_TOL],
+            "p_boot_no_usable_k": float(none_meet.mean()),
+            "supported": bool((boot["alpha_point"] <= ALPHA_TOL).any())},
+        # The RE-AIMED overlay adds the signal condition. A floor condition alone
+        # is satisfied wherever both arms are zero, which is not an audit.
+        "reaimed": {"criterion": "floor meets tolerance AND tau's CI excludes 0",
+                    "rows": up["rows"], "any_usable": up["any_usable"], "note": up["note"]},
+        "crossing_up_through_tolerance": cross,
+        "supported": bool((boot["alpha_point"] <= ALPHA_TOL).any())}
+
+    # ---- the deliverable: alpha -> k*(alpha) ----
+    # alpha_k RISES with k, so "floor <= tolerance" bounds k from ABOVE. The
+    # auditor's k*(alpha) is therefore the LARGEST capacity whose floor still
+    # meets the tolerance -- the operating ceiling, not a starting point. Taking
+    # the smallest such k would return k=1 at every tolerance and say nothing.
+    R["alpha_to_kstar"] = []
+    for tol in ALPHA_MAP:
+        ok_pt = [int(k) for j, k in enumerate(ks_pos) if boot["alpha_point"][j] <= tol]
+        ok_ci = [int(k) for j, k in enumerate(ks_pos) if a_hi[j] <= tol]
+        R["alpha_to_kstar"].append({
+            "alpha_tolerance": tol,
+            "k_max_point_rule": max(ok_pt) if ok_pt else None,
+            "k_max_ci_upper_rule": max(ok_ci) if ok_ci else None,
+            "k_theory_cor1": (H_INF - math.log2(1 / tol)) / LOG2_V,
+            "breaks_tolerance_at": cs.crossing_k(ks_pos, boot["alpha_point"], tol),
+            "note": None if ok_ci else
+            "no capacity on this grid keeps the floor at or below this tolerance "
+            "once sampling error is accounted for"})
+
+    # ---- H3: the calibrated signal at the densified point ----
+    if H3_K in ks_pos:
+        j = ks_pos.index(H3_K)
+        reps = boot["tau"][:, j]
+        R["H3"] = {"k": H3_K, "tau": float(boot["emr_d_point"][j] - boot["alpha_point"][j]),
+                   "tau_ci": [float(t_lo[j]), float(t_hi[j])],
+                   "p_boot": boot_p_two_sided(reps),
+                   "excludes_zero": bool(t_lo[j] > 0 or t_hi[j] < 0),
+                   "half_width": float((t_hi[j] - t_lo[j]) / 2),
+                   "reading": ("CI EXCLUDES 0 -- a measurable signal at this capacity"
+                               if (t_lo[j] > 0 or t_hi[j] < 0) else
+                               "CI CONTAINS 0 -- the bound is the result: no effect larger "
+                               f"than {max(abs(t_lo[j]), abs(t_hi[j])):.3f} in absolute value")}
+
+    # ---- H4: the forcing model, censored, control arm only ----
+    km = kmin_table(df, ks_pos)
+    kc = km[(km.arm == "control") & np.isfinite(km.H_bits) & (km.H_bits > 0)]
+    hbk = {k: v for k, v in hits_by_k(df, ks_pos).items() if k.endswith("|control")}
+    R["H4_inputs"] = {
+        "n_targets_control": int(len(kc)),
+        "right_censored_fraction": sv.right_censored_fraction(kc.k_min.tolist()),
+        "non_monotone_fraction": sv.non_monotone_fraction(hbk),
+        "H_bits": {"min": float(kc.H_bits.min()), "median": float(kc.H_bits.median()),
+                   "max": float(kc.H_bits.max())}}
+    try:
+        fit = sv.fit_loglog(kc.k_min.tolist(), kc.H_bits.tolist(),
+                            kc.person_id.tolist(), ks_pos)
+        g_lo, g_hi = fit["gamma_ci"]
+        # p for gamma == 1 by inverting the bootstrap CI
+        R["H4"] = {**fit, "supported": fit["h4_proportionality_supported"],
+                   "p_boot_gamma_vs_1": None,
+                   "scored_by": "CI rule: gamma's 95% CI must contain 1"}
+    except Exception as e:
+        R["H4"] = {"error": f"{type(e).__name__}: {e}", "supported": None}
+
+    # ---- H5: exploratory ----
+    R["H5"] = {**cs.peak_location(boot), "status": "EXPLORATORY -- outside the family"}
+
+    # ---- Holm over the confirmatory family ----
+    pv = {"H1": R["H1"].get("p_boot", float("nan")),
+          "H2": R["H2"]["preregistered"]["p_boot_no_usable_k"],
+          "H3": R["H3"].get("p_boot", float("nan")) if "H3" in R else float("nan"),
+          "H4": float("nan")}          # scored by its CI rule, no p defined
+    R["holm"] = holm(pv)
+    return R
+
+
+def main():
+    import pathlib
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--out", default="results/e3_analysis.json")
+    ap.add_argument("--glob", default="results/attempts/e3a__*.parquet")
+    ap.add_argument("--n-boot", type=int, default=cs.N_BOOT)
+    a = ap.parse_args()
+
+    df, n_shards = load(a.glob)
+    R = analyze(df, n_shards, a.n_boot)
+    p = pathlib.Path(a.out); p.parent.mkdir(parents=True, exist_ok=True)
+    p.write_text(json.dumps(R, indent=2, default=float) + "\n")
+    print(json.dumps(R, indent=2, default=float))
+    print(f"\n--> written to {p}", flush=True)
+
+
+if __name__ == "__main__":
+    main()
