@@ -661,23 +661,94 @@
   "H4": {
     "gamma": 3.484483149918648,
     "gamma_ci": [
-      NaN,
-      NaN
+      2.6613711529377393,
+      4.1907821318944265
     ],
     "beta_bits_per_token": 299786.4803368486,
     "beta_ci": [
-      NaN,
-      NaN
+      9765.179238159104,
+      6020404.22880118
     ],
     "h4_proportionality_supported": false,
     "right_censored_fraction": 0.0,
     "n_targets": 50,
     "n_persons": 25,
-    "n_boot_ok": 0,
+    "n_boot_ok": 2000,
+    "n_boot_failed": 0,
+    "failure_census": {},
+    "log_h_spread": 0.378790148874546,
+    "identifiable": true,
     "lifelines_version": "0.30.0",
     "supported": false,
-    "p_boot_gamma_vs_1": null,
-    "scored_by": "CI rule: gamma's 95% CI must contain 1"
+    "scored_by": "CI rule: gamma's 95% CI must contain 1",
+    "beta_interpretable": false,
+    "beta_caveat": "DO NOT QUOTE beta_bits_per_token. gamma's CI excludes 1, so the proportional model is refuted and exp(-intercept) is absorbing the slope misfit rather than measuring a steering rate. Use beta_model_free below."
+  },
+  "beta_model_free": {
+    "definition": "beta(t) = H(t) / k_min(t), control arm, no model",
+    "ceiling_log2_V": 15.62,
+    "applies_because_right_censoring_is": 0.0,
+    "overall": {
+      "n": 50,
+      "median_lo": 9.199368953704834,
+      "median_hi": 12.265825271606445,
+      "iqr_lo": [
+        5.942780653635661,
+        10.812133471171062
+      ],
+      "range_lo": [
+        3.315031369527181,
+        15.484766960144043
+      ],
+      "p10_lo": 4.553436803817749
+    },
+    "by_field": {
+      "email": {
+        "n": 25,
+        "median_lo": 10.834431966145834,
+        "median_hi": 16.25164794921875,
+        "H_median": 66.87584686279297,
+        "k_min_median": 6.0,
+        "spearman_H_kmin": 0.4880981430667319
+      },
+      "ssn": {
+        "n": 25,
+        "median_lo": 6.006783167521159,
+        "median_hi": 9.010174751281738,
+        "H_median": 72.90070343017578,
+        "k_min_median": 12.0,
+        "spearman_H_kmin": -0.003224129401095805
+      }
+    },
+    "note": "Field-stratified because the pooled figure is a between-field artefact: see spearman_H_kmin within each field."
+  },
+  "bound_tightness": {
+    "bound": "k_min(t) >= H(t) / log2|V|  -- Prop. 1 at the target's own self-information",
+    "n": 50,
+    "bound_range": [
+      3.5398048566947673,
+      5.169943444402209
+    ],
+    "n_violating": 0,
+    "ratio_k_over_bound": {
+      "min": 1.0087332951283046,
+      "median": 1.6979607547637996,
+      "max": 4.711870947461913
+    },
+    "earliest_forced": {
+      "k_min": 4.0,
+      "n": 2,
+      "H_bits": [
+        61.93906784057617,
+        55.291751861572266
+      ],
+      "their_bounds": [
+        3.9653692599600623,
+        3.5398048566947673
+      ],
+      "H_bits_min_in_set": 55.291751861572266
+    },
+    "note": "H_inf (Cor. 1, 29.9 bits) and H(t) (here, 55-81 bits) are different quantities and design.md L793-808 forbids interchanging them. This row uses H(t), which is what governs forcing an actual rendered string; the alpha_to_kstar table uses H_inf, which is what Corollary 1 is stated in."
   },
   "H5": {
     "argmax_point": 4.0,
