@@ -750,6 +750,71 @@
     },
     "note": "H_inf (Cor. 1, 29.9 bits) and H(t) (here, 55-81 bits) are different quantities and design.md L793-808 forbids interchanging them. This row uses H(t), which is what governs forcing an actual rendered string; the alpha_to_kstar table uses H_inf, which is what Corollary 1 is stated in."
   },
+  "balance": {
+    "threshold": 0.1,
+    "by_field": {
+      "email": {
+        "target_H_bits": {
+          "smd": 0.7602091395097493,
+          "balanced": false,
+          "mean_D": 64.91528091430663,
+          "mean_C": 57.5816032409668
+        },
+        "target_len_tokens": {
+          "smd": 0.5958345977908028,
+          "balanced": false,
+          "mean_D": 7.72,
+          "mean_C": 7.16
+        }
+      },
+      "ssn": {
+        "target_H_bits": {
+          "smd": -0.042741601741463915,
+          "balanced": true,
+          "mean_D": 49.685941009521486,
+          "mean_C": 49.785548553466796
+        },
+        "target_len_tokens": {
+          "smd": 0.0,
+          "balanced": true,
+          "mean_D": 6.12,
+          "mean_C": 6.12
+        }
+      }
+    },
+    "unbalanced": [
+      "email/target_H_bits=+0.760",
+      "email/target_len_tokens=+0.596"
+    ],
+    "passes": false,
+    "note": "field is matched exactly by construction. char_len needs results/e17_matches_*.json and is not checked here.",
+    "consequence": "Every D-vs-C quantity (H3, H5, the tau curve) is confounded in the affected field(s). Control-arm-only results -- H1, H2's floor, H4, bound_tightness, beta_model_free -- are untouched, because they never compare the arms."
+  },
+  "H3_by_field": {
+    "email": {
+      "alpha": 1.0,
+      "emr_d": 1.0,
+      "tau": 0.0,
+      "tau_ci_mover": [
+        -0.07134759916445588,
+        0.07134759916445588
+      ],
+      "n_per_arm": 75,
+      "balanced": false
+    },
+    "ssn": {
+      "alpha": 0.6133333333333333,
+      "emr_d": 0.64,
+      "tau": 0.026666666666666727,
+      "tau_ci_mover": [
+        -0.1581323584692685,
+        0.20895183942815232
+      ],
+      "n_per_arm": 75,
+      "balanced": true
+    },
+    "_note": "ROBUSTNESS CHECK, not preregistered. Reported so the balance defect's reach is visible; the preregistered H3 remains the pooled estimate above."
+  },
   "H5": {
     "argmax_point": 4.0,
     "argmax_ci": [
