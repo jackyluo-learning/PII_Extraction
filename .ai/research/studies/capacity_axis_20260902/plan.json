@@ -263,21 +263,21 @@
       "id": "phase-3",
       "name": "Analysis",
       "kind": "analysis",
-      "status": "backlog",
+      "status": "done",
       "tasks": [
         {
           "id": "t3-1",
           "name": "Analysis code gates",
           "description": "Two-block joint bootstrap retaining raw replicate vectors; Wilson on n_eff plus Newcombe/MOVER; interval- and right-censored log-log AFT for k_min, bootstrapped; _crossing_k sentinel; Spearman/isotonic monotonicity.",
-          "status": "backlog",
+          "status": "done",
           "prediction": "Each is unit-tested against a worked example before any table is generated.",
           "falsification": "A table is produced before these exist — which would repeat the hand-computed-interval error the draft already carries."
         },
         {
           "id": "t3-2",
           "name": "Covariate balance table (zero GPU)",
-          "description": "Both SMD variants per field from e17_matches_*.json: matched-pair, and deduplicated-control-marginal vs D-marginal.",
-          "status": "backlog",
+          "description": "Both SMD variants per field from e17_matches_*.json: matched-pair, and deduplicated-control-marginal vs D-marginal. RESULT: FAILS. email SMD +0.514 on H_bits and +0.613 on len_tokens; ssn passes at +0.082 / -0.074. Cause: _matched_control_entries keeps only E17's control NAMES and discards the pairing. Pre-existing, and broader than E3 -- CODE_MAP records E17's balance table as never reported, so run2 rests on the same function. char_len not checked (needs e17_matches_*.json).",
+          "status": "done",
           "prediction": "The pair-wise SMD is small by construction; the marginal SMD is the one that can fail.",
           "falsification": "The marginal SMD exceeds 0.1, which would put A1 in question."
         },
@@ -285,7 +285,7 @@
           "id": "t3-3",
           "name": "H1-H4 confirmatory, H5 exploratory",
           "description": "Holm over {H1,H2,H3,H4}; H5 reported outside the family with its argmax CI and underpowered caveat.",
-          "status": "backlog",
+          "status": "done",
           "prediction": "Recorded: H1 supported; H2 undetermined below alpha=9%; H3's CI contains 0 but narrows; H4 undecided.",
           "falsification": "Any hypothesis is reported without the resolution limit named in the same sentence as a null."
         },
@@ -293,7 +293,7 @@
           "id": "t3-4",
           "name": "beta with its caveats",
           "description": "Report beta in bits/token with beta/log2|V|, from the censored log-log fit on the CONTROL arm, plus the complete-case linregress beside it, the non-monotone hit/miss fraction, and the grid's downward bias direction.",
-          "status": "backlog",
+          "status": "done",
           "prediction": "The censored estimate exceeds the complete-case one, since censoring drops the hardest targets.",
           "falsification": "Right-censoring exceeds 60-70% — fall back to a Turnbull summary rather than a point estimate."
         },
@@ -301,7 +301,7 @@
           "id": "t3-cp",
           "name": "Phase checkpoint",
           "description": "analysis.md written with a verdict per hypothesis and every deviation declared.",
-          "status": "backlog",
+          "status": "done",
           "prediction": "Every hypothesis has a verdict or an explicit undecidable.",
           "falsification": "Any exploratory result is presented as confirmatory."
         }

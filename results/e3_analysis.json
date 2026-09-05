@@ -659,15 +659,15 @@
     }
   },
   "H4": {
-    "gamma": 3.484483149918648,
+    "gamma": 3.484483149918636,
     "gamma_ci": [
-      2.6613711529377393,
-      4.1907821318944265
+      2.6613711529377966,
+      4.190782131894417
     ],
-    "beta_bits_per_token": 299786.4803368486,
+    "beta_bits_per_token": 299786.4803368337,
     "beta_ci": [
-      9765.179238159104,
-      6020404.22880118
+      9765.179238157085,
+      6020404.228800952
     ],
     "h4_proportionality_supported": false,
     "right_censored_fraction": 0.0,
@@ -686,6 +686,7 @@
   },
   "beta_model_free": {
     "definition": "beta(t) = H(t) / k_min(t), control arm, no model",
+    "this_is_the_papers_definition": "Paper Def. 3 IS median H(t)/k_min(t) in bits/token (CODE_MAP.md mismatch #1). It is not a fallback for the refuted AFT fit -- it is the quantity the paper defines, which capacity_e3 currently computes inverted as linregress(H_bits -> k_min).slope, in tokens/bit.",
     "ceiling_log2_V": 15.62,
     "applies_because_right_censoring_is": 0.0,
     "overall": {
@@ -755,36 +756,36 @@
     "by_field": {
       "email": {
         "target_H_bits": {
-          "smd": 0.7602091395097493,
+          "smd": 0.5134837516181205,
           "balanced": false,
-          "mean_D": 64.91528091430663,
-          "mean_C": 57.5816032409668
+          "mean_D": 71.18852661132813,
+          "mean_C": 66.57019912719727
         },
         "target_len_tokens": {
-          "smd": 0.5958345977908028,
+          "smd": 0.6129047021463004,
           "balanced": false,
-          "mean_D": 7.72,
-          "mean_C": 7.16
+          "mean_D": 9.8,
+          "mean_C": 9.2
         }
       },
       "ssn": {
         "target_H_bits": {
-          "smd": -0.042741601741463915,
+          "smd": 0.08170192903471514,
           "balanced": true,
-          "mean_D": 49.685941009521486,
-          "mean_C": 49.785548553466796
+          "mean_D": 73.64763061523438,
+          "mean_C": 73.41004425048828
         },
         "target_len_tokens": {
-          "smd": 0.0,
+          "smd": -0.07364596943186429,
           "balanced": true,
-          "mean_D": 6.12,
-          "mean_C": 6.12
+          "mean_D": 9.4,
+          "mean_C": 9.44
         }
       }
     },
     "unbalanced": [
-      "email/target_H_bits=+0.760",
-      "email/target_len_tokens=+0.596"
+      "email/target_H_bits=+0.513",
+      "email/target_len_tokens=+0.613"
     ],
     "passes": false,
     "note": "field is matched exactly by construction. char_len needs results/e17_matches_*.json and is not checked here.",

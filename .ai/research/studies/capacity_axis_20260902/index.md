@@ -14,3 +14,4 @@
   carried verbatim per that archive's own instruction.
 - Inherits the codebase corrections verified in
   [`archive/convergent_validity_20260902`](../../archive/convergent_validity_20260902/DEFERRED.md).
+- [analysis.md](analysis.md) — verdicts, findings, defects

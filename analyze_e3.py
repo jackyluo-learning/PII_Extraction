@@ -230,6 +230,10 @@ def analyze(df: pd.DataFrame, n_shards: int, n_boot: int = cs.N_BOOT) -> dict:
     kf["beta_hi"] = kf.H_bits / kf.k_min.map(lambda v: max(prev[int(v)], 1e-9))
     R["beta_model_free"] = {
         "definition": "beta(t) = H(t) / k_min(t), control arm, no model",
+        "this_is_the_papers_definition": "Paper Def. 3 IS median H(t)/k_min(t) in bits/token "
+            "(CODE_MAP.md mismatch #1). It is not a fallback for the refuted AFT fit -- it is the "
+            "quantity the paper defines, which capacity_e3 currently computes inverted as "
+            "linregress(H_bits -> k_min).slope, in tokens/bit.",
         "ceiling_log2_V": LOG2_V,
         "applies_because_right_censoring_is": float(fit["right_censored_fraction"])
         if "error" not in R["H4"] else None,
@@ -279,7 +283,13 @@ def analyze(df: pd.DataFrame, n_shards: int, n_boot: int = cs.N_BOOT) -> dict:
         sp = np.sqrt((d.var(ddof=1) + c.var(ddof=1)) / 2)
         return float((d.mean() - c.mean()) / sp) if sp > 0 else 0.0
 
-    tgt = df.drop_duplicates(["person_id", "field", "target_membership"])
+    # k=0 must be excluded: the fixed probe targets a DIFFERENT string. It forces
+    # 'qjohnson@example.com' while gcg_free forces 'Email: qjohnson@example.com'
+    # with the field prefix, so target_H_bits and target_len_tokens carry two
+    # values per target. Reading the k=0 one here put every SMD on the wrong
+    # quantity (SSN entropy 49.7 instead of 73.4).
+    tgt = (df[df.capacity_k > 0]
+           .drop_duplicates(["person_id", "field", "target_membership"]))
     bal, unbalanced = {}, []
     for f, g in tgt.groupby("field"):
         D, C = g[g.target_membership == "trained"], g[g.target_membership == "control"]
