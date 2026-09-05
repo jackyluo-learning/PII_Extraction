@@ -371,7 +371,7 @@
     ],
     "observations_not_tests": [
       "alpha_k rises from 0.000 to 0.967 and saturates short of 1.0.",
-      "THE KNEE IS AT k=4-6, NOT k=2. Proposition 1 puts the threshold at H/log2|V| = 29.9/15.62 = 1.91, so two tokens. Measured: k=2 and k=3 are EXACTLY 0.000 on 150 targets each; the first non-zero is k=4 at 0.013 (2/150), and k=6 jumps to 0.273. The bound holds but is not attained -- the optimizer needs roughly twice the information-theoretic minimum, and that gap is what beta measures.",
+      "THE INFORMATION-THEORETIC BOUND IS TIGHT, AND THE ORIGINAL READING OF THIS ROW WAS WRONG. It compared the measured knee against k*_thy = H_inf/log2|V| = 29.9/15.62 = 1.91 and concluded the optimizer needs about twice the minimum. But H_inf is the SSN format's combinatorial min-entropy, while what the attack actually forces is a rendered string whose self-information under the reference model is 55.3 to 80.8 bits. Evaluated at each target's own H(t), the bound k >= H(t)/log2|V| runs from 3.54 to 5.17 -- so alpha = 0.000 at k = 1, 2, 3 is REQUIRED by information theory, not a shortfall. Checked per target on the control arm: 0 of 50 violate their own bound; the two targets forced earliest (k_min = 4) are the two lowest-entropy targets in the set (H = 55.3 and 61.9, bounds 3.54 and 3.96), and k = 4 is the first grid point above them. The minimum ratio k_min/bound is 1.01 -- one target sits essentially ON the bound. The median ratio is 1.70, and THAT is the optimizer's real overhead.",
       "alpha is NOT strictly monotone at the top: k=48 (0.913) sits below k=32 (0.920). Exactly the kind of sampling blip that would have failed the old zero-tolerance np.diff check, and the reason it was replaced by a trend test.",
       "tau_rec is near zero at EVERY capacity, range -0.073 to +0.027, sign oscillating. No systematic separation between arms anywhere on the axis. NOT TESTED here."
     ],
@@ -391,6 +391,14 @@
     {
       "date": "2026-09-05",
       "note": "Two defects found by smoke-testing analyze_e3.py on synthetic data, both fixed before the real data was touched. (1) The alpha -> k* deliverable was reporting the SMALLEST k meeting the floor tolerance, which is trivially k=1 at every tolerance and says nothing. alpha_k RISES with k, so the tolerance bounds k from ABOVE: the auditor's k*(alpha) is the LARGEST capacity whose floor still meets the tolerance -- an operating ceiling. (2) H2's bootstrap p-value tested the floor alone while its verdict required floor AND signal, so the number entering Holm did not test the stated hypothesis. H2 is now reported as the preregistered floor test (which carries the p) plus the re-aimed floor-and-signal overlay, kept separate."
+    }
+  ],
+  "corrections": [
+    {
+      "date": "2026-09-05",
+      "what": "The 'knee at k=4-6 vs theory k=2' observation recorded on 2026-09-05 was comparing the measured curve against the wrong entropy. Corrected in place above.",
+      "why_it_matters": "The original text said the bound holds but is not attained. Against the matching per-target bound it IS attained -- minimum ratio 1.01 -- and the empirical zero-region is exactly what the bound predicts. That is a stronger result than the one first recorded, and it points the opposite way.",
+      "design_basis": "design.md L793-808 settled before any data that k*_thy uses H_inf and k_force uses H(t), and that the two are never interchangeable. Both comparisons are legitimate; the first write-up simply used the H_inf one to score a claim about forcing actual strings, which is what H(t) governs."
     }
   ]
 }

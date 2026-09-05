@@ -138,7 +138,12 @@ def fit_loglog(k_min: Sequence[float], h_bits: Sequence[float],
         draw = rng.choice(persons, size=len(persons), replace=True)
         rows = np.concatenate([idx[p] for p in draw])
         try:
-            g_, i_ = _one(df.iloc[rows])
+            # reset_index is REQUIRED, not cosmetic: a clustered resample draws
+            # the same person repeatedly, so df.iloc[rows] carries duplicate
+            # index labels and lifelines' internal reindex raises on them. Left
+            # in, it kills every replicate and the failure reads as an
+            # unidentifiable model rather than as a pandas indexing detail.
+            g_, i_ = _one(df.iloc[rows].reset_index(drop=True))
             gs.append(g_); bs.append(np.exp(-i_))
         except Exception as e:
             # A degenerate resample is not a result -- but swallowing the reason

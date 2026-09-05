@@ -203,12 +203,70 @@ def analyze(df: pd.DataFrame, n_shards: int, n_boot: int = cs.N_BOOT) -> dict:
         fit = sv.fit_loglog(kc.k_min.tolist(), kc.H_bits.tolist(),
                             kc.person_id.tolist(), ks_pos)
         g_lo, g_hi = fit["gamma_ci"]
-        # p for gamma == 1 by inverting the bootstrap CI
-        R["H4"] = {**fit, "supported": fit["h4_proportionality_supported"],
-                   "p_boot_gamma_vs_1": None,
-                   "scored_by": "CI rule: gamma's 95% CI must contain 1"}
+        holds = fit["h4_proportionality_supported"]
+        # beta = exp(-intercept) parameterizes a model the slope test may have
+        # just refuted. When gamma's CI excludes 1 the intercept is absorbing
+        # the misfit and beta is not a rate in bits/token at all -- it must not
+        # be quoted. Enforced here rather than left to whoever reads the JSON.
+        R["H4"] = {**fit, "supported": holds,
+                   "scored_by": "CI rule: gamma's 95% CI must contain 1",
+                   "beta_interpretable": bool(holds),
+                   "beta_caveat": None if holds else
+                   "DO NOT QUOTE beta_bits_per_token. gamma's CI excludes 1, so the "
+                   "proportional model is refuted and exp(-intercept) is absorbing the "
+                   "slope misfit rather than measuring a steering rate. Use "
+                   "beta_model_free below."}
     except Exception as e:
         R["H4"] = {"error": f"{type(e).__name__}: {e}", "supported": None}
+
+    # ---- beta the auditor can actually use, free of the refuted model ----
+    # Right censoring is what motivated the AFT fit; where it is absent the
+    # direct per-target ratio needs no model. Interval censoring remains, so
+    # each target gets a bracket: k at its observed grid point (conservative,
+    # beta low) and at the previous one (optimistic, beta high).
+    prev = {v: (ks_pos[i - 1] if i else 0) for i, v in enumerate(ks_pos)}
+    kf = kc[np.isfinite(kc.k_min)].copy()
+    kf["beta_lo"] = kf.H_bits / kf.k_min
+    kf["beta_hi"] = kf.H_bits / kf.k_min.map(lambda v: max(prev[int(v)], 1e-9))
+    R["beta_model_free"] = {
+        "definition": "beta(t) = H(t) / k_min(t), control arm, no model",
+        "ceiling_log2_V": LOG2_V,
+        "applies_because_right_censoring_is": float(fit["right_censored_fraction"])
+        if "error" not in R["H4"] else None,
+        "overall": {"n": int(len(kf)),
+                    "median_lo": float(kf.beta_lo.median()),
+                    "median_hi": float(kf.beta_hi.median()),
+                    "iqr_lo": [float(kf.beta_lo.quantile(.25)), float(kf.beta_lo.quantile(.75))],
+                    "range_lo": [float(kf.beta_lo.min()), float(kf.beta_lo.max())],
+                    "p10_lo": float(kf.beta_lo.quantile(.10))},
+        "by_field": {f: {"n": int(len(g)), "median_lo": float(g.beta_lo.median()),
+                         "median_hi": float(g.beta_hi.median()),
+                         "H_median": float(g.H_bits.median()),
+                         "k_min_median": float(g.k_min.median()),
+                         "spearman_H_kmin": float(g.H_bits.corr(g.k_min, method="spearman"))}
+                     for f, g in kf.groupby("field")},
+        "note": "Field-stratified because the pooled figure is a between-field artefact: "
+                "see spearman_H_kmin within each field."}
+
+    # ---- is Proposition 1's bound tight, evaluated at each target's own H(t)? ----
+    kf["bound"] = kf.H_bits / LOG2_V
+    ratio = kf.k_min / kf["bound"]
+    early = kf[kf.k_min == kf.k_min.min()]
+    R["bound_tightness"] = {
+        "bound": "k_min(t) >= H(t) / log2|V|  -- Prop. 1 at the target's own self-information",
+        "n": int(len(kf)),
+        "bound_range": [float(kf["bound"].min()), float(kf["bound"].max())],
+        "n_violating": int((kf.k_min < kf["bound"]).sum()),
+        "ratio_k_over_bound": {"min": float(ratio.min()), "median": float(ratio.median()),
+                               "max": float(ratio.max())},
+        "earliest_forced": {"k_min": float(kf.k_min.min()), "n": int(len(early)),
+                            "H_bits": [float(v) for v in early.H_bits],
+                            "their_bounds": [float(v) for v in early["bound"]],
+                            "H_bits_min_in_set": float(kf.H_bits.min())},
+        "note": "H_inf (Cor. 1, 29.9 bits) and H(t) (here, 55-81 bits) are different quantities "
+                "and design.md L793-808 forbids interchanging them. This row uses H(t), which is "
+                "what governs forcing an actual rendered string; the alpha_to_kstar table uses "
+                "H_inf, which is what Corollary 1 is stated in."}
 
     # ---- H5: exploratory ----
     R["H5"] = {**cs.peak_location(boot), "status": "EXPLORATORY -- outside the family"}
