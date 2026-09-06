@@ -1,8 +1,10 @@
 # E3 audited reanalysis
 
-The computation is conditional on the recorded raw artifacts. Final analysis acceptance
-is **blocked**; the study is not ready for closeout. The main execution checkpoint is
-also reopened because completed raw files do not establish historical pins or total cost.
+The computation is conditional on the recorded raw artifacts. Cheaha access is now
+working and a source bundle has been recovered, but final analysis acceptance remains
+**blocked**; the study is not ready for closeout. The main execution checkpoint is
+still reopened because completed raw files do not establish historical checkpoint
+binding or one-to-one scheduler attribution.
 
 ## Start here
 
@@ -14,7 +16,8 @@ also reopened because completed raw files do not establish historical pins or to
 
 `prior_analysis.md`, `prior_results.json` and `prior_plan.json` preserve the rejected
 completion state. `initial_provenance_audit.md` and `raw_data_audit.json` are snapshots
-before Drive recovery; `post_recovery_audit.json` records what was subsequently recovered.
+before Drive recovery; `post_recovery_audit.json` and `cheaha_recovery_audit.json`
+record what was subsequently recovered from Cheaha.
 Legacy root-level `curve`, `analysis_notes` and `exploratory_findings` in the ledger are
 superseded history; the authoritative current results are explicitly namespaced above.
 
@@ -23,11 +26,11 @@ superseded history; the authoritative current results are explicitly namespaced 
 | Needed source | Expected coverage / why needed | Available | Still unresolved |
 |---|---|---|---|
 | Main attack parquet, raw target/generation, exact match, NLL, H, timings | 14 capacities × 3 seeds, both arms, 2 fields; recompute outcomes and statistics | 42 shards, 4,200 rows, complete fixed-target matrix, checksums verified | These records alone cannot establish model identity or scheduler exit |
-| Main launch manifests | One per shard; code, configuration, environment, seed, subset | 42 manifests; one recorded code/environment/subset | 6 unknown dirty states; full resolved launch configuration and full environment lock absent |
+| Main launch manifests | One per shard; code, configuration, environment, seed, subset | 42 manifests; code/environment/subset and exact pip-freeze hash recovered | 6 unknown dirty states; full immutable resolved launch record absent |
 | Training checkpoint identity and data snapshot | Bind measured attacks to the intended trained model and corpus | Recovered Colab data and current model hash; registry labels rechecked | Historical executed Cheaha checkpoint hash, training/log lineage and per-run data binding absent |
-| E17 original matching records | Main seeds 42/1337/2024; pair-weighted and deduplicated marginal SMD | Colab seed42 recovered; actual attacked sample balance computed | Cheaha E17 for all three seeds missing; Colab is not substituted |
+| E17 original matching records | Main seeds 42/1337/2024; pair-weighted and deduplicated marginal SMD | Cheaha seed42/1337/2024 each recovered (600 rows); controls show matching with replacement | The three seed-named files are byte-identical, so they do not provide independent seed matching variation |
 | Original pilot/cost/repro raw data | Audit pilot gates, costs and target-level decision flips | 7 Colab shards plus manifests recovered; zero flip comparison rechecked | Dirty original/code boundary disclosed; not a clean Cheaha replay |
-| Scheduler and failure evidence | Every main/smoke/failed/interrupted job, state, allocation, elapsed time | Per-attack main elapsed totals 26.251 h | Slurm terminal states, allocation totals, complete failed/preempted job costs absent |
+| Scheduler and failure evidence | Every main/smoke/failed/interrupted job, state, allocation, elapsed time | sacct recovered: 45 pii-expcap jobs (43 completed, 1 failed, 1 cancelled); completed billing GPU-h lower bound 222.987 | One-to-one shard mapping and failed/retried task attribution absent |
 | Historical start timestamps | Required by the strict run-ledger schema | Not present in recovered manifests | Never substitute file mtime or import time for launch time |
 
 The three legacy rows stay excluded and retain their original schema. The 49 new
@@ -73,11 +76,11 @@ checked the three PNG figures; matching PDF versions are available for export.
 
 ## Complete the Cheaha evidence
 
-Local batch SSH reached Cheaha but authentication failed. The computer-use tool also
-disallowed Terminal access; no authenticated UI session was inspected or bypassed.
-If these files already exist locally, supply their directory and continue the audit.
-Otherwise, [collect_cheaha_evidence.sh](collect_cheaha_evidence.sh) can be copied to an
-authenticated Cheaha session and run with:
+An authenticated Cheaha session recovered the first-stage source bundle at
+`reanalysis/cheaha-e3-evidence.tar.gz`. Its audit is in
+[cheaha_recovery_audit.json](cheaha_recovery_audit.json). The collection script remains
+available for a future authenticated session if detailed job logs or a shard-to-job
+mapping can be recovered:
 
 ```bash
 bash collect_cheaha_evidence.sh

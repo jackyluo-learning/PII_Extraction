@@ -5985,10 +5985,10 @@
     }
   ],
   "reanalysis": {
-    "status": "computed_conditionally_reviewed_numerically_blocked_on_evidence",
+    "status": "computed_conditionally_reviewed_numerically_source_recovered_historical_binding_blocked",
     "raw_audit_path": ".ai/research/studies/capacity_axis_20260902/reanalysis/raw_data_audit.json",
     "post_recovery_audit": {
-      "created_at": "2026-09-06T00:32:13.365177+00:00",
+      "created_at": "2026-09-06T18:25:44.517999+00:00",
       "recovered_colab_files": 27,
       "registry_label_value_mismatches": 0,
       "data_fingerprints_reverified": {
@@ -6026,17 +6026,176 @@
         "None": 6
       },
       "remaining_missing": [
-        "Cheaha E17 matching records for seeds 42,1337,2024 (Colab seed42 recovered only)",
-        "Cheaha executed checkpoint/content fingerprint; current Drive checkpoint is not proof of main model identity",
-        "Original full environment lock and complete launch configuration",
-        "Cleanliness evidence for 6 main shards with code.dirty=null",
-        "Slurm job terminal states, walltime/GPU allocation, failed/preempted jobs; SSH authentication unavailable"
+        "历史执行 checkpoint 内容指纹并与每个 Cheaha 分片绑定",
+        "超出 manifest PII_* 字段的不可变完整 launch 记录",
+        "6 个 code.dirty=null 主 manifest 的历史清洁证据",
+        "分片与 Slurm 作业的一对一映射及失败/重试归属",
+        "49 条导入运行记录的历史 started_at 时间戳"
       ],
       "new_imports": 49,
       "imported_scope_counts": {
         "cheaha_main": 42,
         "colab_pilot": 7
-      }
+      },
+      "cheaha_recovery": {
+        "retrieved_at": "2026-09-06T18:25:44.517999+00:00",
+        "source": {
+          "host": "cheaha.rc.uab.edu",
+          "user": "jluo",
+          "project_root": "/data/user/jluo/PII_Extraction",
+          "archive": {
+            "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-e3-evidence.tar.gz",
+            "bytes": 104353,
+            "sha256": "d0996803312f0cd1f5d2f355bf545196eed41039271fbee173072aad762bfd99"
+          }
+        },
+        "e17_matching": {
+          "files": {
+            "1337": {
+              "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-e3-evidence/e3-evidence.7JJ8Gj/results/e17_matches_e3a_seed1337.json",
+              "rows": 600,
+              "sha256": "6e04fed3aa55efc5c256118f1d37e0fa7653c9ab6b577b5e063d7bbca3e95431",
+              "fields": [
+                "address",
+                "credit_card",
+                "email",
+                "name",
+                "phone",
+                "ssn"
+              ],
+              "trained_unique_people": 100,
+              "control_unique_people": 50,
+              "control_matching_with_replacement_observed": true
+            },
+            "2024": {
+              "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-e3-evidence/e3-evidence.7JJ8Gj/results/e17_matches_e3a_seed2024.json",
+              "rows": 600,
+              "sha256": "6e04fed3aa55efc5c256118f1d37e0fa7653c9ab6b577b5e063d7bbca3e95431",
+              "fields": [
+                "address",
+                "credit_card",
+                "email",
+                "name",
+                "phone",
+                "ssn"
+              ],
+              "trained_unique_people": 100,
+              "control_unique_people": 50,
+              "control_matching_with_replacement_observed": true
+            },
+            "42": {
+              "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-e3-evidence/e3-evidence.7JJ8Gj/results/e17_matches_e3a_seed42.json",
+              "rows": 600,
+              "sha256": "6e04fed3aa55efc5c256118f1d37e0fa7653c9ab6b577b5e063d7bbca3e95431",
+              "fields": [
+                "address",
+                "credit_card",
+                "email",
+                "name",
+                "phone",
+                "ssn"
+              ],
+              "trained_unique_people": 100,
+              "control_unique_people": 50,
+              "control_matching_with_replacement_observed": true
+            }
+          },
+          "all_three_files_byte_identical": true,
+          "interpretation": "Recovered from Cheaha. The three seed-named files are byte-identical, so they document matching inputs but are not independent seed evidence."
+        },
+        "manifests": {
+          "files": 42,
+          "same_as_local": 42,
+          "code_dirty_counts": {
+            "False": 36,
+            "None": 6
+          },
+          "commit_counts": {
+            "eba523bcb4a40116c00321d9f28485b90c9f17d7": 42
+          },
+          "python_versions": {
+            "3.11.5": 42
+          },
+          "torch_versions": {
+            "2.6.0+cu124": 42
+          },
+          "transformers_versions": {
+            "5.16.1": 42
+          },
+          "lifelines_versions": {
+            "0.30.0": 42
+          },
+          "subset_hash_counts": {
+            "791fb10a21ea726e": 42
+          },
+          "pip_freeze_lines": 113,
+          "pip_freeze_sha256": "b7516b82b8f38c900d7af60443f1d3d2269dfba5687d8f6a6947d864c82c5938",
+          "pip_freeze_sha256_16": "b7516b82b8f38c90",
+          "config": {
+            "PII_ADAPTIVE_LAMBDA": "0.1",
+            "PII_CAP_SWEEP_N": "25",
+            "PII_DEVICE_PROFILE": "auto",
+            "PII_FIELDS": "ssn,email",
+            "PII_GCG_ITERS": "200",
+            "PII_KGRID": "0 1 2 3 4 6 8 12 16 20 24 32 48 64",
+            "PII_MODELS": "gpt2",
+            "PII_RUN_ID": "e3a",
+            "PII_SEEDS": "42 1337 2024"
+          },
+          "interpretation": "Manifests resolve the recorded PII_* launch fields and exact environment hash. Six manifests retain dirty=null; this is unknown historical cleanliness, not clean evidence."
+        },
+        "current_content_hashes": [
+          {
+            "path": "data/corpus/train.json",
+            "sha256_now": "7a059fc04ae21665a464a5cb68eb87d2fae597d736f82869c24866e21d0e1acf",
+            "bytes": 57979000
+          },
+          {
+            "path": "data/target_registry.json",
+            "sha256_now": "91901119f342d7d4ff9e052ceb7fce53bebacfe3fb593a7c1d7ff83a2e2978c6",
+            "bytes": 65170
+          },
+          {
+            "path": "models/gpt2/model.safetensors",
+            "sha256_now": "1cefaa4922d3e2474cf27a0e75a58b72447d1ef2742528972112b4dc89963b7a",
+            "bytes": 497774208
+          },
+          {
+            "path": "models/gpt2/tokenizer.json",
+            "sha256_now": "9fe733f259ca91b0cfce8719f4c9c2d60a5fa57091ccb4855ddcaeb1981707a7",
+            "bytes": 3557778
+          }
+        ],
+        "scheduler": {
+          "source": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-e3-evidence/e3-evidence.7JJ8Gj/sacct.tsv",
+          "top_level_rows": 53,
+          "pii_expcap_jobs": 45,
+          "pii_expcap_states": {
+            "FAILED": 1,
+            "COMPLETED": 43,
+            "CANCELLED by 14642": 1
+          },
+          "pii_expcap_elapsed_seconds_all": 100430,
+          "pii_expcap_elapsed_seconds_completed": 100344,
+          "pii_expcap_alloc_tres": [
+            "billing=8,cpu=8,gres/gpu=1,mem=64G,node=1"
+          ],
+          "completed_billing_gpu_hours_lower_bound": 222.987,
+          "mapping_to_shards": "Aggregate scheduler accounting recovered; the export does not bind every completed job one-to-one to a manifest/shard or identify the failed retry attribution."
+        },
+        "historical_binding": {
+          "checkpoint": "unresolved: current_content_hashes.json is a current snapshot and does not bind the executed checkpoint to each shard",
+          "git_cleanliness": "unresolved for six dirty=null manifests; current git status is dirty because the collection directory was added during recovery",
+          "launch_configuration": "PII_* fields and the generic Slurm scripts recovered; a fully immutable resolved launch record was not recovered",
+          "environment_lock": "resolved: exact pip freeze recovered and its 16-character hash matches every manifest"
+        }
+      },
+      "source_materials_recovered": [
+        "Cheaha E17 matching records for seeds 42, 1337, and 2024",
+        "42 Cheaha manifests and their resolved PII_* fields",
+        "Exact pip freeze with manifest-matching hash",
+        "Slurm sacct export with pii-expcap terminal states and elapsed allocations"
+      ]
     },
     "inference_scope": "Conditional reanalysis of complete recorded main attempts. Not yet confirmatory or ready for closeout.",
     "prior_analysis_superseded": true,
@@ -10899,6 +11058,7 @@
         "candidate_count_verified": false
       },
       "cost_scope": "Colab cost pilots only, dirty manifests. Mean wallclock over recorded attacks with different actual early stopping. The notebook T=10 comparison is not a fixed-step complexity test; per-step candidate count is not inferred from timings."
-    }
+    },
+    "cheaha_recovery_audit_path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha_recovery_audit.json"
   }
 }

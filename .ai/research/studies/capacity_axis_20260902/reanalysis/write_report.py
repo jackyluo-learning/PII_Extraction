@@ -2,7 +2,7 @@
 from pathlib import Path
 import json,csv
 ROOT=Path(__file__).resolve().parents[5];S=ROOT/'.ai/research/studies/capacity_axis_20260902';O=S/'reanalysis';A=ROOT/'artifacts/capacity_axis_20260902'
-L=json.loads((S/'results.json').read_text());R=L['reanalysis']['estimates'];H=R['hypotheses'];P=L['reanalysis']['post_recovery_audit'];D=R['diagnostics']
+L=json.loads((S/'results.json').read_text());R=L['reanalysis']['estimates'];H=R['hypotheses'];P=L['reanalysis']['post_recovery_audit'];CHEAHA=P.get('cheaha_recovery',{});D=R['diagnostics']
 T=L['reanalysis']['task_prediction_evidence']
 def num(x,n=3):return '未得' if x is None else f'{x:.{n}f}'
 def ci(x,n=3):return f'[{num(x[0],n)}, {num(x[1],n)}]'
@@ -25,6 +25,9 @@ for field,rows in R['curves'].items():
   flat.append({'field':field,'k':x['k'],'n_persons_per_arm':25,'n_seeds':3,'n_targets_per_arm':x['control']['n_targets'],'n_attempts_per_arm':x['control']['n_attempts'],'alpha':x['control']['estimate'],'alpha_lower':x['control']['ci'][0],'alpha_upper':x['control']['ci'][1],'emr_D':x['trained']['estimate'],'emr_D_lower':x['trained']['ci'][0],'emr_D_upper':x['trained']['ci'][1],'tau':x['tau'],'tau_lower':x['tau_ci'][0],'tau_upper':x['tau_ci'][1],'interval_method':x['tau_interval_method'],'C_attack_elapsed_h':x['control']['attempt_elapsed_hours'],'D_attack_elapsed_h':x['trained']['attempt_elapsed_hours'],'allocated_GPU_h':'unknown'})
 csvout('isotonic_summary.csv',H['H1']['isotonic_summary']);csvout('curve_table.csv',flat);csvout('seed_rates.csv',R['seed_rates']);csvout('actual_balance.csv',D['actual_marginal_balance']);csvout('colab_e17_balance.csv',D['recovered_colab_e17_balance']);csvout('auc_exploratory.csv',R['auc_exploratory'])
 fulltime=sum(R['compute']['main_attempt_elapsed_hours'].values());excess=fulltime-24
+sched=CHEAHA.get('scheduler',{})
+sched_gpu_h=sched.get('completed_billing_gpu_hours_lower_bound')
+dirty_unknown=P.get('main_code_dirty_counts',{}).get('None',0)
 h2sens=H['H2']['consistent_interval_sensitivity']['conventions']
 sens_by_name={x['name']:x for x in h2sens}
 sens_tols=[.01,.05,.09,.10,.15,.20]
@@ -41,19 +44,20 @@ summary=rf'''# E3 重新分析：原始证据审计后的条件性结果
 已从台账关联的 42 个 Cheaha 原始分片重新计算，共 4,200 次攻击；每组 25 人、50 个目标，三个攻击种子。旧分析被撤回为历史版本，见 [prior_analysis.md](reanalysis/prior_analysis.md)。
 H1：ρ={H['H1']['rho']:.4f}，95% CI {ci(H['H1']['ci'],4)}，支持记录数据中的上升趋势。H3：k=20 的差为 {diff(H['H3']['tau'],H['H3']['ci'])}，未排除零。
 H2：1% 误报条件不可分辨；零命中的保守 Wilson 上界为 {100*H['H2']['zero_count_wilson_upper']:.2f}%，不再接受旧版的 [0,0] 区间或“不存在可用容量”结论。H4：γ={H['H4']['gamma']:.3f}，95% CI {ci(H['H4']['gamma_ci'])}，在声明的 Weibull 工作模型下排除比例关系。
-**状态：可核验数据的统计重算已完成，但完整分析验收仍受 Cheaha 来源材料缺口阻塞；不是已接受的确认性研究，也未结项。** 已记录攻击耗时至少 {fulltime:.2f} h，超过 24 A100-h 预算；完整分配算力和失败成本尚未知。
+**状态：Cheaha 来源材料已部分恢复；统计重算完成，但完整分析验收仍受历史绑定缺口阻塞。** 这不是已接受的确认性研究，也未结项。主分片记录的攻击耗时为 {fulltime:.2f} h；sacct 还记录了 {sched.get('pii_expcap_jobs','未得')} 个主作业，已完成作业的计费 GPU-h 下限为 {sched_gpu_h if sched_gpu_h is not None else '未得'}，但仍缺逐分片映射、历史 checkpoint 绑定和完整运行时间戳。
 
 ## “Cheaha 来源材料缺口阻塞”具体指什么
 
-这里的“阻塞”是**正式确认性验收与研究结项的阻塞**，不是统计程序无法运行，也不是 42 个主扫描分片或 4,200 行攻击结果缺失。现有逐行结果足以重算曲线、区间和假设统计量；缺少的是证明这些结果确实来自预定模型、预定匹配、预定环境和完整调度过程的历史来源链。
+这里的“阻塞”是**正式确认性验收与研究结项的阻塞**，不是统计程序无法运行，也不是 42 个主扫描分片或 4,200 行攻击结果缺失。Cheaha 的 E17、42 个 manifest、精确 pip freeze 和 sacct 汇总已经恢复；仍缺的是把每个结果绑定到当时执行的 checkpoint、不可变的完整 launch 记录、6 个 `code.dirty=null` 分片的历史清洁证据、逐分片的 Slurm 失败/重试归属，以及 49 条导入记录的历史 `started_at`。
 
-{table(['缺少的 Cheaha 材料','阻塞的验收门','对当前重算的影响','解除阻塞所需证据'],[
-['实际执行 checkpoint 的内容指纹及训练—攻击关联','模型身份与五项 pin','不改变已存 parquet 的算术结果；但无法证明主扫描攻击的是计划中的那一个模型','历史 checkpoint 文件或可信 SHA256，以及能把它与各主分片关联的记录'],
-[f"完整 launch 配置、环境锁和 {P['main_code_dirty_counts']['None']} 个 dirty=unknown 分片的清洁证据",'配置、环境与代码清洁性','已记录字段可以复核；未记录的运行差异仍无法排除','原始完整配置、依赖锁/镜像标识、git 状态或等价不可变记录'],
-['Cheaha 三个攻击种子的 E17 matching 记录','D/C 可比性与成员性解释','实际被攻击样本的边际 SMD 可算；但不能验证每个主运行最初如何配对','seeds 42、1337、2024 的原始 E17 配对表及其哈希'],
-['Slurm 终态、分配 walltime/GPU 和失败或抢占任务记录','预算、失败处理与运行完整性','不进入已完成行的统计值；总 GPU-h、失败成本和所有任务终态仍未知','sacct/squeue 导出、作业日志与失败/重试清单']])}
+{table(['材料状态','阻塞的验收门','对当前重算的影响','仍需的证据'],[
+['执行 checkpoint 的内容指纹及训练—攻击关联仍缺','模型身份与五项 pin','不改变已存 parquet 的算术结果；无法证明主扫描攻击的是计划中的那个模型','历史 checkpoint 文件或可信 SHA256，以及与各主分片的绑定记录'],
+[f"PII_* 配置已在 manifest 中恢复；完整不可变 launch 记录和 {dirty_unknown} 个 dirty=unknown 分片的历史清洁证据仍缺",'配置、环境与代码清洁性','精确环境已可复核；未记录的运行差异和历史工作树状态仍无法排除','完整 resolved launch 记录、不可变环境/镜像标识、历史 git 状态或等价记录'],
+['E17 已恢复：42、1337、2024 各600行；三份字节相同，控制匹配观察到有放回','D/C 可比性与成员性解释','matching 证据已不再是缺口；三份相同意味着它们不是独立 seed matching 证据','若要证明 matching 随 seed 变化，需独立且不同的 E17 记录；当前结果仅证明已恢复这三份文件'],
+['sacct 已恢复：pii-expcap 45个作业，43完成、1失败、1取消；逐分片映射和失败/重试归属仍缺','预算、失败处理与运行完整性','可报告调度汇总和 GPU-h 下限；无法把每个作业终态归给具体 manifest','原始作业日志、array/shard 映射和失败/重试清单'],
+['49条导入运行记录缺历史 started_at','严格运行台账 schema','不改变已保存攻击行或统计量；但不能把导入记录当作完整的历史运行日志','Cheaha 作业 start 时间与每个 manifest 的可验证绑定']])}
 
-因此当前状态应读成：**条件性数值重算完成；确认性验收被来源证据阻塞；研究尚未结项。** 即使暂时找不到上述材料，当前数值仍可作为“给定这些已保存攻击行”的条件性结果，但不能升级成无保留的确认性结论。
+因此当前状态应读成：**Cheaha 来源恢复完成了一部分；条件性数值重算完成；确认性验收仍被五项历史绑定缺口阻塞；研究尚未结项。** 当前数值可作为“给定这些已保存攻击行”的条件性结果，但不能升级成无保留的确认性结论。
 
 ## Ledger Audit
 
@@ -61,16 +65,16 @@ H2：1% 误报条件不可分辨；零命中的保守 Wilson 上界为 {100*H['H
 ['完整性','42/42 k×seed；84/84 两组单元；168/168 字段单元；4,200 行','每个目标全部 42 个测量齐全，无重复或关键缺失'],
 ['标签/判定','逐行用运行版本 exact_match 重算一致；与找回注册表一致','验证记录内部一致性与标签，不等于重新运行模型'],
 ['运行状态','新增49条基于原始文件的记录：42主扫描＋7 Colab pilot/cost/repro','3条旧pilot保留并排除，避免同名路径误指Cheaha；没有伪造调度退出状态'],
-['五项 pins','42份manifest；代码commit和环境hash一致；36份dirty=false，6份unknown','缺Cheaha执行checkpoint哈希、完整launch配置/环境；unknown未改成false'],
+['五项 pins','42份manifest；代码commit、Python/Torch/Transformers/lifelines和pip-freeze hash一致；36份dirty=false，6份unknown','缺执行checkpoint哈希、完整不可变launch记录；unknown未改成false'],
 ['数据','四份找回Colab文件的完整SHA256与历史短哈希一致','不是每个Cheaha分片的独立数据/模型快照'],
 ['复现','独立核对Colab original/repro：每组50目标，均0次flip，判定通过','original为dirty=true且代码版本不同；不升级为clean Cheaha复现'],
 ['排除','Colab pilot/cost/repro不进主分析，旧同名引用被替代且保留','没有删掉未知cleanliness的6个主分片挑选有利子集；整体仅条件性'],
 ['种子','42、1337、2024，全格齐全，达到协议3种子下限','同一批人的重复攻击；不是3次独立训练或150名独立对象'],
-['匹配','找到Colab seed42的600条E17配对，可重算两种SMD','Cheaha三种子原始E17仍缺；不能静默用Colab冒充'],
-['算力','按每组原始wallclock_s核算攻击耗时','Slurm终态/分配时间/失败列表缺失，SSH认证未通过']])}
+['匹配','Cheaha 42/1337/2024 各600条E17均已恢复；三份字节相同，控制匹配有放回','matching 来源已恢复，但字节相同的 seed 文件不提供独立 matching 变化；仍保留Colab SMD作为单独诊断'],
+['算力',f"主分片攻击耗时 {fulltime:.3f} h；sacct记录45个pii-expcap作业（43完成、1失败、1取消），已完成计费GPU-h下限 {sched_gpu_h if sched_gpu_h is not None else '未得'}",'逐分片映射和失败/重试归属缺失，GPU-h是调度下限而非每行精确分摊']])}
 
-审计文件：[初次逐行审计（补证前快照）](reanalysis/raw_data_audit.json)、[补证审计](reanalysis/post_recovery_audit.json)、[合同审查](reanalysis/contract_audit.md)、[实现审查](reanalysis/implementation_audit.md)。
-当前主模型来源不足使全部主扫描记录的 `confirmatory_eligible=false`；以下检验展示在已记录攻击数据上的条件性结果，不掩盖这一资格限制。
+审计文件：[初次逐行审计（补证前快照）](reanalysis/raw_data_audit.json)、[Cheaha来源恢复审计](reanalysis/cheaha_recovery_audit.json)、[补证审计](reanalysis/post_recovery_audit.json)、[合同审查](reanalysis/contract_audit.md)、[实现审查](reanalysis/implementation_audit.md)。
+虽然 Cheaha 的部分来源材料已恢复，历史 checkpoint 绑定、不可变 launch 记录、6 个 dirty=unknown 分片的清洁证据、逐分片调度归属和完整 started_at 仍不足，因此全部主扫描记录继续标为 `confirmatory_eligible=false`；以下检验展示在已记录攻击数据上的条件性结果，不掩盖这一资格限制。
 
 ## 预注册假设与条件性结果（Preregistered hypotheses and conditional results）
 
@@ -82,18 +86,8 @@ H2：1% 误报条件不可分辨；零命中的保守 Wilson 上界为 {100*H['H
 ['证据台账','保留原始文件哈希、运行资格、排除理由和由原始数据重算的统计量','results.json'],
 ['本节结果','把预先指定的判据应用到事后观察数据；来源门未齐时只能条件性解释','以下 H1–H5 与详细结果']])}
 
-### 实验前假设、判据、结果与推论
-
 符号约定：D 为参与微调的目标组，C 为未参与微调的控制组；k 为可自由优化的提示 token 数；αₖ 为 C 的精确命中率（forcing floor）；τrec(k) 为 D 与 C 的命中率之差。H(t) 是参考模型给目标序列的自信息量，单位 bits；k_min 是本次规定的三个种子中任一攻击首次命中该目标时的最小网格容量。
-
-{table(['假设与地位','实验前假设','预定判据','本次观察结果','是否满足','结果含义与后续待检验推论'],[
-['H1（确认性）','H0：αₖ 与 k 无关/曲线平；H1：αₖ 随 k 单调不降','k=1…64 上 Spearman ρ 的人员 bootstrap 95% CI 完全大于0',f"ρ={H['H1']['rho']:.6f}，95% CI {ci(H['H1']['ci'],6)}，Holm p={R['holm']['H1']['p_holm']:.6f}",'满足预定“总体上升趋势”判据；条件性支持 H1','当前模型、攻击器和目标内，容量增加伴随更高 forcing floor；不推出相邻点严格单调或跨模型因果规律'],
-['H2（拟作确认性，联合检验未定义）','存在 k≥1，使未训练控制目标的命中概率 αₖ≤1%；设计修订又要求同一点保留可检测的组间信号','αₖ 的95%上界≤容忍度，且 τ=D−C 的95% CI 排除0；原始1%形式和设计规定的可分辨容忍度范围均报告',f"1%下零命中 Wilson 上界={100*H['H2']['zero_count_wilson_upper']:.2f}%；字面联合规则仅在100%容忍度由负向τ的k=64满足；正向τ联合点为空",'1%形式未分辨；字面联合规则出现负向单点；正向可用性未获支持，但缺联合全局检验，不能正式反驳存在性','候选推论是“低 floor 与正向成员信号可能存在张力”；后续必须把 τ 下界>0、统一区间法和全局检验写进新预注册'],
-['H3（确认性）','H0：τrec(20)=0；双侧备择：τrec(20)≠0','k=20 的人员 bootstrap 95% CI 排除0',f"τ={diff(H['H3']['tau'],H['H3']['ci'])}，原始p={H['H3']['p_raw']:.6f}，Holm p={R['holm']['H3']['p_holm']:.6f}",'未满足拒绝 H0 的判据；结果不等于两组等效','下一实验应事先给出最小实际效应/等效界 δ，直接做等效性或界限检验'],
-['H4（确认性）','比例 forcing 模型 k_min∝H 成立，即 log-log 斜率 γ=1','控制组删失 log-log 回归中 γ 的95% CI 若排除1，则反驳比例模型',f"γ={H['H4']['gamma']:.6f}，95% CI {ci(H['H4']['gamma_ci'],6)}，Holm p={R['holm']['H4']['p_holm']:.6f}",'不满足；在声明的 Weibull 工作模型下 H4 被反驳','通用常数 β 不可由本实验迁移使用；应预注册非线性或字段分层模型再检验'],
-['H5（探索性、低功效）','H0：τrec(k) 单调或平；备择：在1与64之间有内部峰','argmax位置95%区间排除两个端点；二次项 b<0 作为次要证据',f"并列观测最大值={H['H5']['observed_maximizers']}；位置包络={ci(H['H5']['argmax_envelope_ci'],0)}；b={H['H5']['quadratic_logk_coefficient']:.5f}，95% CI {ci(H['H5']['quadratic_ci'],5)}",'位置条件满足字面要求，但曲率未排除0；总体仍不确定','k=4…48 只是下一次高功效扫描的候选区间，不能称为已定位峰值']])}
-
-表中区分当前数据支持的结果含义与**后续待检验假设**；后者没有因出现在本报告里而变成预注册结论。H1/H4 的“确认性”表示原设计的假设地位；当前所有主扫描结论都仍受来源资格限制。
+以下 H1–H5 章节各自完整说明实验前假设、预定判据、观察结果、判定和由结果产生的后续待检验推论。H1–H4 属于原设计的确认性家族；H5 在实验前已经标为低功效探索性假设。当前所有结论仍受来源资格限制。
 
 ### 先读 k=0：sanity anchor
 
@@ -111,36 +105,67 @@ B：10,000次独立D/C人员bootstrap，每次在所有k复用同一人样本，
 
 ### H1 — 容量与 forcing floor 的上升关系
 
-ρ={H['H1']['rho']:.6f}，95% CI {ci(H['H1']['ci'],6)}，n=25控制人、3种子；条件性Holm p={R['holm']['H1']['p_holm']:.6f}。预定CI判据支持向上趋势；不声称每个相邻网格点都严格单调，也不证明因果解释能外推到其他优化器/模型。[等权isotonic摘要](reanalysis/isotonic_summary.csv)按协议单独提供，没有用平滑曲线替换原始α或H2。
+**实验前假设。** H1 关注控制组的 forcing floor 是否随可优化提示容量上升。零假设 H0 是 αₖ 与 k 无关，即曲线总体为平；方向性备择假设是 αₖ 在 k=1…64 上单调不降。这个假设讨论的是控制组也能被攻击强行生成目标的概率，不是 D/C 成员差异。
+
+**预定判据。** 在所有正容量网格上计算 k 与 αₖ 的 Spearman ρ，并以控制组人员为重采样单位构造95% bootstrap CI。只有该区间完全大于0，才支持上升趋势；H1 同时进入 H1–H4 的四项 Holm 校正家族。这个判据检验总体排序趋势，不足以证明每一对相邻容量都严格不降。
+
+**观察结果。** ρ={H['H1']['rho']:.6f}，95% CI {ci(H['H1']['ci'],6)}，n=25名控制组人员、50个目标、3个固定攻击种子；原始p={H['H1']['p_raw']:.6f}，条件性Holm p={R['holm']['H1']['p_holm']:.6f}。[等权isotonic摘要](reanalysis/isotonic_summary.csv)按协议单独提供，没有用平滑值替换原始 αₖ。
+
+**判定。** 区间完全大于0，满足预定的总体上升判据，因此在当前保存数据和当前来源限制下，H1 得到条件性支持。原始点估计中仍有局部回落，所以结论不是“每个相邻点都单调”。
+
+**结果含义与新推论。** 在本次 GPT-2 124M、GCG 攻击器、SSN/email 目标和固定优化预算内，增加自由提示 token 与更高 forcing floor 稳定相关。下一项可检验推论是：这个上升关系是否能跨模型规模、攻击优化器和目标格式复现；它需要新的预注册实验，当前结果不提供跨设置的因果外推。
 
 ### H2 — 低误报且有可检测信号的操作点
 
-**1%形式：inconclusive / unresolved。** 保守零计数上界为 {100*H['H2']['zero_count_wilson_upper']:.2f}%；重复攻击ICC=.5敏感性下为 {100*R['curves']['pooled'][1]['control']['repeat_icc_sensitivity_ci'][1]:.2f}%，两种约定均无法认证1%。在同一有效n约定且仍零命中的理想条件下，每组至少需 {H['H2']['minimum_people_per_arm_for_zero_wilson_upper_1pct']} 人才能把该Wilson上界压至1%；这不是τ的功效计算，也不保证出现可用点。设计写的9%是近似分辨率参照，保守双侧Wilson实际更严格。
-联合判据严格按“控制组上界≤容忍度，且τ区间不含0”。以下同时给出最大可行k、检测率最大点、原始D/C比率最大点；比率不是DP下界。
+**实验前假设。** 原始 H2 提出存在某个 k≥1，使控制组 forcing floor αₖ 不超过1%。设计在运行前进一步指出，低 floor 本身不能构成“可用”操作点：同一个 k 还必须保留可检测的 D/C 差异 τrec(k)。因此需要同时阅读原始1%形式和最终联合形式。
+
+**预定判据及其合同缺口。** 原始1%形式要求 αₖ 的95% CI 上界≤1%。最终联合文字要求某个 k 同时满足“αₖ 上界≤审计者容忍度”和“τrec(k) 的95% CI 排除0”，并在设计认为可分辨的 α≥9% 范围报告。设计没有给联合假设定义全局p值，也没有要求 τ 的方向必须为正；后一个遗漏会使负向差异也满足字面规则。
+
+**观察结果：原始1%形式。** k=1、2、3 都观察到零次控制组命中，但零观察不等于总体概率为零。保守有效样本约定下，零计数 Wilson 上界为 {100*H['H2']['zero_count_wilson_upper']:.2f}%；重复攻击 ICC=.5 敏感性下为 {100*R['curves']['pooled'][1]['control']['repeat_icc_sensitivity_ci'][1]:.2f}%。两者都高于1%，所以现有样本不能确认或排除1%条件。在同一有效样本约定并继续零命中的理想情形下，每组至少需 {H['H2']['minimum_people_per_arm_for_zero_wilson_upper_1pct']} 人才能把 Wilson 上界压至1%；这只是精度计算，不是 τ 的功效保证。
+
+**观察结果：联合形式。** 下表同时给出 floor-only 资格和字面联合资格。容忍度≤90%时没有任何字面联合点；100%时 k=64 入选，但该点 τ 为负，因此不构成研究意图中的正向成员信号。检测率最优点和 D/C 比率最优点仅是同一字面规则下的描述，不是差分隐私下界。
 
 {table(['容忍误报','floor-only k','联合可行k','最大联合k','检测率最优k','D/C比率最优k'],[[f"{100*x['tolerance']:g}%"+('（低于设计分辨率）' if x['below_preregistered_resolution'] else ''),str(x['floor_only_capacities']),str(x['joint_capacities']),x['largest_joint_capacity'],x['detection_optimum_k'],x['likelihood_ratio_optimum_k']] for x in H['H2']['mapping']])}
 
-主表使用本次重分析声明的混合法：边界零/全一单元用 Wilson，其他单元用人员 bootstrap。设计要求零计数 Wilson、组间 Newcombe/MOVER 和人员 bootstrap，但没有完全消除这些规则的适用范围歧义；不能把本次所有实现细节都追溯称作预注册。为检查方法切换是否驱动结果，下面增加**事后方法一致性敏感性（exploratory）**，对所有控制组 k 统一使用 Wilson；它是诊断，不替换主分析。
+**为什么下面标为 exploratory。** `exploratory` 表示“事后探索性”：这一检查是在看到完整曲线以后增加的，没有资格用来确认或反驳原来的 H2。表中的1%、5%等数字只是允许的控制组误报容忍度，不是p值；例如“(exploratory) 1%”原意是“对1%容忍度做的事后敏感性检查”。为避免误读，本版把分析地位和容忍度拆成两列。
 
-{table(['标签/容忍误报','声明的混合主法：floor-only k','统一 Wilson：target-only n_eff','统一 Wilson：repeated-ICC n_eff','正向联合点：floor用敏感性法，τ沿用主CI'],[[f"(exploratory) {100*tol:g}%",str(primarymap(tol)['floor_only_capacities']),str(sensmap(target_sens,tol)['floor_only_capacities']),str(sensmap(repeat_sens,tol)['floor_only_capacities']),f"{sensmap(target_sens,tol)['positive_tau_joint_capacities_using_primary_tau_ci']} / {sensmap(repeat_sens,tol)['positive_tau_joint_capacities_using_primary_tau_ci']}"] for tol in sens_tols])}
+主表使用本次重分析声明的混合法：边界零/全一单元用 Wilson，其他单元用人员 bootstrap。设计要求零计数 Wilson、组间 Newcombe/MOVER 和人员 bootstrap，但没有完全消除这些规则的适用范围歧义。下面的事后方法一致性检查对所有控制组 k 统一使用 Wilson；它只诊断结论对区间方法的敏感度，不替换主分析。
+
+{table(['分析地位','容忍误报','声明的混合主法：floor-only k','统一 Wilson：target-only n_eff','统一 Wilson：repeated-ICC n_eff','正向联合点：floor用敏感性法，τ沿用主CI'],[['(exploratory) 事后方法敏感性',f"{100*tol:g}%",str(primarymap(tol)['floor_only_capacities']),str(sensmap(target_sens,tol)['floor_only_capacities']),str(sensmap(repeat_sens,tol)['floor_only_capacities']),f"{sensmap(target_sens,tol)['positive_tau_joint_capacities_using_primary_tau_ci']} / {sensmap(repeat_sens,tol)['positive_tau_joint_capacities_using_primary_tau_ci']}"] for tol in sens_tols])}
 
 该诊断发现一个实质性方法伪影：主法下 k=4 的控制组上界为 {100*primary_k4['control']['ci'][1]:.2f}%，所以它在5%–10%行入选；统一 Wilson 后，同一 k 的上界分别为 {100*target_k4['control_wilson_ci'][1]:.2f}%（target-only n_eff={target_sens['n_eff']:.2f}）和 {100*repeat_k4['control_wilson_ci'][1]:.2f}%（repeated-ICC n_eff={repeat_sens['n_eff']:.2f}）。这解释了为何零命中的 k=1–3 反而可能比有命中的 k=4 更难“合格”。两种一致法都没有正向τ联合点；因此敏感性分析改变部分 floor-only 映射，但不改变 H2 的“不可判定”，更不能把它升级成“已反驳”。
 
-原设计写的是“τ区间排除0”，没有要求方向为正；因此容忍度100%下的负向 k=64 会满足字面联合判据，却不能作为预期的正向成员信号工作点。这是判据含义的缺口，不能事后悄悄改成正向检验。没有得到满足正向检测条件的点。**未检出不等于不存在**，尤其不能由1%不可分辨的数据证明审计不可能。原设计没有定义联合全局p，本次以p=1保留H2家族位置，标为不可检验，拒绝重复旧版floor-only p替换。
+**判定。** 原始1%形式未分辨。字面联合规则只在100%容忍度由负向 k=64 满足，暴露了符号合同缺口；科学上需要的正向联合点没有得到支持。由于原设计没有定义联合全局p，本次以p=1保留 H2 的多重比较位置，不能把“没有观察到正向点”升级成正式反驳存在性。
+
+**结果含义与新推论。** 当前曲线提示低 forcing floor 与正向成员信号可能存在张力，但这只是后续假设。新的确认性研究应事先规定 τ 的下界必须大于0、对所有 k 使用一致的区间规则，并定义整个网格上的全局检验；若仍以1%为目标，还需扩大控制组精度。
 
 ### H3 — k=20 的成员组差异
 
-D={rate(R['curves']['pooled'][9]['trained']['estimate'],R['curves']['pooled'][9]['trained']['ci'])}；C={rate(R['curves']['pooled'][9]['control']['estimate'],R['curves']['pooled'][9]['control']['ci'])}。τ={diff(H['H3']['tau'],H['H3']['ci'])}，每组25人/50目标/3种子；centered bootstrap p={H['H3']['p_raw']:.6f}，Holm p=1。判定：**inconclusive，不能主张无记忆或等效**。设计未给“足够窄”的实用阈值，不能事后设定。
+**实验前假设。** H3 检验固定容量 k=20 时，训练目标组和控制目标组是否存在成员相关的精确命中率差异。零假设是 τrec(20)=0；备择是双侧的 τrec(20)≠0，不预设方向。
+
+**预定判据。** 使用同一批人员在三个固定攻击种子上的记录，以人员为重采样单位构造 τrec(20) 的95% bootstrap CI。只有区间排除0才拒绝零假设；H3 进入四项 Holm 校正家族。设计提到区间若“足够窄”可以形成有用界限，但没有提前给出何为足够窄，所以不能事后把未显著结果解释成等效。
+
+**观察结果。** D={rate(R['curves']['pooled'][9]['trained']['estimate'],R['curves']['pooled'][9]['trained']['ci'])}；C={rate(R['curves']['pooled'][9]['control']['estimate'],R['curves']['pooled'][9]['control']['ci'])}。τ={diff(H['H3']['tau'],H['H3']['ci'])}，每组25名人员、50个目标、3个固定种子；centered bootstrap 原始p={H['H3']['p_raw']:.6f}，Holm p={R['holm']['H3']['p_holm']:.6f}。
 
 {table(['字段','每组人/目标/种子','D及95%CI','C及95%CI','τ及95%CI（百分点）','C/D攻击小时；GPU未知'],[[f,'25 / '+str(next(x for x in R['curves'][f] if x['k']==20)['control']['n_targets'])+' / 3',rate((x:=next(x for x in R['curves'][f] if x['k']==20))['trained']['estimate'],x['trained']['ci']),rate(x['control']['estimate'],x['control']['ci']),diff(x['tau'],x['tau_ci']),f"{x['control']['attempt_elapsed_hours']:.3f}/{x['trained']['attempt_elapsed_hours']:.3f}"] for f in ['ssn','email']])}
 
 email达到样本全命中仍有非零总体不确定性；其差值不再被写成确定的结构性零。SSN区间更宽，合并值不能替代字段级限制。
 
+**判定。** 置信区间包含0，未满足拒绝 H0 的判据，H3 为不确定结果。它既不是“发现成员差异”，也不是“两组等效”或“模型没有记忆”的证据。
+
+**结果含义与新推论。** 当前数据把总体差异约束在 -7.33 到 +10.00 个百分点，但设计没有实用等效界。后续应先规定最小有意义效应 δ，再进行有足够功效的等效性或界限检验；字段级结果还提示该设计应单独处理 SSN 和 email 的不同饱和行为。
+
 ### H4 — k_min 与 H 的比例模型
 
-对控制组25人、50目标拟合log-log Weibull AFT，保留区间删失及右删失，三种子任一命中的最小k定义不变；10,000次按人重拟合，无最终失败。γ={H['H4']['gamma']:.6f}，95% CI {ci(H['H4']['gamma_ci'],6)}，条件性Holm p={R['holm']['H4']['p_holm']:.6f}。**声明的工作模型下 refuted：γ区间排除1。** 这不是对所有可能forcing模型的反证。
-截距={H['H4']['intercept_log_scale']:.3f}，95% CI {ci(H['H4']['intercept_ci'])}。exp(−截距)为 {H['H4']['beta_scale_exp_minus_intercept']:.3e}，区间 {ci(H['H4']['beta_scale_ci'],1)}；当γ不为1，其单位不能称为通用bits/token，禁止作为可迁移β指导攻击容量。
-Weibull误差分布并未在预注册中固定，因此工作分布选择明确披露；log-normal敏感性点估计γ={H['H4']['lognormal_distribution_sensitivity']['gamma']:.3f}，仅作探索性模型诊断，不以它替换主结果。
+**实验前假设。** H4 检验 forcing 容量是否服从比例关系 k_min≈H/β。最终治理规则把它写成控制组的 log-log 模型：若比例关系成立，log k_min 对 log H(t) 的斜率 γ 应等于1。
+
+**预定判据。** 以三个固定种子中任一攻击首次命中的最小网格容量定义 k_min，保留区间删失和右删失；在控制组拟合 log-log 模型，并按人员 bootstrap。若 γ 的95% CI 排除1，就反驳比例模型。H4 进入四项 Holm 校正家族。设计没有预先固定 Weibull 误差分布，因此该分布是明确披露的工作模型限制。
+
+**观察结果。** 对控制组25名人员、50个目标进行10,000次人员重拟合，无最终失败。γ={H['H4']['gamma']:.6f}，95% CI {ci(H['H4']['gamma_ci'],6)}，原始p={H['H4']['p_raw']:.6f}，条件性Holm p={R['holm']['H4']['p_holm']:.6f}。截距={H['H4']['intercept_log_scale']:.3f}，95% CI {ci(H['H4']['intercept_ci'])}；exp(−截距)={H['H4']['beta_scale_exp_minus_intercept']:.3e}，区间 {ci(H['H4']['beta_scale_ci'],1)}。log-normal 事后模型诊断给出 γ={H['H4']['lognormal_distribution_sensitivity']['gamma']:.3f}，只作探索性敏感性检查。
+
+**判定。** γ 的区间完全排除1，因此在声明的 Weibull 工作模型下 H4 被反驳。这个结果针对比例形式，不是对所有 forcing 模型的反证。
+
+**结果含义与新推论。** 当 γ≠1 时，exp(−截距)不再是可迁移的常数 bits/token，不能作为通用 β 指导攻击容量。后续可检验推论是 k_min 与 H 的关系可能非线性或随字段改变；应在新预注册中比较非线性与字段分层模型，并增加字段内 H 变化，避免只由 SSN/email 两个簇识别斜率。
 
 ### 四项家族与判据
 
@@ -171,28 +196,36 @@ Tobit次要规格：level-scale截距={H['H4']['secondary_tobit']['intercept']:.
 {table(['实际攻击字段','协变量','nD/nC','SMD；95%bootstrap CI','|SMD|<0.1'],[[x['field'],x['covariate'],f"{x['n_D']}/{x['n_C']}",num(x['smd'])+' '+ci(x['ci']),'是' if x['passes_abs_0_1'] else '否'] for x in D['actual_marginal_balance']])}
 
 SMD的0.1是预定诊断阈值，不是显著性测试。SSN字符长度两组都固定相同，因此SMD=0不意味着可检测该协变量的变异；email三项都未过点估计平衡门槛，影响D/C的成员解释。
-[完整Colab E17双SMD表](reanalysis/colab_e17_balance.csv)同时包含配对加权与控制去重边际、全匹配人群与实际D子集。其来源明确为Colab seed42；尚缺Cheaha原始E17，故不能据此宣称所有主扫描matching已核验。
+[完整Colab E17双SMD表](reanalysis/colab_e17_balance.csv)同时包含配对加权与控制去重边际、全匹配人群与实际D子集。其来源明确为Colab seed42。Cheaha 三个 seed 的 E17 文件已经恢复，但三份字节相同；它们证明了保存的 matching 输入结构（控制记录有放回），不提供独立的 seed matching 变化。来源摘要见 [Cheaha恢复审计](reanalysis/cheaha_recovery_audit.json)。
 
 ## Exploratory Findings
 
-### H5（exploratory，underpowered）
+### H5 — τ_rec(k) 是否在网格内部达到峰值（探索性、低功效）
 
-观察最大值出现在 {H['H5']['observed_maximizers']}；保留所有并列峰值后的95%位置包络为 {ci(H['H5']['argmax_envelope_ci'],0)}，{H['H5']['tied_maximum_replicates']}/10,000 重抽样存在并列最大值。log-k二次项={H['H5']['quadratic_logk_coefficient']:.5f}，95% CI {ci(H['H5']['quadratic_ci'],5)}，n=25人/组、3种子。探索性单侧曲率p={H['H5']['quadratic_one_sided_p']:.4f}（null-centered、未调整）；只保留第一个argmax的敏感性CI为 {ci(H['H5']['first_argmax_ci'],0)}。位置包络满足不触端点的字面条件，但曲率区间含0、峰区间宽且没有预定flatness等效阈值，判定为探索性不确定；既不声称定位了峰，也不声称证明曲线平坦。
+**实验前假设与地位。** H5 的零假设是 τ_rec(k) 在 k=1,…,64 上单调或平坦；备择是曲线先升后降，并在两个端点之间达到内部峰值。H5 在设计阶段因预计功效不足而明确放在确认性家族之外。“探索性”表示它可以生成下一次研究的假设，但当前结果不能作为确认性发现，也不参与 H1–H4 的 Holm 校正。
+
+**预定探索性判据。** 在每个人员 bootstrap 重抽样中保留全部并列最大点，构造 argmax 位置的 95% 包络；包络需排除端点 {{1,64}}。二次模型 τ_rec(k)=a log k+b(log k)^2 中的 b<0 是辅助曲率证据。位置与曲率应合并解释，而不能只挑其中有利的一项。
+
+**观察结果。** 观测曲线的并列最大点为 k={H['H5']['observed_maximizers']}；保留并列峰后的 95% 位置包络为 {ci(H['H5']['argmax_envelope_ci'],0)}，10,000 次重抽样中有 {H['H5']['tied_maximum_replicates']} 次出现并列最大值。二次项 b={H['H5']['quadratic_logk_coefficient']:.5f}，95% CI {ci(H['H5']['quadratic_ci'],5)}，探索性单侧 p={H['H5']['quadratic_one_sided_p']:.4f}；只保留第一个 argmax 的敏感性 CI 为 {ci(H['H5']['first_argmax_ci'],0)}。
+
+**判定。** 位置包络排除了两个端点，满足位置条件的字面要求；曲率证据没有排除平坦关系，而且峰位置区间很宽。H5 因此判为探索性不确定，不能声称已经定位内部峰值，也不能声称曲线平坦。
+
+**解释与新推论。** {ci(H['H5']['argmax_envelope_ci'],0)} 只能作为下一次扫描的候选区域。结果提出的后续假设是：在更高人员样本量和更密的中段网格下，τ_rec(k) 是否存在稳定的内部峰，并且峰值是否高于两侧一个预注册的最小实际差异。新实验还需预先定义平坦曲线的等效界。
 
 ### NLL/AUC（exploratory）
 
-**NLL（negative log-likelihood，负对数似然）**衡量模型在最终优化提示 $x^*$ 下给完整目标 token 序列 $t=(t_1,\ldots,t_T)$ 分配了多少概率：
+**NLL（negative log-likelihood，负对数似然）** 衡量模型在最终优化提示 $x^*$ 下给完整目标 token 序列 $t=(t_1,\ldots,t_T)$ 分配了多少概率：
 
 $$
-\operatorname{{NLL}}(t\mid x^*)=-\sum_{{i=1}}^T \ln p_\theta(t_i\mid x^*,t_{{<i}}).
+\mathrm{{NLL}}(t \mid x^*) = -\sum_{{i=1}}^{{T}} \ln p_\theta\!\left(t_i \mid x^*, t_1,\ldots,t_{{i-1}}\right).
 $$
 
 原始字段 `final_target_nll` 以 nats 为单位，是整个目标序列的总和，并未除以 token 数。NLL 越小，表示模型认为该目标在该提示下越可能；它提供了比“是否精确生成”更连续的信号。由于序列总 NLL 会受目标长度影响，跨字段或长度不同目标的比较可能混入长度效应，因此这里保留字段拆分，并把合并分析仅作为探索性结果。
 
-**AUC（area under the receiver operating characteristic curve，ROC 曲线下面积）**使用 $s=-\operatorname{{NLL}}$ 作为成员分数，并把 trained 目标记为 D、control 目标记为 C。本报告的样本 AUC 等价于：
+**AUC（area under the receiver operating characteristic curve，ROC 曲线下面积）** 使用 $s=-\operatorname{{NLL}}$ 作为成员分数，并把 trained 目标记为 D、control 目标记为 C。本报告的样本 AUC 等价于：
 
 $$
-\Pr(s_D>s_C)+\tfrac12\Pr(s_D=s_C),
+\mathrm{{AUC}} = \Pr\!\left(s_D > s_C\right) + \frac{{1}}{{2}}\Pr\!\left(s_D = s_C\right),
 $$
 
 即随机抽取一个 D 分数和一个 C 分数时，D 的 NLL 更低的排序概率，平局计一半。AUC=0.5 表示没有排序分离；AUC>0.5 表示 D 倾向于具有更低 NLL；AUC<0.5 表示方向相反；AUC=1 表示样本中所有 D/C 分数都按该方向正确排序。这里在每个字段和 k 内汇总三个固定攻击种子，并以人作为 bootstrap 重采样单位。AUC 是无阈值的排序统计量，不是“某目标属于训练集”的概率、某个固定阈值的分类准确率，也不能单独证明记忆或隐私泄露。
@@ -211,7 +244,7 @@ $$
 4. Weibull分布、跨seed首次任一命中、并列最大值包络及无flatness等效阈值都明示；无法用它们完成严格确认性结论。log-normal只是探索性分布诊断。
 5. 为10,000次删失重拟合使用与lifelines数值核对的同一Weibull似然快速求解器；首次遇到一个线搜索失败即停止，未丢样本。调整线搜索上限后同一抽样重算全部10,000次，最终无失败；[solver_notes.md](reanalysis/solver_notes.md)保留过程。
 6. 报告由ledger驱动的专用生成器生成，取代报告规范中“只能make_tables.py”的旧实现路径；全部数字可追至results.json及带哈希原始文件，没有手工表格抄数。
-7. 找回的Colab文件独立存放，绝不覆盖同名Cheaha文件。新补录身份哈希表示本次观察到的manifest字段，不伪装为历史完整配置hash；未知清洁状态、模型身份和账目继续未知。
+7. 找回的Colab文件独立存放，绝不覆盖同名Cheaha文件；Cheaha三份E17和42份manifest也以独立恢复包记录。新补录身份哈希表示本次观察到的manifest字段，不伪装为历史完整配置hash；未知清洁状态、模型身份和逐分片账目继续未知。
 8. 阅读完整曲线后增加全k一致Wilson区间及MOVER对照，明确标为事后方法敏感性。有效n基于假设ICC而非测得ICC；它揭示H2部分floor-only资格依赖区间切换，不改变H2不可判定。
 
 ## Predictions vs. Outcomes
@@ -224,21 +257,21 @@ __PREDICTIONS__
 
 ## Threats to Validity
 
-- A1/matching：实际email的三项SMD未过预设门槛；原始配对诊断仅恢复Colab版本。组间差值和AUC不应直接归因为训练成员性。
+- A1/matching：实际email的三项SMD未过预设门槛；Cheaha三份E17已恢复且字节相同，仍没有独立seed matching变化证据。组间差值和AUC不应直接归因为训练成员性。
 - 新增CODE_MAP #16–#21逐项记录本次发现及Validity标记；#21说明H2的部分floor-only资格依赖区间方法切换，一致Wilson敏感性不能升级为确认性结论。
 - CODE_MAP旧问题#1/#15（β单位及删失）：本次保留删失，另给比率；γ失配时不把截距当通用bits/token。H4并未因数据右删失少就免除非单调命中假设问题。
 - CODE_MAP #7（CI不一致）：本次逐行标明B/W/M；边界格不再出现无依据的零宽区间。#8及#10的目标/提示差异：k0单列；没有把anchored对比混入本研究。
 - CODE_MAP #9/#11/#12：语料生成与训练程序限制仍存在；源代码显示padding标签未屏蔽，影响模型训练条件及可外推解释。GPT-2单模型没有跨模型LoRA比较，训练工件的主扫描身份仍待补证。
 - CODE_MAP #13/#14：E17有放回、去重与实际独立子集不等于配对平衡；已验证本次被攻击D/C标识及SSN/email值无交叠，不能自动推广为完整语料无污染。
 - CODE_MAP #2/#3/#4：没有把异单位forward计数当GPU-h，没有预算匹配自然提示比较，也没有把原始比值称为DP证书。#5/#6（λ/软提示扫描）未运行，不能做相应结论。
-- 6份main清洁状态未知；所有main缺历史checkpoint内容pin及完整环境。恢复数据和当前Colab模型hash有帮助，但不能制造Cheaha历史执行身份。
+- 6份main清洁状态未知；所有main缺历史checkpoint内容pin及不可变的完整 launch 记录。精确 pip freeze 和当前文件 hash 有帮助，但不能制造 Cheaha 历史执行身份。
 - 只有一个训练模型、25人/组、两个合成字段、200步GCG、三个攻击种子。人员bootstrap条件于这三种子，不估计跨重训练、跨硬件或新seed总体不确定性。
 - 原分析已看过数据；新提出的p实现和探索性分析有研究者自由度。独立复算验证计算，不能消除这个设计层限制。
 
 ## Compute
 
-控制组已记录攻击耗时 {R['compute']['main_attempt_elapsed_hours']['control']:.3f} h，训练组 {R['compute']['main_attempt_elapsed_hours']['trained']:.3f} h，合计 **{fulltime:.3f} h**。每份manifest为1张A100；若按所记录的独占单GPU执行，这是分配小时的下限，已比批准24 A100-h至少高 {excess:.3f} h（{100*excess/24:.1f}%）。
-这不包括加载、匹配、日志、训练、Colab pilot及失败/中断。**不能报告总GPU-h=0，也不能报告预算内。** 完整Slurm accelerator-hours、失败成本仍待sacct及终态记录；本次重分析为本机CPU计算，未新增GPU实验。
+控制组已记录攻击耗时 {R['compute']['main_attempt_elapsed_hours']['control']:.3f} h，训练组 {R['compute']['main_attempt_elapsed_hours']['trained']:.3f} h，合计 **{fulltime:.3f} h**。每份manifest记录1张A100；sacct的已完成主作业计费 GPU-h 下限为 **{sched_gpu_h if sched_gpu_h is not None else '未得'}**，已比批准24 A100-h高出至少 {sched_gpu_h-24 if sched_gpu_h is not None else '未得'} h（按该下限计）。
+这不包括加载、匹配、日志、训练、Colab pilot及失败/中断。**不能报告总GPU-h=0，也不能报告预算内。** sacct 已提供作业级汇总，但失败/取消作业尚未一对一绑定到具体 manifest，不能把该下限当作每个结果的精确分摊；本次重分析为本机CPU计算，未新增GPU实验。
 
 ## Limitations
 
@@ -254,7 +287,7 @@ __PREDICTIONS__
 - 没有把参考模型的H(t)证明为生成目标的确定性容量门槛，也没有证明Proposition1逐目标“紧”。
 - 没有证明一个通用β可以跨字段、目标格式、模型规模、优化器或计算预算迁移。
 - 没有把探索性AUC、宽峰区间、缺乏显著性或被保留的零假设升级成确认性发现。
-- 没有完成Cheaha历史来源与全部算力的核验；研究仍未达到最终分析验收和结项条件。
+- Cheaha 来源材料已部分恢复，但没有完成逐分片历史绑定与失败/重试归属核验；研究仍未达到最终分析验收和结项条件。
 
 复算入口：`reanalysis/recompute.py`；报表入口：`reanalysis/write_report.py`。参数与环境见[方法约定](reanalysis/method_choices.md)、[环境记录](reanalysis/analysis_environment.txt)。完整表：[curve_table.csv](reanalysis/curve_table.csv)、[seed_rates.csv](reanalysis/seed_rates.csv)、[actual_balance.csv](reanalysis/actual_balance.csv)、[探索性AUC](reanalysis/auc_exploratory.csv)。
 '''
@@ -278,12 +311,12 @@ prediction_audit={
  't2-2':{'status':'部分复核','observed':'seed 1337 的完整网格与相同总体形状可见，但计划没有定义“within its intervals”的逐 seed 通过规则。','verdict':'定性支持，不能形式验收'},
  't2-3':{'status':'部分复核','observed':'seed 2024 的完整网格与相同总体形状可见，但同样缺预定逐 seed 判据。','verdict':'定性支持，不能形式验收'},
  't2-2b':{'status':'原始证据直接复核','observed':'42 份主分片的 subset hash 与 N=200 一致。','verdict':'支持'},
- 't2-cp':{'status':'缺失证据阻塞','observed':f"攻击矩阵完整且逐行可重算；checkpoint/完整 pins、Slurm 终态和总 GPU-h 缺失，已记录攻击耗时 {fulltime:.3f} h 并超过预算。",'verdict':'ledger 数值完整，阶段验收未通过'},
+ 't2-cp':{'status':'缺失证据阻塞','observed':f"攻击矩阵完整且逐行可重算；E17、精确环境和sacct已恢复，但checkpoint绑定、完整不可变launch、6个dirty=unknown历史清洁证据及逐分片Slurm归属仍缺，已记录攻击耗时 {fulltime:.3f} h。",'verdict':'ledger 数值完整，阶段验收未通过'},
  't3-1':{'status':'部分复核','observed':'边界区间、固定家族与删失求解器在本次实现中有校验；原实现缺失门槛的证据见 implementation_audit.md，但本轮校验不能追溯证明所有原始单元测试的时序。','verdict':'已覆盖实现的当前校验通过；历史全门槛时序未验收'},
- 't3-2':{'status':'缺失证据阻塞','observed':'实际 email 边际 SMD 未过门槛；只恢复 Colab seed42 的 E17，缺 Cheaha 三种子配对表。','verdict':'边际可失败的预测出现；pair-wise 部分无法在主运行验收'},
+ 't3-2':{'status':'部分复核','observed':'实际 email 边际 SMD 未过门槛；Cheaha seed42/1337/2024 的 E17 各600行已恢复且三份字节相同，控制匹配有放回。','verdict':'边际可失败的预测出现；matching来源已恢复，但三份相同不提供独立seed变化'},
  't3-3':{'status':'部分复核','observed':'H1 条件性支持；H4 被反驳；H2/H3 未决；H5 仍为探索性不确定。','verdict':'混合；原预测只部分吻合'},
  't3-4':{'status':'原始证据直接复核','observed':f"右删失比例={H['H4']['right_censored_fraction']:.3f}；H4 的 γ 排除1，使AFT截距不再对应通用bits/token的β。次要Tobit/OLS斜率比较见删失诊断。",'verdict':'β的预期大小方向无法按原定义有效判断；零右删失时“丢最难例”机制未出现'},
- 't3-cp':{'status':'缺失证据阻塞','observed':'每个假设已有条件性判定或明确不可判定；来源、matching 与完整算力账仍未齐。','verdict':'字面预测满足；完整阶段验收仍未通过'},
+ 't3-cp':{'status':'缺失证据阻塞','observed':'每个假设已有条件性判定或明确不可判定；Cheaha matching、环境锁和sacct汇总已恢复，但checkpoint历史绑定、6个dirty=unknown清洁证据、逐分片调度归属仍缺。','verdict':'字面预测满足；完整阶段验收仍未通过'},
 }
 tasks=[t for phase in plan['phases'] for t in phase['tasks']]
 assert {t['id'] for t in tasks}==set(prediction_audit),({t['id'] for t in tasks}^set(prediction_audit))

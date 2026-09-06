@@ -4,11 +4,17 @@ set -euo pipefail
 cd /data/user/jluo/PII_Extraction
 bundle_dir=$(mktemp -d /tmp/e3-evidence.XXXXXX)
 export E3_BUNDLE_DIR="$bundle_dir"
+# The venv's Python is linked against the Cheaha module's libpython. Load the
+# same module used by exp_capacity.slurm before collecting pip freeze; without
+# it, the venv interpreter exits before producing the environment lock.
+if type module >/dev/null 2>&1; then
+  module load Python/3.11.5-GCCcore-13.2.0 2>/dev/null || true
+fi
 python3 - <<'PY'
 from pathlib import Path
 import os,json,hashlib,shutil,subprocess,tarfile
 root=Path.cwd();out=Path(os.environ['E3_BUNDLE_DIR']);items=[]
-for pattern in ['results/e17_matches_e3a_seed*.json','results/manifests/e3*.json','slurm/logs/*capacity*','slurm/logs/*e3*','requirements*.txt','*.lock','environment*.yml']:
+for pattern in ['results/e17_matches_e3a_seed*.json','results/manifests/e3*.json','slurm/logs/*capacity*','slurm/logs/*e3*','slurm/logs/pii-expcap-*','slurm/logs/*envcheck*','requirements*.txt','*.lock','environment*.yml']:
  for p in root.glob(pattern):
   if p.is_file():
    dest=out/p.relative_to(root);dest.parent.mkdir(parents=True,exist_ok=True);shutil.copyfile(p,dest)
@@ -26,12 +32,12 @@ for rel in ['data/corpus/train.json','data/target_registry.json','models/gpt2/mo
 (out/'current_content_hashes.json').write_text(json.dumps(items,indent=2)+'\n')
 commands={'git_identity_now.txt':['git','rev-parse','HEAD'],'git_status_now.txt':['git','status','--short'],'sacct.tsv':['sacct','-u',os.environ.get('USER','jluo'),'-S','2026-09-03','-E','2026-09-07','--parsable2','--format=JobIDRaw,JobName%80,State,ExitCode,Start,End,ElapsedRaw,AllocTRES%100']}
 for name,cmd in commands.items():
- try:r=subprocess.run(cmd,capture_output=True,text=True,timeout=60);text=r.stdout+'\nSTDERR:\n'+r.stderr+'\nexit='+str(r.returncode)
+ try:r=subprocess.run(cmd,stdout=subprocess.PIPE,stderr=subprocess.PIPE,universal_newlines=True,timeout=60);text=r.stdout+'\nSTDERR:\n'+r.stderr+'\nexit='+str(r.returncode)
  except Exception as exc:text=str(exc)
  (out/name).write_text(text)
 py=root/'.venv/bin/python'
 if py.exists():
- r=subprocess.run([str(py),'-m','pip','freeze'],capture_output=True,text=True,timeout=60);(out/'pip_freeze_now.txt').write_text(r.stdout);(out/'pip_freeze_status.txt').write_text(r.stderr+'\nexit='+str(r.returncode))
+ r=subprocess.run([str(py),'-m','pip','freeze'],stdout=subprocess.PIPE,stderr=subprocess.PIPE,universal_newlines=True,timeout=60);(out/'pip_freeze_now.txt').write_text(r.stdout);(out/'pip_freeze_status.txt').write_text(r.stderr+'\nexit='+str(r.returncode))
 (out/'README.txt').write_text('Collected now; current hashes/status do not prove historical per-shard identity or repair code.dirty=null by themselves. No experiments launched. Slurm export is scoped to the study dates and current user.\n')
 archive=out.with_suffix('.tar.gz')
 with tarfile.open(archive,'w:gz') as tar:tar.add(out,arcname=out.name)

@@ -6,7 +6,7 @@
   "main_grid_cells_by_arm_field": 168,
   "curve_table_rows": 42,
   "bootstrap_draws": 10000,
-  "report_local_links_checked": 18,
+  "report_local_links_checked": 20,
   "registry_and_plan_schema": "PASS",
   "strict_results_schema": "INCOMPLETE: 49 imported rows lack historical started_at; excluded legacy rows retain original schema errors",
   "schema_errors": {

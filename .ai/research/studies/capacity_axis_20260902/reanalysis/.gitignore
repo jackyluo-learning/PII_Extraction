@@ -1,2 +1,6 @@
 # Temporary checkpoint before censored-model completion; final estimates are in the ledger.
 intermediate_results.json
+# Cheaha recovery bundles contain raw matching records and source artifacts;
+# retain them locally for audit without committing raw/PII-bearing material.
+cheaha-e3-evidence/
+cheaha-e3-evidence.tar.gz
