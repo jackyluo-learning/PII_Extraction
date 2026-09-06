@@ -168,6 +168,22 @@ SMD的0.1是预定诊断阈值，不是显著性测试。SSN字符长度两组�
 
 ### NLL/AUC（exploratory）
 
+**NLL（negative log-likelihood，负对数似然）**衡量模型在最终优化提示 $x^*$ 下给完整目标 token 序列 $t=(t_1,\ldots,t_T)$ 分配了多少概率：
+
+$$
+\operatorname{NLL}(t\mid x^*)=-\sum_{i=1}^T \ln p_\theta(t_i\mid x^*,t_{<i}).
+$$
+
+原始字段 `final_target_nll` 以 nats 为单位，是整个目标序列的总和，并未除以 token 数。NLL 越小，表示模型认为该目标在该提示下越可能；它提供了比“是否精确生成”更连续的信号。由于序列总 NLL 会受目标长度影响，跨字段或长度不同目标的比较可能混入长度效应，因此这里保留字段拆分，并把合并分析仅作为探索性结果。
+
+**AUC（area under the receiver operating characteristic curve，ROC 曲线下面积）**使用 $s=-\operatorname{NLL}$ 作为成员分数，并把 trained 目标记为 D、control 目标记为 C。本报告的样本 AUC 等价于：
+
+$$
+\Pr(s_D>s_C)+\tfrac12\Pr(s_D=s_C),
+$$
+
+即随机抽取一个 D 分数和一个 C 分数时，D 的 NLL 更低的排序概率，平局计一半。AUC=0.5 表示没有排序分离；AUC>0.5 表示 D 倾向于具有更低 NLL；AUC<0.5 表示方向相反；AUC=1 表示样本中所有 D/C 分数都按该方向正确排序。这里在每个字段和 k 内汇总三个固定攻击种子，并以人作为 bootstrap 重采样单位。AUC 是无阈值的排序统计量，不是“某目标属于训练集”的概率、某个固定阈值的分类准确率，也不能单独证明记忆或隐私泄露。
+
 | 行标签 | 字段/k | n人每组/种子 | AUC及95%人员bootstrap CI | GPU-h |
 |---|---|---|---|---|
 | (exploratory) | ssn / 1 | 25 / 3 | 0.666 [0.510, 0.813] | 未知；重用主扫描 |

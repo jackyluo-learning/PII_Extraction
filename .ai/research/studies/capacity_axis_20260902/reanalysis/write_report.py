@@ -22,7 +22,7 @@ for field,rows in R['curves'].items():
   flat.append({'field':field,'k':x['k'],'n_persons_per_arm':25,'n_seeds':3,'n_targets_per_arm':x['control']['n_targets'],'n_attempts_per_arm':x['control']['n_attempts'],'alpha':x['control']['estimate'],'alpha_lower':x['control']['ci'][0],'alpha_upper':x['control']['ci'][1],'emr_D':x['trained']['estimate'],'emr_D_lower':x['trained']['ci'][0],'emr_D_upper':x['trained']['ci'][1],'tau':x['tau'],'tau_lower':x['tau_ci'][0],'tau_upper':x['tau_ci'][1],'interval_method':x['tau_interval_method'],'C_attack_elapsed_h':x['control']['attempt_elapsed_hours'],'D_attack_elapsed_h':x['trained']['attempt_elapsed_hours'],'allocated_GPU_h':'unknown'})
 csvout('isotonic_summary.csv',H['H1']['isotonic_summary']);csvout('curve_table.csv',flat);csvout('seed_rates.csv',R['seed_rates']);csvout('actual_balance.csv',D['actual_marginal_balance']);csvout('colab_e17_balance.csv',D['recovered_colab_e17_balance']);csvout('auc_exploratory.csv',R['auc_exploratory'])
 fulltime=sum(R['compute']['main_attempt_elapsed_hours'].values());excess=fulltime-24
-summary=f'''# E3 重新分析：原始证据审计后的条件性结果
+summary=rf'''# E3 重新分析：原始证据审计后的条件性结果
 
 ## Summary
 
@@ -129,6 +129,22 @@ SMD的0.1是预定诊断阈值，不是显著性测试。SSN字符长度两组�
 观察最大值出现在 {H['H5']['observed_maximizers']}；保留所有并列峰值后的95%位置包络为 {ci(H['H5']['argmax_envelope_ci'],0)}，{H['H5']['tied_maximum_replicates']}/10,000 重抽样存在并列最大值。log-k二次项={H['H5']['quadratic_logk_coefficient']:.5f}，95% CI {ci(H['H5']['quadratic_ci'],5)}，n=25人/组、3种子。探索性单侧曲率p={H['H5']['quadratic_one_sided_p']:.4f}（null-centered、未调整）；只保留第一个argmax的敏感性CI为 {ci(H['H5']['first_argmax_ci'],0)}。位置包络满足不触端点的字面条件，但曲率区间含0、峰区间宽且没有预定flatness等效阈值，判定为探索性不确定；既不声称定位了峰，也不声称证明曲线平坦。
 
 ### NLL/AUC（exploratory）
+
+**NLL（negative log-likelihood，负对数似然）**衡量模型在最终优化提示 $x^*$ 下给完整目标 token 序列 $t=(t_1,\ldots,t_T)$ 分配了多少概率：
+
+$$
+\operatorname{{NLL}}(t\mid x^*)=-\sum_{{i=1}}^T \ln p_\theta(t_i\mid x^*,t_{{<i}}).
+$$
+
+原始字段 `final_target_nll` 以 nats 为单位，是整个目标序列的总和，并未除以 token 数。NLL 越小，表示模型认为该目标在该提示下越可能；它提供了比“是否精确生成”更连续的信号。由于序列总 NLL 会受目标长度影响，跨字段或长度不同目标的比较可能混入长度效应，因此这里保留字段拆分，并把合并分析仅作为探索性结果。
+
+**AUC（area under the receiver operating characteristic curve，ROC 曲线下面积）**使用 $s=-\operatorname{{NLL}}$ 作为成员分数，并把 trained 目标记为 D、control 目标记为 C。本报告的样本 AUC 等价于：
+
+$$
+\Pr(s_D>s_C)+\tfrac12\Pr(s_D=s_C),
+$$
+
+即随机抽取一个 D 分数和一个 C 分数时，D 的 NLL 更低的排序概率，平局计一半。AUC=0.5 表示没有排序分离；AUC>0.5 表示 D 倾向于具有更低 NLL；AUC<0.5 表示方向相反；AUC=1 表示样本中所有 D/C 分数都按该方向正确排序。这里在每个字段和 k 内汇总三个固定攻击种子，并以人作为 bootstrap 重采样单位。AUC 是无阈值的排序统计量，不是“某目标属于训练集”的概率、某个固定阈值的分类准确率，也不能单独证明记忆或隐私泄露。
 
 {table(['行标签','字段/k','n人每组/种子','AUC及95%人员bootstrap CI','GPU-h'],[[x['label'],f"{x['field']} / {x['k']}",'25 / 3',num(x['auc'])+' '+ci(x['ci']),'未知；重用主扫描'] for x in R['auc_exploratory'] if x['field']!='pooled' and x['k'] in [1,2,3,8,20,64]])}
 
