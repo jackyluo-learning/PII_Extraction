@@ -69,7 +69,7 @@
         "note": "49 byte-addressed raw shards; 3 legacy rows excluded as superseded. Scheduler allocation and any additional smoke/failure jobs are not verified. $0 is the existing academic-charge estimate, not a complete compute ledger."
       },
       "created_at": "2026-09-02T22:40:00-05:00",
-      "updated_at": "2026-09-06T01:06:20.990308+00:00",
+      "updated_at": "2026-09-06T15:50:55+00:00",
       "protocol_path": ".ai/research/studies/capacity_axis_20260902/protocol.md",
       "plan_path": ".ai/research/studies/capacity_axis_20260902/plan.json",
       "results_path": ".ai/research/studies/capacity_axis_20260902/results.json",

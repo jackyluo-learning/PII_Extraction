@@ -6086,7 +6086,7 @@
     ],
     "estimates": {
       "status": "conditional_reanalysis_not_ready_for_closeout",
-      "created_at": "2026-09-06T00:52:13.949196+00:00",
+      "created_at": "2026-09-06T04:13:49.256061+00:00",
       "n_boot": 10000,
       "bootstrap_seed": 20240601,
       "curves": {
@@ -9041,7 +9041,580 @@
             }
           ],
           "rule": "both alpha upper CI <= tolerance and tau CI excludes zero; retain sign; descriptive mapping cannot establish impossibility",
-          "global_test": "not defined by preregistration; not replaced by floor-only p"
+          "global_test": "not defined by preregistration; not replaced by floor-only p",
+          "consistent_interval_sensitivity": {
+            "label": "post-hoc method-consistency sensitivity; does not replace the disclosed hybrid main analysis",
+            "conventions": [
+              {
+                "name": "target_only_icc_0.5",
+                "n_eff": 33.333333333333336,
+                "per_k": [
+                  {
+                    "k": 1,
+                    "control_wilson_ci": [
+                      0.0,
+                      0.10333504501592614
+                    ],
+                    "tau_mover_ci": [
+                      -0.10333504501592614,
+                      0.10333504501592614
+                    ]
+                  },
+                  {
+                    "k": 2,
+                    "control_wilson_ci": [
+                      0.0,
+                      0.10333504501592614
+                    ],
+                    "tau_mover_ci": [
+                      -0.10333504501592614,
+                      0.10333504501592614
+                    ]
+                  },
+                  {
+                    "k": 3,
+                    "control_wilson_ci": [
+                      0.0,
+                      0.10333504501592614
+                    ],
+                    "tau_mover_ci": [
+                      -0.10333504501592614,
+                      0.10333504501592614
+                    ]
+                  },
+                  {
+                    "k": 4,
+                    "control_wilson_ci": [
+                      0.0012653287342448763,
+                      0.12598078174792324
+                    ],
+                    "tau_mover_ci": [
+                      -0.090270067158824,
+                      0.15369023390694433
+                    ]
+                  },
+                  {
+                    "k": 6,
+                    "control_wilson_ci": [
+                      0.15158964254650376,
+                      0.4419222445273827
+                    ],
+                    "tau_mover_ci": [
+                      -0.2699984886707316,
+                      0.1303279188857553
+                    ]
+                  },
+                  {
+                    "k": 8,
+                    "control_wilson_ci": [
+                      0.315565192074023,
+                      0.636612676993493
+                    ],
+                    "tau_mover_ci": [
+                      -0.21478191812096034,
+                      0.2395030417671871
+                    ]
+                  },
+                  {
+                    "k": 12,
+                    "control_wilson_ci": [
+                      0.46403514460103723,
+                      0.7750755100613825
+                    ],
+                    "tau_mover_ci": [
+                      -0.1944462668975903,
+                      0.24422585597824326
+                    ]
+                  },
+                  {
+                    "k": 16,
+                    "control_wilson_ci": [
+                      0.5790643623886491,
+                      0.8632903487368273
+                    ],
+                    "tau_mover_ci": [
+                      -0.21808820354791358,
+                      0.1928413566028766
+                    ]
+                  },
+                  {
+                    "k": 20,
+                    "control_wilson_ci": [
+                      0.6441342427270634,
+                      0.9058202629965021
+                    ],
+                    "tau_mover_ci": [
+                      -0.17567956221871145,
+                      0.201483852265933
+                    ]
+                  },
+                  {
+                    "k": 24,
+                    "control_wilson_ci": [
+                      0.7052178152301256,
+                      0.9403809523584075
+                    ],
+                    "tau_mover_ci": [
+                      -0.21987644793544503,
+                      0.14149753074094173
+                    ]
+                  },
+                  {
+                    "k": 32,
+                    "control_wilson_ci": [
+                      0.7791873633686837,
+                      0.9740111988179385
+                    ],
+                    "tau_mover_ci": [
+                      -0.18409874400456847,
+                      0.12909602102526122
+                    ]
+                  },
+                  {
+                    "k": 48,
+                    "control_wilson_ci": [
+                      0.7706023048454702,
+                      0.9706407246080309
+                    ],
+                    "tau_mover_ci": [
+                      -0.14536075102426962,
+                      0.1592751726253913
+                    ]
+                  },
+                  {
+                    "k": 64,
+                    "control_wilson_ci": [
+                      0.8432429505897755,
+                      0.9936443407286936
+                    ],
+                    "tau_mover_ci": [
+                      -0.20703901951761614,
+                      0.0774529747392082
+                    ]
+                  }
+                ],
+                "mapping": [
+                  {
+                    "tolerance": 0.01,
+                    "floor_only_capacities": [],
+                    "positive_tau_joint_capacities_using_primary_tau_ci": [],
+                    "positive_tau_joint_capacities_using_consistent_mover": [],
+                    "any_direction_joint_capacities_using_consistent_mover": []
+                  },
+                  {
+                    "tolerance": 0.05,
+                    "floor_only_capacities": [],
+                    "positive_tau_joint_capacities_using_primary_tau_ci": [],
+                    "positive_tau_joint_capacities_using_consistent_mover": [],
+                    "any_direction_joint_capacities_using_consistent_mover": []
+                  },
+                  {
+                    "tolerance": 0.09,
+                    "floor_only_capacities": [],
+                    "positive_tau_joint_capacities_using_primary_tau_ci": [],
+                    "positive_tau_joint_capacities_using_consistent_mover": [],
+                    "any_direction_joint_capacities_using_consistent_mover": []
+                  },
+                  {
+                    "tolerance": 0.1,
+                    "floor_only_capacities": [],
+                    "positive_tau_joint_capacities_using_primary_tau_ci": [],
+                    "positive_tau_joint_capacities_using_consistent_mover": [],
+                    "any_direction_joint_capacities_using_consistent_mover": []
+                  },
+                  {
+                    "tolerance": 0.15,
+                    "floor_only_capacities": [
+                      1,
+                      2,
+                      3,
+                      4
+                    ],
+                    "positive_tau_joint_capacities_using_primary_tau_ci": [],
+                    "positive_tau_joint_capacities_using_consistent_mover": [],
+                    "any_direction_joint_capacities_using_consistent_mover": []
+                  },
+                  {
+                    "tolerance": 0.2,
+                    "floor_only_capacities": [
+                      1,
+                      2,
+                      3,
+                      4
+                    ],
+                    "positive_tau_joint_capacities_using_primary_tau_ci": [],
+                    "positive_tau_joint_capacities_using_consistent_mover": [],
+                    "any_direction_joint_capacities_using_consistent_mover": []
+                  },
+                  {
+                    "tolerance": 0.3,
+                    "floor_only_capacities": [
+                      1,
+                      2,
+                      3,
+                      4
+                    ],
+                    "positive_tau_joint_capacities_using_primary_tau_ci": [],
+                    "positive_tau_joint_capacities_using_consistent_mover": [],
+                    "any_direction_joint_capacities_using_consistent_mover": []
+                  },
+                  {
+                    "tolerance": 0.5,
+                    "floor_only_capacities": [
+                      1,
+                      2,
+                      3,
+                      4,
+                      6
+                    ],
+                    "positive_tau_joint_capacities_using_primary_tau_ci": [],
+                    "positive_tau_joint_capacities_using_consistent_mover": [],
+                    "any_direction_joint_capacities_using_consistent_mover": []
+                  },
+                  {
+                    "tolerance": 0.75,
+                    "floor_only_capacities": [
+                      1,
+                      2,
+                      3,
+                      4,
+                      6,
+                      8
+                    ],
+                    "positive_tau_joint_capacities_using_primary_tau_ci": [],
+                    "positive_tau_joint_capacities_using_consistent_mover": [],
+                    "any_direction_joint_capacities_using_consistent_mover": []
+                  },
+                  {
+                    "tolerance": 0.9,
+                    "floor_only_capacities": [
+                      1,
+                      2,
+                      3,
+                      4,
+                      6,
+                      8,
+                      12,
+                      16
+                    ],
+                    "positive_tau_joint_capacities_using_primary_tau_ci": [],
+                    "positive_tau_joint_capacities_using_consistent_mover": [],
+                    "any_direction_joint_capacities_using_consistent_mover": []
+                  },
+                  {
+                    "tolerance": 1.0,
+                    "floor_only_capacities": [
+                      1,
+                      2,
+                      3,
+                      4,
+                      6,
+                      8,
+                      12,
+                      16,
+                      20,
+                      24,
+                      32,
+                      48,
+                      64
+                    ],
+                    "positive_tau_joint_capacities_using_primary_tau_ci": [],
+                    "positive_tau_joint_capacities_using_consistent_mover": [],
+                    "any_direction_joint_capacities_using_consistent_mover": []
+                  }
+                ]
+              },
+              {
+                "name": "all_repeats_icc_0.5",
+                "n_eff": 42.857142857142854,
+                "per_k": [
+                  {
+                    "k": 1,
+                    "control_wilson_ci": [
+                      0.0,
+                      0.08226068196207405
+                    ],
+                    "tau_mover_ci": [
+                      -0.08226068196207405,
+                      0.08226068196207405
+                    ]
+                  },
+                  {
+                    "k": 2,
+                    "control_wilson_ci": [
+                      0.0,
+                      0.08226068196207405
+                    ],
+                    "tau_mover_ci": [
+                      -0.08226068196207405,
+                      0.08226068196207405
+                    ]
+                  },
+                  {
+                    "k": 3,
+                    "control_wilson_ci": [
+                      0.0,
+                      0.08226068196207405
+                    ],
+                    "tau_mover_ci": [
+                      -0.08226068196207405,
+                      0.08226068196207405
+                    ]
+                  },
+                  {
+                    "k": 4,
+                    "control_wilson_ci": [
+                      0.0015511470750745604,
+                      0.10518258336801084
+                    ],
+                    "tau_mover_ci": [
+                      -0.0699312933252747,
+                      0.13291635100081678
+                    ]
+                  },
+                  {
+                    "k": 6,
+                    "control_wilson_ci": [
+                      0.1628029925353307,
+                      0.42115518328747614
+                    ],
+                    "tau_mover_ci": [
+                      -0.2478014518826634,
+                      0.10663500978672738
+                    ]
+                  },
+                  {
+                    "k": 8,
+                    "control_wilson_ci": [
+                      0.33230863576882996,
+                      0.6187452672691472
+                    ],
+                    "tau_mover_ci": [
+                      -0.19009505303546054,
+                      0.2152129810762594
+                    ]
+                  },
+                  {
+                    "k": 12,
+                    "control_wilson_ci": [
+                      0.48371800159097056,
+                      0.7610124832191432
+                    ],
+                    "tau_mover_ci": [
+                      -0.17005876859339156,
+                      0.22056698214206472
+                    ]
+                  },
+                  {
+                    "k": 16,
+                    "control_wilson_ci": [
+                      0.5999961574306011,
+                      0.8527552394681092
+                    ],
+                    "tau_mover_ci": [
+                      -0.1949991873090163,
+                      0.16945416831496912
+                    ]
+                  },
+                  {
+                    "k": 20,
+                    "control_wilson_ci": [
+                      0.6653995811269467,
+                      0.8974805339363147
+                    ],
+                    "tau_mover_ci": [
+                      -0.1532170617774517,
+                      0.1792235275516703
+                    ]
+                  },
+                  {
+                    "k": 24,
+                    "control_wilson_ci": [
+                      0.7265537609263879,
+                      0.9342185480609186
+                    ],
+                    "tau_mover_ci": [
+                      -0.19811473207566813,
+                      0.11928297399220852
+                    ]
+                  },
+                  {
+                    "k": 32,
+                    "control_wilson_ci": [
+                      0.8003150144902026,
+                      0.9705860126616553
+                    ],
+                    "tau_mover_ci": [
+                      -0.16301611608396227,
+                      0.10808100448853147
+                    ]
+                  },
+                  {
+                    "k": 48,
+                    "control_wilson_ci": [
+                      0.7917681974726746,
+                      0.9668963054386776
+                    ],
+                    "tau_mover_ci": [
+                      -0.12445727369983658,
+                      0.1383368110951801
+                    ]
+                  },
+                  {
+                    "k": 64,
+                    "control_wilson_ci": [
+                      0.8640577524042892,
+                      0.9924989444311081
+                    ],
+                    "tau_mover_ci": [
+                      -0.1860184736678887,
+                      0.057105636311085964
+                    ]
+                  }
+                ],
+                "mapping": [
+                  {
+                    "tolerance": 0.01,
+                    "floor_only_capacities": [],
+                    "positive_tau_joint_capacities_using_primary_tau_ci": [],
+                    "positive_tau_joint_capacities_using_consistent_mover": [],
+                    "any_direction_joint_capacities_using_consistent_mover": []
+                  },
+                  {
+                    "tolerance": 0.05,
+                    "floor_only_capacities": [],
+                    "positive_tau_joint_capacities_using_primary_tau_ci": [],
+                    "positive_tau_joint_capacities_using_consistent_mover": [],
+                    "any_direction_joint_capacities_using_consistent_mover": []
+                  },
+                  {
+                    "tolerance": 0.09,
+                    "floor_only_capacities": [
+                      1,
+                      2,
+                      3
+                    ],
+                    "positive_tau_joint_capacities_using_primary_tau_ci": [],
+                    "positive_tau_joint_capacities_using_consistent_mover": [],
+                    "any_direction_joint_capacities_using_consistent_mover": []
+                  },
+                  {
+                    "tolerance": 0.1,
+                    "floor_only_capacities": [
+                      1,
+                      2,
+                      3
+                    ],
+                    "positive_tau_joint_capacities_using_primary_tau_ci": [],
+                    "positive_tau_joint_capacities_using_consistent_mover": [],
+                    "any_direction_joint_capacities_using_consistent_mover": []
+                  },
+                  {
+                    "tolerance": 0.15,
+                    "floor_only_capacities": [
+                      1,
+                      2,
+                      3,
+                      4
+                    ],
+                    "positive_tau_joint_capacities_using_primary_tau_ci": [],
+                    "positive_tau_joint_capacities_using_consistent_mover": [],
+                    "any_direction_joint_capacities_using_consistent_mover": []
+                  },
+                  {
+                    "tolerance": 0.2,
+                    "floor_only_capacities": [
+                      1,
+                      2,
+                      3,
+                      4
+                    ],
+                    "positive_tau_joint_capacities_using_primary_tau_ci": [],
+                    "positive_tau_joint_capacities_using_consistent_mover": [],
+                    "any_direction_joint_capacities_using_consistent_mover": []
+                  },
+                  {
+                    "tolerance": 0.3,
+                    "floor_only_capacities": [
+                      1,
+                      2,
+                      3,
+                      4
+                    ],
+                    "positive_tau_joint_capacities_using_primary_tau_ci": [],
+                    "positive_tau_joint_capacities_using_consistent_mover": [],
+                    "any_direction_joint_capacities_using_consistent_mover": []
+                  },
+                  {
+                    "tolerance": 0.5,
+                    "floor_only_capacities": [
+                      1,
+                      2,
+                      3,
+                      4,
+                      6
+                    ],
+                    "positive_tau_joint_capacities_using_primary_tau_ci": [],
+                    "positive_tau_joint_capacities_using_consistent_mover": [],
+                    "any_direction_joint_capacities_using_consistent_mover": []
+                  },
+                  {
+                    "tolerance": 0.75,
+                    "floor_only_capacities": [
+                      1,
+                      2,
+                      3,
+                      4,
+                      6,
+                      8
+                    ],
+                    "positive_tau_joint_capacities_using_primary_tau_ci": [],
+                    "positive_tau_joint_capacities_using_consistent_mover": [],
+                    "any_direction_joint_capacities_using_consistent_mover": []
+                  },
+                  {
+                    "tolerance": 0.9,
+                    "floor_only_capacities": [
+                      1,
+                      2,
+                      3,
+                      4,
+                      6,
+                      8,
+                      12,
+                      16,
+                      20
+                    ],
+                    "positive_tau_joint_capacities_using_primary_tau_ci": [],
+                    "positive_tau_joint_capacities_using_consistent_mover": [],
+                    "any_direction_joint_capacities_using_consistent_mover": []
+                  },
+                  {
+                    "tolerance": 1.0,
+                    "floor_only_capacities": [
+                      1,
+                      2,
+                      3,
+                      4,
+                      6,
+                      8,
+                      12,
+                      16,
+                      20,
+                      24,
+                      32,
+                      48,
+                      64
+                    ],
+                    "positive_tau_joint_capacities_using_primary_tau_ci": [],
+                    "positive_tau_joint_capacities_using_consistent_mover": [],
+                    "any_direction_joint_capacities_using_consistent_mover": []
+                  }
+                ]
+              }
+            ],
+            "conclusion": "The hybrid primary mapping makes k=4 floor-eligible at 5%-10% because its nonzero cell uses a percentile interval while k=1-3 use Wilson. Applying Wilson consistently removes that reversal under the conservative target-only effective n. No convention yields a positive-tau joint operating point; H2 remains unresolved, not refuted."
+          }
         },
         "H3": {
           "tau": 0.01333333333333342,
@@ -10255,6 +10828,77 @@
     "completion_accepted": false,
     "statistics_review_path": ".ai/research/studies/capacity_axis_20260902/reanalysis/statistics_review.md",
     "blocked_reason": "Cheaha historical checkpoint/full launch pins, three-seed E17, six unknown cleanliness records and Slurm accounting remain unavailable; SSH authentication failed.",
-    "updated_at": "2026-09-06T01:06:20.990308+00:00"
+    "updated_at": "2026-09-06T01:06:20.990308+00:00",
+    "task_prediction_evidence": {
+      "training": {
+        "source": {
+          "path": "artifacts/capacity_axis_20260902/recovered_colab/models/gpt2/train_meta.json",
+          "sha256": "35188b0ae6dfebe0bf002702fa892e1a4d1203fb195d0c23280ffe06e45ee3d6"
+        },
+        "scope": "Recovered Colab training metadata; not proof of the executed Cheaha checkpoint identity.",
+        "pii_eval_losses": [
+          2.6760688739594336,
+          2.2046645108496374,
+          2.0888931497307883
+        ],
+        "decreases_each_epoch": true,
+        "near_zero_threshold_preregistered": null,
+        "interpretation": "PII eval loss decreases. The record does not support the near-zero wording or prove memorization."
+      },
+      "cost_pilot": [
+        {
+          "source": {
+            "path": "artifacts/capacity_axis_20260902/recovered_colab/results/attempts/e3a_cost__E3__gpt2_42_field-ssn-email_k1.parquet",
+            "sha256": "3571dbad0f1490e966e3ec48eb4cd5ea9a29fd98caa51f3b4508d2d39f9f2181"
+          },
+          "run_id": "capacity_axis_20260902__9110b912__s42",
+          "k": 1,
+          "n_attempts": 12,
+          "mean_attempt_seconds": 25.551559031009674,
+          "total_attempt_seconds": 306.6187083721161,
+          "mean_steps_run": 200.0
+        },
+        {
+          "source": {
+            "path": "artifacts/capacity_axis_20260902/recovered_colab/results/attempts/e3a_cost__E3__gpt2_42_field-ssn-email_k20.parquet",
+            "sha256": "13301d82890f4a2bf4b42dcd6d1a05d6d558c10cd924f81ac3741e44ea0df78f"
+          },
+          "run_id": "capacity_axis_20260902__1868295e__s42",
+          "k": 20,
+          "n_attempts": 12,
+          "mean_attempt_seconds": 31.00243439277013,
+          "total_attempt_seconds": 372.0292127132416,
+          "mean_steps_run": 75.0
+        },
+        {
+          "source": {
+            "path": "artifacts/capacity_axis_20260902/recovered_colab/results/attempts/e3a_cost__E3__gpt2_42_field-ssn-email_k64.parquet",
+            "sha256": "aa55fafa1d6e43121842a45034066066197dee6e96e88ad1a0a1fb7a3a5d3389"
+          },
+          "run_id": "capacity_axis_20260902__75011c9c__s42",
+          "k": 64,
+          "n_attempts": 12,
+          "mean_attempt_seconds": 80.80366535981496,
+          "total_attempt_seconds": 969.6439843177795,
+          "mean_steps_run": 65.83333333333333
+        }
+      ],
+      "cost_comparison": {
+        "formula_source": {
+          "path": "colab/phase0_pilot.ipynb",
+          "sha256": "1db9ad983ec07754b2f15244a941169ebe961fb482d891d10fe31e17af3be049",
+          "cell_index_zero_based": 17,
+          "scope": "Archived notebook formula; does not prove a pre-result statistical test was preregistered."
+        },
+        "formula": "(mean_wallclock_k64 / mean_wallclock_k20) / ((64 + 10) / (20 + 10))",
+        "measured_k64_over_k20": 2.606365175589522,
+        "linear_k64_over_k20_T10": 2.466666666666667,
+        "observed_over_linear": 1.0566345306444007,
+        "notebook_overhead_flag_threshold": 1.25,
+        "exceeds_notebook_flag": false,
+        "candidate_count_verified": false
+      },
+      "cost_scope": "Colab cost pilots only, dirty manifests. Mean wallclock over recorded attacks with different actual early stopping. The notebook T=10 comparison is not a fixed-step complexity test; per-step candidate count is not inferred from timings."
+    }
   }
 }

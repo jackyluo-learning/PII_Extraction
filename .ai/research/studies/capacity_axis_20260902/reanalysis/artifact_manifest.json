@@ -12,7 +12,7 @@
   {
     "path": "artifacts/capacity_axis_20260902/figures/auc_exploratory.pdf",
     "bytes": 15580,
-    "sha256": "4ec6343edec28c981b18a27803c173c86471c1ce0e4dec21f955471d18f0c6f4"
+    "sha256": "917d9c6bf503b645733cda66db4042b150eb7235cc2f0128a9836806a4835562"
   },
   {
     "path": "artifacts/capacity_axis_20260902/figures/auc_exploratory.png",
@@ -22,7 +22,7 @@
   {
     "path": "artifacts/capacity_axis_20260902/figures/capacity_and_signal.pdf",
     "bytes": 19558,
-    "sha256": "79153fc0a2313d0c72c82a51f69db1b2f8d383651953edcb40664d87b7e08fc1"
+    "sha256": "8d059ab44863ffbd703c2d22747aa0de14de05b2f36218db370632247e3e5102"
   },
   {
     "path": "artifacts/capacity_axis_20260902/figures/capacity_and_signal.png",
@@ -32,7 +32,7 @@
   {
     "path": "artifacts/capacity_axis_20260902/figures/seed_spread.pdf",
     "bytes": 17325,
-    "sha256": "d41afc4957892d50dd163d0c3bd6f415ed5fc49edb0d924774579d9b4e932df8"
+    "sha256": "1f579700b43467d92f943f7d83465546bcf25522070974e5875d8a4a2f1d2a57"
   },
   {
     "path": "artifacts/capacity_axis_20260902/figures/seed_spread.png",

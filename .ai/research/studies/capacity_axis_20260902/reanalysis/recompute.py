@@ -106,7 +106,24 @@ def hypotheses(rows,rep,tau,point):
         ratio_candidates=[x for x in candidates if x['control']['estimate']>0]
         certification=max(ratio_candidates,key=lambda x:x['trained']['estimate']/x['control']['estimate']) if ratio_candidates else None
         maps.append({'tolerance':tol,'below_preregistered_resolution':tol<.09,'floor_only_capacities':[x['k'] for x in rows[1:] if x['control']['ci'][1]<=tol],'joint_capacities':[x['k'] for x in candidates],'largest_joint_capacity':max([x['k'] for x in candidates],default=None),'detection_optimum_k':detection['k'] if detection else None,'likelihood_ratio_optimum_k':certification['k'] if certification else None,'positive_tau_capacities':[x['k'] for x in candidates if x['tau_ci'][0]>0]})
-    h2={'p_raw':None,'holm_reserved_p':1.,'one_percent_verdict':'unresolved at achieved sample size','resolution_floor_preregistered':.09,'zero_count_wilson_upper':float(wilson(0,50/1.5)[1]),'minimum_people_per_arm_for_zero_wilson_upper_1pct':int(np.ceil(stats.norm.ppf(.975)**2*.99/.01*1.5/2)),'minimum_people_scope':'Zero observed hits only; same two-field ICC=.5 assumption, two-sided Wilson. This is not a power calculation for tau or a guarantee of a feasible point.','mapping':maps,'rule':'both alpha upper CI <= tolerance and tau CI excludes zero; retain sign; descriptive mapping cannot establish impossibility','global_test':'not defined by preregistration; not replaced by floor-only p'}
+    sensitivity=[]
+    for name,neff in [('target_only_icc_0.5',50/1.5),('all_repeats_icc_0.5',150/(1+5*.5))]:
+        per_k=[]
+        for x in rows[1:]:
+            consistent_tau_ci=mover(x['trained']['estimate'],x['control']['estimate'],neff,neff)
+            per_k.append({'k':x['k'],'control_wilson_ci':wilson(x['control']['estimate'],neff),'tau_mover_ci':consistent_tau_ci})
+        sens_maps=[]
+        for tol in [.01,.05,.09,.10,.15,.20,.30,.50,.75,.90,1.0]:
+            eligible=[(x,s) for x,s in zip(rows[1:],per_k) if s['control_wilson_ci'][1]<=tol]
+            sens_maps.append({
+                'tolerance':tol,
+                'floor_only_capacities':[x['k'] for x,s in eligible],
+                'positive_tau_joint_capacities_using_primary_tau_ci':[x['k'] for x,s in eligible if x['tau_ci'][0]>0],
+                'positive_tau_joint_capacities_using_consistent_mover':[x['k'] for x,s in eligible if s['tau_mover_ci'][0]>0],
+                'any_direction_joint_capacities_using_consistent_mover':[x['k'] for x,s in eligible if s['tau_mover_ci'][0]>0 or s['tau_mover_ci'][1]<0],
+            })
+        sensitivity.append({'name':name,'n_eff':neff,'per_k':per_k,'mapping':sens_maps})
+    h2={'p_raw':None,'holm_reserved_p':1.,'one_percent_verdict':'unresolved at achieved sample size','resolution_floor_preregistered':.09,'zero_count_wilson_upper':float(wilson(0,50/1.5)[1]),'minimum_people_per_arm_for_zero_wilson_upper_1pct':int(np.ceil(stats.norm.ppf(.975)**2*.99/.01*1.5/2)),'minimum_people_scope':'Zero observed hits only; same two-field ICC=.5 assumption, two-sided Wilson. This is not a power calculation for tau or a guarantee of a feasible point.','mapping':maps,'rule':'both alpha upper CI <= tolerance and tau CI excludes zero; retain sign; descriptive mapping cannot establish impossibility','global_test':'not defined by preregistration; not replaced by floor-only p','consistent_interval_sensitivity':{'label':'post-hoc method-consistency sensitivity; does not replace the disclosed hybrid main analysis','conventions':sensitivity,'conclusion':'The hybrid primary mapping makes k=4 floor-eligible at 5%-10% because its nonzero cell uses a percentile interval while k=1-3 use Wilson. Applying Wilson consistently removes that reversal under the conservative target-only effective n. No convention yields a positive-tau joint operating point; H2 remains unresolved, not refuted.'}}
     tpos=tau[:,1:];maxv=tpos.max(axis=1);ties=np.isclose(tpos,maxv[:,None],atol=1e-12,rtol=0)
     earliest=POS[np.argmax(ties,axis=1)];latest=POS[len(POS)-1-np.argmax(ties[:,::-1],axis=1)]
     observed=point['trained'][1:]-point['control'][1:];obsmax=POS[np.isclose(observed,observed.max(),atol=1e-12,rtol=0)]

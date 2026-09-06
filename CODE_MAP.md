@@ -12,7 +12,7 @@ reanalysis is [here](.ai/research/studies/capacity_axis_20260902/analysis.md); f
 acceptance is blocked on historical launch/model pins, Cheaha E17 and scheduler accounting.
 The old analysis CLI is retired. Its replacement reads ledger-linked, checksum-checked
 raw files through `reanalysis/recompute.py`; `write_report.py` renders the resulting ledger.
-New validity issues are recorded as #16–#20 below. Other experiment statuses remain historical.
+New validity issues are recorded as #16–#21 below. Other experiment statuses remain historical.
 
 Companion visual documents:
 - [GCG attack walkthrough](https://claude.ai/code/artifact/29d5ea65-d8be-4fbd-83cd-b593d80533fa) — one full attack, from random gibberish to early stop on a hit
@@ -235,6 +235,7 @@ Ordered by how urgently each must be settled before adding experiments.
 | 18 | **E17 matching versus achieved sample** | **Validity: yes.** Actual attacked email covariates fail the predeclared point SMD threshold. Recovered Colab E17 pair-weighted and deduplicated marginal diagnostics are now reported; missing Cheaha E17 files prevent declaring the main matching records verified. |
 | 19 | **Reference self-information versus a deterministic bound** | **Validity: yes.** The old report called H(t)/log2(V) a per-target deterministic capacity lower bound and claimed tightness. A reference model's self-information does not establish that bound for these targets or this success rule. The claim and corresponding guarantee overlay are withdrawn. |
 | 20 | **Provenance and compute acceptance** | **Validity: yes.** Six main manifests have unknown cleanliness; all lack a historical executed checkpoint content pin and complete launch provenance. Main attack-call elapsed time totals 26.251 h, exceeding the 24 A100-h budget under the recorded single-GPU execution, before overhead/failures. Scheduler allocation remains unknown. File completeness is not final study acceptance. |
+| 21 | **H2 interval-method switching** | **Validity: yes.** The conditional reanalysis applies effective-n Wilson at boundary cells and person-percentile bootstrap elsewhere. This makes k=4 floor-eligible at 5%–10% while zero-hit k=1–3 fail the conservative bound. An explicitly post-hoc all-k Wilson sensitivity removes this reversal: k=4 upper bounds are 12.60% / 10.52% under the two assumed effective-n conventions. No positive-contrast joint point is established; H2 remains unresolved. The mixed-rule mapping must not be interpreted as evidence that the nonzero cell is better calibrated. |
 
 ---
 

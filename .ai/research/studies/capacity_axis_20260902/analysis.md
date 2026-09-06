@@ -7,6 +7,20 @@ H1：ρ=0.9890，95% CI [0.9779, 0.9945]，支持记录数据中的上升趋势�
 H2：1% 误报条件不可分辨；零命中的保守 Wilson 上界为 10.33%，不再接受旧版的 [0,0] 区间或“不存在可用容量”结论。H4：γ=3.484，95% CI [2.811, 4.209]，在声明的 Weibull 工作模型下排除比例关系。
 **状态：可核验数据的统计重算已完成，但完整分析验收仍受 Cheaha 来源材料缺口阻塞；不是已接受的确认性研究，也未结项。** 已记录攻击耗时至少 26.25 h，超过 24 A100-h 预算；完整分配算力和失败成本尚未知。
 
+## “Cheaha 来源材料缺口阻塞”具体指什么
+
+这里的“阻塞”是**正式确认性验收与研究结项的阻塞**，不是统计程序无法运行，也不是 42 个主扫描分片或 4,200 行攻击结果缺失。现有逐行结果足以重算曲线、区间和假设统计量；缺少的是证明这些结果确实来自预定模型、预定匹配、预定环境和完整调度过程的历史来源链。
+
+| 缺少的 Cheaha 材料 | 阻塞的验收门 | 对当前重算的影响 | 解除阻塞所需证据 |
+|---|---|---|---|
+| 实际执行 checkpoint 的内容指纹及训练—攻击关联 | 模型身份与五项 pin | 不改变已存 parquet 的算术结果；但无法证明主扫描攻击的是计划中的那一个模型 | 历史 checkpoint 文件或可信 SHA256，以及能把它与各主分片关联的记录 |
+| 完整 launch 配置、环境锁和 6 个 dirty=unknown 分片的清洁证据 | 配置、环境与代码清洁性 | 已记录字段可以复核；未记录的运行差异仍无法排除 | 原始完整配置、依赖锁/镜像标识、git 状态或等价不可变记录 |
+| Cheaha 三个攻击种子的 E17 matching 记录 | D/C 可比性与成员性解释 | 实际被攻击样本的边际 SMD 可算；但不能验证每个主运行最初如何配对 | seeds 42、1337、2024 的原始 E17 配对表及其哈希 |
+| Slurm 终态、分配 walltime/GPU 和失败或抢占任务记录 | 预算、失败处理与运行完整性 | 不进入已完成行的统计值；总 GPU-h、失败成本和所有任务终态仍未知 | sacct/squeue 导出、作业日志与失败/重试清单 |
+
+
+因此当前状态应读成：**条件性数值重算完成；确认性验收被来源证据阻塞；研究尚未结项。** 即使暂时找不到上述材料，当前数值仍可作为“给定这些已保存攻击行”的条件性结果，但不能升级成无保留的确认性结论。
+
 ## Ledger Audit
 
 | 审计项 | 结论 | 边界 |
@@ -26,7 +40,32 @@ H2：1% 误报条件不可分辨；零命中的保守 Wilson 上界为 10.33%，
 审计文件：[初次逐行审计（补证前快照）](reanalysis/raw_data_audit.json)、[补证审计](reanalysis/post_recovery_audit.json)、[合同审查](reanalysis/contract_audit.md)、[实现审查](reanalysis/implementation_audit.md)。
 当前主模型来源不足使全部主扫描记录的 `confirmatory_eligible=false`；以下检验展示在已记录攻击数据上的条件性结果，不掩盖这一资格限制。
 
-## Preregistered Results
+## 预注册假设与条件性结果（Preregistered hypotheses and conditional results）
+
+“Preregistered”修饰的是**实验前固定的假设、估计量、判据和分析计划**，不是实验跑完以后产生的数据。原始实验数据是各次攻击的逐行 parquet 和 manifest；`results.json` 是把原始文件路径、哈希、运行资格与派生统计量连起来的证据台账，也不是原始数据本身。旧标题“Preregistered Results”容易被理解成“结果被预先登记”，因此改为本标题。
+
+| 对象 | 含义 | 本研究中的位置 |
+|---|---|---|
+| 预注册 | 看结果前固定：问什么、H1–H5是什么、用什么指标和判据 | design.md、protocol.md，以及 plan.json 中运行前登记的 prediction；plan 的 status/description 会随后更新 |
+| 原始实验数据 | 模型攻击后实际观察到的逐行输出及伴随运行记录 | Cheaha attempts parquet 与 manifests |
+| 证据台账 | 保留原始文件哈希、运行资格、排除理由和由原始数据重算的统计量 | results.json |
+| 本节结果 | 把预先指定的判据应用到事后观察数据；来源门未齐时只能条件性解释 | 以下 H1–H5 与详细结果 |
+
+
+### 实验前假设、判据、结果与推论
+
+符号约定：D 为参与微调的目标组，C 为未参与微调的控制组；k 为可自由优化的提示 token 数；αₖ 为 C 的精确命中率（forcing floor）；τrec(k) 为 D 与 C 的命中率之差。H(t) 是参考模型给目标序列的自信息量，单位 bits；k_min 是本次规定的三个种子中任一攻击首次命中该目标时的最小网格容量。
+
+| 假设与地位 | 实验前假设 | 预定判据 | 本次观察结果 | 是否满足 | 结果含义与后续待检验推论 |
+|---|---|---|---|---|---|
+| H1（确认性） | H0：αₖ 与 k 无关/曲线平；H1：αₖ 随 k 单调不降 | k=1…64 上 Spearman ρ 的人员 bootstrap 95% CI 完全大于0 | ρ=0.988965，95% CI [0.977915, 0.994490]，Holm p=0.000400 | 满足预定“总体上升趋势”判据；条件性支持 H1 | 当前模型、攻击器和目标内，容量增加伴随更高 forcing floor；不推出相邻点严格单调或跨模型因果规律 |
+| H2（拟作确认性，联合检验未定义） | 存在 k≥1，使未训练控制目标的命中概率 αₖ≤1%；设计修订又要求同一点保留可检测的组间信号 | αₖ 的95%上界≤容忍度，且 τ=D−C 的95% CI 排除0；原始1%形式和设计规定的可分辨容忍度范围均报告 | 1%下零命中 Wilson 上界=10.33%；字面联合规则仅在100%容忍度由负向τ的k=64满足；正向τ联合点为空 | 1%形式未分辨；字面联合规则出现负向单点；正向可用性未获支持，但缺联合全局检验，不能正式反驳存在性 | 候选推论是“低 floor 与正向成员信号可能存在张力”；后续必须把 τ 下界>0、统一区间法和全局检验写进新预注册 |
+| H3（确认性） | H0：τrec(20)=0；双侧备择：τrec(20)≠0 | k=20 的人员 bootstrap 95% CI 排除0 | τ=+1.33 pp [-7.33, +10.00]，原始p=0.825617，Holm p=1.000000 | 未满足拒绝 H0 的判据；结果不等于两组等效 | 下一实验应事先给出最小实际效应/等效界 δ，直接做等效性或界限检验 |
+| H4（确认性） | 比例 forcing 模型 k_min∝H 成立，即 log-log 斜率 γ=1 | 控制组删失 log-log 回归中 γ 的95% CI 若排除1，则反驳比例模型 | γ=3.484486，95% CI [2.811469, 4.209360]，Holm p=0.000400 | 不满足；在声明的 Weibull 工作模型下 H4 被反驳 | 通用常数 β 不可由本实验迁移使用；应预注册非线性或字段分层模型再检验 |
+| H5（探索性、低功效） | H0：τrec(k) 单调或平；备择：在1与64之间有内部峰 | argmax位置95%区间排除两个端点；二次项 b<0 作为次要证据 | 并列观测最大值=[4, 12]；位置包络=[4, 48]；b=-0.00391，95% CI [-0.01660, 0.00956] | 位置条件满足字面要求，但曲率未排除0；总体仍不确定 | k=4…48 只是下一次高功效扫描的候选区间，不能称为已定位峰值 |
+
+
+表中区分当前数据支持的结果含义与**后续待检验假设**；后者没有因出现在本报告里而变成预注册结论。H1/H4 的“确认性”表示原设计的假设地位；当前所有主扫描结论都仍受来源资格限制。
 
 ### 先读 k=0：sanity anchor
 
@@ -82,7 +121,21 @@ B：10,000次独立D/C人员bootstrap，每次在所有k复用同一人样本，
 | 100% | [1, 2, 3, 4, 6, 8, 12, 16, 20, 24, 32, 48, 64] | [64] | 64 | 64 | 64 |
 
 
-除极高容忍度下负向τ的描述性单点外，没有得到满足正向检测条件的点。**未检出不等于不存在**，尤其不能由1%不可分辨的数据证明审计不可能。原设计没有定义联合全局p，本次以p=1保留H2家族位置，标为不可检验，拒绝重复旧版floor-only p替换。
+主表使用本次重分析声明的混合法：边界零/全一单元用 Wilson，其他单元用人员 bootstrap。设计要求零计数 Wilson、组间 Newcombe/MOVER 和人员 bootstrap，但没有完全消除这些规则的适用范围歧义；不能把本次所有实现细节都追溯称作预注册。为检查方法切换是否驱动结果，下面增加**事后方法一致性敏感性（exploratory）**，对所有控制组 k 统一使用 Wilson；它是诊断，不替换主分析。
+
+| 标签/容忍误报 | 声明的混合主法：floor-only k | 统一 Wilson：target-only n_eff | 统一 Wilson：repeated-ICC n_eff | 正向联合点：floor用敏感性法，τ沿用主CI |
+|---|---|---|---|---|
+| (exploratory) 1% | [] | [] | [] | [] / [] |
+| (exploratory) 5% | [4] | [] | [] | [] / [] |
+| (exploratory) 9% | [4] | [] | [1, 2, 3] | [] / [] |
+| (exploratory) 10% | [4] | [] | [1, 2, 3] | [] / [] |
+| (exploratory) 15% | [1, 2, 3, 4] | [1, 2, 3, 4] | [1, 2, 3, 4] | [] / [] |
+| (exploratory) 20% | [1, 2, 3, 4] | [1, 2, 3, 4] | [1, 2, 3, 4] | [] / [] |
+
+
+该诊断发现一个实质性方法伪影：主法下 k=4 的控制组上界为 3.33%，所以它在5%–10%行入选；统一 Wilson 后，同一 k 的上界分别为 12.60%（target-only n_eff=33.33）和 10.52%（repeated-ICC n_eff=42.86）。这解释了为何零命中的 k=1–3 反而可能比有命中的 k=4 更难“合格”。两种一致法都没有正向τ联合点；因此敏感性分析改变部分 floor-only 映射，但不改变 H2 的“不可判定”，更不能把它升级成“已反驳”。
+
+原设计写的是“τ区间排除0”，没有要求方向为正；因此容忍度100%下的负向 k=64 会满足字面联合判据，却不能作为预期的正向成员信号工作点。这是判据含义的缺口，不能事后悄悄改成正向检验。没有得到满足正向检测条件的点。**未检出不等于不存在**，尤其不能由1%不可分辨的数据证明审计不可能。原设计没有定义联合全局p，本次以p=1保留H2家族位置，标为不可检验，拒绝重复旧版floor-only p替换。
 
 ### H3 — k=20 的成员组差异
 
@@ -147,7 +200,7 @@ Tobit次要规格：level-scale截距=-13.569，CI [-21.412, -6.873]；斜率=0.
 
 ### 平衡与原始E17
 
-| 实际攻击字段 | 协变量 | nD/nC | SMD；95%bootstrap CI | |SMD|<0.1 |
+| 实际攻击字段 | 协变量 | nD/nC | SMD；95%bootstrap CI | \|SMD\|<0.1 |
 |---|---|---|---|---|
 | ssn | char_len | 25/25 | 0.000 [0.000, 0.000] | 是 |
 | ssn | target_len_tokens | 25/25 | -0.074 [-0.667, 0.465] | 是 |
@@ -213,43 +266,60 @@ $$
 5. 为10,000次删失重拟合使用与lifelines数值核对的同一Weibull似然快速求解器；首次遇到一个线搜索失败即停止，未丢样本。调整线搜索上限后同一抽样重算全部10,000次，最终无失败；[solver_notes.md](reanalysis/solver_notes.md)保留过程。
 6. 报告由ledger驱动的专用生成器生成，取代报告规范中“只能make_tables.py”的旧实现路径；全部数字可追至results.json及带哈希原始文件，没有手工表格抄数。
 7. 找回的Colab文件独立存放，绝不覆盖同名Cheaha文件。新补录身份哈希表示本次观察到的manifest字段，不伪装为历史完整配置hash；未知清洁状态、模型身份和账目继续未知。
+8. 阅读完整曲线后增加全k一致Wilson区间及MOVER对照，明确标为事后方法敏感性。有效n基于假设ICC而非测得ICC；它揭示H2部分floor-only资格依赖区间切换，不改变H2不可判定。
 
 ## Predictions vs. Outcomes
 
-下列逐任务表区分本次能核验的结果和历史文字；不把已有description中的“done/held”当作原始证据。
+这里比较的是 `plan.json` 中登记的**各任务预测**与实际证据，不是 H1–H5 的统计检验表。plan 是持续更新的执行账本；保留 prediction 原文不等于已经证明每条文字都在数据可见前写入，尤其不能用后写的 description 当原始证据。上一版有 11/24 行显示“未独立验收”，原因是报告生成器给所有未专门编写分支的任务套用了同一句默认文案，混在一起的其实有：原始行可直接复核、只有部分证据、执行门本次未重跑、以及真正缺材料阻塞。这是报告分类错误，不是 11 项原始实验数据都缺失。
 
-| 任务 | 原预测（原文） | 本次可核验结果 | 判定 |
-|---|---|---|---|
-| t0-1 | The current prefix yields {f=1:10, f=5:15, f=20:0}; the fix yields roughly {3, 7, 15}. | 本次未重跑该执行/破坏性试验；保留历史预测 | 未独立验收 |
-| t0-2 | A k=0 shard writes 100 rows with capacity_k=0 and does not collide with any gcg shard. | 本次未重跑该执行/破坏性试验；保留历史预测 | 未独立验收 |
-| t0-3 | Killing a shard mid-run leaves a parquet with the persons completed so far. | 本次未重跑该执行/破坏性试验；保留历史预测 | 未独立验收 |
-| t0-4 | All 42 shards emit an identical target_subset_hash. | 本次未重跑该执行/破坏性试验；保留历史预测 | 未独立验收 |
-| t0-5 | On a simulated 16GB profile the eval batch drops below 512. | 本次未重跑该执行/破坏性试验；保留历史预测 | 未独立验收 |
-| t0-6 | The corpus regenerates from Wikipedia alone, C4 count zero, assertions pass. | 本次未重跑该执行/破坏性试验；保留历史预测 | 未独立验收 |
-| t0-7 | Importing the analysis module without lifelines raises rather than degrading. | 本次未重跑该执行/破坏性试验；保留历史预测 | 未独立验收 |
-| t0-8 | PII eval loss falls to near zero on the PII documents, as in run2. | 找回Colab模型和train_meta；未重训，Cheaha模型身份待核验 | 历史损失预测未据日志重新判定 |
-| t0-cp | Every gate's test passes and the tree is clean. | 本次未重跑该执行/破坏性试验；保留历史预测 | 未独立验收 |
-| t1-1 | alpha_0 is not detectably above 0 — run2's own gpt2 fixed-probe EMR was 0.0. | 原始anchor确认未命中；总体概率仍有区间 | 符合观察预测 |
-| t1-2 | k=64 costs materially more than the linear-in-(k+T) model predicts; k=1 evaluates 256 candidates, not 512. | 本次未重跑该执行/破坏性试验；保留历史预测 | 未独立验收 |
-| t1-3 | |D| = 25 with all three frequency tiers present; |C| between 15 and 25. | 本次未重跑该执行/破坏性试验；保留历史预测 | 未独立验收 |
-| t1-4 | Per-arm flip rate does not exceed 2*p_hat*(1-p_hat) beyond its bootstrap CI. | 找回original与repro，逐目标0 flips；原始pilot dirty | 判定复现通过；来源限制 |
-| t1-cp | All four pilot criteria met. | 本次未重跑该执行/破坏性试验；保留历史预测 | 未独立验收 |
-| t2-1 | alpha_k rises monotonically from near 0 toward run2's 52% at k=20 and beyond. | 种子网格齐全；见seed_rates.csv和主曲线 | 上升形状支持；不声称每相邻点单调 |
-| t2-2 | The curve's shape reproduces seed 42's within its intervals. | 种子网格齐全；见seed_rates.csv和主曲线 | 上升形状支持；不声称每相邻点单调 |
-| t2-3 | The curve's shape reproduces the first two. | 种子网格齐全；见seed_rates.csv和主曲线 | 上升形状支持；不声称每相邻点单调 |
-| t2-2b | All 42 agree on both. | 逐行重建subset hash一致，N=200一致 | 通过 |
-| t2-cp | The ledger is complete and the invariants hold. | 原始矩阵完整；GPU分配账目未齐，已记录攻击时间超预算 | 未满足全部checkpoint条件 |
-| t3-1 | Each is unit-tested against a worked example before any table is generated. | 边界区间、固定家族、删失求解器经过本次校验 | 本次实现验证通过 |
-| t3-2 | The pair-wise SMD is small by construction; the marginal SMD is the one that can fail. | email实际攻击边际SMD不达标；Cheaha配对未齐 | 平衡预测失败/待补证 |
-| t3-3 | Recorded: H1 supported; H2 undetermined below alpha=9%; H3's CI contains 0 but narrows; H4 undecided. | H1趋势、H4比例被反驳；H2/H3未决，H5探索性 | 混合；不接受旧完结结论 |
-| t3-4 | The censored estimate exceeds the complete-case one, since censoring drops the hardest targets. | 保留删失；右删失为零，未见预期的掉难例差异可直接解释 | 比较需保留模型差异，不宣称预测成立 |
-| t3-cp | Every hypothesis has a verdict or an explicit undecidable. | 新报告和数值已写；来源/匹配/总账仍待补齐 | 尚未验收 |
+本版把 20 个原子任务和 4 个阶段 checkpoint 分开，并使用四个互斥状态。`执行门未重跑`只表示本轮统计重分析没有再做 kill-test、显存模拟等工程试验；它不自动否定历史运行，也不影响已经保存的攻击行。`缺失证据阻塞`才表示现有材料不足以完成该验收门。
+
+| 状态 | 任务数 | 含义 |
+|---|---|---|
+| 原始证据直接复核 | 9 | 现有逐行结果、manifest或台账字段足以判断该预测的观察部分。 |
+| 部分复核 | 9 | 有直接证据，但原句是复合条件、缺明确阈值或仍有一部分没有重放。 |
+| 执行门未重跑 | 3 | 本轮没有重新执行工程/破坏性测试；不表示主攻击原始行缺失。 |
+| 缺失证据阻塞 | 3 | 现有材料不足以通过该任务或 checkpoint 的正式验收。 |
+
+### 20个原子任务
+
+| 任务 | 登记的任务预测（原文） | 本次直接证据/结果 | 预测判定 | 验收状态 |
+|---|---|---|---|---|
+| t0-1 | The current prefix yields {f=1:10, f=5:15, f=20:0}; the fix yields roughly {3, 7, 15}. | 恢复的数据注册信息显示修正后的频率层级抽样为3/7/15；旧 prefix 的反事实没有复演。 | 修正后结果符合；反事实部分仅可追溯 | 原始证据直接复核 |
+| t0-2 | A k=0 shard writes 100 rows with capacity_k=0 and does not collide with any gcg shard. | k=0 分片有独立命名与 capacity_k=0 标签，原始行数与预期一致且未与 GCG 分片碰撞。 | 支持 | 原始证据直接复核 |
+| t0-3 | Killing a shard mid-run leaves a parquet with the persons completed so far. | 本轮没有中途终止新任务来检查部分 parquet 的保留行为。 | 本轮未复测 | 执行门未重跑 |
+| t0-4 | All 42 shards emit an identical target_subset_hash. | 42 份主 manifest 的 target_subset_hash 一致。 | 支持 | 原始证据直接复核 |
+| t0-5 | On a simulated 16GB profile the eval batch drops below 512. | 本轮没有模拟 16GB 显存配置。 | 本轮未复测 | 执行门未重跑 |
+| t0-6 | The corpus regenerates from Wikipedia alone, C4 count zero, assertions pass. | 元数据支持 C4 计数为0和 D/C 值不相交；来源记录同时包含 arXiv，且本轮未重放语料再生成断言。 | 复合预测只部分满足；“Wikipedia alone”不成立 | 部分复核 |
+| t0-7 | Importing the analysis module without lifelines raises rather than degrading. | 本轮没有构造缺少 lifelines 的导入环境。 | 本轮未复测 | 执行门未重跑 |
+| t0-8 | PII eval loss falls to near zero on the PII documents, as in run2. | 恢复的 Colab train_meta 显示 PII eval loss：2.6761 → 2.2047 → 2.0889；文件哈希已核验，Cheaha 模型身份仍未建立。 | 下降部分满足；“near zero”未获支持，且原计划未定义该阈值 | 部分复核 |
+| t1-1 | alpha_0 is not detectably above 0 — run2's own gpt2 fixed-probe EMR was 0.0. | k=0 两组均为0次命中；控制组95%上界仍为 10.33%。 | 观测支持 anchor 预测；不能由零命中断言总体概率为零 | 原始证据直接复核 |
+| t1-2 | k=64 costs materially more than the linear-in-(k+T) model predicts; k=1 evaluates 256 candidates, not 512. | Colab 原始 pilot 的每次攻击均值：k=1：25.55s；k=20：31.00s；k=64：80.80s。按notebook的T=10公式，k64实测/线性预测=1.0566，未过其1.25倍提示阈值；dirty pilot、不同早停步数限制解释。 | 大幅超线性成本预测未获支持；256候选数部分仍缺直接证据 | 部分复核 |
+| t1-3 | \|D\| = 25 with all three frequency tiers present; \|C\| between 15 and 25. | D=25、C=25，D 含三种频率层级。 | 支持 | 原始证据直接复核 |
+| t1-4 | Per-arm flip rate does not exceed 2*p_hat*(1-p_hat) beyond its bootstrap CI. | 找回的 Colab original/repro 在两组逐目标均为0 flips；original 为 dirty=true，代码边界也不同。 | 数值判据通过；不能替代 clean Cheaha 复现 | 原始证据直接复核 |
+| t2-1 | alpha_k rises monotonically from near 0 toward run2's 52% at k=20 and beyond. | seed 42 曲线总体上升，但存在局部回落；完整曲线见 seed_rates.csv。 | 字面“逐点单调”预测不满足；H1 的总体趋势判据满足 | 原始证据直接复核 |
+| t2-2 | The curve's shape reproduces seed 42's within its intervals. | seed 1337 的完整网格与相同总体形状可见，但计划没有定义“within its intervals”的逐 seed 通过规则。 | 定性支持，不能形式验收 | 部分复核 |
+| t2-3 | The curve's shape reproduces the first two. | seed 2024 的完整网格与相同总体形状可见，但同样缺预定逐 seed 判据。 | 定性支持，不能形式验收 | 部分复核 |
+| t2-2b | All 42 agree on both. | 42 份主分片的 subset hash 与 N=200 一致。 | 支持 | 原始证据直接复核 |
+| t3-1 | Each is unit-tested against a worked example before any table is generated. | 边界区间、固定家族与删失求解器在本次实现中有校验；原实现缺失门槛的证据见 implementation_audit.md，但本轮校验不能追溯证明所有原始单元测试的时序。 | 已覆盖实现的当前校验通过；历史全门槛时序未验收 | 部分复核 |
+| t3-2 | The pair-wise SMD is small by construction; the marginal SMD is the one that can fail. | 实际 email 边际 SMD 未过门槛；只恢复 Colab seed42 的 E17，缺 Cheaha 三种子配对表。 | 边际可失败的预测出现；pair-wise 部分无法在主运行验收 | 缺失证据阻塞 |
+| t3-3 | Recorded: H1 supported; H2 undetermined below alpha=9%; H3's CI contains 0 but narrows; H4 undecided. | H1 条件性支持；H4 被反驳；H2/H3 未决；H5 仍为探索性不确定。 | 混合；原预测只部分吻合 | 部分复核 |
+| t3-4 | The censored estimate exceeds the complete-case one, since censoring drops the hardest targets. | 右删失比例=0.000；H4 的 γ 排除1，使AFT截距不再对应通用bits/token的β。次要Tobit/OLS斜率比较见删失诊断。 | β的预期大小方向无法按原定义有效判断；零右删失时“丢最难例”机制未出现 | 原始证据直接复核 |
+
+### 4个阶段 checkpoint
+
+| 任务 | 登记的任务预测（原文） | 本次直接证据/结果 | 预测判定 | 验收状态 |
+|---|---|---|---|---|
+| t0-cp | Every gate's test passes and the tree is clean. | 多项数据门可复核，但三项工程门未重跑，且历史 clean-tree/完整 pin 证据不全。 | checkpoint 未整体满足 | 部分复核 |
+| t1-cp | All four pilot criteria met. | anchor、样本臂和 Colab flip 判据有证据；成本结论与来源身份仍有限制。 | 四项 pilot 条件未能整体确认 | 部分复核 |
+| t2-cp | The ledger is complete and the invariants hold. | 攻击矩阵完整且逐行可重算；checkpoint/完整 pins、Slurm 终态和总 GPU-h 缺失，已记录攻击耗时 26.251 h 并超过预算。 | ledger 数值完整，阶段验收未通过 | 缺失证据阻塞 |
+| t3-cp | Every hypothesis has a verdict or an explicit undecidable. | 每个假设已有条件性判定或明确不可判定；来源、matching 与完整算力账仍未齐。 | 字面预测满足；完整阶段验收仍未通过 | 缺失证据阻塞 |
 
 
 ## Threats to Validity
 
 - A1/matching：实际email的三项SMD未过预设门槛；原始配对诊断仅恢复Colab版本。组间差值和AUC不应直接归因为训练成员性。
-- 新增CODE_MAP #16–#20逐项记录本次发现及Validity标记；以下也逐项交代历史问题。
+- 新增CODE_MAP #16–#21逐项记录本次发现及Validity标记；#21说明H2的部分floor-only资格依赖区间方法切换，一致Wilson敏感性不能升级为确认性结论。
 - CODE_MAP旧问题#1/#15（β单位及删失）：本次保留删失，另给比率；γ失配时不把截距当通用bits/token。H4并未因数据右删失少就免除非单调命中假设问题。
 - CODE_MAP #7（CI不一致）：本次逐行标明B/W/M；边界格不再出现无依据的零宽区间。#8及#10的目标/提示差异：k0单列；没有把anchored对比混入本研究。
 - CODE_MAP #9/#11/#12：语料生成与训练程序限制仍存在；源代码显示padding标签未屏蔽，影响模型训练条件及可外推解释。GPT-2单模型没有跨模型LoRA比较，训练工件的主扫描身份仍待补证。
