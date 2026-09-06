@@ -87,6 +87,37 @@ def main():
                            ('tau', row['tau']), ('tau_lower', row['tau_ci'][0]), ('tau_upper', row['tau_ci'][1])]:
             assert np.isclose(float(cell[key]), value)
         assert cell['allocated_GPU_h'] == 'unknown'
+    descriptive = R['descriptive_figures']
+    assert descriptive['status'] == 'exploratory_descriptive'
+    assert descriptive['created_from_rows'] == len(df) == 4200
+    assert descriptive['n_targets'] == len(descriptive['target_summaries']) == 100
+    assert len(descriptive['target_by_k']) == 1400
+    assert len(descriptive['field_counts']) == 56
+    assert {row['successes_out_of_3'] for row in descriptive['target_by_k']} <= {0, 1, 2, 3}
+    assert all(row['n_seeds'] == 3 for row in descriptive['target_by_k'])
+    # Outputs retain only anonymous target IDs, never raw names or target values.
+    descriptive_text = json.dumps(descriptive, ensure_ascii=False)
+    for raw_value in set(df.person_id.astype(str)) | set(df.target_string.astype(str)):
+        assert raw_value not in descriptive_text
+    with (OUT / 'extraction_rates_and_counts_full.csv').open() as stream:
+        rate_count_table = list(csv.DictReader(stream))
+    with (OUT / 'extraction_counts_by_field_full.csv').open() as stream:
+        field_count_table = list(csv.DictReader(stream))
+    with (OUT / 'target_success_by_k_full.csv').open() as stream:
+        target_table = list(csv.DictReader(stream))
+    assert len(rate_count_table) == 84
+    assert len(field_count_table) == 56
+    assert len(target_table) == 1400
+    target_cells = {
+        (row['arm'], row['field'], row['target_id'], row['k']): row
+        for row in descriptive['target_by_k']
+    }
+    for row in target_table:
+        source = target_cells[(row['arm'], row['field'], row['target_id'], int(row['k']))]
+        assert int(row['successes_out_of_3']) == source['successes_out_of_3']
+        assert row['successful_seeds'] == ';'.join(map(str, source['successful_seeds']))
+    for item in descriptive['artifacts']:
+        check_file(item)
     joint = np.load(ART / 'bootstrap/joint_bootstrap.npz')
     fitted = np.load(ART / 'bootstrap/censored_bootstrap.npz')
     assert joint['tau'].shape == (10000, 14)
@@ -136,11 +167,18 @@ def main():
         'checked_raw_and_manifest_files': len(checked), 'main_rows': len(df),
         'recovered_colab_files_checked': len(recovered),
         'main_grid_cells_by_arm_field': 168, 'curve_table_rows': len(table),
+        'descriptive_target_by_k_cells': len(target_table),
+        'descriptive_field_count_cells': len(field_count_table),
+        'descriptive_artifacts_checked': len(descriptive['artifacts']),
         'bootstrap_draws': 10000, 'report_local_links_checked': link_count,
         'registry_and_plan_schema': 'PASS',
         'strict_results_schema': 'INCOMPLETE: 49 imported rows lack historical started_at; excluded legacy rows retain original schema errors',
         'schema_errors': schema_report,
-        'final_analysis_acceptance': 'BLOCKED: see data_audit.md; numerical checks do not establish missing provenance',
+        'final_analysis_acceptance': (
+            'BLOCKED: see analysis.md and data_audit.md; numerical checks do not '
+            'resolve missing historical provenance, the failed email balance gate, '
+            'or the undefined H2 global-test contract'
+        ),
     }
     (OUT / 'verification.json').write_text(json.dumps(result, ensure_ascii=False, indent=2) + '\n')
     print(json.dumps({k: v for k, v in result.items() if k != 'schema_errors'}, indent=2))

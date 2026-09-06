@@ -30,6 +30,26 @@
     "sha256": "b1107578225bd743f2cf3078c4b53f97914fcaf6f32f56e9263673ea4b911fb0"
   },
   {
+    "path": "artifacts/capacity_axis_20260902/figures/extraction_counts_by_field_full.pdf",
+    "bytes": 36286,
+    "sha256": "907b6b3bd27b6c13f22c5a0baf734a3f93034a60e81fac0b45eeef8f80e80f23"
+  },
+  {
+    "path": "artifacts/capacity_axis_20260902/figures/extraction_counts_by_field_full.png",
+    "bytes": 184064,
+    "sha256": "6e6130dd89f073ae348fd3fd887b06ebed01c6f478574782268821a3b571da9a"
+  },
+  {
+    "path": "artifacts/capacity_axis_20260902/figures/extraction_rates_by_k_full.pdf",
+    "bytes": 26861,
+    "sha256": "215536758ae630633ffeda03830e8f17a02c20885b5c045a33cf5927117f32f2"
+  },
+  {
+    "path": "artifacts/capacity_axis_20260902/figures/extraction_rates_by_k_full.png",
+    "bytes": 305094,
+    "sha256": "ffd89919be6623af2daca78aa7f81848569f1e09f017d0a5329ed086dce83f14"
+  },
+  {
     "path": "artifacts/capacity_axis_20260902/figures/seed_spread.pdf",
     "bytes": 17325,
     "sha256": "1f579700b43467d92f943f7d83465546bcf25522070974e5875d8a4a2f1d2a57"
@@ -38,6 +58,16 @@
     "path": "artifacts/capacity_axis_20260902/figures/seed_spread.png",
     "bytes": 121206,
     "sha256": "0134a47b6e52352c15da121b75f071576a31de3d08ca31cce7522a9d42c3f0e0"
+  },
+  {
+    "path": "artifacts/capacity_axis_20260902/figures/target_success_by_k_full.pdf",
+    "bytes": 38047,
+    "sha256": "10a444401e367fdd13425e4bca95c4e4a5366a6acc7ed64e8d68b3e57e4c70e6"
+  },
+  {
+    "path": "artifacts/capacity_axis_20260902/figures/target_success_by_k_full.png",
+    "bytes": 483694,
+    "sha256": "602031878a15575ca11e2ba5582c9600d45f5a33e30eb0626cdfe6dd350e56b7"
   },
   {
     "path": "artifacts/capacity_axis_20260902/recovered_colab/data/corpus/train.json",

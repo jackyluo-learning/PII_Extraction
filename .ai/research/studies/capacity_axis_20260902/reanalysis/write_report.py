@@ -44,7 +44,7 @@ summary=rf'''# E3 重新分析：原始证据审计后的条件性结果
 已从台账关联的 42 个 Cheaha 原始分片重新计算，共 4,200 次攻击；每组 25 人、50 个目标，三个攻击种子。旧分析被撤回为历史版本，见 [prior_analysis.md](reanalysis/prior_analysis.md)。
 H1：ρ={H['H1']['rho']:.4f}，95% CI {ci(H['H1']['ci'],4)}，支持记录数据中的上升趋势。H3：k=20 的差为 {diff(H['H3']['tau'],H['H3']['ci'])}，未排除零。
 H2：1% 误报条件不可分辨；零命中的保守 Wilson 上界为 {100*H['H2']['zero_count_wilson_upper']:.2f}%，不再接受旧版的 [0,0] 区间或“不存在可用容量”结论。H4：γ={H['H4']['gamma']:.3f}，95% CI {ci(H['H4']['gamma_ci'])}，在声明的 Weibull 工作模型下排除比例关系。
-**状态：Cheaha 来源材料已部分恢复；统计重算完成，但完整分析验收仍受历史绑定缺口阻塞。** 这不是已接受的确认性研究，也未结项。主分片记录的攻击耗时为 {fulltime:.2f} h；sacct 还记录了 {sched.get('pii_expcap_jobs','未得')} 个主作业，已完成作业的计费 GPU-h 下限为 {sched_gpu_h if sched_gpu_h is not None else '未得'}，但仍缺逐分片映射、历史 checkpoint 绑定和完整运行时间戳。
+**状态：Cheaha 来源材料已部分恢复；统计重算和完整描述图已完成，但最终分析验收仍未通过。** 来源侧仍有历史绑定缺口；设计侧还有email平衡门失败和H2全局检验合同未定义。这不是已接受的确认性研究，也未结项。主分片记录的攻击耗时为 {fulltime:.2f} h；sacct 还记录了 {sched.get('pii_expcap_jobs','未得')} 个主作业，已完成作业的计费 GPU-h 下限为 {sched_gpu_h if sched_gpu_h is not None else '未得'}，但仍缺逐分片映射、历史 checkpoint 绑定和完整运行时间戳。
 
 ## “Cheaha 来源材料缺口阻塞”具体指什么
 
@@ -57,7 +57,7 @@ H2：1% 误报条件不可分辨；零命中的保守 Wilson 上界为 {100*H['H
 ['sacct 已恢复：pii-expcap 45个作业，43完成、1失败、1取消；逐分片映射和失败/重试归属仍缺','预算、失败处理与运行完整性','可报告调度汇总和 GPU-h 下限；无法把每个作业终态归给具体 manifest','原始作业日志、array/shard 映射和失败/重试清单'],
 ['49条导入运行记录缺历史 started_at','严格运行台账 schema','不改变已保存攻击行或统计量；但不能把导入记录当作完整的历史运行日志','Cheaha 作业 start 时间与每个 manifest 的可验证绑定']])}
 
-因此当前状态应读成：**Cheaha 来源恢复完成了一部分；条件性数值重算完成；确认性验收仍被五项历史绑定缺口阻塞；研究尚未结项。** 当前数值可作为“给定这些已保存攻击行”的条件性结果，但不能升级成无保留的确认性结论。
+因此当前状态应读成：**Cheaha 来源恢复完成了一部分；条件性数值重算与描述图完成；来源链验收仍被五项历史绑定缺口阻塞；加上email平衡门失败和H2合同缺口，研究尚未结项。** 当前数值可作为“给定这些已保存攻击行”的条件性结果，但不能升级成无保留的确认性结论。
 
 ## Ledger Audit
 
@@ -102,6 +102,19 @@ B：10,000次独立D/C人员bootstrap，每次在所有k复用同一人样本，
 
 ![容量与组间信号](../../../../artifacts/capacity_axis_20260902/figures/capacity_and_signal.png)
 图1：预注册的主估计量，25人/组、3种子；阴影/误差棒为上述95%点区间。k=1.49只标示设计中的理论参照，不是本数据推出的边界。旧版把参考模型H(t)变成逐目标确定性下界的解释已撤回；尚未验证的理论概率上界不叠加成经验保证。
+
+### 完整 D/C、字段与靶标描述图
+
+![完整D/C抽取率](../../../../artifacts/capacity_axis_20260902/figures/extraction_rates_by_k_full.png)
+补充图S1：完整14点容量网格上的D/C精确命中率。总体面板是预注册D/C曲线的完整显示；SSN和email面板是探索性字段拆分。每个总体点汇总25人、50个`(person, field)`靶标和3个固定攻击种子，共150条重复攻击；每个字段点为25人、25个靶标和75条重复攻击。误差棒是95%点区间：普通格使用10,000次人员聚类bootstrap，0/n或n/n边界格使用报告约定的Wilson有效样本量。灰底菱形列是`k=0` fixed-probe anchor，分隔线右侧才是`k≥1` GCG扫描；H1/H5不使用`k=0`。
+
+![按字段拆开的完整抽取计数](../../../../artifacts/capacity_axis_20260902/figures/extraction_counts_by_field_full.png)
+补充图S2（探索性、描述性）：按字段和组别拆开的精确命中attempt计数。每格分母固定为75（25人×3个固定攻击种子），格内整数没有置信区间，也不能当作75个独立样本。完整CSV另给每格至少1/3、至少2/3和3/3 seeds命中的唯一靶标数。`k=0` fixed anchor 与正容量扫描分开显示。
+
+![不同靶标在不同k下的成功情况](../../../../artifacts/capacity_axis_20260902/figures/target_success_by_k_full.png)
+补充图S3（探索性、描述性）：四个面板各含25个匿名靶标和全部14个`k`；每格颜色是该靶标在三个固定攻击seed中的成功次数0–3。靶标定义为`(arm, person_id, field)`，不使用会随probe表示改变的原始`target_string`；图中不显示姓名或目标值。每个面板按首次观察到任一seed成功的`k`、总成功次数和稳定匿名编号排序；这是事后可视化排序，不把后续失败补成成功，也不把首次命中解释为真正单调阈值。三个seed是同一批人员上的重复攻击，不是三次独立训练。
+
+三张补充图都只使用`results.json`登记并逐文件校验SHA256的42个Cheaha主扫描分片，共4,200条记录；不混入Colab pilot、cost或repro结果。总体曲线的数值地位仍是“给定这些恢复行的条件性结果”，字段和靶标图不能产生确认性发现。对应完整表为[抽取率与计数](reanalysis/extraction_rates_and_counts_full.csv)、[字段计数](reanalysis/extraction_counts_by_field_full.csv)和[靶标×k成功矩阵](reanalysis/target_success_by_k_full.csv)。
 
 ### H1 — 容量与 forcing floor 的上升关系
 
@@ -289,7 +302,7 @@ __PREDICTIONS__
 - 没有把探索性AUC、宽峰区间、缺乏显著性或被保留的零假设升级成确认性发现。
 - Cheaha 来源材料已部分恢复，但没有完成逐分片历史绑定与失败/重试归属核验；研究仍未达到最终分析验收和结项条件。
 
-复算入口：`reanalysis/recompute.py`；报表入口：`reanalysis/write_report.py`。参数与环境见[方法约定](reanalysis/method_choices.md)、[环境记录](reanalysis/analysis_environment.txt)。完整表：[curve_table.csv](reanalysis/curve_table.csv)、[seed_rates.csv](reanalysis/seed_rates.csv)、[actual_balance.csv](reanalysis/actual_balance.csv)、[探索性AUC](reanalysis/auc_exploratory.csv)。
+复算入口：`reanalysis/recompute.py`；完整描述图入口：`reanalysis/render_descriptive_figures.py`；报表入口：`reanalysis/write_report.py`。参数与环境见[方法约定](reanalysis/method_choices.md)、[环境记录](reanalysis/analysis_environment.txt)。完整表：[curve_table.csv](reanalysis/curve_table.csv)、[seed_rates.csv](reanalysis/seed_rates.csv)、[抽取率与计数](reanalysis/extraction_rates_and_counts_full.csv)、[字段计数](reanalysis/extraction_counts_by_field_full.csv)、[靶标×k成功矩阵](reanalysis/target_success_by_k_full.csv)、[actual_balance.csv](reanalysis/actual_balance.csv)、[探索性AUC](reanalysis/auc_exploratory.csv)。
 '''
 plan=json.loads((O/'prior_plan.json').read_text())
 prediction_audit={
@@ -342,5 +355,5 @@ summary=summary.replace('__PREDICTIONS__',prediction_text)
 (S/'analysis.md').write_text(summary)
 audit_text='# 原始数据需求与审计\n\n主扫描逐行原始记录可用于条件性重算；确认性来源链仍不完整。\n\n'+summary.split('## Ledger Audit\n\n')[1].split('## 预注册假设与条件性结果')[0]+'\n## 仍需Cheaha补证\n\n'+'\n'.join('- '+x for x in P['remaining_missing'])+'\n'
 (O/'data_audit.md').write_text(audit_text)
-print('Wrote analysis.md, data_audit.md and six CSV tables from results.json.')
+print('Wrote analysis.md, data_audit.md and ledger-derived CSV tables.')
 print(curve_table.splitlines()[0]);print('\n'.join(curve_table.splitlines()[2:4]))

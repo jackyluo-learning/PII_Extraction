@@ -4,3 +4,5 @@ intermediate_results.json
 # retain them locally for audit without committing raw/PII-bearing material.
 cheaha-e3-evidence/
 cheaha-e3-evidence.tar.gz
+cheaha-extra-evidence/
+cheaha-extra-evidence.tar.gz

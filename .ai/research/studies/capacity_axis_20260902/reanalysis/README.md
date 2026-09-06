@@ -58,6 +58,7 @@ historical Cheaha execution environment.
 ```bash
 python .ai/research/studies/capacity_axis_20260902/reanalysis/verify_models.py
 OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 python .ai/research/studies/capacity_axis_20260902/reanalysis/recompute.py
+python .ai/research/studies/capacity_axis_20260902/reanalysis/render_descriptive_figures.py
 python .ai/research/studies/capacity_axis_20260902/reanalysis/audit_task_predictions.py
 python .ai/research/studies/capacity_axis_20260902/reanalysis/write_report.py
 python .ai/research/studies/capacity_axis_20260902/reanalysis/verify_evidence.py
@@ -72,7 +73,15 @@ Bootstrap vectors are preserved in `artifacts/capacity_axis_20260902/bootstrap/`
 The main curve and censored models each use all 10,000 prescribed draws. The
 independent reviewer refitted the full H4 case and five selected bootstrap cases;
 this does not mean all 10,000 fits were independently duplicated. Final visual QA
-checked the three PNG figures; matching PDF versions are available for export.
+checked all six PNG figures; matching PDF versions are available for export.
+
+`render_descriptive_figures.py` adds complete-grid pooled and field-specific D/C
+rates, field-by-arm exact-match counts, and an anonymized target-by-k heatmap whose
+cells retain the number of successful fixed attack seeds (0--3). The field and target
+displays are explicitly exploratory/descriptive. The script does not retain names or
+target strings in its ledger or CSV outputs, does not fill nonmonotone success
+patterns, and visually separates the k=0 fixed-probe anchor from the positive-k GCG
+sweep. PNG files are rendered at 300 dpi and matching vector PDFs are provided.
 
 ## Complete the Cheaha evidence
 

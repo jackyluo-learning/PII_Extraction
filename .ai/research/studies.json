@@ -36,7 +36,7 @@
           "kind": "main",
           "status": "blocked",
           "tasks": 5,
-          "blocked_reason": "Raw main sweep complete; execution/accounting checkpoint not accepted."
+          "blocked_reason": "Raw main sweep and aggregate sacct accounting are recovered; historical checkpoint/full launch binding and one-to-one shard/retry attribution are not accepted."
         },
         {
           "id": "phase-3",
@@ -44,16 +44,16 @@
           "kind": "analysis",
           "status": "blocked",
           "tasks": 5,
-          "blocked_reason": "Cheaha historical checkpoint/full launch pins, three-seed E17, six unknown cleanliness records and Slurm accounting remain unavailable; SSH authentication failed."
+          "blocked_reason": "Conditional analysis and complete descriptive figures are finished. Final acceptance remains blocked by the failed email balance gate, unresolved H2 global-test contract, and the remaining historical provenance/accounting gaps."
         }
       ],
       "progress": {
         "total_tasks": 24,
-        "completed_tasks": 20,
+        "completed_tasks": 21,
         "tasks_total": 24,
-        "tasks_done": 20,
-        "percentage": 83.33333333333333,
-        "note": "Historical execution tasks plus verified conditional calculation tasks; final evidence gates remain blocked."
+        "tasks_done": 21,
+        "percentage": 87.5,
+        "note": "Historical execution tasks, recovered three-seed E17 balance audit, and verified conditional calculations are complete; final acceptance gates remain blocked."
       },
       "compute": {
         "runs_completed": 49,
@@ -63,13 +63,13 @@
         "est_cost_usd": 0,
         "budget_accelerator_hours": 24,
         "recorded_attack_elapsed_hours_main": 26.251341756780942,
-        "accelerator_hours_status": "unknown; omitted, not zero",
-        "failed_job_accounting_status": "unknown",
-        "budget_status": "recorded single-GPU attack elapsed alone exceeds approved hours",
-        "note": "49 byte-addressed raw shards; 3 legacy rows excluded as superseded. Scheduler allocation and any additional smoke/failure jobs are not verified. $0 is the existing academic-charge estimate, not a complete compute ledger."
+        "accelerator_hours_status": "sacct recovered a 222.987 completed-billing GPU-hour lower bound; per-shard allocation remains unresolved",
+        "failed_job_accounting_status": "aggregate states recovered: 43 completed, 1 failed, and 1 cancelled among 45 pii-expcap jobs; retry attribution remains unresolved",
+        "budget_status": "the recovered completed-billing lower bound exceeds the approved 24 GPU-hours",
+        "note": "49 byte-addressed raw shards; 3 legacy rows excluded as superseded. Aggregate scheduler accounting is recovered, but one-to-one shard mapping, retry attribution, and historical checkpoint/full launch binding remain unresolved. $0 is the existing academic-charge estimate, not a complete compute ledger."
       },
       "created_at": "2026-09-02T22:40:00-05:00",
-      "updated_at": "2026-09-06T15:50:55+00:00",
+      "updated_at": "2026-09-06T21:03:09Z",
       "protocol_path": ".ai/research/studies/capacity_axis_20260902/protocol.md",
       "plan_path": ".ai/research/studies/capacity_axis_20260902/plan.json",
       "results_path": ".ai/research/studies/capacity_axis_20260902/results.json",
@@ -77,12 +77,12 @@
       "reanalysis": {
         "prior_verdict": "H1 supported; H2 supported on the floor and refuted in operation; H3's CI contains 0 (bound +-0.2 on the balanced field); H4 refuted (gamma=3.48, CI [2.66,4.19]); H5 exploratory and not located. Two findings outside the hypotheses: Prop. 1's bound is tight (0/50 violations), and a membership signal in the continuous score exactly where the binary rule is blind.",
         "prior_analysis_path": ".ai/research/studies/capacity_axis_20260902/reanalysis/prior_analysis.md",
-        "stage": "conditional computation and independent numeric review complete; evidence acceptance blocked",
+        "stage": "conditional computation, complete descriptive figures, and independent numeric review complete; final acceptance blocked",
         "completion_accepted": false,
         "data_audit_path": ".ai/research/studies/capacity_axis_20260902/reanalysis/data_audit.md",
         "statistics_review_path": ".ai/research/studies/capacity_axis_20260902/reanalysis/statistics_review.md"
       },
-      "blocked_reason": "Cheaha historical checkpoint/full launch pins, three-seed E17, six unknown cleanliness records and Slurm accounting remain unavailable; SSH authentication failed."
+      "blocked_reason": "E17, exact environment records, manifests, and aggregate Slurm accounting are recovered. Final acceptance remains blocked by the failed email balance gate, unresolved H2 global-test contract, historical executed-checkpoint/full-launch binding, 6 dirty=null shards, shard-to-Slurm/retry attribution, and 49 missing historical started_at timestamps."
     }
   ]
 }

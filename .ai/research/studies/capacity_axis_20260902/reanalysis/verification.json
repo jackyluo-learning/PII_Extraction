@@ -5,8 +5,11 @@
   "recovered_colab_files_checked": 27,
   "main_grid_cells_by_arm_field": 168,
   "curve_table_rows": 42,
+  "descriptive_target_by_k_cells": 1400,
+  "descriptive_field_count_cells": 56,
+  "descriptive_artifacts_checked": 9,
   "bootstrap_draws": 10000,
-  "report_local_links_checked": 20,
+  "report_local_links_checked": 29,
   "registry_and_plan_schema": "PASS",
   "strict_results_schema": "INCOMPLETE: 49 imported rows lack historical started_at; excluded legacy rows retain original schema errors",
   "schema_errors": {
@@ -307,5 +310,5 @@
       }
     ]
   },
-  "final_analysis_acceptance": "BLOCKED: see data_audit.md; numerical checks do not establish missing provenance"
+  "final_analysis_acceptance": "BLOCKED: see analysis.md and data_audit.md; numerical checks do not resolve missing historical provenance, the failed email balance gate, or the undefined H2 global-test contract"
 }
