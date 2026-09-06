@@ -10,11 +10,11 @@
     {
       "study_id": "capacity_axis_20260902",
       "type": "experiment",
-      "status": "done",
+      "status": "blocked",
       "question": "How does the forcing floor alpha_k respond to probe capacity k, does an operating point k* exist whose floor is low enough to retain dynamic range, and where does the measured knee sit relative to Corollary 1's k*_thy ~ 1.49?",
       "description": "The E3 capacity sweep: measure the forcing floor alpha_k across k in {1..64} on a fixed target subset, locate the operating point k* and the realized steering rate beta, and confront Corollary 1's predicted knee at k*_thy ~ 1.49 head-on. Revives the design abandoned as capacity_response_20260831 with fixes for all three of its abandonment reasons.",
       "design_path": ".ai/research/studies/capacity_axis_20260902/design.md",
-      "verdict": "H1 supported; H2 supported on the floor and refuted in operation; H3's CI contains 0 (bound +-0.2 on the balanced field); H4 refuted (gamma=3.48, CI [2.66,4.19]); H5 exploratory and not located. Two findings outside the hypotheses: Prop. 1's bound is tight (0/50 violations), and a membership signal in the continuous score exactly where the binary rule is blind.",
+      "verdict": "inconclusive",
       "phases_summary": [
         {
           "id": "phase-0",
@@ -34,35 +34,55 @@
           "id": "phase-2",
           "name": "Main sweep — 42 shards",
           "kind": "main",
-          "status": "done",
-          "tasks": 5
+          "status": "blocked",
+          "tasks": 5,
+          "blocked_reason": "Raw main sweep complete; execution/accounting checkpoint not accepted."
         },
         {
           "id": "phase-3",
           "name": "Analysis",
           "kind": "analysis",
-          "status": "done",
-          "tasks": 5
+          "status": "blocked",
+          "tasks": 5,
+          "blocked_reason": "Cheaha historical checkpoint/full launch pins, three-seed E17, six unknown cleanliness records and Slurm accounting remain unavailable; SSH authentication failed."
         }
       ],
       "progress": {
+        "total_tasks": 24,
+        "completed_tasks": 20,
         "tasks_total": 24,
-        "tasks_done": 24,
-        "percentage": 100.0
+        "tasks_done": 20,
+        "percentage": 83.33333333333333,
+        "note": "Historical execution tasks plus verified conditional calculation tasks; final evidence gates remain blocked."
       },
       "compute": {
-        "accelerator_hours": 0,
+        "runs_completed": 49,
+        "runs": 49,
+        "main_shards_completed": 42,
+        "recovered_colab_shards": 7,
         "est_cost_usd": 0,
-        "runs": 43,
         "budget_accelerator_hours": 24,
-        "note": "43 shards (42 sweep + 1 smoke); accelerator-hours pending sacct transcription"
+        "recorded_attack_elapsed_hours_main": 26.251341756780942,
+        "accelerator_hours_status": "unknown; omitted, not zero",
+        "failed_job_accounting_status": "unknown",
+        "budget_status": "recorded single-GPU attack elapsed alone exceeds approved hours",
+        "note": "49 byte-addressed raw shards; 3 legacy rows excluded as superseded. Scheduler allocation and any additional smoke/failure jobs are not verified. $0 is the existing academic-charge estimate, not a complete compute ledger."
       },
       "created_at": "2026-09-02T22:40:00-05:00",
-      "updated_at": "2026-09-05T21:00:00-05:00",
+      "updated_at": "2026-09-06T01:06:20.990308+00:00",
       "protocol_path": ".ai/research/studies/capacity_axis_20260902/protocol.md",
       "plan_path": ".ai/research/studies/capacity_axis_20260902/plan.json",
       "results_path": ".ai/research/studies/capacity_axis_20260902/results.json",
-      "analysis_path": ".ai/research/studies/capacity_axis_20260902/analysis.md"
+      "analysis_path": ".ai/research/studies/capacity_axis_20260902/analysis.md",
+      "reanalysis": {
+        "prior_verdict": "H1 supported; H2 supported on the floor and refuted in operation; H3's CI contains 0 (bound +-0.2 on the balanced field); H4 refuted (gamma=3.48, CI [2.66,4.19]); H5 exploratory and not located. Two findings outside the hypotheses: Prop. 1's bound is tight (0/50 violations), and a membership signal in the continuous score exactly where the binary rule is blind.",
+        "prior_analysis_path": ".ai/research/studies/capacity_axis_20260902/reanalysis/prior_analysis.md",
+        "stage": "conditional computation and independent numeric review complete; evidence acceptance blocked",
+        "completion_accepted": false,
+        "data_audit_path": ".ai/research/studies/capacity_axis_20260902/reanalysis/data_audit.md",
+        "statistics_review_path": ".ai/research/studies/capacity_axis_20260902/reanalysis/statistics_review.md"
+      },
+      "blocked_reason": "Cheaha historical checkpoint/full launch pins, three-seed E17, six unknown cleanliness records and Slurm accounting remain unavailable; SSH authentication failed."
     }
   ]
 }

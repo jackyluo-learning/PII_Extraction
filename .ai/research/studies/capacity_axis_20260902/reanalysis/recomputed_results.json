@@ -1,0 +1,4162 @@
+{
+  "status": "conditional_reanalysis_not_ready_for_closeout",
+  "created_at": "2026-09-06T00:52:13.949196+00:00",
+  "n_boot": 10000,
+  "bootstrap_seed": 20240601,
+  "curves": {
+    "pooled": [
+      {
+        "k": 0,
+        "n_seeds": 3,
+        "control": {
+          "estimate": 0.0,
+          "ci": [
+            0.0,
+            0.10333504501592614
+          ],
+          "interval_method": "Wilson assumed n_eff",
+          "n_persons": 25,
+          "n_targets": 50,
+          "n_attempts": 150,
+          "successes": 0,
+          "n_eff_if_wilson": 33.333333333333336,
+          "repeat_icc_sensitivity_n_eff": 42.857142857142854,
+          "repeat_icc_sensitivity_ci": [
+            0.0,
+            0.08226068196207405
+          ],
+          "attempt_elapsed_hours": 0.008513483140203688,
+          "accelerator_hours": null
+        },
+        "trained": {
+          "estimate": 0.0,
+          "ci": [
+            0.0,
+            0.10333504501592614
+          ],
+          "interval_method": "Wilson assumed n_eff",
+          "n_persons": 25,
+          "n_targets": 50,
+          "n_attempts": 150,
+          "successes": 0,
+          "n_eff_if_wilson": 33.333333333333336,
+          "repeat_icc_sensitivity_n_eff": 42.857142857142854,
+          "repeat_icc_sensitivity_ci": [
+            0.0,
+            0.08226068196207405
+          ],
+          "attempt_elapsed_hours": 0.008697449564933776,
+          "accelerator_hours": null
+        },
+        "tau": 0.0,
+        "tau_ci": [
+          -0.10333504501592614,
+          0.10333504501592614
+        ],
+        "tau_interval_method": "Newcombe/MOVER, two Wilson intervals with assumed n_eff"
+      },
+      {
+        "k": 1,
+        "n_seeds": 3,
+        "control": {
+          "estimate": 0.0,
+          "ci": [
+            0.0,
+            0.10333504501592614
+          ],
+          "interval_method": "Wilson assumed n_eff",
+          "n_persons": 25,
+          "n_targets": 50,
+          "n_attempts": 150,
+          "successes": 0,
+          "n_eff_if_wilson": 33.333333333333336,
+          "repeat_icc_sensitivity_n_eff": 42.857142857142854,
+          "repeat_icc_sensitivity_ci": [
+            0.0,
+            0.08226068196207405
+          ],
+          "attempt_elapsed_hours": 0.7321949868069755,
+          "accelerator_hours": null
+        },
+        "trained": {
+          "estimate": 0.0,
+          "ci": [
+            0.0,
+            0.10333504501592614
+          ],
+          "interval_method": "Wilson assumed n_eff",
+          "n_persons": 25,
+          "n_targets": 50,
+          "n_attempts": 150,
+          "successes": 0,
+          "n_eff_if_wilson": 33.333333333333336,
+          "repeat_icc_sensitivity_n_eff": 42.857142857142854,
+          "repeat_icc_sensitivity_ci": [
+            0.0,
+            0.08226068196207405
+          ],
+          "attempt_elapsed_hours": 0.7349029174778197,
+          "accelerator_hours": null
+        },
+        "tau": 0.0,
+        "tau_ci": [
+          -0.10333504501592614,
+          0.10333504501592614
+        ],
+        "tau_interval_method": "Newcombe/MOVER, two Wilson intervals with assumed n_eff"
+      },
+      {
+        "k": 2,
+        "n_seeds": 3,
+        "control": {
+          "estimate": 0.0,
+          "ci": [
+            0.0,
+            0.10333504501592614
+          ],
+          "interval_method": "Wilson assumed n_eff",
+          "n_persons": 25,
+          "n_targets": 50,
+          "n_attempts": 150,
+          "successes": 0,
+          "n_eff_if_wilson": 33.333333333333336,
+          "repeat_icc_sensitivity_n_eff": 42.857142857142854,
+          "repeat_icc_sensitivity_ci": [
+            0.0,
+            0.08226068196207405
+          ],
+          "attempt_elapsed_hours": 1.1238387148247824,
+          "accelerator_hours": null
+        },
+        "trained": {
+          "estimate": 0.0,
+          "ci": [
+            0.0,
+            0.10333504501592614
+          ],
+          "interval_method": "Wilson assumed n_eff",
+          "n_persons": 25,
+          "n_targets": 50,
+          "n_attempts": 150,
+          "successes": 0,
+          "n_eff_if_wilson": 33.333333333333336,
+          "repeat_icc_sensitivity_n_eff": 42.857142857142854,
+          "repeat_icc_sensitivity_ci": [
+            0.0,
+            0.08226068196207405
+          ],
+          "attempt_elapsed_hours": 1.1347943407297134,
+          "accelerator_hours": null
+        },
+        "tau": 0.0,
+        "tau_ci": [
+          -0.10333504501592614,
+          0.10333504501592614
+        ],
+        "tau_interval_method": "Newcombe/MOVER, two Wilson intervals with assumed n_eff"
+      },
+      {
+        "k": 3,
+        "n_seeds": 3,
+        "control": {
+          "estimate": 0.0,
+          "ci": [
+            0.0,
+            0.10333504501592614
+          ],
+          "interval_method": "Wilson assumed n_eff",
+          "n_persons": 25,
+          "n_targets": 50,
+          "n_attempts": 150,
+          "successes": 0,
+          "n_eff_if_wilson": 33.333333333333336,
+          "repeat_icc_sensitivity_n_eff": 42.857142857142854,
+          "repeat_icc_sensitivity_ci": [
+            0.0,
+            0.08226068196207405
+          ],
+          "attempt_elapsed_hours": 1.1625700953271654,
+          "accelerator_hours": null
+        },
+        "trained": {
+          "estimate": 0.0,
+          "ci": [
+            0.0,
+            0.10333504501592614
+          ],
+          "interval_method": "Wilson assumed n_eff",
+          "n_persons": 25,
+          "n_targets": 50,
+          "n_attempts": 150,
+          "successes": 0,
+          "n_eff_if_wilson": 33.333333333333336,
+          "repeat_icc_sensitivity_n_eff": 42.857142857142854,
+          "repeat_icc_sensitivity_ci": [
+            0.0,
+            0.08226068196207405
+          ],
+          "attempt_elapsed_hours": 1.1697153933180704,
+          "accelerator_hours": null
+        },
+        "tau": 0.0,
+        "tau_ci": [
+          -0.10333504501592614,
+          0.10333504501592614
+        ],
+        "tau_interval_method": "Newcombe/MOVER, two Wilson intervals with assumed n_eff"
+      },
+      {
+        "k": 4,
+        "n_seeds": 3,
+        "control": {
+          "estimate": 0.013333333333333332,
+          "ci": [
+            0.0,
+            0.03333333333333333
+          ],
+          "interval_method": "person-clustered percentile bootstrap",
+          "n_persons": 25,
+          "n_targets": 50,
+          "n_attempts": 150,
+          "successes": 2,
+          "n_eff_if_wilson": 33.333333333333336,
+          "repeat_icc_sensitivity_n_eff": 42.857142857142854,
+          "repeat_icc_sensitivity_ci": null,
+          "attempt_elapsed_hours": 1.1839525269137487,
+          "accelerator_hours": null
+        },
+        "trained": {
+          "estimate": 0.04,
+          "ci": [
+            0.006666666666666666,
+            0.08666666666666668
+          ],
+          "interval_method": "person-clustered percentile bootstrap",
+          "n_persons": 25,
+          "n_targets": 50,
+          "n_attempts": 150,
+          "successes": 6,
+          "n_eff_if_wilson": 33.333333333333336,
+          "repeat_icc_sensitivity_n_eff": 42.857142857142854,
+          "repeat_icc_sensitivity_ci": null,
+          "attempt_elapsed_hours": 1.1717661657598284,
+          "accelerator_hours": null
+        },
+        "tau": 0.02666666666666667,
+        "tau_ci": [
+          -0.013333333333333332,
+          0.07999999999999999
+        ],
+        "tau_interval_method": "person-clustered percentile bootstrap"
+      },
+      {
+        "k": 6,
+        "n_seeds": 3,
+        "control": {
+          "estimate": 0.2733333333333333,
+          "ci": [
+            0.20666666666666667,
+            0.34
+          ],
+          "interval_method": "person-clustered percentile bootstrap",
+          "n_persons": 25,
+          "n_targets": 50,
+          "n_attempts": 150,
+          "successes": 41,
+          "n_eff_if_wilson": 33.333333333333336,
+          "repeat_icc_sensitivity_n_eff": 42.857142857142854,
+          "repeat_icc_sensitivity_ci": null,
+          "attempt_elapsed_hours": 1.084904892179701,
+          "accelerator_hours": null
+        },
+        "trained": {
+          "estimate": 0.19999999999999996,
+          "ci": [
+            0.12666666666666665,
+            0.28
+          ],
+          "interval_method": "person-clustered percentile bootstrap",
+          "n_persons": 25,
+          "n_targets": 50,
+          "n_attempts": 150,
+          "successes": 30,
+          "n_eff_if_wilson": 33.333333333333336,
+          "repeat_icc_sensitivity_n_eff": 42.857142857142854,
+          "repeat_icc_sensitivity_ci": null,
+          "attempt_elapsed_hours": 1.1211671401394738,
+          "accelerator_hours": null
+        },
+        "tau": -0.07333333333333336,
+        "tau_ci": [
+          -0.18,
+          0.0266666666666667
+        ],
+        "tau_interval_method": "person-clustered percentile bootstrap"
+      },
+      {
+        "k": 8,
+        "n_seeds": 3,
+        "control": {
+          "estimate": 0.4733333333333333,
+          "ci": [
+            0.4,
+            0.5466666666666667
+          ],
+          "interval_method": "person-clustered percentile bootstrap",
+          "n_persons": 25,
+          "n_targets": 50,
+          "n_attempts": 150,
+          "successes": 71,
+          "n_eff_if_wilson": 33.333333333333336,
+          "repeat_icc_sensitivity_n_eff": 42.857142857142854,
+          "repeat_icc_sensitivity_ci": null,
+          "attempt_elapsed_hours": 0.9510105197959476,
+          "accelerator_hours": null
+        },
+        "trained": {
+          "estimate": 0.48666666666666664,
+          "ci": [
+            0.4133333333333333,
+            0.5533333333333333
+          ],
+          "interval_method": "person-clustered percentile bootstrap",
+          "n_persons": 25,
+          "n_targets": 50,
+          "n_attempts": 150,
+          "successes": 73,
+          "n_eff_if_wilson": 33.333333333333336,
+          "repeat_icc_sensitivity_n_eff": 42.857142857142854,
+          "repeat_icc_sensitivity_ci": null,
+          "attempt_elapsed_hours": 0.9403329097562366,
+          "accelerator_hours": null
+        },
+        "tau": 0.013333333333333364,
+        "tau_ci": [
+          -0.09333333333333327,
+          0.11333333333333329
+        ],
+        "tau_interval_method": "person-clustered percentile bootstrap"
+      },
+      {
+        "k": 12,
+        "n_seeds": 3,
+        "control": {
+          "estimate": 0.6333333333333334,
+          "ci": [
+            0.5666666666666668,
+            0.7
+          ],
+          "interval_method": "person-clustered percentile bootstrap",
+          "n_persons": 25,
+          "n_targets": 50,
+          "n_attempts": 150,
+          "successes": 95,
+          "n_eff_if_wilson": 33.333333333333336,
+          "repeat_icc_sensitivity_n_eff": 42.857142857142854,
+          "repeat_icc_sensitivity_ci": null,
+          "attempt_elapsed_hours": 0.8144177969959047,
+          "accelerator_hours": null
+        },
+        "trained": {
+          "estimate": 0.66,
+          "ci": [
+            0.6,
+            0.7266666666666666
+          ],
+          "interval_method": "person-clustered percentile bootstrap",
+          "n_persons": 25,
+          "n_targets": 50,
+          "n_attempts": 150,
+          "successes": 99,
+          "n_eff_if_wilson": 33.333333333333336,
+          "repeat_icc_sensitivity_n_eff": 42.857142857142854,
+          "repeat_icc_sensitivity_ci": null,
+          "attempt_elapsed_hours": 0.819384726219707,
+          "accelerator_hours": null
+        },
+        "tau": 0.026666666666666616,
+        "tau_ci": [
+          -0.06666666666666676,
+          0.11999999999999988
+        ],
+        "tau_interval_method": "person-clustered percentile bootstrap"
+      },
+      {
+        "k": 16,
+        "n_seeds": 3,
+        "control": {
+          "estimate": 0.7466666666666667,
+          "ci": [
+            0.6866666666666665,
+            0.8066666666666665
+          ],
+          "interval_method": "person-clustered percentile bootstrap",
+          "n_persons": 25,
+          "n_targets": 50,
+          "n_attempts": 150,
+          "successes": 112,
+          "n_eff_if_wilson": 33.333333333333336,
+          "repeat_icc_sensitivity_n_eff": 42.857142857142854,
+          "repeat_icc_sensitivity_ci": null,
+          "attempt_elapsed_hours": 0.7500237069527308,
+          "accelerator_hours": null
+        },
+        "trained": {
+          "estimate": 0.7333333333333334,
+          "ci": [
+            0.6733333333333335,
+            0.7933333333333333
+          ],
+          "interval_method": "person-clustered percentile bootstrap",
+          "n_persons": 25,
+          "n_targets": 50,
+          "n_attempts": 150,
+          "successes": 110,
+          "n_eff_if_wilson": 33.333333333333336,
+          "repeat_icc_sensitivity_n_eff": 42.857142857142854,
+          "repeat_icc_sensitivity_ci": null,
+          "attempt_elapsed_hours": 0.7580192425515917,
+          "accelerator_hours": null
+        },
+        "tau": -0.013333333333333308,
+        "tau_ci": [
+          -0.0933333333333336,
+          0.07333333333333314
+        ],
+        "tau_interval_method": "person-clustered percentile bootstrap"
+      },
+      {
+        "k": 20,
+        "n_seeds": 3,
+        "control": {
+          "estimate": 0.8066666666666668,
+          "ci": [
+            0.74,
+            0.8666666666666667
+          ],
+          "interval_method": "person-clustered percentile bootstrap",
+          "n_persons": 25,
+          "n_targets": 50,
+          "n_attempts": 150,
+          "successes": 121,
+          "n_eff_if_wilson": 33.333333333333336,
+          "repeat_icc_sensitivity_n_eff": 42.857142857142854,
+          "repeat_icc_sensitivity_ci": null,
+          "attempt_elapsed_hours": 0.7820833241939544,
+          "accelerator_hours": null
+        },
+        "trained": {
+          "estimate": 0.8200000000000002,
+          "ci": [
+            0.7599999999999999,
+            0.88
+          ],
+          "interval_method": "person-clustered percentile bootstrap",
+          "n_persons": 25,
+          "n_targets": 50,
+          "n_attempts": 150,
+          "successes": 123,
+          "n_eff_if_wilson": 33.333333333333336,
+          "repeat_icc_sensitivity_n_eff": 42.857142857142854,
+          "repeat_icc_sensitivity_ci": null,
+          "attempt_elapsed_hours": 0.765728935069508,
+          "accelerator_hours": null
+        },
+        "tau": 0.01333333333333342,
+        "tau_ci": [
+          -0.07333333333333336,
+          0.1000000000000002
+        ],
+        "tau_interval_method": "person-clustered percentile bootstrap"
+      },
+      {
+        "k": 24,
+        "n_seeds": 3,
+        "control": {
+          "estimate": 0.86,
+          "ci": [
+            0.7999999999999998,
+            0.9199999999999998
+          ],
+          "interval_method": "person-clustered percentile bootstrap",
+          "n_persons": 25,
+          "n_targets": 50,
+          "n_attempts": 150,
+          "successes": 129,
+          "n_eff_if_wilson": 33.333333333333336,
+          "repeat_icc_sensitivity_n_eff": 42.857142857142854,
+          "repeat_icc_sensitivity_ci": null,
+          "attempt_elapsed_hours": 0.7666158560249541,
+          "accelerator_hours": null
+        },
+        "trained": {
+          "estimate": 0.82,
+          "ci": [
+            0.7533333333333333,
+            0.8866666666666664
+          ],
+          "interval_method": "person-clustered percentile bootstrap",
+          "n_persons": 25,
+          "n_targets": 50,
+          "n_attempts": 150,
+          "successes": 123,
+          "n_eff_if_wilson": 33.333333333333336,
+          "repeat_icc_sensitivity_n_eff": 42.857142857142854,
+          "repeat_icc_sensitivity_ci": null,
+          "attempt_elapsed_hours": 0.7833139129479726,
+          "accelerator_hours": null
+        },
+        "tau": -0.040000000000000036,
+        "tau_ci": [
+          -0.1333333333333332,
+          0.05333333333333323
+        ],
+        "tau_interval_method": "person-clustered percentile bootstrap"
+      },
+      {
+        "k": 32,
+        "n_seeds": 3,
+        "control": {
+          "estimate": 0.92,
+          "ci": [
+            0.88,
+            0.9533333333333335
+          ],
+          "interval_method": "person-clustered percentile bootstrap",
+          "n_persons": 25,
+          "n_targets": 50,
+          "n_attempts": 150,
+          "successes": 138,
+          "n_eff_if_wilson": 33.333333333333336,
+          "repeat_icc_sensitivity_n_eff": 42.857142857142854,
+          "repeat_icc_sensitivity_ci": null,
+          "attempt_elapsed_hours": 0.8860979008012347,
+          "accelerator_hours": null
+        },
+        "trained": {
+          "estimate": 0.8933333333333334,
+          "ci": [
+            0.8333333333333335,
+            0.9466666666666665
+          ],
+          "interval_method": "person-clustered percentile bootstrap",
+          "n_persons": 25,
+          "n_targets": 50,
+          "n_attempts": 150,
+          "successes": 134,
+          "n_eff_if_wilson": 33.333333333333336,
+          "repeat_icc_sensitivity_n_eff": 42.857142857142854,
+          "repeat_icc_sensitivity_ci": null,
+          "attempt_elapsed_hours": 0.8986871740553114,
+          "accelerator_hours": null
+        },
+        "tau": -0.026666666666666616,
+        "tau_ci": [
+          -0.09333333333333338,
+          0.039999999999999925
+        ],
+        "tau_interval_method": "person-clustered percentile bootstrap"
+      },
+      {
+        "k": 48,
+        "n_seeds": 3,
+        "control": {
+          "estimate": 0.9133333333333333,
+          "ci": [
+            0.86,
+            0.96
+          ],
+          "interval_method": "person-clustered percentile bootstrap",
+          "n_persons": 25,
+          "n_targets": 50,
+          "n_attempts": 150,
+          "successes": 137,
+          "n_eff_if_wilson": 33.333333333333336,
+          "repeat_icc_sensitivity_n_eff": 42.857142857142854,
+          "repeat_icc_sensitivity_ci": null,
+          "attempt_elapsed_hours": 1.2064646278487312,
+          "accelerator_hours": null
+        },
+        "trained": {
+          "estimate": 0.92,
+          "ci": [
+            0.8666666666666666,
+            0.9666666666666666
+          ],
+          "interval_method": "person-clustered percentile bootstrap",
+          "n_persons": 25,
+          "n_targets": 50,
+          "n_attempts": 150,
+          "successes": 138,
+          "n_eff_if_wilson": 33.333333333333336,
+          "repeat_icc_sensitivity_n_eff": 42.857142857142854,
+          "repeat_icc_sensitivity_ci": null,
+          "attempt_elapsed_hours": 1.2371878821320004,
+          "accelerator_hours": null
+        },
+        "tau": 0.00666666666666671,
+        "tau_ci": [
+          -0.060000000000000275,
+          0.07999999999999974
+        ],
+        "tau_interval_method": "person-clustered percentile bootstrap"
+      },
+      {
+        "k": 64,
+        "n_seeds": 3,
+        "control": {
+          "estimate": 0.9666666666666667,
+          "ci": [
+            0.9399999999999998,
+            0.9933333333333333
+          ],
+          "interval_method": "person-clustered percentile bootstrap",
+          "n_persons": 25,
+          "n_targets": 50,
+          "n_attempts": 150,
+          "successes": 145,
+          "n_eff_if_wilson": 33.333333333333336,
+          "repeat_icc_sensitivity_n_eff": 42.857142857142854,
+          "repeat_icc_sensitivity_ci": null,
+          "attempt_elapsed_hours": 1.5694157102372912,
+          "accelerator_hours": null
+        },
+        "trained": {
+          "estimate": 0.9066666666666667,
+          "ci": [
+            0.8599999999999999,
+            0.9533333333333331
+          ],
+          "interval_method": "person-clustered percentile bootstrap",
+          "n_persons": 25,
+          "n_targets": 50,
+          "n_attempts": 150,
+          "successes": 136,
+          "n_eff_if_wilson": 33.333333333333336,
+          "repeat_icc_sensitivity_n_eff": 42.857142857142854,
+          "repeat_icc_sensitivity_ci": null,
+          "attempt_elapsed_hours": 1.6855394250154496,
+          "accelerator_hours": null
+        },
+        "tau": -0.05999999999999994,
+        "tau_ci": [
+          -0.1133333333333334,
+          -0.00666666666666671
+        ],
+        "tau_interval_method": "person-clustered percentile bootstrap"
+      }
+    ],
+    "ssn": [
+      {
+        "k": 0,
+        "n_seeds": 3,
+        "control": {
+          "estimate": 0.0,
+          "ci": [
+            0.0,
+            0.13319225093904846
+          ],
+          "interval_method": "Wilson assumed n_eff",
+          "n_persons": 25,
+          "n_targets": 25,
+          "n_attempts": 75,
+          "successes": 0,
+          "n_eff_if_wilson": 25.0,
+          "repeat_icc_sensitivity_n_eff": 37.5,
+          "repeat_icc_sensitivity_ci": [
+            0.0,
+            0.0929202531859186
+          ],
+          "attempt_elapsed_hours": 0.004177228940857781,
+          "accelerator_hours": null
+        },
+        "trained": {
+          "estimate": 0.0,
+          "ci": [
+            0.0,
+            0.13319225093904846
+          ],
+          "interval_method": "Wilson assumed n_eff",
+          "n_persons": 25,
+          "n_targets": 25,
+          "n_attempts": 75,
+          "successes": 0,
+          "n_eff_if_wilson": 25.0,
+          "repeat_icc_sensitivity_n_eff": 37.5,
+          "repeat_icc_sensitivity_ci": [
+            0.0,
+            0.0929202531859186
+          ],
+          "attempt_elapsed_hours": 0.004263471431202359,
+          "accelerator_hours": null
+        },
+        "tau": 0.0,
+        "tau_ci": [
+          -0.13319225093904846,
+          0.13319225093904846
+        ],
+        "tau_interval_method": "Newcombe/MOVER, two Wilson intervals with assumed n_eff"
+      },
+      {
+        "k": 1,
+        "n_seeds": 3,
+        "control": {
+          "estimate": 0.0,
+          "ci": [
+            0.0,
+            0.13319225093904846
+          ],
+          "interval_method": "Wilson assumed n_eff",
+          "n_persons": 25,
+          "n_targets": 25,
+          "n_attempts": 75,
+          "successes": 0,
+          "n_eff_if_wilson": 25.0,
+          "repeat_icc_sensitivity_n_eff": 37.5,
+          "repeat_icc_sensitivity_ci": [
+            0.0,
+            0.0929202531859186
+          ],
+          "attempt_elapsed_hours": 0.36662550462616816,
+          "accelerator_hours": null
+        },
+        "trained": {
+          "estimate": 0.0,
+          "ci": [
+            0.0,
+            0.13319225093904846
+          ],
+          "interval_method": "Wilson assumed n_eff",
+          "n_persons": 25,
+          "n_targets": 25,
+          "n_attempts": 75,
+          "successes": 0,
+          "n_eff_if_wilson": 25.0,
+          "repeat_icc_sensitivity_n_eff": 37.5,
+          "repeat_icc_sensitivity_ci": [
+            0.0,
+            0.0929202531859186
+          ],
+          "attempt_elapsed_hours": 0.36694484094778695,
+          "accelerator_hours": null
+        },
+        "tau": 0.0,
+        "tau_ci": [
+          -0.13319225093904846,
+          0.13319225093904846
+        ],
+        "tau_interval_method": "Newcombe/MOVER, two Wilson intervals with assumed n_eff"
+      },
+      {
+        "k": 2,
+        "n_seeds": 3,
+        "control": {
+          "estimate": 0.0,
+          "ci": [
+            0.0,
+            0.13319225093904846
+          ],
+          "interval_method": "Wilson assumed n_eff",
+          "n_persons": 25,
+          "n_targets": 25,
+          "n_attempts": 75,
+          "successes": 0,
+          "n_eff_if_wilson": 25.0,
+          "repeat_icc_sensitivity_n_eff": 37.5,
+          "repeat_icc_sensitivity_ci": [
+            0.0,
+            0.0929202531859186
+          ],
+          "attempt_elapsed_hours": 0.5626187550359302,
+          "accelerator_hours": null
+        },
+        "trained": {
+          "estimate": 0.0,
+          "ci": [
+            0.0,
+            0.13319225093904846
+          ],
+          "interval_method": "Wilson assumed n_eff",
+          "n_persons": 25,
+          "n_targets": 25,
+          "n_attempts": 75,
+          "successes": 0,
+          "n_eff_if_wilson": 25.0,
+          "repeat_icc_sensitivity_n_eff": 37.5,
+          "repeat_icc_sensitivity_ci": [
+            0.0,
+            0.0929202531859186
+          ],
+          "attempt_elapsed_hours": 0.5651444372865889,
+          "accelerator_hours": null
+        },
+        "tau": 0.0,
+        "tau_ci": [
+          -0.13319225093904846,
+          0.13319225093904846
+        ],
+        "tau_interval_method": "Newcombe/MOVER, two Wilson intervals with assumed n_eff"
+      },
+      {
+        "k": 3,
+        "n_seeds": 3,
+        "control": {
+          "estimate": 0.0,
+          "ci": [
+            0.0,
+            0.13319225093904846
+          ],
+          "interval_method": "Wilson assumed n_eff",
+          "n_persons": 25,
+          "n_targets": 25,
+          "n_attempts": 75,
+          "successes": 0,
+          "n_eff_if_wilson": 25.0,
+          "repeat_icc_sensitivity_n_eff": 37.5,
+          "repeat_icc_sensitivity_ci": [
+            0.0,
+            0.0929202531859186
+          ],
+          "attempt_elapsed_hours": 0.5831257385677762,
+          "accelerator_hours": null
+        },
+        "trained": {
+          "estimate": 0.0,
+          "ci": [
+            0.0,
+            0.13319225093904846
+          ],
+          "interval_method": "Wilson assumed n_eff",
+          "n_persons": 25,
+          "n_targets": 25,
+          "n_attempts": 75,
+          "successes": 0,
+          "n_eff_if_wilson": 25.0,
+          "repeat_icc_sensitivity_n_eff": 37.5,
+          "repeat_icc_sensitivity_ci": [
+            0.0,
+            0.0929202531859186
+          ],
+          "attempt_elapsed_hours": 0.5827051093180974,
+          "accelerator_hours": null
+        },
+        "tau": 0.0,
+        "tau_ci": [
+          -0.13319225093904846,
+          0.13319225093904846
+        ],
+        "tau_interval_method": "Newcombe/MOVER, two Wilson intervals with assumed n_eff"
+      },
+      {
+        "k": 4,
+        "n_seeds": 3,
+        "control": {
+          "estimate": 0.0,
+          "ci": [
+            0.0,
+            0.13319225093904846
+          ],
+          "interval_method": "Wilson assumed n_eff",
+          "n_persons": 25,
+          "n_targets": 25,
+          "n_attempts": 75,
+          "successes": 0,
+          "n_eff_if_wilson": 25.0,
+          "repeat_icc_sensitivity_n_eff": 37.5,
+          "repeat_icc_sensitivity_ci": [
+            0.0,
+            0.0929202531859186
+          ],
+          "attempt_elapsed_hours": 0.6000101092126634,
+          "accelerator_hours": null
+        },
+        "trained": {
+          "estimate": 0.0,
+          "ci": [
+            0.0,
+            0.13319225093904846
+          ],
+          "interval_method": "Wilson assumed n_eff",
+          "n_persons": 25,
+          "n_targets": 25,
+          "n_attempts": 75,
+          "successes": 0,
+          "n_eff_if_wilson": 25.0,
+          "repeat_icc_sensitivity_n_eff": 37.5,
+          "repeat_icc_sensitivity_ci": [
+            0.0,
+            0.0929202531859186
+          ],
+          "attempt_elapsed_hours": 0.6016180630524953,
+          "accelerator_hours": null
+        },
+        "tau": 0.0,
+        "tau_ci": [
+          -0.13319225093904846,
+          0.13319225093904846
+        ],
+        "tau_interval_method": "Newcombe/MOVER, two Wilson intervals with assumed n_eff"
+      },
+      {
+        "k": 6,
+        "n_seeds": 3,
+        "control": {
+          "estimate": 0.0,
+          "ci": [
+            0.0,
+            0.13319225093904846
+          ],
+          "interval_method": "Wilson assumed n_eff",
+          "n_persons": 25,
+          "n_targets": 25,
+          "n_attempts": 75,
+          "successes": 0,
+          "n_eff_if_wilson": 25.0,
+          "repeat_icc_sensitivity_n_eff": 37.5,
+          "repeat_icc_sensitivity_ci": [
+            0.0,
+            0.0929202531859186
+          ],
+          "attempt_elapsed_hours": 0.6525060125854281,
+          "accelerator_hours": null
+        },
+        "trained": {
+          "estimate": 0.013333333333333332,
+          "ci": [
+            0.0,
+            0.04
+          ],
+          "interval_method": "person-clustered percentile bootstrap",
+          "n_persons": 25,
+          "n_targets": 25,
+          "n_attempts": 75,
+          "successes": 1,
+          "n_eff_if_wilson": 25.0,
+          "repeat_icc_sensitivity_n_eff": 37.5,
+          "repeat_icc_sensitivity_ci": null,
+          "attempt_elapsed_hours": 0.6505208375056585,
+          "accelerator_hours": null
+        },
+        "tau": 0.013333333333333332,
+        "tau_ci": [
+          -0.12042944165243147,
+          0.1553149521916944
+        ],
+        "tau_interval_method": "Newcombe/MOVER, two Wilson intervals with assumed n_eff"
+      },
+      {
+        "k": 8,
+        "n_seeds": 3,
+        "control": {
+          "estimate": 0.12,
+          "ci": [
+            0.04,
+            0.2133333333333333
+          ],
+          "interval_method": "person-clustered percentile bootstrap",
+          "n_persons": 25,
+          "n_targets": 25,
+          "n_attempts": 75,
+          "successes": 9,
+          "n_eff_if_wilson": 25.0,
+          "repeat_icc_sensitivity_n_eff": 37.5,
+          "repeat_icc_sensitivity_ci": null,
+          "attempt_elapsed_hours": 0.6839880511495802,
+          "accelerator_hours": null
+        },
+        "trained": {
+          "estimate": 0.14666666666666667,
+          "ci": [
+            0.06666666666666667,
+            0.23999999999999994
+          ],
+          "interval_method": "person-clustered percentile bootstrap",
+          "n_persons": 25,
+          "n_targets": 25,
+          "n_attempts": 75,
+          "successes": 11,
+          "n_eff_if_wilson": 25.0,
+          "repeat_icc_sensitivity_n_eff": 37.5,
+          "repeat_icc_sensitivity_ci": null,
+          "attempt_elapsed_hours": 0.6651947009563446,
+          "accelerator_hours": null
+        },
+        "tau": 0.026666666666666672,
+        "tau_ci": [
+          -0.09333333333333332,
+          0.14666666666666664
+        ],
+        "tau_interval_method": "person-clustered percentile bootstrap"
+      },
+      {
+        "k": 12,
+        "n_seeds": 3,
+        "control": {
+          "estimate": 0.28,
+          "ci": [
+            0.15999999999999998,
+            0.4133333333333332
+          ],
+          "interval_method": "person-clustered percentile bootstrap",
+          "n_persons": 25,
+          "n_targets": 25,
+          "n_attempts": 75,
+          "successes": 21,
+          "n_eff_if_wilson": 25.0,
+          "repeat_icc_sensitivity_n_eff": 37.5,
+          "repeat_icc_sensitivity_ci": null,
+          "attempt_elapsed_hours": 0.6796706836753421,
+          "accelerator_hours": null
+        },
+        "trained": {
+          "estimate": 0.33333333333333326,
+          "ci": [
+            0.2266666666666666,
+            0.45333333333333337
+          ],
+          "interval_method": "person-clustered percentile bootstrap",
+          "n_persons": 25,
+          "n_targets": 25,
+          "n_attempts": 75,
+          "successes": 25,
+          "n_eff_if_wilson": 25.0,
+          "repeat_icc_sensitivity_n_eff": 37.5,
+          "repeat_icc_sensitivity_ci": null,
+          "attempt_elapsed_hours": 0.6811764548884498,
+          "accelerator_hours": null
+        },
+        "tau": 0.05333333333333323,
+        "tau_ci": [
+          -0.12000000000000002,
+          0.22666666666666666
+        ],
+        "tau_interval_method": "person-clustered percentile bootstrap"
+      },
+      {
+        "k": 16,
+        "n_seeds": 3,
+        "control": {
+          "estimate": 0.49333333333333335,
+          "ci": [
+            0.37333333333333335,
+            0.6133333333333332
+          ],
+          "interval_method": "person-clustered percentile bootstrap",
+          "n_persons": 25,
+          "n_targets": 25,
+          "n_attempts": 75,
+          "successes": 37,
+          "n_eff_if_wilson": 25.0,
+          "repeat_icc_sensitivity_n_eff": 37.5,
+          "repeat_icc_sensitivity_ci": null,
+          "attempt_elapsed_hours": 0.6346545371082094,
+          "accelerator_hours": null
+        },
+        "trained": {
+          "estimate": 0.4666666666666666,
+          "ci": [
+            0.34666666666666673,
+            0.5866666666666666
+          ],
+          "interval_method": "person-clustered percentile bootstrap",
+          "n_persons": 25,
+          "n_targets": 25,
+          "n_attempts": 75,
+          "successes": 35,
+          "n_eff_if_wilson": 25.0,
+          "repeat_icc_sensitivity_n_eff": 37.5,
+          "repeat_icc_sensitivity_ci": null,
+          "attempt_elapsed_hours": 0.648053723971049,
+          "accelerator_hours": null
+        },
+        "tau": -0.026666666666666727,
+        "tau_ci": [
+          -0.18666666666666676,
+          0.14666666666666656
+        ],
+        "tau_interval_method": "person-clustered percentile bootstrap"
+      },
+      {
+        "k": 20,
+        "n_seeds": 3,
+        "control": {
+          "estimate": 0.6133333333333333,
+          "ci": [
+            0.48,
+            0.7333333333333333
+          ],
+          "interval_method": "person-clustered percentile bootstrap",
+          "n_persons": 25,
+          "n_targets": 25,
+          "n_attempts": 75,
+          "successes": 46,
+          "n_eff_if_wilson": 25.0,
+          "repeat_icc_sensitivity_n_eff": 37.5,
+          "repeat_icc_sensitivity_ci": null,
+          "attempt_elapsed_hours": 0.652275255256229,
+          "accelerator_hours": null
+        },
+        "trained": {
+          "estimate": 0.6399999999999999,
+          "ci": [
+            0.5199999999999999,
+            0.76
+          ],
+          "interval_method": "person-clustered percentile bootstrap",
+          "n_persons": 25,
+          "n_targets": 25,
+          "n_attempts": 75,
+          "successes": 48,
+          "n_eff_if_wilson": 25.0,
+          "repeat_icc_sensitivity_n_eff": 37.5,
+          "repeat_icc_sensitivity_ci": null,
+          "attempt_elapsed_hours": 0.6414597756995095,
+          "accelerator_hours": null
+        },
+        "tau": 0.026666666666666616,
+        "tau_ci": [
+          -0.14666666666666672,
+          0.20000000000000018
+        ],
+        "tau_interval_method": "person-clustered percentile bootstrap"
+      },
+      {
+        "k": 24,
+        "n_seeds": 3,
+        "control": {
+          "estimate": 0.72,
+          "ci": [
+            0.5999999999999999,
+            0.8399999999999999
+          ],
+          "interval_method": "person-clustered percentile bootstrap",
+          "n_persons": 25,
+          "n_targets": 25,
+          "n_attempts": 75,
+          "successes": 54,
+          "n_eff_if_wilson": 25.0,
+          "repeat_icc_sensitivity_n_eff": 37.5,
+          "repeat_icc_sensitivity_ci": null,
+          "attempt_elapsed_hours": 0.6335376696454154,
+          "accelerator_hours": null
+        },
+        "trained": {
+          "estimate": 0.6399999999999999,
+          "ci": [
+            0.5066666666666666,
+            0.7733333333333331
+          ],
+          "interval_method": "person-clustered percentile bootstrap",
+          "n_persons": 25,
+          "n_targets": 25,
+          "n_attempts": 75,
+          "successes": 48,
+          "n_eff_if_wilson": 25.0,
+          "repeat_icc_sensitivity_n_eff": 37.5,
+          "repeat_icc_sensitivity_ci": null,
+          "attempt_elapsed_hours": 0.6475554654333326,
+          "accelerator_hours": null
+        },
+        "tau": -0.08000000000000007,
+        "tau_ci": [
+          -0.2666666666666666,
+          0.10666666666666658
+        ],
+        "tau_interval_method": "person-clustered percentile bootstrap"
+      },
+      {
+        "k": 32,
+        "n_seeds": 3,
+        "control": {
+          "estimate": 0.84,
+          "ci": [
+            0.76,
+            0.9066666666666668
+          ],
+          "interval_method": "person-clustered percentile bootstrap",
+          "n_persons": 25,
+          "n_targets": 25,
+          "n_attempts": 75,
+          "successes": 63,
+          "n_eff_if_wilson": 25.0,
+          "repeat_icc_sensitivity_n_eff": 37.5,
+          "repeat_icc_sensitivity_ci": null,
+          "attempt_elapsed_hours": 0.7099757443534004,
+          "accelerator_hours": null
+        },
+        "trained": {
+          "estimate": 0.7866666666666666,
+          "ci": [
+            0.6666666666666667,
+            0.8933333333333333
+          ],
+          "interval_method": "person-clustered percentile bootstrap",
+          "n_persons": 25,
+          "n_targets": 25,
+          "n_attempts": 75,
+          "successes": 59,
+          "n_eff_if_wilson": 25.0,
+          "repeat_icc_sensitivity_n_eff": 37.5,
+          "repeat_icc_sensitivity_ci": null,
+          "attempt_elapsed_hours": 0.7121197022994359,
+          "accelerator_hours": null
+        },
+        "tau": -0.053333333333333344,
+        "tau_ci": [
+          -0.18666666666666676,
+          0.07999999999999985
+        ],
+        "tau_interval_method": "person-clustered percentile bootstrap"
+      },
+      {
+        "k": 48,
+        "n_seeds": 3,
+        "control": {
+          "estimate": 0.8266666666666667,
+          "ci": [
+            0.72,
+            0.92
+          ],
+          "interval_method": "person-clustered percentile bootstrap",
+          "n_persons": 25,
+          "n_targets": 25,
+          "n_attempts": 75,
+          "successes": 62,
+          "n_eff_if_wilson": 25.0,
+          "repeat_icc_sensitivity_n_eff": 37.5,
+          "repeat_icc_sensitivity_ci": null,
+          "attempt_elapsed_hours": 0.9199178561899397,
+          "accelerator_hours": null
+        },
+        "trained": {
+          "estimate": 0.84,
+          "ci": [
+            0.7333333333333333,
+            0.9333333333333332
+          ],
+          "interval_method": "person-clustered percentile bootstrap",
+          "n_persons": 25,
+          "n_targets": 25,
+          "n_attempts": 75,
+          "successes": 63,
+          "n_eff_if_wilson": 25.0,
+          "repeat_icc_sensitivity_n_eff": 37.5,
+          "repeat_icc_sensitivity_ci": null,
+          "attempt_elapsed_hours": 0.9589530113670561,
+          "accelerator_hours": null
+        },
+        "tau": 0.013333333333333308,
+        "tau_ci": [
+          -0.12000000000000033,
+          0.1599999999999998
+        ],
+        "tau_interval_method": "person-clustered percentile bootstrap"
+      },
+      {
+        "k": 64,
+        "n_seeds": 3,
+        "control": {
+          "estimate": 0.9333333333333332,
+          "ci": [
+            0.88,
+            0.9866666666666666
+          ],
+          "interval_method": "person-clustered percentile bootstrap",
+          "n_persons": 25,
+          "n_targets": 25,
+          "n_attempts": 75,
+          "successes": 70,
+          "n_eff_if_wilson": 25.0,
+          "repeat_icc_sensitivity_n_eff": 37.5,
+          "repeat_icc_sensitivity_ci": null,
+          "attempt_elapsed_hours": 1.1587274934185876,
+          "accelerator_hours": null
+        },
+        "trained": {
+          "estimate": 0.8133333333333332,
+          "ci": [
+            0.72,
+            0.9066666666666666
+          ],
+          "interval_method": "person-clustered percentile bootstrap",
+          "n_persons": 25,
+          "n_targets": 25,
+          "n_attempts": 75,
+          "successes": 61,
+          "n_eff_if_wilson": 25.0,
+          "repeat_icc_sensitivity_n_eff": 37.5,
+          "repeat_icc_sensitivity_ci": null,
+          "attempt_elapsed_hours": 1.263034367163976,
+          "accelerator_hours": null
+        },
+        "tau": -0.12,
+        "tau_ci": [
+          -0.2266666666666668,
+          -0.01333333333333342
+        ],
+        "tau_interval_method": "person-clustered percentile bootstrap"
+      }
+    ],
+    "email": [
+      {
+        "k": 0,
+        "n_seeds": 3,
+        "control": {
+          "estimate": 0.0,
+          "ci": [
+            0.0,
+            0.13319225093904846
+          ],
+          "interval_method": "Wilson assumed n_eff",
+          "n_persons": 25,
+          "n_targets": 25,
+          "n_attempts": 75,
+          "successes": 0,
+          "n_eff_if_wilson": 25.0,
+          "repeat_icc_sensitivity_n_eff": 37.5,
+          "repeat_icc_sensitivity_ci": [
+            0.0,
+            0.0929202531859186
+          ],
+          "attempt_elapsed_hours": 0.004336254199345906,
+          "accelerator_hours": null
+        },
+        "trained": {
+          "estimate": 0.0,
+          "ci": [
+            0.0,
+            0.13319225093904846
+          ],
+          "interval_method": "Wilson assumed n_eff",
+          "n_persons": 25,
+          "n_targets": 25,
+          "n_attempts": 75,
+          "successes": 0,
+          "n_eff_if_wilson": 25.0,
+          "repeat_icc_sensitivity_n_eff": 37.5,
+          "repeat_icc_sensitivity_ci": [
+            0.0,
+            0.0929202531859186
+          ],
+          "attempt_elapsed_hours": 0.004433978133731418,
+          "accelerator_hours": null
+        },
+        "tau": 0.0,
+        "tau_ci": [
+          -0.13319225093904846,
+          0.13319225093904846
+        ],
+        "tau_interval_method": "Newcombe/MOVER, two Wilson intervals with assumed n_eff"
+      },
+      {
+        "k": 1,
+        "n_seeds": 3,
+        "control": {
+          "estimate": 0.0,
+          "ci": [
+            0.0,
+            0.13319225093904846
+          ],
+          "interval_method": "Wilson assumed n_eff",
+          "n_persons": 25,
+          "n_targets": 25,
+          "n_attempts": 75,
+          "successes": 0,
+          "n_eff_if_wilson": 25.0,
+          "repeat_icc_sensitivity_n_eff": 37.5,
+          "repeat_icc_sensitivity_ci": [
+            0.0,
+            0.0929202531859186
+          ],
+          "attempt_elapsed_hours": 0.3655694821808073,
+          "accelerator_hours": null
+        },
+        "trained": {
+          "estimate": 0.0,
+          "ci": [
+            0.0,
+            0.13319225093904846
+          ],
+          "interval_method": "Wilson assumed n_eff",
+          "n_persons": 25,
+          "n_targets": 25,
+          "n_attempts": 75,
+          "successes": 0,
+          "n_eff_if_wilson": 25.0,
+          "repeat_icc_sensitivity_n_eff": 37.5,
+          "repeat_icc_sensitivity_ci": [
+            0.0,
+            0.0929202531859186
+          ],
+          "attempt_elapsed_hours": 0.3679580765300327,
+          "accelerator_hours": null
+        },
+        "tau": 0.0,
+        "tau_ci": [
+          -0.13319225093904846,
+          0.13319225093904846
+        ],
+        "tau_interval_method": "Newcombe/MOVER, two Wilson intervals with assumed n_eff"
+      },
+      {
+        "k": 2,
+        "n_seeds": 3,
+        "control": {
+          "estimate": 0.0,
+          "ci": [
+            0.0,
+            0.13319225093904846
+          ],
+          "interval_method": "Wilson assumed n_eff",
+          "n_persons": 25,
+          "n_targets": 25,
+          "n_attempts": 75,
+          "successes": 0,
+          "n_eff_if_wilson": 25.0,
+          "repeat_icc_sensitivity_n_eff": 37.5,
+          "repeat_icc_sensitivity_ci": [
+            0.0,
+            0.0929202531859186
+          ],
+          "attempt_elapsed_hours": 0.5612199597888523,
+          "accelerator_hours": null
+        },
+        "trained": {
+          "estimate": 0.0,
+          "ci": [
+            0.0,
+            0.13319225093904846
+          ],
+          "interval_method": "Wilson assumed n_eff",
+          "n_persons": 25,
+          "n_targets": 25,
+          "n_attempts": 75,
+          "successes": 0,
+          "n_eff_if_wilson": 25.0,
+          "repeat_icc_sensitivity_n_eff": 37.5,
+          "repeat_icc_sensitivity_ci": [
+            0.0,
+            0.0929202531859186
+          ],
+          "attempt_elapsed_hours": 0.5696499034431246,
+          "accelerator_hours": null
+        },
+        "tau": 0.0,
+        "tau_ci": [
+          -0.13319225093904846,
+          0.13319225093904846
+        ],
+        "tau_interval_method": "Newcombe/MOVER, two Wilson intervals with assumed n_eff"
+      },
+      {
+        "k": 3,
+        "n_seeds": 3,
+        "control": {
+          "estimate": 0.0,
+          "ci": [
+            0.0,
+            0.13319225093904846
+          ],
+          "interval_method": "Wilson assumed n_eff",
+          "n_persons": 25,
+          "n_targets": 25,
+          "n_attempts": 75,
+          "successes": 0,
+          "n_eff_if_wilson": 25.0,
+          "repeat_icc_sensitivity_n_eff": 37.5,
+          "repeat_icc_sensitivity_ci": [
+            0.0,
+            0.0929202531859186
+          ],
+          "attempt_elapsed_hours": 0.5794443567593892,
+          "accelerator_hours": null
+        },
+        "trained": {
+          "estimate": 0.0,
+          "ci": [
+            0.0,
+            0.13319225093904846
+          ],
+          "interval_method": "Wilson assumed n_eff",
+          "n_persons": 25,
+          "n_targets": 25,
+          "n_attempts": 75,
+          "successes": 0,
+          "n_eff_if_wilson": 25.0,
+          "repeat_icc_sensitivity_n_eff": 37.5,
+          "repeat_icc_sensitivity_ci": [
+            0.0,
+            0.0929202531859186
+          ],
+          "attempt_elapsed_hours": 0.5870102839999729,
+          "accelerator_hours": null
+        },
+        "tau": 0.0,
+        "tau_ci": [
+          -0.13319225093904846,
+          0.13319225093904846
+        ],
+        "tau_interval_method": "Newcombe/MOVER, two Wilson intervals with assumed n_eff"
+      },
+      {
+        "k": 4,
+        "n_seeds": 3,
+        "control": {
+          "estimate": 0.026666666666666665,
+          "ci": [
+            0.0,
+            0.06666666666666667
+          ],
+          "interval_method": "person-clustered percentile bootstrap",
+          "n_persons": 25,
+          "n_targets": 25,
+          "n_attempts": 75,
+          "successes": 2,
+          "n_eff_if_wilson": 25.0,
+          "repeat_icc_sensitivity_n_eff": 37.5,
+          "repeat_icc_sensitivity_ci": null,
+          "attempt_elapsed_hours": 0.5839424177010855,
+          "accelerator_hours": null
+        },
+        "trained": {
+          "estimate": 0.08,
+          "ci": [
+            0.013333333333333332,
+            0.17333333333333337
+          ],
+          "interval_method": "person-clustered percentile bootstrap",
+          "n_persons": 25,
+          "n_targets": 25,
+          "n_attempts": 75,
+          "successes": 6,
+          "n_eff_if_wilson": 25.0,
+          "repeat_icc_sensitivity_n_eff": 37.5,
+          "repeat_icc_sensitivity_ci": null,
+          "attempt_elapsed_hours": 0.5701481027073331,
+          "accelerator_hours": null
+        },
+        "tau": 0.05333333333333334,
+        "tau_ci": [
+          -0.026666666666666665,
+          0.15999999999999998
+        ],
+        "tau_interval_method": "person-clustered percentile bootstrap"
+      },
+      {
+        "k": 6,
+        "n_seeds": 3,
+        "control": {
+          "estimate": 0.5466666666666666,
+          "ci": [
+            0.41333333333333333,
+            0.68
+          ],
+          "interval_method": "person-clustered percentile bootstrap",
+          "n_persons": 25,
+          "n_targets": 25,
+          "n_attempts": 75,
+          "successes": 41,
+          "n_eff_if_wilson": 25.0,
+          "repeat_icc_sensitivity_n_eff": 37.5,
+          "repeat_icc_sensitivity_ci": null,
+          "attempt_elapsed_hours": 0.43239887959427303,
+          "accelerator_hours": null
+        },
+        "trained": {
+          "estimate": 0.38666666666666666,
+          "ci": [
+            0.23999999999999994,
+            0.5466666666666667
+          ],
+          "interval_method": "person-clustered percentile bootstrap",
+          "n_persons": 25,
+          "n_targets": 25,
+          "n_attempts": 75,
+          "successes": 29,
+          "n_eff_if_wilson": 25.0,
+          "repeat_icc_sensitivity_n_eff": 37.5,
+          "repeat_icc_sensitivity_ci": null,
+          "attempt_elapsed_hours": 0.47064630263381535,
+          "accelerator_hours": null
+        },
+        "tau": -0.15999999999999998,
+        "tau_ci": [
+          -0.3733333333333333,
+          0.053333333333333066
+        ],
+        "tau_interval_method": "person-clustered percentile bootstrap"
+      },
+      {
+        "k": 8,
+        "n_seeds": 3,
+        "control": {
+          "estimate": 0.8266666666666665,
+          "ci": [
+            0.7066666666666666,
+            0.9333333333333332
+          ],
+          "interval_method": "person-clustered percentile bootstrap",
+          "n_persons": 25,
+          "n_targets": 25,
+          "n_attempts": 75,
+          "successes": 62,
+          "n_eff_if_wilson": 25.0,
+          "repeat_icc_sensitivity_n_eff": 37.5,
+          "repeat_icc_sensitivity_ci": null,
+          "attempt_elapsed_hours": 0.2670224686463674,
+          "accelerator_hours": null
+        },
+        "trained": {
+          "estimate": 0.8266666666666667,
+          "ci": [
+            0.72,
+            0.92
+          ],
+          "interval_method": "person-clustered percentile bootstrap",
+          "n_persons": 25,
+          "n_targets": 25,
+          "n_attempts": 75,
+          "successes": 62,
+          "n_eff_if_wilson": 25.0,
+          "repeat_icc_sensitivity_n_eff": 37.5,
+          "repeat_icc_sensitivity_ci": null,
+          "attempt_elapsed_hours": 0.275138208799892,
+          "accelerator_hours": null
+        },
+        "tau": 1.1102230246251565e-16,
+        "tau_ci": [
+          -0.14666666666666672,
+          0.14666666666666694
+        ],
+        "tau_interval_method": "person-clustered percentile bootstrap"
+      },
+      {
+        "k": 12,
+        "n_seeds": 3,
+        "control": {
+          "estimate": 0.9866666666666666,
+          "ci": [
+            0.96,
+            1.0
+          ],
+          "interval_method": "person-clustered percentile bootstrap",
+          "n_persons": 25,
+          "n_targets": 25,
+          "n_attempts": 75,
+          "successes": 74,
+          "n_eff_if_wilson": 25.0,
+          "repeat_icc_sensitivity_n_eff": 37.5,
+          "repeat_icc_sensitivity_ci": null,
+          "attempt_elapsed_hours": 0.13474711332056258,
+          "accelerator_hours": null
+        },
+        "trained": {
+          "estimate": 0.9866666666666666,
+          "ci": [
+            0.96,
+            1.0
+          ],
+          "interval_method": "person-clustered percentile bootstrap",
+          "n_persons": 25,
+          "n_targets": 25,
+          "n_attempts": 75,
+          "successes": 74,
+          "n_eff_if_wilson": 25.0,
+          "repeat_icc_sensitivity_n_eff": 37.5,
+          "repeat_icc_sensitivity_ci": null,
+          "attempt_elapsed_hours": 0.1382082713312573,
+          "accelerator_hours": null
+        },
+        "tau": 0.0,
+        "tau_ci": [
+          -0.039999999999999925,
+          0.039999999999999813
+        ],
+        "tau_interval_method": "person-clustered percentile bootstrap"
+      },
+      {
+        "k": 16,
+        "n_seeds": 3,
+        "control": {
+          "estimate": 1.0,
+          "ci": [
+            0.8668077490609515,
+            1.0
+          ],
+          "interval_method": "Wilson assumed n_eff",
+          "n_persons": 25,
+          "n_targets": 25,
+          "n_attempts": 75,
+          "successes": 75,
+          "n_eff_if_wilson": 25.0,
+          "repeat_icc_sensitivity_n_eff": 37.5,
+          "repeat_icc_sensitivity_ci": [
+            0.9070797468140814,
+            1.0
+          ],
+          "attempt_elapsed_hours": 0.11536916984452142,
+          "accelerator_hours": null
+        },
+        "trained": {
+          "estimate": 1.0,
+          "ci": [
+            0.8668077490609515,
+            1.0
+          ],
+          "interval_method": "Wilson assumed n_eff",
+          "n_persons": 25,
+          "n_targets": 25,
+          "n_attempts": 75,
+          "successes": 75,
+          "n_eff_if_wilson": 25.0,
+          "repeat_icc_sensitivity_n_eff": 37.5,
+          "repeat_icc_sensitivity_ci": [
+            0.9070797468140814,
+            1.0
+          ],
+          "attempt_elapsed_hours": 0.10996551858054267,
+          "accelerator_hours": null
+        },
+        "tau": 0.0,
+        "tau_ci": [
+          -0.13319225093904852,
+          0.13319225093904852
+        ],
+        "tau_interval_method": "Newcombe/MOVER, two Wilson intervals with assumed n_eff"
+      },
+      {
+        "k": 20,
+        "n_seeds": 3,
+        "control": {
+          "estimate": 1.0,
+          "ci": [
+            0.8668077490609515,
+            1.0
+          ],
+          "interval_method": "Wilson assumed n_eff",
+          "n_persons": 25,
+          "n_targets": 25,
+          "n_attempts": 75,
+          "successes": 75,
+          "n_eff_if_wilson": 25.0,
+          "repeat_icc_sensitivity_n_eff": 37.5,
+          "repeat_icc_sensitivity_ci": [
+            0.9070797468140814,
+            1.0
+          ],
+          "attempt_elapsed_hours": 0.12980806893772548,
+          "accelerator_hours": null
+        },
+        "trained": {
+          "estimate": 1.0,
+          "ci": [
+            0.8668077490609515,
+            1.0
+          ],
+          "interval_method": "Wilson assumed n_eff",
+          "n_persons": 25,
+          "n_targets": 25,
+          "n_attempts": 75,
+          "successes": 75,
+          "n_eff_if_wilson": 25.0,
+          "repeat_icc_sensitivity_n_eff": 37.5,
+          "repeat_icc_sensitivity_ci": [
+            0.9070797468140814,
+            1.0
+          ],
+          "attempt_elapsed_hours": 0.12426915936999851,
+          "accelerator_hours": null
+        },
+        "tau": 0.0,
+        "tau_ci": [
+          -0.13319225093904852,
+          0.13319225093904852
+        ],
+        "tau_interval_method": "Newcombe/MOVER, two Wilson intervals with assumed n_eff"
+      },
+      {
+        "k": 24,
+        "n_seeds": 3,
+        "control": {
+          "estimate": 1.0,
+          "ci": [
+            0.8668077490609515,
+            1.0
+          ],
+          "interval_method": "Wilson assumed n_eff",
+          "n_persons": 25,
+          "n_targets": 25,
+          "n_attempts": 75,
+          "successes": 75,
+          "n_eff_if_wilson": 25.0,
+          "repeat_icc_sensitivity_n_eff": 37.5,
+          "repeat_icc_sensitivity_ci": [
+            0.9070797468140814,
+            1.0
+          ],
+          "attempt_elapsed_hours": 0.13307818637953864,
+          "accelerator_hours": null
+        },
+        "trained": {
+          "estimate": 1.0,
+          "ci": [
+            0.8668077490609515,
+            1.0
+          ],
+          "interval_method": "Wilson assumed n_eff",
+          "n_persons": 25,
+          "n_targets": 25,
+          "n_attempts": 75,
+          "successes": 75,
+          "n_eff_if_wilson": 25.0,
+          "repeat_icc_sensitivity_n_eff": 37.5,
+          "repeat_icc_sensitivity_ci": [
+            0.9070797468140814,
+            1.0
+          ],
+          "attempt_elapsed_hours": 0.13575844751463997,
+          "accelerator_hours": null
+        },
+        "tau": 0.0,
+        "tau_ci": [
+          -0.13319225093904852,
+          0.13319225093904852
+        ],
+        "tau_interval_method": "Newcombe/MOVER, two Wilson intervals with assumed n_eff"
+      },
+      {
+        "k": 32,
+        "n_seeds": 3,
+        "control": {
+          "estimate": 1.0,
+          "ci": [
+            0.8668077490609515,
+            1.0
+          ],
+          "interval_method": "Wilson assumed n_eff",
+          "n_persons": 25,
+          "n_targets": 25,
+          "n_attempts": 75,
+          "successes": 75,
+          "n_eff_if_wilson": 25.0,
+          "repeat_icc_sensitivity_n_eff": 37.5,
+          "repeat_icc_sensitivity_ci": [
+            0.9070797468140814,
+            1.0
+          ],
+          "attempt_elapsed_hours": 0.17612215644783444,
+          "accelerator_hours": null
+        },
+        "trained": {
+          "estimate": 1.0,
+          "ci": [
+            0.8668077490609515,
+            1.0
+          ],
+          "interval_method": "Wilson assumed n_eff",
+          "n_persons": 25,
+          "n_targets": 25,
+          "n_attempts": 75,
+          "successes": 75,
+          "n_eff_if_wilson": 25.0,
+          "repeat_icc_sensitivity_n_eff": 37.5,
+          "repeat_icc_sensitivity_ci": [
+            0.9070797468140814,
+            1.0
+          ],
+          "attempt_elapsed_hours": 0.18656747175587549,
+          "accelerator_hours": null
+        },
+        "tau": 0.0,
+        "tau_ci": [
+          -0.13319225093904852,
+          0.13319225093904852
+        ],
+        "tau_interval_method": "Newcombe/MOVER, two Wilson intervals with assumed n_eff"
+      },
+      {
+        "k": 48,
+        "n_seeds": 3,
+        "control": {
+          "estimate": 1.0,
+          "ci": [
+            0.8668077490609515,
+            1.0
+          ],
+          "interval_method": "Wilson assumed n_eff",
+          "n_persons": 25,
+          "n_targets": 25,
+          "n_attempts": 75,
+          "successes": 75,
+          "n_eff_if_wilson": 25.0,
+          "repeat_icc_sensitivity_n_eff": 37.5,
+          "repeat_icc_sensitivity_ci": [
+            0.9070797468140814,
+            1.0
+          ],
+          "attempt_elapsed_hours": 0.28654677165879144,
+          "accelerator_hours": null
+        },
+        "trained": {
+          "estimate": 1.0,
+          "ci": [
+            0.8668077490609515,
+            1.0
+          ],
+          "interval_method": "Wilson assumed n_eff",
+          "n_persons": 25,
+          "n_targets": 25,
+          "n_attempts": 75,
+          "successes": 75,
+          "n_eff_if_wilson": 25.0,
+          "repeat_icc_sensitivity_n_eff": 37.5,
+          "repeat_icc_sensitivity_ci": [
+            0.9070797468140814,
+            1.0
+          ],
+          "attempt_elapsed_hours": 0.2782348707649443,
+          "accelerator_hours": null
+        },
+        "tau": 0.0,
+        "tau_ci": [
+          -0.13319225093904852,
+          0.13319225093904852
+        ],
+        "tau_interval_method": "Newcombe/MOVER, two Wilson intervals with assumed n_eff"
+      },
+      {
+        "k": 64,
+        "n_seeds": 3,
+        "control": {
+          "estimate": 1.0,
+          "ci": [
+            0.8668077490609515,
+            1.0
+          ],
+          "interval_method": "Wilson assumed n_eff",
+          "n_persons": 25,
+          "n_targets": 25,
+          "n_attempts": 75,
+          "successes": 75,
+          "n_eff_if_wilson": 25.0,
+          "repeat_icc_sensitivity_n_eff": 37.5,
+          "repeat_icc_sensitivity_ci": [
+            0.9070797468140814,
+            1.0
+          ],
+          "attempt_elapsed_hours": 0.41068821681870354,
+          "accelerator_hours": null
+        },
+        "trained": {
+          "estimate": 1.0,
+          "ci": [
+            0.8668077490609515,
+            1.0
+          ],
+          "interval_method": "Wilson assumed n_eff",
+          "n_persons": 25,
+          "n_targets": 25,
+          "n_attempts": 75,
+          "successes": 75,
+          "n_eff_if_wilson": 25.0,
+          "repeat_icc_sensitivity_n_eff": 37.5,
+          "repeat_icc_sensitivity_ci": [
+            0.9070797468140814,
+            1.0
+          ],
+          "attempt_elapsed_hours": 0.42250505785147346,
+          "accelerator_hours": null
+        },
+        "tau": 0.0,
+        "tau_ci": [
+          -0.13319225093904852,
+          0.13319225093904852
+        ],
+        "tau_interval_method": "Newcombe/MOVER, two Wilson intervals with assumed n_eff"
+      }
+    ]
+  },
+  "seed_rates": [
+    {
+      "seed": 42,
+      "k": 0,
+      "arm": "control",
+      "rate": 0.0,
+      "hits": 0,
+      "attempts": 50
+    },
+    {
+      "seed": 42,
+      "k": 0,
+      "arm": "trained",
+      "rate": 0.0,
+      "hits": 0,
+      "attempts": 50
+    },
+    {
+      "seed": 42,
+      "k": 1,
+      "arm": "control",
+      "rate": 0.0,
+      "hits": 0,
+      "attempts": 50
+    },
+    {
+      "seed": 42,
+      "k": 1,
+      "arm": "trained",
+      "rate": 0.0,
+      "hits": 0,
+      "attempts": 50
+    },
+    {
+      "seed": 42,
+      "k": 2,
+      "arm": "control",
+      "rate": 0.0,
+      "hits": 0,
+      "attempts": 50
+    },
+    {
+      "seed": 42,
+      "k": 2,
+      "arm": "trained",
+      "rate": 0.0,
+      "hits": 0,
+      "attempts": 50
+    },
+    {
+      "seed": 42,
+      "k": 3,
+      "arm": "control",
+      "rate": 0.0,
+      "hits": 0,
+      "attempts": 50
+    },
+    {
+      "seed": 42,
+      "k": 3,
+      "arm": "trained",
+      "rate": 0.0,
+      "hits": 0,
+      "attempts": 50
+    },
+    {
+      "seed": 42,
+      "k": 4,
+      "arm": "control",
+      "rate": 0.04,
+      "hits": 2,
+      "attempts": 50
+    },
+    {
+      "seed": 42,
+      "k": 4,
+      "arm": "trained",
+      "rate": 0.02,
+      "hits": 1,
+      "attempts": 50
+    },
+    {
+      "seed": 42,
+      "k": 6,
+      "arm": "control",
+      "rate": 0.3,
+      "hits": 15,
+      "attempts": 50
+    },
+    {
+      "seed": 42,
+      "k": 6,
+      "arm": "trained",
+      "rate": 0.18,
+      "hits": 9,
+      "attempts": 50
+    },
+    {
+      "seed": 42,
+      "k": 8,
+      "arm": "control",
+      "rate": 0.42,
+      "hits": 21,
+      "attempts": 50
+    },
+    {
+      "seed": 42,
+      "k": 8,
+      "arm": "trained",
+      "rate": 0.46,
+      "hits": 23,
+      "attempts": 50
+    },
+    {
+      "seed": 42,
+      "k": 12,
+      "arm": "control",
+      "rate": 0.58,
+      "hits": 29,
+      "attempts": 50
+    },
+    {
+      "seed": 42,
+      "k": 12,
+      "arm": "trained",
+      "rate": 0.64,
+      "hits": 32,
+      "attempts": 50
+    },
+    {
+      "seed": 42,
+      "k": 16,
+      "arm": "control",
+      "rate": 0.8,
+      "hits": 40,
+      "attempts": 50
+    },
+    {
+      "seed": 42,
+      "k": 16,
+      "arm": "trained",
+      "rate": 0.76,
+      "hits": 38,
+      "attempts": 50
+    },
+    {
+      "seed": 42,
+      "k": 20,
+      "arm": "control",
+      "rate": 0.78,
+      "hits": 39,
+      "attempts": 50
+    },
+    {
+      "seed": 42,
+      "k": 20,
+      "arm": "trained",
+      "rate": 0.8,
+      "hits": 40,
+      "attempts": 50
+    },
+    {
+      "seed": 42,
+      "k": 24,
+      "arm": "control",
+      "rate": 0.84,
+      "hits": 42,
+      "attempts": 50
+    },
+    {
+      "seed": 42,
+      "k": 24,
+      "arm": "trained",
+      "rate": 0.86,
+      "hits": 43,
+      "attempts": 50
+    },
+    {
+      "seed": 42,
+      "k": 32,
+      "arm": "control",
+      "rate": 0.9,
+      "hits": 45,
+      "attempts": 50
+    },
+    {
+      "seed": 42,
+      "k": 32,
+      "arm": "trained",
+      "rate": 0.94,
+      "hits": 47,
+      "attempts": 50
+    },
+    {
+      "seed": 42,
+      "k": 48,
+      "arm": "control",
+      "rate": 0.98,
+      "hits": 49,
+      "attempts": 50
+    },
+    {
+      "seed": 42,
+      "k": 48,
+      "arm": "trained",
+      "rate": 0.88,
+      "hits": 44,
+      "attempts": 50
+    },
+    {
+      "seed": 42,
+      "k": 64,
+      "arm": "control",
+      "rate": 0.96,
+      "hits": 48,
+      "attempts": 50
+    },
+    {
+      "seed": 42,
+      "k": 64,
+      "arm": "trained",
+      "rate": 0.88,
+      "hits": 44,
+      "attempts": 50
+    },
+    {
+      "seed": 1337,
+      "k": 0,
+      "arm": "control",
+      "rate": 0.0,
+      "hits": 0,
+      "attempts": 50
+    },
+    {
+      "seed": 1337,
+      "k": 0,
+      "arm": "trained",
+      "rate": 0.0,
+      "hits": 0,
+      "attempts": 50
+    },
+    {
+      "seed": 1337,
+      "k": 1,
+      "arm": "control",
+      "rate": 0.0,
+      "hits": 0,
+      "attempts": 50
+    },
+    {
+      "seed": 1337,
+      "k": 1,
+      "arm": "trained",
+      "rate": 0.0,
+      "hits": 0,
+      "attempts": 50
+    },
+    {
+      "seed": 1337,
+      "k": 2,
+      "arm": "control",
+      "rate": 0.0,
+      "hits": 0,
+      "attempts": 50
+    },
+    {
+      "seed": 1337,
+      "k": 2,
+      "arm": "trained",
+      "rate": 0.0,
+      "hits": 0,
+      "attempts": 50
+    },
+    {
+      "seed": 1337,
+      "k": 3,
+      "arm": "control",
+      "rate": 0.0,
+      "hits": 0,
+      "attempts": 50
+    },
+    {
+      "seed": 1337,
+      "k": 3,
+      "arm": "trained",
+      "rate": 0.0,
+      "hits": 0,
+      "attempts": 50
+    },
+    {
+      "seed": 1337,
+      "k": 4,
+      "arm": "control",
+      "rate": 0.0,
+      "hits": 0,
+      "attempts": 50
+    },
+    {
+      "seed": 1337,
+      "k": 4,
+      "arm": "trained",
+      "rate": 0.04,
+      "hits": 2,
+      "attempts": 50
+    },
+    {
+      "seed": 1337,
+      "k": 6,
+      "arm": "control",
+      "rate": 0.3,
+      "hits": 15,
+      "attempts": 50
+    },
+    {
+      "seed": 1337,
+      "k": 6,
+      "arm": "trained",
+      "rate": 0.24,
+      "hits": 12,
+      "attempts": 50
+    },
+    {
+      "seed": 1337,
+      "k": 8,
+      "arm": "control",
+      "rate": 0.54,
+      "hits": 27,
+      "attempts": 50
+    },
+    {
+      "seed": 1337,
+      "k": 8,
+      "arm": "trained",
+      "rate": 0.56,
+      "hits": 28,
+      "attempts": 50
+    },
+    {
+      "seed": 1337,
+      "k": 12,
+      "arm": "control",
+      "rate": 0.68,
+      "hits": 34,
+      "attempts": 50
+    },
+    {
+      "seed": 1337,
+      "k": 12,
+      "arm": "trained",
+      "rate": 0.68,
+      "hits": 34,
+      "attempts": 50
+    },
+    {
+      "seed": 1337,
+      "k": 16,
+      "arm": "control",
+      "rate": 0.74,
+      "hits": 37,
+      "attempts": 50
+    },
+    {
+      "seed": 1337,
+      "k": 16,
+      "arm": "trained",
+      "rate": 0.74,
+      "hits": 37,
+      "attempts": 50
+    },
+    {
+      "seed": 1337,
+      "k": 20,
+      "arm": "control",
+      "rate": 0.86,
+      "hits": 43,
+      "attempts": 50
+    },
+    {
+      "seed": 1337,
+      "k": 20,
+      "arm": "trained",
+      "rate": 0.86,
+      "hits": 43,
+      "attempts": 50
+    },
+    {
+      "seed": 1337,
+      "k": 24,
+      "arm": "control",
+      "rate": 0.9,
+      "hits": 45,
+      "attempts": 50
+    },
+    {
+      "seed": 1337,
+      "k": 24,
+      "arm": "trained",
+      "rate": 0.8,
+      "hits": 40,
+      "attempts": 50
+    },
+    {
+      "seed": 1337,
+      "k": 32,
+      "arm": "control",
+      "rate": 0.92,
+      "hits": 46,
+      "attempts": 50
+    },
+    {
+      "seed": 1337,
+      "k": 32,
+      "arm": "trained",
+      "rate": 0.86,
+      "hits": 43,
+      "attempts": 50
+    },
+    {
+      "seed": 1337,
+      "k": 48,
+      "arm": "control",
+      "rate": 0.9,
+      "hits": 45,
+      "attempts": 50
+    },
+    {
+      "seed": 1337,
+      "k": 48,
+      "arm": "trained",
+      "rate": 0.92,
+      "hits": 46,
+      "attempts": 50
+    },
+    {
+      "seed": 1337,
+      "k": 64,
+      "arm": "control",
+      "rate": 0.94,
+      "hits": 47,
+      "attempts": 50
+    },
+    {
+      "seed": 1337,
+      "k": 64,
+      "arm": "trained",
+      "rate": 0.94,
+      "hits": 47,
+      "attempts": 50
+    },
+    {
+      "seed": 2024,
+      "k": 0,
+      "arm": "control",
+      "rate": 0.0,
+      "hits": 0,
+      "attempts": 50
+    },
+    {
+      "seed": 2024,
+      "k": 0,
+      "arm": "trained",
+      "rate": 0.0,
+      "hits": 0,
+      "attempts": 50
+    },
+    {
+      "seed": 2024,
+      "k": 1,
+      "arm": "control",
+      "rate": 0.0,
+      "hits": 0,
+      "attempts": 50
+    },
+    {
+      "seed": 2024,
+      "k": 1,
+      "arm": "trained",
+      "rate": 0.0,
+      "hits": 0,
+      "attempts": 50
+    },
+    {
+      "seed": 2024,
+      "k": 2,
+      "arm": "control",
+      "rate": 0.0,
+      "hits": 0,
+      "attempts": 50
+    },
+    {
+      "seed": 2024,
+      "k": 2,
+      "arm": "trained",
+      "rate": 0.0,
+      "hits": 0,
+      "attempts": 50
+    },
+    {
+      "seed": 2024,
+      "k": 3,
+      "arm": "control",
+      "rate": 0.0,
+      "hits": 0,
+      "attempts": 50
+    },
+    {
+      "seed": 2024,
+      "k": 3,
+      "arm": "trained",
+      "rate": 0.0,
+      "hits": 0,
+      "attempts": 50
+    },
+    {
+      "seed": 2024,
+      "k": 4,
+      "arm": "control",
+      "rate": 0.0,
+      "hits": 0,
+      "attempts": 50
+    },
+    {
+      "seed": 2024,
+      "k": 4,
+      "arm": "trained",
+      "rate": 0.06,
+      "hits": 3,
+      "attempts": 50
+    },
+    {
+      "seed": 2024,
+      "k": 6,
+      "arm": "control",
+      "rate": 0.22,
+      "hits": 11,
+      "attempts": 50
+    },
+    {
+      "seed": 2024,
+      "k": 6,
+      "arm": "trained",
+      "rate": 0.18,
+      "hits": 9,
+      "attempts": 50
+    },
+    {
+      "seed": 2024,
+      "k": 8,
+      "arm": "control",
+      "rate": 0.46,
+      "hits": 23,
+      "attempts": 50
+    },
+    {
+      "seed": 2024,
+      "k": 8,
+      "arm": "trained",
+      "rate": 0.44,
+      "hits": 22,
+      "attempts": 50
+    },
+    {
+      "seed": 2024,
+      "k": 12,
+      "arm": "control",
+      "rate": 0.64,
+      "hits": 32,
+      "attempts": 50
+    },
+    {
+      "seed": 2024,
+      "k": 12,
+      "arm": "trained",
+      "rate": 0.66,
+      "hits": 33,
+      "attempts": 50
+    },
+    {
+      "seed": 2024,
+      "k": 16,
+      "arm": "control",
+      "rate": 0.7,
+      "hits": 35,
+      "attempts": 50
+    },
+    {
+      "seed": 2024,
+      "k": 16,
+      "arm": "trained",
+      "rate": 0.7,
+      "hits": 35,
+      "attempts": 50
+    },
+    {
+      "seed": 2024,
+      "k": 20,
+      "arm": "control",
+      "rate": 0.78,
+      "hits": 39,
+      "attempts": 50
+    },
+    {
+      "seed": 2024,
+      "k": 20,
+      "arm": "trained",
+      "rate": 0.8,
+      "hits": 40,
+      "attempts": 50
+    },
+    {
+      "seed": 2024,
+      "k": 24,
+      "arm": "control",
+      "rate": 0.84,
+      "hits": 42,
+      "attempts": 50
+    },
+    {
+      "seed": 2024,
+      "k": 24,
+      "arm": "trained",
+      "rate": 0.8,
+      "hits": 40,
+      "attempts": 50
+    },
+    {
+      "seed": 2024,
+      "k": 32,
+      "arm": "control",
+      "rate": 0.94,
+      "hits": 47,
+      "attempts": 50
+    },
+    {
+      "seed": 2024,
+      "k": 32,
+      "arm": "trained",
+      "rate": 0.88,
+      "hits": 44,
+      "attempts": 50
+    },
+    {
+      "seed": 2024,
+      "k": 48,
+      "arm": "control",
+      "rate": 0.86,
+      "hits": 43,
+      "attempts": 50
+    },
+    {
+      "seed": 2024,
+      "k": 48,
+      "arm": "trained",
+      "rate": 0.96,
+      "hits": 48,
+      "attempts": 50
+    },
+    {
+      "seed": 2024,
+      "k": 64,
+      "arm": "control",
+      "rate": 1.0,
+      "hits": 50,
+      "attempts": 50
+    },
+    {
+      "seed": 2024,
+      "k": 64,
+      "arm": "trained",
+      "rate": 0.9,
+      "hits": 45,
+      "attempts": 50
+    }
+  ],
+  "analysis_run_ids": [
+    "capacity_axis_20260902__2a000258__s1337",
+    "capacity_axis_20260902__5b84bd0a__s1337",
+    "capacity_axis_20260902__4c8f494a__s1337",
+    "capacity_axis_20260902__805d9e2c__s1337",
+    "capacity_axis_20260902__6e83b2f3__s1337",
+    "capacity_axis_20260902__b5a0b0c1__s1337",
+    "capacity_axis_20260902__dd223768__s1337",
+    "capacity_axis_20260902__04529cf3__s1337",
+    "capacity_axis_20260902__bb0a64d7__s1337",
+    "capacity_axis_20260902__ff7ff034__s1337",
+    "capacity_axis_20260902__add01fe8__s1337",
+    "capacity_axis_20260902__75e45407__s1337",
+    "capacity_axis_20260902__2a6fb52a__s1337",
+    "capacity_axis_20260902__a48cb2ea__s1337",
+    "capacity_axis_20260902__2a000258__s2024",
+    "capacity_axis_20260902__5b84bd0a__s2024",
+    "capacity_axis_20260902__4c8f494a__s2024",
+    "capacity_axis_20260902__805d9e2c__s2024",
+    "capacity_axis_20260902__6e83b2f3__s2024",
+    "capacity_axis_20260902__b5a0b0c1__s2024",
+    "capacity_axis_20260902__dd223768__s2024",
+    "capacity_axis_20260902__04529cf3__s2024",
+    "capacity_axis_20260902__bb0a64d7__s2024",
+    "capacity_axis_20260902__ff7ff034__s2024",
+    "capacity_axis_20260902__add01fe8__s2024",
+    "capacity_axis_20260902__75e45407__s2024",
+    "capacity_axis_20260902__2a6fb52a__s2024",
+    "capacity_axis_20260902__a48cb2ea__s2024",
+    "capacity_axis_20260902__2a000258__s42",
+    "capacity_axis_20260902__5b84bd0a__s42",
+    "capacity_axis_20260902__4c8f494a__s42",
+    "capacity_axis_20260902__805d9e2c__s42",
+    "capacity_axis_20260902__6e83b2f3__s42",
+    "capacity_axis_20260902__b5a0b0c1__s42",
+    "capacity_axis_20260902__dd223768__s42",
+    "capacity_axis_20260902__04529cf3__s42",
+    "capacity_axis_20260902__bb0a64d7__s42",
+    "capacity_axis_20260902__ff7ff034__s42",
+    "capacity_axis_20260902__add01fe8__s42",
+    "capacity_axis_20260902__75e45407__s42",
+    "capacity_axis_20260902__2a6fb52a__s42",
+    "capacity_axis_20260902__a48cb2ea__s42"
+  ],
+  "hypotheses": {
+    "H1": {
+      "rho": 0.9889653699965955,
+      "ci": [
+        0.977915477594399,
+        0.9944903161976939
+      ],
+      "p_raw": 9.999000099990002e-05,
+      "n_persons_control": 25,
+      "n_seeds": 3,
+      "rule": "H1 upward trend if person-bootstrap rho CI strictly above zero; monotonic every-adjacent-point behavior is not tested",
+      "isotonic_summary": [
+        {
+          "k": 1,
+          "observed_alpha": 0.0,
+          "isotonic_alpha": 0.0
+        },
+        {
+          "k": 2,
+          "observed_alpha": 0.0,
+          "isotonic_alpha": 0.0
+        },
+        {
+          "k": 3,
+          "observed_alpha": 0.0,
+          "isotonic_alpha": 0.0
+        },
+        {
+          "k": 4,
+          "observed_alpha": 0.013333333333333332,
+          "isotonic_alpha": 0.013333333333333332
+        },
+        {
+          "k": 6,
+          "observed_alpha": 0.2733333333333333,
+          "isotonic_alpha": 0.2733333333333333
+        },
+        {
+          "k": 8,
+          "observed_alpha": 0.4733333333333333,
+          "isotonic_alpha": 0.4733333333333333
+        },
+        {
+          "k": 12,
+          "observed_alpha": 0.6333333333333334,
+          "isotonic_alpha": 0.6333333333333334
+        },
+        {
+          "k": 16,
+          "observed_alpha": 0.7466666666666667,
+          "isotonic_alpha": 0.7466666666666667
+        },
+        {
+          "k": 20,
+          "observed_alpha": 0.8066666666666668,
+          "isotonic_alpha": 0.8066666666666668
+        },
+        {
+          "k": 24,
+          "observed_alpha": 0.86,
+          "isotonic_alpha": 0.86
+        },
+        {
+          "k": 32,
+          "observed_alpha": 0.92,
+          "isotonic_alpha": 0.9166666666666667
+        },
+        {
+          "k": 48,
+          "observed_alpha": 0.9133333333333333,
+          "isotonic_alpha": 0.9166666666666667
+        },
+        {
+          "k": 64,
+          "observed_alpha": 0.9666666666666667,
+          "isotonic_alpha": 0.9666666666666667
+        }
+      ]
+    },
+    "H2": {
+      "p_raw": null,
+      "holm_reserved_p": 1.0,
+      "one_percent_verdict": "unresolved at achieved sample size",
+      "resolution_floor_preregistered": 0.09,
+      "zero_count_wilson_upper": 0.10333504501592614,
+      "minimum_people_per_arm_for_zero_wilson_upper_1pct": 286,
+      "minimum_people_scope": "Zero observed hits only; same two-field ICC=.5 assumption, two-sided Wilson. This is not a power calculation for tau or a guarantee of a feasible point.",
+      "mapping": [
+        {
+          "tolerance": 0.01,
+          "below_preregistered_resolution": true,
+          "floor_only_capacities": [],
+          "joint_capacities": [],
+          "largest_joint_capacity": null,
+          "detection_optimum_k": null,
+          "likelihood_ratio_optimum_k": null,
+          "positive_tau_capacities": []
+        },
+        {
+          "tolerance": 0.05,
+          "below_preregistered_resolution": true,
+          "floor_only_capacities": [
+            4
+          ],
+          "joint_capacities": [],
+          "largest_joint_capacity": null,
+          "detection_optimum_k": null,
+          "likelihood_ratio_optimum_k": null,
+          "positive_tau_capacities": []
+        },
+        {
+          "tolerance": 0.09,
+          "below_preregistered_resolution": false,
+          "floor_only_capacities": [
+            4
+          ],
+          "joint_capacities": [],
+          "largest_joint_capacity": null,
+          "detection_optimum_k": null,
+          "likelihood_ratio_optimum_k": null,
+          "positive_tau_capacities": []
+        },
+        {
+          "tolerance": 0.1,
+          "below_preregistered_resolution": false,
+          "floor_only_capacities": [
+            4
+          ],
+          "joint_capacities": [],
+          "largest_joint_capacity": null,
+          "detection_optimum_k": null,
+          "likelihood_ratio_optimum_k": null,
+          "positive_tau_capacities": []
+        },
+        {
+          "tolerance": 0.15,
+          "below_preregistered_resolution": false,
+          "floor_only_capacities": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "joint_capacities": [],
+          "largest_joint_capacity": null,
+          "detection_optimum_k": null,
+          "likelihood_ratio_optimum_k": null,
+          "positive_tau_capacities": []
+        },
+        {
+          "tolerance": 0.2,
+          "below_preregistered_resolution": false,
+          "floor_only_capacities": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "joint_capacities": [],
+          "largest_joint_capacity": null,
+          "detection_optimum_k": null,
+          "likelihood_ratio_optimum_k": null,
+          "positive_tau_capacities": []
+        },
+        {
+          "tolerance": 0.3,
+          "below_preregistered_resolution": false,
+          "floor_only_capacities": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "joint_capacities": [],
+          "largest_joint_capacity": null,
+          "detection_optimum_k": null,
+          "likelihood_ratio_optimum_k": null,
+          "positive_tau_capacities": []
+        },
+        {
+          "tolerance": 0.5,
+          "below_preregistered_resolution": false,
+          "floor_only_capacities": [
+            1,
+            2,
+            3,
+            4,
+            6
+          ],
+          "joint_capacities": [],
+          "largest_joint_capacity": null,
+          "detection_optimum_k": null,
+          "likelihood_ratio_optimum_k": null,
+          "positive_tau_capacities": []
+        },
+        {
+          "tolerance": 0.75,
+          "below_preregistered_resolution": false,
+          "floor_only_capacities": [
+            1,
+            2,
+            3,
+            4,
+            6,
+            8,
+            12
+          ],
+          "joint_capacities": [],
+          "largest_joint_capacity": null,
+          "detection_optimum_k": null,
+          "likelihood_ratio_optimum_k": null,
+          "positive_tau_capacities": []
+        },
+        {
+          "tolerance": 0.9,
+          "below_preregistered_resolution": false,
+          "floor_only_capacities": [
+            1,
+            2,
+            3,
+            4,
+            6,
+            8,
+            12,
+            16,
+            20
+          ],
+          "joint_capacities": [],
+          "largest_joint_capacity": null,
+          "detection_optimum_k": null,
+          "likelihood_ratio_optimum_k": null,
+          "positive_tau_capacities": []
+        },
+        {
+          "tolerance": 1.0,
+          "below_preregistered_resolution": false,
+          "floor_only_capacities": [
+            1,
+            2,
+            3,
+            4,
+            6,
+            8,
+            12,
+            16,
+            20,
+            24,
+            32,
+            48,
+            64
+          ],
+          "joint_capacities": [
+            64
+          ],
+          "largest_joint_capacity": 64,
+          "detection_optimum_k": 64,
+          "likelihood_ratio_optimum_k": 64,
+          "positive_tau_capacities": []
+        }
+      ],
+      "rule": "both alpha upper CI <= tolerance and tau CI excludes zero; retain sign; descriptive mapping cannot establish impossibility",
+      "global_test": "not defined by preregistration; not replaced by floor-only p"
+    },
+    "H3": {
+      "tau": 0.01333333333333342,
+      "ci": [
+        -0.07333333333333336,
+        0.1000000000000002
+      ],
+      "p_raw": 0.8256174382561744,
+      "n_persons_per_arm": 25,
+      "n_seeds": 3,
+      "rule": "CI excludes 0 rejects the null; containing zero is inconclusive, not equivalence",
+      "seed_values": [
+        {
+          "seed": 42,
+          "k": 20,
+          "arm": "control",
+          "rate": 0.78,
+          "hits": 39,
+          "attempts": 50
+        },
+        {
+          "seed": 42,
+          "k": 20,
+          "arm": "trained",
+          "rate": 0.8,
+          "hits": 40,
+          "attempts": 50
+        },
+        {
+          "seed": 1337,
+          "k": 20,
+          "arm": "control",
+          "rate": 0.86,
+          "hits": 43,
+          "attempts": 50
+        },
+        {
+          "seed": 1337,
+          "k": 20,
+          "arm": "trained",
+          "rate": 0.86,
+          "hits": 43,
+          "attempts": 50
+        },
+        {
+          "seed": 2024,
+          "k": 20,
+          "arm": "control",
+          "rate": 0.78,
+          "hits": 39,
+          "attempts": 50
+        },
+        {
+          "seed": 2024,
+          "k": 20,
+          "arm": "trained",
+          "rate": 0.8,
+          "hits": 40,
+          "attempts": 50
+        }
+      ]
+    },
+    "H5": {
+      "label": "(exploratory), underpowered",
+      "observed_maximizers": [
+        4,
+        12
+      ],
+      "argmax_envelope_ci": [
+        4.0,
+        48.0
+      ],
+      "first_argmax_ci": [
+        4.0,
+        48.0
+      ],
+      "tied_maximum_replicates": 1121,
+      "quadratic_logk_coefficient": -0.0039061334574444937,
+      "quadratic_ci": [
+        -0.016602682531159613,
+        0.009560451870747954
+      ],
+      "quadratic_one_sided_p": 0.280971902809719,
+      "quadratic_p_method": "Null-centered bootstrap left tail; disclosed post-result implementation, exploratory, unadjusted.",
+      "flatness": "no prespecified equivalence threshold; lack of significant curvature does not prove flatness"
+    },
+    "H4": {
+      "gamma": 3.484485727131306,
+      "gamma_ci": [
+        2.8114694856491265,
+        4.209359665595608
+      ],
+      "p_raw": 9.999000099990002e-05,
+      "intercept_log_scale": -12.610837388415277,
+      "intercept_ci": [
+        -15.696669065367912,
+        -9.766932601458604
+      ],
+      "beta_scale_exp_minus_intercept": 299789.96399262466,
+      "beta_scale_ci": [
+        17447.16799322792,
+        6561101.751446208
+      ],
+      "beta_units_warning": "When gamma differs from1, this scale is not a constant bits/token rate. Do not quote as beta forcing rate.",
+      "n_targets": 50,
+      "n_persons": 25,
+      "n_seeds": 3,
+      "bootstrap_replicates": 10000,
+      "bootstrap_failures": [],
+      "right_censored_fraction": 0.0,
+      "nonmonotone_targets": 7,
+      "secondary_tobit": {
+        "intercept": -13.5693665474931,
+        "slope_tokens_per_bit": 0.3104483339369672,
+        "intercept_ci": [
+          -21.412361063431696,
+          -6.8726151024662405
+        ],
+        "slope_ci": [
+          0.2077051060166446,
+          0.42663719456249233
+        ],
+        "n_persons": 25,
+        "label": "preregistered secondary specification; same conditional evidence limits"
+      },
+      "lognormal_distribution_sensitivity": {
+        "gamma": 2.717673365728185,
+        "label": "(exploratory) distribution not preregistered; point diagnostic only"
+      },
+      "solver_validation": [
+        {
+          "kind": "full",
+          "max_parameter_difference": 1.2991568398845743e-06,
+          "log_likelihood_difference": -3.6637004541262286e-10
+        },
+        {
+          "kind": "bootstrap_0",
+          "max_parameter_difference": 1.15417290791342e-05,
+          "log_likelihood_difference": -1.139454752774327e-09
+        },
+        {
+          "kind": "bootstrap_1",
+          "max_parameter_difference": 2.4336718977835403e-06,
+          "log_likelihood_difference": -2.8705926524708048e-11
+        },
+        {
+          "kind": "bootstrap_2",
+          "max_parameter_difference": 1.289795009906669e-06,
+          "log_likelihood_difference": -1.0658141036401503e-12
+        }
+      ],
+      "rule": "Reject proportionality if gamma CI excludes1; Holm uses disclosed centered-bootstrap p. CI containing1 does not establish equivalence."
+    }
+  },
+  "diagnostics": {
+    "per_seed_kmin": [
+      {
+        "label": "(exploratory) single attack seed sensitivity",
+        "seed": 42,
+        "field": "ssn",
+        "n_persons": 25,
+        "median_first_hit_k": 16.0,
+        "median_ci": [
+          16.0,
+          20.0
+        ],
+        "right_censored_targets": 0,
+        "nonmonotone_targets": 11
+      },
+      {
+        "label": "(exploratory) single attack seed sensitivity",
+        "seed": 42,
+        "field": "email",
+        "n_persons": 25,
+        "median_first_hit_k": 6.0,
+        "median_ci": [
+          6.0,
+          8.0
+        ],
+        "right_censored_targets": 0,
+        "nonmonotone_targets": 2
+      },
+      {
+        "label": "(exploratory) single attack seed sensitivity",
+        "seed": 1337,
+        "field": "ssn",
+        "n_persons": 25,
+        "median_first_hit_k": 16.0,
+        "median_ci": [
+          12.0,
+          16.0
+        ],
+        "right_censored_targets": 0,
+        "nonmonotone_targets": 17
+      },
+      {
+        "label": "(exploratory) single attack seed sensitivity",
+        "seed": 1337,
+        "field": "email",
+        "n_persons": 25,
+        "median_first_hit_k": 6.0,
+        "median_ci": [
+          6.0,
+          8.0
+        ],
+        "right_censored_targets": 0,
+        "nonmonotone_targets": 1
+      },
+      {
+        "label": "(exploratory) single attack seed sensitivity",
+        "seed": 2024,
+        "field": "ssn",
+        "n_persons": 25,
+        "median_first_hit_k": 16.0,
+        "median_ci": [
+          12.0,
+          20.0
+        ],
+        "right_censored_targets": 0,
+        "nonmonotone_targets": 14
+      },
+      {
+        "label": "(exploratory) single attack seed sensitivity",
+        "seed": 2024,
+        "field": "email",
+        "n_persons": 25,
+        "median_first_hit_k": 8.0,
+        "median_ci": [
+          6.0,
+          8.0
+        ],
+        "right_censored_targets": 0,
+        "nonmonotone_targets": 1
+      }
+    ],
+    "actual_marginal_balance": [
+      {
+        "scope": "actual Cheaha attacked target marginals",
+        "field": "ssn",
+        "covariate": "char_len",
+        "smd": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ],
+        "n_D": 25,
+        "n_C": 25,
+        "passes_abs_0_1": true
+      },
+      {
+        "scope": "actual Cheaha attacked target marginals",
+        "field": "ssn",
+        "covariate": "target_len_tokens",
+        "smd": -0.07364596943186429,
+        "ci": [
+          -0.6672461249826399,
+          0.4647580015448905
+        ],
+        "n_D": 25,
+        "n_C": 25,
+        "passes_abs_0_1": true
+      },
+      {
+        "scope": "actual Cheaha attacked target marginals",
+        "field": "ssn",
+        "covariate": "target_H_bits",
+        "smd": 0.08170192903471514,
+        "ci": [
+          -0.4925317565545299,
+          0.6425618605813822
+        ],
+        "n_D": 25,
+        "n_C": 25,
+        "passes_abs_0_1": true
+      },
+      {
+        "scope": "actual Cheaha attacked target marginals",
+        "field": "email",
+        "covariate": "char_len",
+        "smd": 0.5029489291128494,
+        "ci": [
+          -0.030923673554022098,
+          1.0984661433393839
+        ],
+        "n_D": 25,
+        "n_C": 25,
+        "passes_abs_0_1": false
+      },
+      {
+        "scope": "actual Cheaha attacked target marginals",
+        "field": "email",
+        "covariate": "target_len_tokens",
+        "smd": 0.6129047021463004,
+        "ci": [
+          0.06580666034392042,
+          1.315373291712935
+        ],
+        "n_D": 25,
+        "n_C": 25,
+        "passes_abs_0_1": false
+      },
+      {
+        "scope": "actual Cheaha attacked target marginals",
+        "field": "email",
+        "covariate": "target_H_bits",
+        "smd": 0.5134837516181205,
+        "ci": [
+          -0.024557998666582197,
+          1.1033591939814207
+        ],
+        "n_D": 25,
+        "n_C": 25,
+        "passes_abs_0_1": false
+      }
+    ],
+    "recovered_colab_e17_balance": [
+      {
+        "source": "Colab seed42 only; missing Cheaha E17 not replaced",
+        "scope": "all_matching",
+        "variant": "pair_weighted",
+        "field": "ssn",
+        "covariate": "char_len",
+        "smd": 0.0,
+        "n_D": 100,
+        "n_C": 100
+      },
+      {
+        "source": "Colab seed42 only; missing Cheaha E17 not replaced",
+        "scope": "all_matching",
+        "variant": "pair_weighted",
+        "field": "ssn",
+        "covariate": "tok_len",
+        "smd": 0.0,
+        "n_D": 100,
+        "n_C": 100
+      },
+      {
+        "source": "Colab seed42 only; missing Cheaha E17 not replaced",
+        "scope": "all_matching",
+        "variant": "pair_weighted",
+        "field": "ssn",
+        "covariate": "H_bits",
+        "smd": 0.016009838419188162,
+        "n_D": 100,
+        "n_C": 100
+      },
+      {
+        "source": "Colab seed42 only; missing Cheaha E17 not replaced",
+        "scope": "all_matching",
+        "variant": "deduplicated_marginals",
+        "field": "ssn",
+        "covariate": "char_len",
+        "smd": 0.0,
+        "n_D": 100,
+        "n_C": 43
+      },
+      {
+        "source": "Colab seed42 only; missing Cheaha E17 not replaced",
+        "scope": "all_matching",
+        "variant": "deduplicated_marginals",
+        "field": "ssn",
+        "covariate": "tok_len",
+        "smd": -0.03615631826522049,
+        "n_D": 100,
+        "n_C": 43
+      },
+      {
+        "source": "Colab seed42 only; missing Cheaha E17 not replaced",
+        "scope": "all_matching",
+        "variant": "deduplicated_marginals",
+        "field": "ssn",
+        "covariate": "H_bits",
+        "smd": 0.021016041287255063,
+        "n_D": 100,
+        "n_C": 43
+      },
+      {
+        "source": "Colab seed42 only; missing Cheaha E17 not replaced",
+        "scope": "all_matching",
+        "variant": "pair_weighted",
+        "field": "email",
+        "covariate": "char_len",
+        "smd": 0.0400136995150237,
+        "n_D": 100,
+        "n_C": 100
+      },
+      {
+        "source": "Colab seed42 only; missing Cheaha E17 not replaced",
+        "scope": "all_matching",
+        "variant": "pair_weighted",
+        "field": "email",
+        "covariate": "tok_len",
+        "smd": -0.009633548130874305,
+        "n_D": 100,
+        "n_C": 100
+      },
+      {
+        "source": "Colab seed42 only; missing Cheaha E17 not replaced",
+        "scope": "all_matching",
+        "variant": "pair_weighted",
+        "field": "email",
+        "covariate": "H_bits",
+        "smd": 0.044455895698580127,
+        "n_D": 100,
+        "n_C": 100
+      },
+      {
+        "source": "Colab seed42 only; missing Cheaha E17 not replaced",
+        "scope": "all_matching",
+        "variant": "deduplicated_marginals",
+        "field": "email",
+        "covariate": "char_len",
+        "smd": 0.12158839012752996,
+        "n_D": 100,
+        "n_C": 39
+      },
+      {
+        "source": "Colab seed42 only; missing Cheaha E17 not replaced",
+        "scope": "all_matching",
+        "variant": "deduplicated_marginals",
+        "field": "email",
+        "covariate": "tok_len",
+        "smd": -0.005253627693112,
+        "n_D": 100,
+        "n_C": 39
+      },
+      {
+        "source": "Colab seed42 only; missing Cheaha E17 not replaced",
+        "scope": "all_matching",
+        "variant": "deduplicated_marginals",
+        "field": "email",
+        "covariate": "H_bits",
+        "smd": 0.13664597463772266,
+        "n_D": 100,
+        "n_C": 39
+      },
+      {
+        "source": "Colab seed42 only; missing Cheaha E17 not replaced",
+        "scope": "attacked_D_matching",
+        "variant": "pair_weighted",
+        "field": "ssn",
+        "covariate": "char_len",
+        "smd": 0.0,
+        "n_D": 25,
+        "n_C": 25
+      },
+      {
+        "source": "Colab seed42 only; missing Cheaha E17 not replaced",
+        "scope": "attacked_D_matching",
+        "variant": "pair_weighted",
+        "field": "ssn",
+        "covariate": "tok_len",
+        "smd": 0.0,
+        "n_D": 25,
+        "n_C": 25
+      },
+      {
+        "source": "Colab seed42 only; missing Cheaha E17 not replaced",
+        "scope": "attacked_D_matching",
+        "variant": "pair_weighted",
+        "field": "ssn",
+        "covariate": "H_bits",
+        "smd": 0.024017845818899975,
+        "n_D": 25,
+        "n_C": 25
+      },
+      {
+        "source": "Colab seed42 only; missing Cheaha E17 not replaced",
+        "scope": "attacked_D_matching",
+        "variant": "deduplicated_marginals",
+        "field": "ssn",
+        "covariate": "char_len",
+        "smd": 0.0,
+        "n_D": 25,
+        "n_C": 18
+      },
+      {
+        "source": "Colab seed42 only; missing Cheaha E17 not replaced",
+        "scope": "attacked_D_matching",
+        "variant": "deduplicated_marginals",
+        "field": "ssn",
+        "covariate": "tok_len",
+        "smd": 0.02218600015703113,
+        "n_D": 25,
+        "n_C": 18
+      },
+      {
+        "source": "Colab seed42 only; missing Cheaha E17 not replaced",
+        "scope": "attacked_D_matching",
+        "variant": "deduplicated_marginals",
+        "field": "ssn",
+        "covariate": "H_bits",
+        "smd": 0.050185016802384935,
+        "n_D": 25,
+        "n_C": 18
+      },
+      {
+        "source": "Colab seed42 only; missing Cheaha E17 not replaced",
+        "scope": "attacked_D_matching",
+        "variant": "pair_weighted",
+        "field": "email",
+        "covariate": "char_len",
+        "smd": -0.01369707734124324,
+        "n_D": 25,
+        "n_C": 25
+      },
+      {
+        "source": "Colab seed42 only; missing Cheaha E17 not replaced",
+        "scope": "attacked_D_matching",
+        "variant": "pair_weighted",
+        "field": "email",
+        "covariate": "tok_len",
+        "smd": 0.0,
+        "n_D": 25,
+        "n_C": 25
+      },
+      {
+        "source": "Colab seed42 only; missing Cheaha E17 not replaced",
+        "scope": "attacked_D_matching",
+        "variant": "pair_weighted",
+        "field": "email",
+        "covariate": "H_bits",
+        "smd": 0.16327278525652555,
+        "n_D": 25,
+        "n_C": 25
+      },
+      {
+        "source": "Colab seed42 only; missing Cheaha E17 not replaced",
+        "scope": "attacked_D_matching",
+        "variant": "deduplicated_marginals",
+        "field": "email",
+        "covariate": "char_len",
+        "smd": 0.0926555641118691,
+        "n_D": 25,
+        "n_C": 17
+      },
+      {
+        "source": "Colab seed42 only; missing Cheaha E17 not replaced",
+        "scope": "attacked_D_matching",
+        "variant": "deduplicated_marginals",
+        "field": "email",
+        "covariate": "tok_len",
+        "smd": 0.08614630655803672,
+        "n_D": 25,
+        "n_C": 17
+      },
+      {
+        "source": "Colab seed42 only; missing Cheaha E17 not replaced",
+        "scope": "attacked_D_matching",
+        "variant": "deduplicated_marginals",
+        "field": "email",
+        "covariate": "H_bits",
+        "smd": 0.31900002991172655,
+        "n_D": 25,
+        "n_C": 17
+      }
+    ],
+    "direct_beta_brackets": [
+      {
+        "field": "pooled",
+        "n_persons": 25,
+        "n_targets": 50,
+        "n_seeds": 3,
+        "conservative_median": 9.199368953704834,
+        "conservative_ci": [
+          7.568979422251383,
+          9.502717177073162
+        ],
+        "optimistic_median": 12.265825271606445,
+        "optimistic_ci": [
+          10.652767817179363,
+          13.015272776285807
+        ],
+        "conservative_fraction_log2V": 0.5890598192482533,
+        "label": "interval-grid ratio diagnostic; not a validated transferable constant"
+      },
+      {
+        "field": "ssn",
+        "n_persons": 25,
+        "n_targets": 25,
+        "n_seeds": 3,
+        "conservative_median": 6.006783167521159,
+        "conservative_ci": [
+          4.697469234466553,
+          6.585898717244466
+        ],
+        "optimistic_median": 9.010174751281738,
+        "optimistic_ci": [
+          6.26329231262207,
+          9.8788480758667
+        ],
+        "conservative_fraction_log2V": 0.3846301441685817,
+        "label": "interval-grid ratio diagnostic; not a validated transferable constant"
+      },
+      {
+        "field": "email",
+        "n_persons": 25,
+        "n_targets": 25,
+        "n_seeds": 3,
+        "conservative_median": 10.834431966145834,
+        "conservative_ci": [
+          9.814130783081055,
+          11.598880767822266
+        ],
+        "optimistic_median": 16.25164794921875,
+        "optimistic_ci": [
+          14.721196174621582,
+          17.3983211517334
+        ],
+        "conservative_fraction_log2V": 0.6937572096252437,
+        "label": "interval-grid ratio diagnostic; not a validated transferable constant"
+      }
+    ],
+    "complete_case_linear": {
+      "intercept": -15.384882406630961,
+      "intercept_ci": [
+        -23.871661474157595,
+        -7.927357415767551
+      ],
+      "slope": 0.3575487769243329,
+      "slope_ci": [
+        0.24455326257917864,
+        0.4830793282769822
+      ],
+      "inverse_slope_bits_per_token": 2.796821201856963,
+      "label": "complete-case diagnostic only"
+    },
+    "H_variance_control": {
+      "total": 41.758633439648676,
+      "within_field": 30.062763111996702,
+      "between_field": 11.695870327651974,
+      "within_fraction": 0.7199173113613659,
+      "by_field": {
+        "email": {
+          "n": 25,
+          "sd": 7.291418472606387,
+          "range": 25.462764739990234
+        },
+        "ssn": {
+          "n": 25,
+          "sd": 3.076682164387604,
+          "range": 12.777267456054688
+        }
+      }
+    },
+    "nonmonotone_by_arm": {
+      "control": {
+        "n_targets": 50,
+        "count": 7,
+        "fraction": 0.14
+      },
+      "trained": {
+        "n_targets": 50,
+        "count": 6,
+        "fraction": 0.12
+      }
+    }
+  },
+  "auc_exploratory": [
+    {
+      "label": "(exploratory)",
+      "field": "ssn",
+      "k": 1,
+      "auc": 0.6659555555555555,
+      "ci": [
+        0.5103955555555555,
+        0.81316
+      ],
+      "n_persons_per_arm": 25,
+      "n_seeds": 3,
+      "multiple_comparison_note": "pointwise exploratory intervals, no confirmatory discovery claim"
+    },
+    {
+      "label": "(exploratory)",
+      "field": "ssn",
+      "k": 2,
+      "auc": 0.6385777777777778,
+      "ci": [
+        0.5137644444444445,
+        0.7536088888888888
+      ],
+      "n_persons_per_arm": 25,
+      "n_seeds": 3,
+      "multiple_comparison_note": "pointwise exploratory intervals, no confirmatory discovery claim"
+    },
+    {
+      "label": "(exploratory)",
+      "field": "ssn",
+      "k": 3,
+      "auc": 0.6709333333333333,
+      "ci": [
+        0.5219555555555556,
+        0.8080044444444443
+      ],
+      "n_persons_per_arm": 25,
+      "n_seeds": 3,
+      "multiple_comparison_note": "pointwise exploratory intervals, no confirmatory discovery claim"
+    },
+    {
+      "label": "(exploratory)",
+      "field": "ssn",
+      "k": 4,
+      "auc": 0.6471111111111111,
+      "ci": [
+        0.5111066666666666,
+        0.7738666666666666
+      ],
+      "n_persons_per_arm": 25,
+      "n_seeds": 3,
+      "multiple_comparison_note": "pointwise exploratory intervals, no confirmatory discovery claim"
+    },
+    {
+      "label": "(exploratory)",
+      "field": "ssn",
+      "k": 6,
+      "auc": 0.6051555555555554,
+      "ci": [
+        0.48888444444444445,
+        0.7168088888888888
+      ],
+      "n_persons_per_arm": 25,
+      "n_seeds": 3,
+      "multiple_comparison_note": "pointwise exploratory intervals, no confirmatory discovery claim"
+    },
+    {
+      "label": "(exploratory)",
+      "field": "ssn",
+      "k": 8,
+      "auc": 0.5456,
+      "ci": [
+        0.4272,
+        0.6643555555555556
+      ],
+      "n_persons_per_arm": 25,
+      "n_seeds": 3,
+      "multiple_comparison_note": "pointwise exploratory intervals, no confirmatory discovery claim"
+    },
+    {
+      "label": "(exploratory)",
+      "field": "ssn",
+      "k": 12,
+      "auc": 0.512,
+      "ci": [
+        0.39039999999999997,
+        0.6328933333333332
+      ],
+      "n_persons_per_arm": 25,
+      "n_seeds": 3,
+      "multiple_comparison_note": "pointwise exploratory intervals, no confirmatory discovery claim"
+    },
+    {
+      "label": "(exploratory)",
+      "field": "ssn",
+      "k": 16,
+      "auc": 0.5354666666666666,
+      "ci": [
+        0.43021777777777775,
+        0.642311111111111
+      ],
+      "n_persons_per_arm": 25,
+      "n_seeds": 3,
+      "multiple_comparison_note": "pointwise exploratory intervals, no confirmatory discovery claim"
+    },
+    {
+      "label": "(exploratory)",
+      "field": "ssn",
+      "k": 20,
+      "auc": 0.4890666666666666,
+      "ci": [
+        0.39145777777777774,
+        0.5905822222222221
+      ],
+      "n_persons_per_arm": 25,
+      "n_seeds": 3,
+      "multiple_comparison_note": "pointwise exploratory intervals, no confirmatory discovery claim"
+    },
+    {
+      "label": "(exploratory)",
+      "field": "ssn",
+      "k": 24,
+      "auc": 0.5143111111111112,
+      "ci": [
+        0.4026666666666667,
+        0.6238222222222221
+      ],
+      "n_persons_per_arm": 25,
+      "n_seeds": 3,
+      "multiple_comparison_note": "pointwise exploratory intervals, no confirmatory discovery claim"
+    },
+    {
+      "label": "(exploratory)",
+      "field": "ssn",
+      "k": 32,
+      "auc": 0.5296,
+      "ci": [
+        0.4309333333333333,
+        0.6282666666666666
+      ],
+      "n_persons_per_arm": 25,
+      "n_seeds": 3,
+      "multiple_comparison_note": "pointwise exploratory intervals, no confirmatory discovery claim"
+    },
+    {
+      "label": "(exploratory)",
+      "field": "ssn",
+      "k": 48,
+      "auc": 0.4750222222222223,
+      "ci": [
+        0.36195555555555553,
+        0.5868444444444443
+      ],
+      "n_persons_per_arm": 25,
+      "n_seeds": 3,
+      "multiple_comparison_note": "pointwise exploratory intervals, no confirmatory discovery claim"
+    },
+    {
+      "label": "(exploratory)",
+      "field": "ssn",
+      "k": 64,
+      "auc": 0.4670222222222223,
+      "ci": [
+        0.3658666666666667,
+        0.5715555555555556
+      ],
+      "n_persons_per_arm": 25,
+      "n_seeds": 3,
+      "multiple_comparison_note": "pointwise exploratory intervals, no confirmatory discovery claim"
+    },
+    {
+      "label": "(exploratory)",
+      "field": "email",
+      "k": 1,
+      "auc": 0.5984,
+      "ci": [
+        0.4272000000000001,
+        0.7616
+      ],
+      "n_persons_per_arm": 25,
+      "n_seeds": 3,
+      "multiple_comparison_note": "pointwise exploratory intervals, no confirmatory discovery claim"
+    },
+    {
+      "label": "(exploratory)",
+      "field": "email",
+      "k": 2,
+      "auc": 0.5968,
+      "ci": [
+        0.43324444444444443,
+        0.7530666666666667
+      ],
+      "n_persons_per_arm": 25,
+      "n_seeds": 3,
+      "multiple_comparison_note": "pointwise exploratory intervals, no confirmatory discovery claim"
+    },
+    {
+      "label": "(exploratory)",
+      "field": "email",
+      "k": 3,
+      "auc": 0.5667555555555556,
+      "ci": [
+        0.40035111111111116,
+        0.7262266666666667
+      ],
+      "n_persons_per_arm": 25,
+      "n_seeds": 3,
+      "multiple_comparison_note": "pointwise exploratory intervals, no confirmatory discovery claim"
+    },
+    {
+      "label": "(exploratory)",
+      "field": "email",
+      "k": 4,
+      "auc": 0.5155555555555554,
+      "ci": [
+        0.3655111111111111,
+        0.6631155555555556
+      ],
+      "n_persons_per_arm": 25,
+      "n_seeds": 3,
+      "multiple_comparison_note": "pointwise exploratory intervals, no confirmatory discovery claim"
+    },
+    {
+      "label": "(exploratory)",
+      "field": "email",
+      "k": 6,
+      "auc": 0.46062222222222227,
+      "ci": [
+        0.31715111111111116,
+        0.6024888888888889
+      ],
+      "n_persons_per_arm": 25,
+      "n_seeds": 3,
+      "multiple_comparison_note": "pointwise exploratory intervals, no confirmatory discovery claim"
+    },
+    {
+      "label": "(exploratory)",
+      "field": "email",
+      "k": 8,
+      "auc": 0.5466666666666667,
+      "ci": [
+        0.42648444444444444,
+        0.6629377777777777
+      ],
+      "n_persons_per_arm": 25,
+      "n_seeds": 3,
+      "multiple_comparison_note": "pointwise exploratory intervals, no confirmatory discovery claim"
+    },
+    {
+      "label": "(exploratory)",
+      "field": "email",
+      "k": 12,
+      "auc": 0.5324444444444444,
+      "ci": [
+        0.42488888888888887,
+        0.6408977777777776
+      ],
+      "n_persons_per_arm": 25,
+      "n_seeds": 3,
+      "multiple_comparison_note": "pointwise exploratory intervals, no confirmatory discovery claim"
+    },
+    {
+      "label": "(exploratory)",
+      "field": "email",
+      "k": 16,
+      "auc": 0.48302222222222224,
+      "ci": [
+        0.3656888888888889,
+        0.6005333333333333
+      ],
+      "n_persons_per_arm": 25,
+      "n_seeds": 3,
+      "multiple_comparison_note": "pointwise exploratory intervals, no confirmatory discovery claim"
+    },
+    {
+      "label": "(exploratory)",
+      "field": "email",
+      "k": 20,
+      "auc": 0.42897777777777774,
+      "ci": [
+        0.32799999999999996,
+        0.5327999999999999
+      ],
+      "n_persons_per_arm": 25,
+      "n_seeds": 3,
+      "multiple_comparison_note": "pointwise exploratory intervals, no confirmatory discovery claim"
+    },
+    {
+      "label": "(exploratory)",
+      "field": "email",
+      "k": 24,
+      "auc": 0.5187555555555555,
+      "ci": [
+        0.40924,
+        0.6255999999999999
+      ],
+      "n_persons_per_arm": 25,
+      "n_seeds": 3,
+      "multiple_comparison_note": "pointwise exploratory intervals, no confirmatory discovery claim"
+    },
+    {
+      "label": "(exploratory)",
+      "field": "email",
+      "k": 32,
+      "auc": 0.5381333333333334,
+      "ci": [
+        0.44337777777777776,
+        0.6320088888888887
+      ],
+      "n_persons_per_arm": 25,
+      "n_seeds": 3,
+      "multiple_comparison_note": "pointwise exploratory intervals, no confirmatory discovery claim"
+    },
+    {
+      "label": "(exploratory)",
+      "field": "email",
+      "k": 48,
+      "auc": 0.4451555555555556,
+      "ci": [
+        0.33457333333333333,
+        0.5539599999999999
+      ],
+      "n_persons_per_arm": 25,
+      "n_seeds": 3,
+      "multiple_comparison_note": "pointwise exploratory intervals, no confirmatory discovery claim"
+    },
+    {
+      "label": "(exploratory)",
+      "field": "email",
+      "k": 64,
+      "auc": 0.47804444444444455,
+      "ci": [
+        0.37670666666666663,
+        0.5781377777777778
+      ],
+      "n_persons_per_arm": 25,
+      "n_seeds": 3,
+      "multiple_comparison_note": "pointwise exploratory intervals, no confirmatory discovery claim"
+    },
+    {
+      "label": "(exploratory)",
+      "field": "pooled",
+      "k": 1,
+      "auc": 0.5448888888888889,
+      "ci": [
+        0.462798888888889,
+        0.6192033333333333
+      ],
+      "n_persons_per_arm": 25,
+      "n_seeds": 3,
+      "multiple_comparison_note": "pointwise exploratory intervals, no confirmatory discovery claim"
+    },
+    {
+      "label": "(exploratory)",
+      "field": "pooled",
+      "k": 2,
+      "auc": 0.5486666666666667,
+      "ci": [
+        0.47346444444444447,
+        0.6189777777777778
+      ],
+      "n_persons_per_arm": 25,
+      "n_seeds": 3,
+      "multiple_comparison_note": "pointwise exploratory intervals, no confirmatory discovery claim"
+    },
+    {
+      "label": "(exploratory)",
+      "field": "pooled",
+      "k": 3,
+      "auc": 0.5467111111111111,
+      "ci": [
+        0.45920000000000005,
+        0.6276466666666667
+      ],
+      "n_persons_per_arm": 25,
+      "n_seeds": 3,
+      "multiple_comparison_note": "pointwise exploratory intervals, no confirmatory discovery claim"
+    },
+    {
+      "label": "(exploratory)",
+      "field": "pooled",
+      "k": 4,
+      "auc": 0.5336,
+      "ci": [
+        0.46653,
+        0.5960900000000001
+      ],
+      "n_persons_per_arm": 25,
+      "n_seeds": 3,
+      "multiple_comparison_note": "pointwise exploratory intervals, no confirmatory discovery claim"
+    },
+    {
+      "label": "(exploratory)",
+      "field": "pooled",
+      "k": 6,
+      "auc": 0.5124888888888889,
+      "ci": [
+        0.4556866666666667,
+        0.5650244444444446
+      ],
+      "n_persons_per_arm": 25,
+      "n_seeds": 3,
+      "multiple_comparison_note": "pointwise exploratory intervals, no confirmatory discovery claim"
+    },
+    {
+      "label": "(exploratory)",
+      "field": "pooled",
+      "k": 8,
+      "auc": 0.5269333333333333,
+      "ci": [
+        0.4803555555555556,
+        0.5738244444444445
+      ],
+      "n_persons_per_arm": 25,
+      "n_seeds": 3,
+      "multiple_comparison_note": "pointwise exploratory intervals, no confirmatory discovery claim"
+    },
+    {
+      "label": "(exploratory)",
+      "field": "pooled",
+      "k": 12,
+      "auc": 0.5072444444444444,
+      "ci": [
+        0.44039888888888895,
+        0.5730233333333333
+      ],
+      "n_persons_per_arm": 25,
+      "n_seeds": 3,
+      "multiple_comparison_note": "pointwise exploratory intervals, no confirmatory discovery claim"
+    },
+    {
+      "label": "(exploratory)",
+      "field": "pooled",
+      "k": 16,
+      "auc": 0.504,
+      "ci": [
+        0.4410666666666667,
+        0.5654733333333334
+      ],
+      "n_persons_per_arm": 25,
+      "n_seeds": 3,
+      "multiple_comparison_note": "pointwise exploratory intervals, no confirmatory discovery claim"
+    },
+    {
+      "label": "(exploratory)",
+      "field": "pooled",
+      "k": 20,
+      "auc": 0.4607555555555556,
+      "ci": [
+        0.39644111111111113,
+        0.5278255555555554
+      ],
+      "n_persons_per_arm": 25,
+      "n_seeds": 3,
+      "multiple_comparison_note": "pointwise exploratory intervals, no confirmatory discovery claim"
+    },
+    {
+      "label": "(exploratory)",
+      "field": "pooled",
+      "k": 24,
+      "auc": 0.5240888888888888,
+      "ci": [
+        0.44422,
+        0.6030688888888889
+      ],
+      "n_persons_per_arm": 25,
+      "n_seeds": 3,
+      "multiple_comparison_note": "pointwise exploratory intervals, no confirmatory discovery claim"
+    },
+    {
+      "label": "(exploratory)",
+      "field": "pooled",
+      "k": 32,
+      "auc": 0.5330666666666667,
+      "ci": [
+        0.46235444444444446,
+        0.6018699999999999
+      ],
+      "n_persons_per_arm": 25,
+      "n_seeds": 3,
+      "multiple_comparison_note": "pointwise exploratory intervals, no confirmatory discovery claim"
+    },
+    {
+      "label": "(exploratory)",
+      "field": "pooled",
+      "k": 48,
+      "auc": 0.4613333333333333,
+      "ci": [
+        0.3853311111111111,
+        0.5375555555555556
+      ],
+      "n_persons_per_arm": 25,
+      "n_seeds": 3,
+      "multiple_comparison_note": "pointwise exploratory intervals, no confirmatory discovery claim"
+    },
+    {
+      "label": "(exploratory)",
+      "field": "pooled",
+      "k": 64,
+      "auc": 0.47422222222222227,
+      "ci": [
+        0.3927988888888889,
+        0.5557333333333334
+      ],
+      "n_persons_per_arm": 25,
+      "n_seeds": 3,
+      "multiple_comparison_note": "pointwise exploratory intervals, no confirmatory discovery claim"
+    }
+  ],
+  "holm": {
+    "H1": {
+      "p_raw_or_reserved": 9.999000099990002e-05,
+      "p_holm": 0.00039996000399960006,
+      "reject_at_0_05": true,
+      "H2_reserved_not_tested": false
+    },
+    "H4": {
+      "p_raw_or_reserved": 9.999000099990002e-05,
+      "p_holm": 0.00039996000399960006,
+      "reject_at_0_05": true,
+      "H2_reserved_not_tested": false
+    },
+    "H3": {
+      "p_raw_or_reserved": 0.8256174382561744,
+      "p_holm": 1.0,
+      "reject_at_0_05": false,
+      "H2_reserved_not_tested": false
+    },
+    "H2": {
+      "p_raw_or_reserved": 1.0,
+      "p_holm": 1.0,
+      "reject_at_0_05": false,
+      "H2_reserved_not_tested": true
+    }
+  },
+  "compute": {
+    "main_attempt_elapsed_hours": {
+      "control": 13.022104142043325,
+      "trained": 13.229237614737617
+    },
+    "accelerator_hours": null,
+    "budget_accelerator_hours": 24,
+    "failed_job_hours": null,
+    "note": "Attempt-call elapsed only; not allocated GPU hours."
+  }
+}

@@ -1,0 +1,191 @@
+[
+  {
+    "path": "artifacts/capacity_axis_20260902/recovered_colab/results/attempts/e3a__E3__gpt2_42_field-ssn-email_k0.parquet",
+    "source": "/Users/xuqiluo/Library/CloudStorage/GoogleDrive-jackyluo0412@gmail.com/My Drive/PII_Extraction/results/attempts/e3a__E3__gpt2_42_field-ssn-email_k0.parquet",
+    "bytes": 24224,
+    "sha256": "d5479389399f09dc57e5782508e6198dc32f03b572aee73eee4b72a996471210",
+    "source_scope": "Colab Drive; retrieved now, not a historical per-shard identity proof"
+  },
+  {
+    "path": "artifacts/capacity_axis_20260902/recovered_colab/results/attempts/e3a__E3__gpt2_42_field-ssn-email_k1.parquet",
+    "source": "/Users/xuqiluo/Library/CloudStorage/GoogleDrive-jackyluo0412@gmail.com/My Drive/PII_Extraction/results/attempts/e3a__E3__gpt2_42_field-ssn-email_k1.parquet",
+    "bytes": 21762,
+    "sha256": "8849ac7297b9ce004e9b3fb09f101a7b915382497801e2d54166f1234340a95a",
+    "source_scope": "Colab Drive; retrieved now, not a historical per-shard identity proof"
+  },
+  {
+    "path": "artifacts/capacity_axis_20260902/recovered_colab/results/attempts/e3a_repro__E3__gpt2_42_field-ssn-email_k20.parquet",
+    "source": "/Users/xuqiluo/Library/CloudStorage/GoogleDrive-jackyluo0412@gmail.com/My Drive/PII_Extraction/results/attempts/e3a_repro__E3__gpt2_42_field-ssn-email_k20.parquet",
+    "bytes": 46093,
+    "sha256": "1d8ea48b50c205d232ad9f4192bd46e24c82a1e9081085a4abf44250db439990",
+    "source_scope": "Colab Drive; retrieved now, not a historical per-shard identity proof"
+  },
+  {
+    "path": "artifacts/capacity_axis_20260902/recovered_colab/results/attempts/e3a__E3__gpt2_42_field-ssn-email_k20.parquet",
+    "source": "/Users/xuqiluo/Library/CloudStorage/GoogleDrive-jackyluo0412@gmail.com/My Drive/PII_Extraction/results/attempts/e3a__E3__gpt2_42_field-ssn-email_k20.parquet",
+    "bytes": 46061,
+    "sha256": "d4f104bb1f30e8354f118cc2b86b0c7012d63ccd5d60510c8eb32db88e43109d",
+    "source_scope": "Colab Drive; retrieved now, not a historical per-shard identity proof"
+  },
+  {
+    "path": "artifacts/capacity_axis_20260902/recovered_colab/results/attempts/e3a_cost__E3__gpt2_42_field-ssn-email_k64.parquet",
+    "source": "/Users/xuqiluo/Library/CloudStorage/GoogleDrive-jackyluo0412@gmail.com/My Drive/PII_Extraction/results/attempts/e3a_cost__E3__gpt2_42_field-ssn-email_k64.parquet",
+    "bytes": 27224,
+    "sha256": "aa55fafa1d6e43121842a45034066066197dee6e96e88ad1a0a1fb7a3a5d3389",
+    "source_scope": "Colab Drive; retrieved now, not a historical per-shard identity proof"
+  },
+  {
+    "path": "artifacts/capacity_axis_20260902/recovered_colab/results/attempts/e3a_cost__E3__gpt2_42_field-ssn-email_k1.parquet",
+    "source": "/Users/xuqiluo/Library/CloudStorage/GoogleDrive-jackyluo0412@gmail.com/My Drive/PII_Extraction/results/attempts/e3a_cost__E3__gpt2_42_field-ssn-email_k1.parquet",
+    "bytes": 17165,
+    "sha256": "3571dbad0f1490e966e3ec48eb4cd5ea9a29fd98caa51f3b4508d2d39f9f2181",
+    "source_scope": "Colab Drive; retrieved now, not a historical per-shard identity proof"
+  },
+  {
+    "path": "artifacts/capacity_axis_20260902/recovered_colab/results/attempts/e3a_cost__E3__gpt2_42_field-ssn-email_k20.parquet",
+    "source": "/Users/xuqiluo/Library/CloudStorage/GoogleDrive-jackyluo0412@gmail.com/My Drive/PII_Extraction/results/attempts/e3a_cost__E3__gpt2_42_field-ssn-email_k20.parquet",
+    "bytes": 20562,
+    "sha256": "13301d82890f4a2bf4b42dcd6d1a05d6d558c10cd924f81ac3741e44ea0df78f",
+    "source_scope": "Colab Drive; retrieved now, not a historical per-shard identity proof"
+  },
+  {
+    "path": "artifacts/capacity_axis_20260902/recovered_colab/results/manifests/e3a__E3__gpt2_42_field-ssn-email_k0.json",
+    "source": "/Users/xuqiluo/Library/CloudStorage/GoogleDrive-jackyluo0412@gmail.com/My Drive/PII_Extraction/results/manifests/e3a__E3__gpt2_42_field-ssn-email_k0.json",
+    "bytes": 1619,
+    "sha256": "46ec39f117945af3973f403545dc221d64d19d23cd2ff2d35219a30679bda5c5",
+    "source_scope": "Colab Drive; retrieved now, not a historical per-shard identity proof"
+  },
+  {
+    "path": "artifacts/capacity_axis_20260902/recovered_colab/results/manifests/e3a__E3__gpt2_42_field-ssn-email_k1.json",
+    "source": "/Users/xuqiluo/Library/CloudStorage/GoogleDrive-jackyluo0412@gmail.com/My Drive/PII_Extraction/results/manifests/e3a__E3__gpt2_42_field-ssn-email_k1.json",
+    "bytes": 1619,
+    "sha256": "2228c1f71c5948bc1e5dcf7a26603657fefd48f32bb0c22ac2779c0a40afb3c6",
+    "source_scope": "Colab Drive; retrieved now, not a historical per-shard identity proof"
+  },
+  {
+    "path": "artifacts/capacity_axis_20260902/recovered_colab/results/manifests/e3a_repro__E3__gpt2_42_field-ssn-email_k20.json",
+    "source": "/Users/xuqiluo/Library/CloudStorage/GoogleDrive-jackyluo0412@gmail.com/My Drive/PII_Extraction/results/manifests/e3a_repro__E3__gpt2_42_field-ssn-email_k20.json",
+    "bytes": 1092,
+    "sha256": "bbd7a732ec42813ade11cbf37b5dc7099fa05833300255d03525654cd6edb825",
+    "source_scope": "Colab Drive; retrieved now, not a historical per-shard identity proof"
+  },
+  {
+    "path": "artifacts/capacity_axis_20260902/recovered_colab/results/manifests/e3a_cost__E3__gpt2_42_field-ssn-email_k64.json",
+    "source": "/Users/xuqiluo/Library/CloudStorage/GoogleDrive-jackyluo0412@gmail.com/My Drive/PII_Extraction/results/manifests/e3a_cost__E3__gpt2_42_field-ssn-email_k64.json",
+    "bytes": 1614,
+    "sha256": "00fc42901076a02b776f94ed9e49d26e34465092cb81ae1c91b923020bb01ebf",
+    "source_scope": "Colab Drive; retrieved now, not a historical per-shard identity proof"
+  },
+  {
+    "path": "artifacts/capacity_axis_20260902/recovered_colab/results/manifests/e3a_cost__E3__gpt2_42_field-ssn-email_k1.json",
+    "source": "/Users/xuqiluo/Library/CloudStorage/GoogleDrive-jackyluo0412@gmail.com/My Drive/PII_Extraction/results/manifests/e3a_cost__E3__gpt2_42_field-ssn-email_k1.json",
+    "bytes": 1612,
+    "sha256": "36286d6d1f9ce716445c9ccda8280d7ad93a360e2c4528d68ef33a0906978d2f",
+    "source_scope": "Colab Drive; retrieved now, not a historical per-shard identity proof"
+  },
+  {
+    "path": "artifacts/capacity_axis_20260902/recovered_colab/results/manifests/e3a__E3__gpt2_42_field-ssn-email_k20.json",
+    "source": "/Users/xuqiluo/Library/CloudStorage/GoogleDrive-jackyluo0412@gmail.com/My Drive/PII_Extraction/results/manifests/e3a__E3__gpt2_42_field-ssn-email_k20.json",
+    "bytes": 1621,
+    "sha256": "98f9be174a4e29c0af4c0ec648409180fce710d98dd5bab70bf091d39a60e8de",
+    "source_scope": "Colab Drive; retrieved now, not a historical per-shard identity proof"
+  },
+  {
+    "path": "artifacts/capacity_axis_20260902/recovered_colab/results/manifests/e3a_cost__E3__gpt2_42_field-ssn-email_k20.json",
+    "source": "/Users/xuqiluo/Library/CloudStorage/GoogleDrive-jackyluo0412@gmail.com/My Drive/PII_Extraction/results/manifests/e3a_cost__E3__gpt2_42_field-ssn-email_k20.json",
+    "bytes": 1614,
+    "sha256": "a2d5f03c5cd7ce7784e0c272b05144b9b10f316ad3f3562640fa0d4de725f266",
+    "source_scope": "Colab Drive; retrieved now, not a historical per-shard identity proof"
+  },
+  {
+    "path": "artifacts/capacity_axis_20260902/recovered_colab/results/e17_matches_e3a_seed42.json",
+    "source": "/Users/xuqiluo/Library/CloudStorage/GoogleDrive-jackyluo0412@gmail.com/My Drive/PII_Extraction/results/e17_matches_e3a_seed42.json",
+    "bytes": 203269,
+    "sha256": "b946229c13992f19c8c318be0a8a5bff7d275e61e6e6ffb60c65224e9a0f6170",
+    "source_scope": "Colab Drive; retrieved now, not a historical per-shard identity proof"
+  },
+  {
+    "path": "artifacts/capacity_axis_20260902/recovered_colab/results/e17_matches_e3a_repro_seed42.json",
+    "source": "/Users/xuqiluo/Library/CloudStorage/GoogleDrive-jackyluo0412@gmail.com/My Drive/PII_Extraction/results/e17_matches_e3a_repro_seed42.json",
+    "bytes": 203269,
+    "sha256": "b946229c13992f19c8c318be0a8a5bff7d275e61e6e6ffb60c65224e9a0f6170",
+    "source_scope": "Colab Drive; retrieved now, not a historical per-shard identity proof"
+  },
+  {
+    "path": "artifacts/capacity_axis_20260902/recovered_colab/results/e17_matches_e3a_cost_seed42.json",
+    "source": "/Users/xuqiluo/Library/CloudStorage/GoogleDrive-jackyluo0412@gmail.com/My Drive/PII_Extraction/results/e17_matches_e3a_cost_seed42.json",
+    "bytes": 203269,
+    "sha256": "b946229c13992f19c8c318be0a8a5bff7d275e61e6e6ffb60c65224e9a0f6170",
+    "source_scope": "Colab Drive; retrieved now, not a historical per-shard identity proof"
+  },
+  {
+    "path": "artifacts/capacity_axis_20260902/recovered_colab/data/target_registry.json",
+    "source": "/Users/xuqiluo/Library/CloudStorage/GoogleDrive-jackyluo0412@gmail.com/My Drive/PII_Extraction/data/target_registry.json",
+    "bytes": 65170,
+    "sha256": "91901119f342d7d4ff9e052ceb7fce53bebacfe3fb593a7c1d7ff83a2e2978c6",
+    "source_scope": "Colab Drive; retrieved now, not a historical per-shard identity proof"
+  },
+  {
+    "path": "artifacts/capacity_axis_20260902/recovered_colab/data/individuals.json",
+    "source": "/Users/xuqiluo/Library/CloudStorage/GoogleDrive-jackyluo0412@gmail.com/My Drive/PII_Extraction/data/individuals.json",
+    "bytes": 34020,
+    "sha256": "15f95b78fbe95640ac363054ced842619dcd7031cf89530d612df7e6d28c112f",
+    "source_scope": "Colab Drive; retrieved now, not a historical per-shard identity proof"
+  },
+  {
+    "path": "artifacts/capacity_axis_20260902/recovered_colab/data/negative_controls.json",
+    "source": "/Users/xuqiluo/Library/CloudStorage/GoogleDrive-jackyluo0412@gmail.com/My Drive/PII_Extraction/data/negative_controls.json",
+    "bytes": 17042,
+    "sha256": "5fc92b3f3334b9c84f2537da35bb10a907a23e6531f0b997324587f469021e66",
+    "source_scope": "Colab Drive; retrieved now, not a historical per-shard identity proof"
+  },
+  {
+    "path": "artifacts/capacity_axis_20260902/recovered_colab/data/corpus_metadata.json",
+    "source": "/Users/xuqiluo/Library/CloudStorage/GoogleDrive-jackyluo0412@gmail.com/My Drive/PII_Extraction/data/corpus_metadata.json",
+    "bytes": 377,
+    "sha256": "2d0ffe20c73ab4f19b7a2cf4885dc451cf25652c7db35a48b4e0d13a192c36ac",
+    "source_scope": "Colab Drive; retrieved now, not a historical per-shard identity proof"
+  },
+  {
+    "path": "artifacts/capacity_axis_20260902/recovered_colab/data/corpus/train.json",
+    "source": "/Users/xuqiluo/Library/CloudStorage/GoogleDrive-jackyluo0412@gmail.com/My Drive/PII_Extraction/data/corpus/train.json",
+    "bytes": 57979000,
+    "sha256": "7a059fc04ae21665a464a5cb68eb87d2fae597d736f82869c24866e21d0e1acf",
+    "source_scope": "Colab Drive; retrieved now, not a historical per-shard identity proof"
+  },
+  {
+    "path": "artifacts/capacity_axis_20260902/recovered_colab/models/gpt2/config.json",
+    "source": "/Users/xuqiluo/Library/CloudStorage/GoogleDrive-jackyluo0412@gmail.com/My Drive/PII_Extraction/models/gpt2/config.json",
+    "bytes": 961,
+    "sha256": "b0457be0f27b82ba744a0ef9a3d0ad03fbe7db9664537572c96edb5ec2f42555",
+    "source_scope": "Colab Drive; retrieved now, not a historical per-shard identity proof"
+  },
+  {
+    "path": "artifacts/capacity_axis_20260902/recovered_colab/models/gpt2/tokenizer.json",
+    "source": "/Users/xuqiluo/Library/CloudStorage/GoogleDrive-jackyluo0412@gmail.com/My Drive/PII_Extraction/models/gpt2/tokenizer.json",
+    "bytes": 3557778,
+    "sha256": "9fe733f259ca91b0cfce8719f4c9c2d60a5fa57091ccb4855ddcaeb1981707a7",
+    "source_scope": "Colab Drive; retrieved now, not a historical per-shard identity proof"
+  },
+  {
+    "path": "artifacts/capacity_axis_20260902/recovered_colab/models/gpt2/tokenizer_config.json",
+    "source": "/Users/xuqiluo/Library/CloudStorage/GoogleDrive-jackyluo0412@gmail.com/My Drive/PII_Extraction/models/gpt2/tokenizer_config.json",
+    "bytes": 326,
+    "sha256": "2ec6e8751bff5617ea5f342d96c69b50fba71826c0b2b9449c34fb55253432f4",
+    "source_scope": "Colab Drive; retrieved now, not a historical per-shard identity proof"
+  },
+  {
+    "path": "artifacts/capacity_axis_20260902/recovered_colab/models/gpt2/generation_config.json",
+    "source": "/Users/xuqiluo/Library/CloudStorage/GoogleDrive-jackyluo0412@gmail.com/My Drive/PII_Extraction/models/gpt2/generation_config.json",
+    "bytes": 119,
+    "sha256": "2e352d17c39026d25fd7994c102f94879e9047b348bfdd503a180c41f90f2b8c",
+    "source_scope": "Colab Drive; retrieved now, not a historical per-shard identity proof"
+  },
+  {
+    "path": "artifacts/capacity_axis_20260902/recovered_colab/models/gpt2/train_meta.json",
+    "source": "/Users/xuqiluo/Library/CloudStorage/GoogleDrive-jackyluo0412@gmail.com/My Drive/PII_Extraction/models/gpt2/train_meta.json",
+    "bytes": 367,
+    "sha256": "35188b0ae6dfebe0bf002702fa892e1a4d1203fb195d0c23280ffe06e45ee3d6",
+    "source_scope": "Colab Drive; retrieved now, not a historical per-shard identity proof"
+  }
+]

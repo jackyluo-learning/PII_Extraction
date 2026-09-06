@@ -1,0 +1,25 @@
+source,scope,variant,field,covariate,smd,n_D,n_C
+Colab seed42 only; missing Cheaha E17 not replaced,all_matching,pair_weighted,ssn,char_len,0.0,100,100
+Colab seed42 only; missing Cheaha E17 not replaced,all_matching,pair_weighted,ssn,tok_len,0.0,100,100
+Colab seed42 only; missing Cheaha E17 not replaced,all_matching,pair_weighted,ssn,H_bits,0.016009838419188162,100,100
+Colab seed42 only; missing Cheaha E17 not replaced,all_matching,deduplicated_marginals,ssn,char_len,0.0,100,43
+Colab seed42 only; missing Cheaha E17 not replaced,all_matching,deduplicated_marginals,ssn,tok_len,-0.03615631826522049,100,43
+Colab seed42 only; missing Cheaha E17 not replaced,all_matching,deduplicated_marginals,ssn,H_bits,0.021016041287255063,100,43
+Colab seed42 only; missing Cheaha E17 not replaced,all_matching,pair_weighted,email,char_len,0.0400136995150237,100,100
+Colab seed42 only; missing Cheaha E17 not replaced,all_matching,pair_weighted,email,tok_len,-0.009633548130874305,100,100
+Colab seed42 only; missing Cheaha E17 not replaced,all_matching,pair_weighted,email,H_bits,0.044455895698580127,100,100
+Colab seed42 only; missing Cheaha E17 not replaced,all_matching,deduplicated_marginals,email,char_len,0.12158839012752996,100,39
+Colab seed42 only; missing Cheaha E17 not replaced,all_matching,deduplicated_marginals,email,tok_len,-0.005253627693112,100,39
+Colab seed42 only; missing Cheaha E17 not replaced,all_matching,deduplicated_marginals,email,H_bits,0.13664597463772266,100,39
+Colab seed42 only; missing Cheaha E17 not replaced,attacked_D_matching,pair_weighted,ssn,char_len,0.0,25,25
+Colab seed42 only; missing Cheaha E17 not replaced,attacked_D_matching,pair_weighted,ssn,tok_len,0.0,25,25
+Colab seed42 only; missing Cheaha E17 not replaced,attacked_D_matching,pair_weighted,ssn,H_bits,0.024017845818899975,25,25
+Colab seed42 only; missing Cheaha E17 not replaced,attacked_D_matching,deduplicated_marginals,ssn,char_len,0.0,25,18
+Colab seed42 only; missing Cheaha E17 not replaced,attacked_D_matching,deduplicated_marginals,ssn,tok_len,0.02218600015703113,25,18
+Colab seed42 only; missing Cheaha E17 not replaced,attacked_D_matching,deduplicated_marginals,ssn,H_bits,0.050185016802384935,25,18
+Colab seed42 only; missing Cheaha E17 not replaced,attacked_D_matching,pair_weighted,email,char_len,-0.01369707734124324,25,25
+Colab seed42 only; missing Cheaha E17 not replaced,attacked_D_matching,pair_weighted,email,tok_len,0.0,25,25
+Colab seed42 only; missing Cheaha E17 not replaced,attacked_D_matching,pair_weighted,email,H_bits,0.16327278525652555,25,25
+Colab seed42 only; missing Cheaha E17 not replaced,attacked_D_matching,deduplicated_marginals,email,char_len,0.0926555641118691,25,17
+Colab seed42 only; missing Cheaha E17 not replaced,attacked_D_matching,deduplicated_marginals,email,tok_len,0.08614630655803672,25,17
+Colab seed42 only; missing Cheaha E17 not replaced,attacked_D_matching,deduplicated_marginals,email,H_bits,0.31900002991172655,25,17

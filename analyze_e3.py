@@ -1,15 +1,10 @@
-"""
-E3 capacity sweep — the preregistered analysis, run end to end.
+"""Historical E3 analysis helpers; the command-line entry point is retired.
 
-Every test here was specified in design.md and implemented in curve_stats.py /
-survival.py BEFORE the full curve was read. This driver only wires them to the
-data and writes one JSON; it decides nothing.
-
-Family: {H1, H2, H3, H4}, Holm-corrected at FWER 0.05. H5 is reported outside
-the family as exploratory -- design.md L846/L849/L858. (The threats table said
-"H1-H5" at L1087; that line was stale and is corrected in the same commit.)
-
-Usage:  python analyze_e3.py [--out results/e3_analysis.json]
+The raw-data audit found invalid boundary intervals, a post-result H2 change,
+and an incomplete Holm family. The former claim that all implementation
+preceded the full curve is withdrawn. See the source-linked replacement at
+.ai/research/studies/capacity_axis_20260902/reanalysis/recompute.py and its
+method_choices.md. The replacement is conditional, pending provenance.
 """
 import argparse, glob, json, math
 import numpy as np
@@ -339,19 +334,12 @@ def analyze(df: pd.DataFrame, n_shards: int, n_boot: int = cs.N_BOOT) -> dict:
 
 
 def main():
-    import pathlib
-    ap = argparse.ArgumentParser()
-    ap.add_argument("--out", default="results/e3_analysis.json")
-    ap.add_argument("--glob", default="results/attempts/e3a__*.parquet")
-    ap.add_argument("--n-boot", type=int, default=cs.N_BOOT)
-    a = ap.parse_args()
-
-    df, n_shards = load(a.glob)
-    R = analyze(df, n_shards, a.n_boot)
-    p = pathlib.Path(a.out); p.parent.mkdir(parents=True, exist_ok=True)
-    p.write_text(json.dumps(R, indent=2, default=float) + "\n")
-    print(json.dumps(R, indent=2, default=float))
-    print(f"\n--> written to {p}", flush=True)
+    raise SystemExit(
+        "This historical analyzer is superseded: its boundary intervals and H2/Holm "
+        "decisions failed the reanalysis audit. Use the ledger-checked entry point "
+        ".ai/research/studies/capacity_axis_20260902/reanalysis/recompute.py. "
+        "See reanalysis/method_choices.md for the conditional inference limits."
+    )
 
 
 if __name__ == "__main__":

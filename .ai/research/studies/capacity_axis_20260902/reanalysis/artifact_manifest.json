@@ -1,0 +1,597 @@
+[
+  {
+    "path": "artifacts/capacity_axis_20260902/bootstrap/censored_bootstrap.npz",
+    "bytes": 277078,
+    "sha256": "8d36b571c97e4be79635c5b67a52b710319fcba69ddaaee3e22ed6b489a9b9f4"
+  },
+  {
+    "path": "artifacts/capacity_axis_20260902/bootstrap/joint_bootstrap.npz",
+    "bytes": 1016493,
+    "sha256": "91b093f6078f59ec438e0d128469ac4abc7f0e9654ced1d48e3eca7e01df9ce3"
+  },
+  {
+    "path": "artifacts/capacity_axis_20260902/figures/auc_exploratory.pdf",
+    "bytes": 15580,
+    "sha256": "4ec6343edec28c981b18a27803c173c86471c1ce0e4dec21f955471d18f0c6f4"
+  },
+  {
+    "path": "artifacts/capacity_axis_20260902/figures/auc_exploratory.png",
+    "bytes": 82520,
+    "sha256": "bf24987b9a0ea92724a412711a742c0e2be3e561e7dd2366b2d3c6d60eb45bb3"
+  },
+  {
+    "path": "artifacts/capacity_axis_20260902/figures/capacity_and_signal.pdf",
+    "bytes": 19558,
+    "sha256": "79153fc0a2313d0c72c82a51f69db1b2f8d383651953edcb40664d87b7e08fc1"
+  },
+  {
+    "path": "artifacts/capacity_axis_20260902/figures/capacity_and_signal.png",
+    "bytes": 127418,
+    "sha256": "b1107578225bd743f2cf3078c4b53f97914fcaf6f32f56e9263673ea4b911fb0"
+  },
+  {
+    "path": "artifacts/capacity_axis_20260902/figures/seed_spread.pdf",
+    "bytes": 17325,
+    "sha256": "d41afc4957892d50dd163d0c3bd6f415ed5fc49edb0d924774579d9b4e932df8"
+  },
+  {
+    "path": "artifacts/capacity_axis_20260902/figures/seed_spread.png",
+    "bytes": 121206,
+    "sha256": "0134a47b6e52352c15da121b75f071576a31de3d08ca31cce7522a9d42c3f0e0"
+  },
+  {
+    "path": "artifacts/capacity_axis_20260902/recovered_colab/data/corpus/train.json",
+    "bytes": 57979000,
+    "sha256": "7a059fc04ae21665a464a5cb68eb87d2fae597d736f82869c24866e21d0e1acf"
+  },
+  {
+    "path": "artifacts/capacity_axis_20260902/recovered_colab/data/corpus_metadata.json",
+    "bytes": 377,
+    "sha256": "2d0ffe20c73ab4f19b7a2cf4885dc451cf25652c7db35a48b4e0d13a192c36ac"
+  },
+  {
+    "path": "artifacts/capacity_axis_20260902/recovered_colab/data/individuals.json",
+    "bytes": 34020,
+    "sha256": "15f95b78fbe95640ac363054ced842619dcd7031cf89530d612df7e6d28c112f"
+  },
+  {
+    "path": "artifacts/capacity_axis_20260902/recovered_colab/data/negative_controls.json",
+    "bytes": 17042,
+    "sha256": "5fc92b3f3334b9c84f2537da35bb10a907a23e6531f0b997324587f469021e66"
+  },
+  {
+    "path": "artifacts/capacity_axis_20260902/recovered_colab/data/target_registry.json",
+    "bytes": 65170,
+    "sha256": "91901119f342d7d4ff9e052ceb7fce53bebacfe3fb593a7c1d7ff83a2e2978c6"
+  },
+  {
+    "path": "artifacts/capacity_axis_20260902/recovered_colab/models/gpt2/config.json",
+    "bytes": 961,
+    "sha256": "b0457be0f27b82ba744a0ef9a3d0ad03fbe7db9664537572c96edb5ec2f42555"
+  },
+  {
+    "path": "artifacts/capacity_axis_20260902/recovered_colab/models/gpt2/generation_config.json",
+    "bytes": 119,
+    "sha256": "2e352d17c39026d25fd7994c102f94879e9047b348bfdd503a180c41f90f2b8c"
+  },
+  {
+    "path": "artifacts/capacity_axis_20260902/recovered_colab/models/gpt2/tokenizer.json",
+    "bytes": 3557778,
+    "sha256": "9fe733f259ca91b0cfce8719f4c9c2d60a5fa57091ccb4855ddcaeb1981707a7"
+  },
+  {
+    "path": "artifacts/capacity_axis_20260902/recovered_colab/models/gpt2/tokenizer_config.json",
+    "bytes": 326,
+    "sha256": "2ec6e8751bff5617ea5f342d96c69b50fba71826c0b2b9449c34fb55253432f4"
+  },
+  {
+    "path": "artifacts/capacity_axis_20260902/recovered_colab/models/gpt2/train_meta.json",
+    "bytes": 367,
+    "sha256": "35188b0ae6dfebe0bf002702fa892e1a4d1203fb195d0c23280ffe06e45ee3d6"
+  },
+  {
+    "path": "artifacts/capacity_axis_20260902/recovered_colab/results/attempts/e3a__E3__gpt2_42_field-ssn-email_k0.parquet",
+    "bytes": 24224,
+    "sha256": "d5479389399f09dc57e5782508e6198dc32f03b572aee73eee4b72a996471210"
+  },
+  {
+    "path": "artifacts/capacity_axis_20260902/recovered_colab/results/attempts/e3a__E3__gpt2_42_field-ssn-email_k1.parquet",
+    "bytes": 21762,
+    "sha256": "8849ac7297b9ce004e9b3fb09f101a7b915382497801e2d54166f1234340a95a"
+  },
+  {
+    "path": "artifacts/capacity_axis_20260902/recovered_colab/results/attempts/e3a__E3__gpt2_42_field-ssn-email_k20.parquet",
+    "bytes": 46061,
+    "sha256": "d4f104bb1f30e8354f118cc2b86b0c7012d63ccd5d60510c8eb32db88e43109d"
+  },
+  {
+    "path": "artifacts/capacity_axis_20260902/recovered_colab/results/attempts/e3a_cost__E3__gpt2_42_field-ssn-email_k1.parquet",
+    "bytes": 17165,
+    "sha256": "3571dbad0f1490e966e3ec48eb4cd5ea9a29fd98caa51f3b4508d2d39f9f2181"
+  },
+  {
+    "path": "artifacts/capacity_axis_20260902/recovered_colab/results/attempts/e3a_cost__E3__gpt2_42_field-ssn-email_k20.parquet",
+    "bytes": 20562,
+    "sha256": "13301d82890f4a2bf4b42dcd6d1a05d6d558c10cd924f81ac3741e44ea0df78f"
+  },
+  {
+    "path": "artifacts/capacity_axis_20260902/recovered_colab/results/attempts/e3a_cost__E3__gpt2_42_field-ssn-email_k64.parquet",
+    "bytes": 27224,
+    "sha256": "aa55fafa1d6e43121842a45034066066197dee6e96e88ad1a0a1fb7a3a5d3389"
+  },
+  {
+    "path": "artifacts/capacity_axis_20260902/recovered_colab/results/attempts/e3a_repro__E3__gpt2_42_field-ssn-email_k20.parquet",
+    "bytes": 46093,
+    "sha256": "1d8ea48b50c205d232ad9f4192bd46e24c82a1e9081085a4abf44250db439990"
+  },
+  {
+    "path": "artifacts/capacity_axis_20260902/recovered_colab/results/e17_matches_e3a_cost_seed42.json",
+    "bytes": 203269,
+    "sha256": "b946229c13992f19c8c318be0a8a5bff7d275e61e6e6ffb60c65224e9a0f6170"
+  },
+  {
+    "path": "artifacts/capacity_axis_20260902/recovered_colab/results/e17_matches_e3a_repro_seed42.json",
+    "bytes": 203269,
+    "sha256": "b946229c13992f19c8c318be0a8a5bff7d275e61e6e6ffb60c65224e9a0f6170"
+  },
+  {
+    "path": "artifacts/capacity_axis_20260902/recovered_colab/results/e17_matches_e3a_seed42.json",
+    "bytes": 203269,
+    "sha256": "b946229c13992f19c8c318be0a8a5bff7d275e61e6e6ffb60c65224e9a0f6170"
+  },
+  {
+    "path": "artifacts/capacity_axis_20260902/recovered_colab/results/manifests/e3a__E3__gpt2_42_field-ssn-email_k0.json",
+    "bytes": 1619,
+    "sha256": "46ec39f117945af3973f403545dc221d64d19d23cd2ff2d35219a30679bda5c5"
+  },
+  {
+    "path": "artifacts/capacity_axis_20260902/recovered_colab/results/manifests/e3a__E3__gpt2_42_field-ssn-email_k1.json",
+    "bytes": 1619,
+    "sha256": "2228c1f71c5948bc1e5dcf7a26603657fefd48f32bb0c22ac2779c0a40afb3c6"
+  },
+  {
+    "path": "artifacts/capacity_axis_20260902/recovered_colab/results/manifests/e3a__E3__gpt2_42_field-ssn-email_k20.json",
+    "bytes": 1621,
+    "sha256": "98f9be174a4e29c0af4c0ec648409180fce710d98dd5bab70bf091d39a60e8de"
+  },
+  {
+    "path": "artifacts/capacity_axis_20260902/recovered_colab/results/manifests/e3a_cost__E3__gpt2_42_field-ssn-email_k1.json",
+    "bytes": 1612,
+    "sha256": "36286d6d1f9ce716445c9ccda8280d7ad93a360e2c4528d68ef33a0906978d2f"
+  },
+  {
+    "path": "artifacts/capacity_axis_20260902/recovered_colab/results/manifests/e3a_cost__E3__gpt2_42_field-ssn-email_k20.json",
+    "bytes": 1614,
+    "sha256": "a2d5f03c5cd7ce7784e0c272b05144b9b10f316ad3f3562640fa0d4de725f266"
+  },
+  {
+    "path": "artifacts/capacity_axis_20260902/recovered_colab/results/manifests/e3a_cost__E3__gpt2_42_field-ssn-email_k64.json",
+    "bytes": 1614,
+    "sha256": "00fc42901076a02b776f94ed9e49d26e34465092cb81ae1c91b923020bb01ebf"
+  },
+  {
+    "path": "artifacts/capacity_axis_20260902/recovered_colab/results/manifests/e3a_repro__E3__gpt2_42_field-ssn-email_k20.json",
+    "bytes": 1092,
+    "sha256": "bbd7a732ec42813ade11cbf37b5dc7099fa05833300255d03525654cd6edb825"
+  },
+  {
+    "path": "results/attempts/e3a__E3__gpt2_1337_field-ssn-email_k0.parquet",
+    "bytes": 24444,
+    "sha256": "27009b885b824f329fa82b4e4a4b06d4a8ac4d10c25d673d614f39b16b4a6c9f"
+  },
+  {
+    "path": "results/attempts/e3a__E3__gpt2_1337_field-ssn-email_k1.parquet",
+    "bytes": 22004,
+    "sha256": "b7c5a8bf43dff045bf347431ef1a24fa3d0f83f99697d337e19fe2c124b499c8"
+  },
+  {
+    "path": "results/attempts/e3a__E3__gpt2_1337_field-ssn-email_k12.parquet",
+    "bytes": 38428,
+    "sha256": "a16802f915cdcd066c0a59721e1e6e05df28a41bc9fec50392a94903eaa5bfcc"
+  },
+  {
+    "path": "results/attempts/e3a__E3__gpt2_1337_field-ssn-email_k16.parquet",
+    "bytes": 42283,
+    "sha256": "56fa23db89d0e824ae8de03bb82fa166ce2156353c9424b5576b31b3585bf67c"
+  },
+  {
+    "path": "results/attempts/e3a__E3__gpt2_1337_field-ssn-email_k2.parquet",
+    "bytes": 26807,
+    "sha256": "dc20f44be64058a94522cc868a2b6c31aa9d786c2103a1038c8b036d2a0801bd"
+  },
+  {
+    "path": "results/attempts/e3a__E3__gpt2_1337_field-ssn-email_k20.parquet",
+    "bytes": 46221,
+    "sha256": "e1b949dace78ccbcc8d97fb3f7d6dc91a9494b1b775a1eec95e6d907977bb513"
+  },
+  {
+    "path": "results/attempts/e3a__E3__gpt2_1337_field-ssn-email_k24.parquet",
+    "bytes": 50575,
+    "sha256": "75177b346a7a4cf5b9606a04cf7b7d291864a0d0cb2fb7e2ea48b756bc178bf6"
+  },
+  {
+    "path": "results/attempts/e3a__E3__gpt2_1337_field-ssn-email_k3.parquet",
+    "bytes": 27821,
+    "sha256": "c688ae1f13bc9398b22aec87240bd3d0d86261c34e30fa14eff37c341d164744"
+  },
+  {
+    "path": "results/attempts/e3a__E3__gpt2_1337_field-ssn-email_k32.parquet",
+    "bytes": 58205,
+    "sha256": "dbb0c71f1398ae37ffcdbdf8ebff0b1923a00451e88155a6eb02ccd5eedfaa7d"
+  },
+  {
+    "path": "results/attempts/e3a__E3__gpt2_1337_field-ssn-email_k4.parquet",
+    "bytes": 29450,
+    "sha256": "833e211b79605dd31ab0e1e80ebe2f6269d76070fb30786c08fcc3e144cfc1c2"
+  },
+  {
+    "path": "results/attempts/e3a__E3__gpt2_1337_field-ssn-email_k48.parquet",
+    "bytes": 74864,
+    "sha256": "e318bee81bf66e673fd95c13128d84c500cfdb5d09f57fbc0ced6e686a58f0a8"
+  },
+  {
+    "path": "results/attempts/e3a__E3__gpt2_1337_field-ssn-email_k6.parquet",
+    "bytes": 31480,
+    "sha256": "f5a94cc931ebe8997a61e32b7ea6eb252ba03c05ca9c130d8a810d765e8f3ef1"
+  },
+  {
+    "path": "results/attempts/e3a__E3__gpt2_1337_field-ssn-email_k64.parquet",
+    "bytes": 91295,
+    "sha256": "3792dd86e87fb44b70204fc3a29e5e4507264179c32bf9f0111ace36b29dc418"
+  },
+  {
+    "path": "results/attempts/e3a__E3__gpt2_1337_field-ssn-email_k8.parquet",
+    "bytes": 33852,
+    "sha256": "fda12de672d262617a299f260b3cf89e2897ecb4d150a508da30bf828d911042"
+  },
+  {
+    "path": "results/attempts/e3a__E3__gpt2_2024_field-ssn-email_k0.parquet",
+    "bytes": 24441,
+    "sha256": "605116fd6483e56d97828d81993eebaa8e084a4c52c93490cc4fe4d55e8dc629"
+  },
+  {
+    "path": "results/attempts/e3a__E3__gpt2_2024_field-ssn-email_k1.parquet",
+    "bytes": 21993,
+    "sha256": "edcbd64e7390c521fa292a59db1d8e5e675a765222dbf7cb2a0a6b3cdcf20e99"
+  },
+  {
+    "path": "results/attempts/e3a__E3__gpt2_2024_field-ssn-email_k12.parquet",
+    "bytes": 37857,
+    "sha256": "e499d4e350a5d5e3c231769aaaa0c5fff99fca5875eeb08fb9be3214d916e1ce"
+  },
+  {
+    "path": "results/attempts/e3a__E3__gpt2_2024_field-ssn-email_k16.parquet",
+    "bytes": 41785,
+    "sha256": "835f1e73c7b706733393075092f4453a20a389a431e145b67b9454fa5c36cd17"
+  },
+  {
+    "path": "results/attempts/e3a__E3__gpt2_2024_field-ssn-email_k2.parquet",
+    "bytes": 26753,
+    "sha256": "4f0fa3f926e91bb0e08c265e948bf8f5de2c92750bdffc569efad665621cfbce"
+  },
+  {
+    "path": "results/attempts/e3a__E3__gpt2_2024_field-ssn-email_k20.parquet",
+    "bytes": 46296,
+    "sha256": "138119fa6904f9fd16cd329cfb3b1d63a5db0941f3a757e0f9d8d6fcf361377c"
+  },
+  {
+    "path": "results/attempts/e3a__E3__gpt2_2024_field-ssn-email_k24.parquet",
+    "bytes": 50508,
+    "sha256": "2f7cee62f7754876c874447346a288df7989b22311c2533385f74d0c6d50242c"
+  },
+  {
+    "path": "results/attempts/e3a__E3__gpt2_2024_field-ssn-email_k3.parquet",
+    "bytes": 27667,
+    "sha256": "0a071b9ddcc2dd43df4085487dbf6baabad360a1bf690e070e2152cceead3733"
+  },
+  {
+    "path": "results/attempts/e3a__E3__gpt2_2024_field-ssn-email_k32.parquet",
+    "bytes": 58199,
+    "sha256": "4f2ed0a2465412b3b08409b2a33c123c2da0dcad05bdc1a9736fa8e135116857"
+  },
+  {
+    "path": "results/attempts/e3a__E3__gpt2_2024_field-ssn-email_k4.parquet",
+    "bytes": 29148,
+    "sha256": "cbeb48a6b06b5835ba6d7de40c7a292418c170a9c2e0016b03944a563f7c6790"
+  },
+  {
+    "path": "results/attempts/e3a__E3__gpt2_2024_field-ssn-email_k48.parquet",
+    "bytes": 74740,
+    "sha256": "f9375fcf5ac9abd7a0e0ffc1f31cd7a59fb79a99ccf6599b656171a83b9dd5e8"
+  },
+  {
+    "path": "results/attempts/e3a__E3__gpt2_2024_field-ssn-email_k6.parquet",
+    "bytes": 30960,
+    "sha256": "9e53b245ee045e5fd6d47dc09045b1c58c0052207322ba0131ab210b325fd016"
+  },
+  {
+    "path": "results/attempts/e3a__E3__gpt2_2024_field-ssn-email_k64.parquet",
+    "bytes": 91316,
+    "sha256": "c07780b24f56422f8981a9c215abb016e13699d8fec76d89487be16d7401b259"
+  },
+  {
+    "path": "results/attempts/e3a__E3__gpt2_2024_field-ssn-email_k8.parquet",
+    "bytes": 33677,
+    "sha256": "234ba24ee4aa4f63488a35e06e30150fd7cf68544bd78147a217dd00a16d176d"
+  },
+  {
+    "path": "results/attempts/e3a__E3__gpt2_42_field-ssn-email_k0.parquet",
+    "bytes": 24447,
+    "sha256": "48355d2c73bc41626eb9de98b1a07306e9b7ae8a08d6fd90ea470f6fa77c9c7d"
+  },
+  {
+    "path": "results/attempts/e3a__E3__gpt2_42_field-ssn-email_k1.parquet",
+    "bytes": 21866,
+    "sha256": "af8a03da70449a002972e0571cafc2c8171a54e40d09e06fa1f1b0ae376a5e6d"
+  },
+  {
+    "path": "results/attempts/e3a__E3__gpt2_42_field-ssn-email_k12.parquet",
+    "bytes": 38103,
+    "sha256": "be88648ff9d4eddaba2f8978fd573843ece70f740c27c4b55efcce5248d4c073"
+  },
+  {
+    "path": "results/attempts/e3a__E3__gpt2_42_field-ssn-email_k16.parquet",
+    "bytes": 42497,
+    "sha256": "bd074b5ecfa0c88ac9583388c58f26a96f5b26d1811edc60a3b4d4e32780e34a"
+  },
+  {
+    "path": "results/attempts/e3a__E3__gpt2_42_field-ssn-email_k2.parquet",
+    "bytes": 26642,
+    "sha256": "e7f3899cdf6b234f76aec0380de8ed29190834d99682819d57568d7903d4a72a"
+  },
+  {
+    "path": "results/attempts/e3a__E3__gpt2_42_field-ssn-email_k20.parquet",
+    "bytes": 46379,
+    "sha256": "40d8d16a42181373e20753383bbfef872d88f43bbc386834e2d9c7773eb8c696"
+  },
+  {
+    "path": "results/attempts/e3a__E3__gpt2_42_field-ssn-email_k24.parquet",
+    "bytes": 51145,
+    "sha256": "bbacec579d4d13319457b7fd10b879e75bc123fe6f089b7f11c1e0399b8f95d6"
+  },
+  {
+    "path": "results/attempts/e3a__E3__gpt2_42_field-ssn-email_k3.parquet",
+    "bytes": 27830,
+    "sha256": "eef498b7c6d160a460386fce70739258acfe42bd9215d457fec23da9806f83c2"
+  },
+  {
+    "path": "results/attempts/e3a__E3__gpt2_42_field-ssn-email_k32.parquet",
+    "bytes": 59332,
+    "sha256": "a8d0e1cc9ca354ab5abefe71344e4729d846fc58e819bf7b434a96c524a40d35"
+  },
+  {
+    "path": "results/attempts/e3a__E3__gpt2_42_field-ssn-email_k4.parquet",
+    "bytes": 28811,
+    "sha256": "4946ad80f7fe90659239d78def818f1e25e17b0e3d7589f8eee9be9d2dc2f19a"
+  },
+  {
+    "path": "results/attempts/e3a__E3__gpt2_42_field-ssn-email_k48.parquet",
+    "bytes": 75501,
+    "sha256": "59cf87a4f403f6dc621f1ba5563b8f4b12b80b8c336f2f843f9b36c4360d8b45"
+  },
+  {
+    "path": "results/attempts/e3a__E3__gpt2_42_field-ssn-email_k6.parquet",
+    "bytes": 31222,
+    "sha256": "053f54747bb75a281de387c7ac06280c3e1c626d885d72f43cca75157bf97016"
+  },
+  {
+    "path": "results/attempts/e3a__E3__gpt2_42_field-ssn-email_k64.parquet",
+    "bytes": 91016,
+    "sha256": "c261ec21fd72c294f01ad6eff4805672aa998ec7f2c26efc9ccc113891bdcab2"
+  },
+  {
+    "path": "results/attempts/e3a__E3__gpt2_42_field-ssn-email_k8.parquet",
+    "bytes": 33693,
+    "sha256": "7d83747e992365149e0fac969820191a5287a786568cd2bedee6a6fe26deb68d"
+  },
+  {
+    "path": "results/manifests/e3a__E3__gpt2_1337_field-ssn-email_k0.json",
+    "bytes": 1238,
+    "sha256": "f1b99b39ddd21fde27c0e072624d48db035e6345d0ef3b69cae661e5ca2c68de"
+  },
+  {
+    "path": "results/manifests/e3a__E3__gpt2_1337_field-ssn-email_k1.json",
+    "bytes": 1238,
+    "sha256": "f825dd330bfb0de924ad5573479e00480b9d7070233823f243f3dd73753d0df8"
+  },
+  {
+    "path": "results/manifests/e3a__E3__gpt2_1337_field-ssn-email_k12.json",
+    "bytes": 1240,
+    "sha256": "f688c01e013cddd2027bbe928e3955b948d6f788ffdd864f43a3fb9a9fe03e3a"
+  },
+  {
+    "path": "results/manifests/e3a__E3__gpt2_1337_field-ssn-email_k16.json",
+    "bytes": 1240,
+    "sha256": "d08e27b5e7afa5ab478ae1616d9850b60d60291035b70037a816403fe2781d95"
+  },
+  {
+    "path": "results/manifests/e3a__E3__gpt2_1337_field-ssn-email_k2.json",
+    "bytes": 1238,
+    "sha256": "b8044671850c1c8e7c5826e1df47452c3777f03cdb67e7fe39210a792e0139df"
+  },
+  {
+    "path": "results/manifests/e3a__E3__gpt2_1337_field-ssn-email_k20.json",
+    "bytes": 1239,
+    "sha256": "6d4c1cfdab0041eb62a4081b2d6cad942671cda199b8b9d521e5c86aaae80c01"
+  },
+  {
+    "path": "results/manifests/e3a__E3__gpt2_1337_field-ssn-email_k24.json",
+    "bytes": 1240,
+    "sha256": "50f19078f64d6f318e285b8c207912f3aca7e309122fa33a40ff1a5813e9aa9b"
+  },
+  {
+    "path": "results/manifests/e3a__E3__gpt2_1337_field-ssn-email_k3.json",
+    "bytes": 1238,
+    "sha256": "9e3bf944c945c8ba9a8c727c7719176375f368365356d82b622e58a943e3c23d"
+  },
+  {
+    "path": "results/manifests/e3a__E3__gpt2_1337_field-ssn-email_k32.json",
+    "bytes": 1239,
+    "sha256": "1d6b52888c5f34ae441717317126abbbc07a0b2833d21f891b47557bbc3b0041"
+  },
+  {
+    "path": "results/manifests/e3a__E3__gpt2_1337_field-ssn-email_k4.json",
+    "bytes": 1237,
+    "sha256": "8dfad4ae31500529506e4d7ef397c047df9a0c9e6aac3f771453cf61025b03e6"
+  },
+  {
+    "path": "results/manifests/e3a__E3__gpt2_1337_field-ssn-email_k48.json",
+    "bytes": 1239,
+    "sha256": "29c692e0400fed788e57ddfe5ac5376e7fd30c7c7aeffb6f3df87f478648a7f6"
+  },
+  {
+    "path": "results/manifests/e3a__E3__gpt2_1337_field-ssn-email_k6.json",
+    "bytes": 1238,
+    "sha256": "09488db8ee70d5ad53523e6623af0b4e34abeb189d52efd339a341af5ae1124d"
+  },
+  {
+    "path": "results/manifests/e3a__E3__gpt2_1337_field-ssn-email_k64.json",
+    "bytes": 1239,
+    "sha256": "feeb007193e2e5319df22770e9d4ef73b9d5be666de46aa0ae96295f6bd79289"
+  },
+  {
+    "path": "results/manifests/e3a__E3__gpt2_1337_field-ssn-email_k8.json",
+    "bytes": 1238,
+    "sha256": "76986028fe76c0abcf67bbdb6950406f703d2a647f20ea81a1447c53e0381fe4"
+  },
+  {
+    "path": "results/manifests/e3a__E3__gpt2_2024_field-ssn-email_k0.json",
+    "bytes": 1238,
+    "sha256": "7839bb98ca2ae5fc7226ef2362b9a97091b6064d5b6350a901f11666b42d35b3"
+  },
+  {
+    "path": "results/manifests/e3a__E3__gpt2_2024_field-ssn-email_k1.json",
+    "bytes": 1238,
+    "sha256": "6360c1e2f5834518aabccb21454e019c449b479465d0f628abb2b2f17950b34e"
+  },
+  {
+    "path": "results/manifests/e3a__E3__gpt2_2024_field-ssn-email_k12.json",
+    "bytes": 1240,
+    "sha256": "c6679dd5fd09e6312f5aad0e67bebba30aec277e8ac064f964016cb4988d4fe0"
+  },
+  {
+    "path": "results/manifests/e3a__E3__gpt2_2024_field-ssn-email_k16.json",
+    "bytes": 1240,
+    "sha256": "cd73c6c5174af2be8e13bd076665182b7fe6312a9e86ca282fb32d3d7c562453"
+  },
+  {
+    "path": "results/manifests/e3a__E3__gpt2_2024_field-ssn-email_k2.json",
+    "bytes": 1238,
+    "sha256": "1b954294e0fc7e501a5e9e2e1c5e57638171b2c09cdf23bc64aecf90d61e5380"
+  },
+  {
+    "path": "results/manifests/e3a__E3__gpt2_2024_field-ssn-email_k20.json",
+    "bytes": 1240,
+    "sha256": "b52dd4d6ba288f6dc9ace7fdb28dade3391c30a9716a4e419470f009e0c50758"
+  },
+  {
+    "path": "results/manifests/e3a__E3__gpt2_2024_field-ssn-email_k24.json",
+    "bytes": 1240,
+    "sha256": "ce707d9b7afbbfc71e8a4d8278275c8de326240c30a6be73666d9ea7de8914fa"
+  },
+  {
+    "path": "results/manifests/e3a__E3__gpt2_2024_field-ssn-email_k3.json",
+    "bytes": 1238,
+    "sha256": "ba4aafdf6e2effbbe8f6202bf1bf7a872d88fcd6b753195c88d0c43090eed451"
+  },
+  {
+    "path": "results/manifests/e3a__E3__gpt2_2024_field-ssn-email_k32.json",
+    "bytes": 1240,
+    "sha256": "ac4edf054c635d63d7dd935925790970d1bdabef9a79b2d9b9f64339cdd64aa6"
+  },
+  {
+    "path": "results/manifests/e3a__E3__gpt2_2024_field-ssn-email_k4.json",
+    "bytes": 1238,
+    "sha256": "acde5ba3f4fa2857ec0f1cbc0dacb0a1d08ab8fa1fd1b8c9533bffd25ca97af8"
+  },
+  {
+    "path": "results/manifests/e3a__E3__gpt2_2024_field-ssn-email_k48.json",
+    "bytes": 1240,
+    "sha256": "213af1d81aa80840cdd88649716c5a7b9748da782e1baa056774a4e5c65b9ee2"
+  },
+  {
+    "path": "results/manifests/e3a__E3__gpt2_2024_field-ssn-email_k6.json",
+    "bytes": 1238,
+    "sha256": "29f2daab50e504cc0054b6d3c28a2bdfbd5ebcbdac4a3d3a5c2266ef3ff46492"
+  },
+  {
+    "path": "results/manifests/e3a__E3__gpt2_2024_field-ssn-email_k64.json",
+    "bytes": 1240,
+    "sha256": "feaafd365cc115011a79ab40df6e812ad29d68820f1f77c4c2e9adf2ea8b3ecd"
+  },
+  {
+    "path": "results/manifests/e3a__E3__gpt2_2024_field-ssn-email_k8.json",
+    "bytes": 1238,
+    "sha256": "7cc15bd41e15e3b540f59f2af9faffd787e0d253869224bbc2d3ac71efaa9cda"
+  },
+  {
+    "path": "results/manifests/e3a__E3__gpt2_42_field-ssn-email_k0.json",
+    "bytes": 1236,
+    "sha256": "e5ffebfb7d1cd2057bc8e2e90573dbed88b625f86f509164b6157c6292133d7a"
+  },
+  {
+    "path": "results/manifests/e3a__E3__gpt2_42_field-ssn-email_k1.json",
+    "bytes": 1236,
+    "sha256": "246580e68a598309eaccbac63ae2d345b05a70a6a9767640db8d4249a7c858cf"
+  },
+  {
+    "path": "results/manifests/e3a__E3__gpt2_42_field-ssn-email_k12.json",
+    "bytes": 1238,
+    "sha256": "dde5fb4d71bc648867aa144433d21c9a6d8fa3b09b1e27827497ee86362baadf"
+  },
+  {
+    "path": "results/manifests/e3a__E3__gpt2_42_field-ssn-email_k16.json",
+    "bytes": 1238,
+    "sha256": "a5ac69fdcc7ab2da4952cf4f2cbb8a3deeaefa75f39b92c28db4b979e6d58d51"
+  },
+  {
+    "path": "results/manifests/e3a__E3__gpt2_42_field-ssn-email_k2.json",
+    "bytes": 1236,
+    "sha256": "552e271b7ae64ea27825907a50860efa71a7138ff3baf212eafadacd19382872"
+  },
+  {
+    "path": "results/manifests/e3a__E3__gpt2_42_field-ssn-email_k20.json",
+    "bytes": 1238,
+    "sha256": "2d7e925791d59a761396b60765ec0946a836e4424ce51a7d37b0f47d95e866be"
+  },
+  {
+    "path": "results/manifests/e3a__E3__gpt2_42_field-ssn-email_k24.json",
+    "bytes": 1238,
+    "sha256": "198eec8dfd4dc01271672bf8bb118911bd9efeb7bba0d3b6014ccb99a3e1df48"
+  },
+  {
+    "path": "results/manifests/e3a__E3__gpt2_42_field-ssn-email_k3.json",
+    "bytes": 1236,
+    "sha256": "2bd8199fbd28e5a5b2caa1f353ffee56b36877653bc2e4d76d77f1145d5ad808"
+  },
+  {
+    "path": "results/manifests/e3a__E3__gpt2_42_field-ssn-email_k32.json",
+    "bytes": 1238,
+    "sha256": "e8821dba459272a1b8f548532e6b740e14d472becc051cceac49676b4513eced"
+  },
+  {
+    "path": "results/manifests/e3a__E3__gpt2_42_field-ssn-email_k4.json",
+    "bytes": 1236,
+    "sha256": "87e8a2957c950aeb642d93e51a3b753460710c50b2f7b9fd080040f198058e82"
+  },
+  {
+    "path": "results/manifests/e3a__E3__gpt2_42_field-ssn-email_k48.json",
+    "bytes": 1238,
+    "sha256": "2e9fa3217d84e24c657bddbbcb5f725067da07dd8741d8cab0f51703d4d771ac"
+  },
+  {
+    "path": "results/manifests/e3a__E3__gpt2_42_field-ssn-email_k6.json",
+    "bytes": 1235,
+    "sha256": "a24ab8a6d8760bedd299f861b604a143ed4034b3b96060956d0e3f968e94a484"
+  },
+  {
+    "path": "results/manifests/e3a__E3__gpt2_42_field-ssn-email_k64.json",
+    "bytes": 1238,
+    "sha256": "58da86ef7ff21b2c21c1305301ca8ca980d8b269f8e0ab257c0989f21eb0598b"
+  },
+  {
+    "path": "results/manifests/e3a__E3__gpt2_42_field-ssn-email_k8.json",
+    "bytes": 1236,
+    "sha256": "0bde091eeb4b8ad2538ece807f4f44c8fa4a82d125a3a362f118955bcd176221"
+  }
+]

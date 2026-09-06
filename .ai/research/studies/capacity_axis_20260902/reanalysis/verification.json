@@ -1,0 +1,311 @@
+{
+  "numerical_artifact_checks": "PASS",
+  "checked_raw_and_manifest_files": 98,
+  "main_rows": 4200,
+  "recovered_colab_files_checked": 27,
+  "main_grid_cells_by_arm_field": 168,
+  "curve_table_rows": 42,
+  "bootstrap_draws": 10000,
+  "report_local_links_checked": 18,
+  "registry_and_plan_schema": "PASS",
+  "strict_results_schema": "INCOMPLETE: 49 imported rows lack historical started_at; excluded legacy rows retain original schema errors",
+  "schema_errors": {
+    "studies": [],
+    "plan": [],
+    "results": [
+      {
+        "path": "repro_check",
+        "message": "'run_id' is a required property"
+      },
+      {
+        "path": "repro_check/tolerance",
+        "message": "'2*p*(1-p), the disagreement expected under pure stochastic re-draw at an unchanged true rate' is not of type 'number'"
+      },
+      {
+        "path": "runs/0",
+        "message": "'config_hash' is a required property"
+      },
+      {
+        "path": "runs/0",
+        "message": "'code_commit' is a required property"
+      },
+      {
+        "path": "runs/0",
+        "message": "'started_at' is a required property"
+      },
+      {
+        "path": "runs/0/run_id",
+        "message": "'e3a__E3__gpt2_42_field-ssn-email_k0' does not match '^[a-z0-9_]+_[0-9]{8}__[0-9a-f]{8}__s-?[0-9]+$'"
+      },
+      {
+        "path": "runs/0/metric_split",
+        "message": "'control arm / trained arm, ssn+email' is not one of ['train', 'val', 'test']"
+      },
+      {
+        "path": "runs/0/artifacts/0",
+        "message": "'results/attempts/e3a__E3__gpt2_42_field-ssn-email_k0.parquet' is not of type 'object'"
+      },
+      {
+        "path": "runs/0/artifacts/1",
+        "message": "'results/manifests/e3a__E3__gpt2_42_field-ssn-email_k0.json' is not of type 'object'"
+      },
+      {
+        "path": "runs/0/artifacts/2",
+        "message": "'results/e17_matches_e3a_seed42.json' is not of type 'object'"
+      },
+      {
+        "path": "runs/1",
+        "message": "'config_hash' is a required property"
+      },
+      {
+        "path": "runs/1",
+        "message": "'code_commit' is a required property"
+      },
+      {
+        "path": "runs/1",
+        "message": "'started_at' is a required property"
+      },
+      {
+        "path": "runs/1/run_id",
+        "message": "'e3a__E3__gpt2_42_field-ssn-email_k1' does not match '^[a-z0-9_]+_[0-9]{8}__[0-9a-f]{8}__s-?[0-9]+$'"
+      },
+      {
+        "path": "runs/1/metric_split",
+        "message": "'control arm / trained arm, ssn+email' is not one of ['train', 'val', 'test']"
+      },
+      {
+        "path": "runs/1/artifacts/0",
+        "message": "'results/attempts/e3a__E3__gpt2_42_field-ssn-email_k1.parquet' is not of type 'object'"
+      },
+      {
+        "path": "runs/1/artifacts/1",
+        "message": "'results/manifests/e3a__E3__gpt2_42_field-ssn-email_k1.json' is not of type 'object'"
+      },
+      {
+        "path": "runs/2",
+        "message": "'config_hash' is a required property"
+      },
+      {
+        "path": "runs/2",
+        "message": "'code_commit' is a required property"
+      },
+      {
+        "path": "runs/2",
+        "message": "'started_at' is a required property"
+      },
+      {
+        "path": "runs/2/run_id",
+        "message": "'e3a__E3__gpt2_42_field-ssn-email_k20' does not match '^[a-z0-9_]+_[0-9]{8}__[0-9a-f]{8}__s-?[0-9]+$'"
+      },
+      {
+        "path": "runs/2/metric_split",
+        "message": "'control arm / trained arm, ssn+email' is not one of ['train', 'val', 'test']"
+      },
+      {
+        "path": "runs/2/artifacts/0",
+        "message": "'results/attempts/e3a__E3__gpt2_42_field-ssn-email_k20.parquet' is not of type 'object'"
+      },
+      {
+        "path": "runs/2/artifacts/1",
+        "message": "'results/manifests/e3a__E3__gpt2_42_field-ssn-email_k20.json' is not of type 'object'"
+      },
+      {
+        "path": "runs/3",
+        "message": "'started_at' is a required property"
+      },
+      {
+        "path": "runs/4",
+        "message": "'started_at' is a required property"
+      },
+      {
+        "path": "runs/5",
+        "message": "'started_at' is a required property"
+      },
+      {
+        "path": "runs/6",
+        "message": "'started_at' is a required property"
+      },
+      {
+        "path": "runs/7",
+        "message": "'started_at' is a required property"
+      },
+      {
+        "path": "runs/8",
+        "message": "'started_at' is a required property"
+      },
+      {
+        "path": "runs/9",
+        "message": "'started_at' is a required property"
+      },
+      {
+        "path": "runs/10",
+        "message": "'started_at' is a required property"
+      },
+      {
+        "path": "runs/11",
+        "message": "'started_at' is a required property"
+      },
+      {
+        "path": "runs/12",
+        "message": "'started_at' is a required property"
+      },
+      {
+        "path": "runs/13",
+        "message": "'started_at' is a required property"
+      },
+      {
+        "path": "runs/14",
+        "message": "'started_at' is a required property"
+      },
+      {
+        "path": "runs/15",
+        "message": "'started_at' is a required property"
+      },
+      {
+        "path": "runs/16",
+        "message": "'started_at' is a required property"
+      },
+      {
+        "path": "runs/17",
+        "message": "'started_at' is a required property"
+      },
+      {
+        "path": "runs/18",
+        "message": "'started_at' is a required property"
+      },
+      {
+        "path": "runs/19",
+        "message": "'started_at' is a required property"
+      },
+      {
+        "path": "runs/20",
+        "message": "'started_at' is a required property"
+      },
+      {
+        "path": "runs/21",
+        "message": "'started_at' is a required property"
+      },
+      {
+        "path": "runs/22",
+        "message": "'started_at' is a required property"
+      },
+      {
+        "path": "runs/23",
+        "message": "'started_at' is a required property"
+      },
+      {
+        "path": "runs/24",
+        "message": "'started_at' is a required property"
+      },
+      {
+        "path": "runs/25",
+        "message": "'started_at' is a required property"
+      },
+      {
+        "path": "runs/26",
+        "message": "'started_at' is a required property"
+      },
+      {
+        "path": "runs/27",
+        "message": "'started_at' is a required property"
+      },
+      {
+        "path": "runs/28",
+        "message": "'started_at' is a required property"
+      },
+      {
+        "path": "runs/29",
+        "message": "'started_at' is a required property"
+      },
+      {
+        "path": "runs/30",
+        "message": "'started_at' is a required property"
+      },
+      {
+        "path": "runs/31",
+        "message": "'started_at' is a required property"
+      },
+      {
+        "path": "runs/32",
+        "message": "'started_at' is a required property"
+      },
+      {
+        "path": "runs/33",
+        "message": "'started_at' is a required property"
+      },
+      {
+        "path": "runs/34",
+        "message": "'started_at' is a required property"
+      },
+      {
+        "path": "runs/35",
+        "message": "'started_at' is a required property"
+      },
+      {
+        "path": "runs/36",
+        "message": "'started_at' is a required property"
+      },
+      {
+        "path": "runs/37",
+        "message": "'started_at' is a required property"
+      },
+      {
+        "path": "runs/38",
+        "message": "'started_at' is a required property"
+      },
+      {
+        "path": "runs/39",
+        "message": "'started_at' is a required property"
+      },
+      {
+        "path": "runs/40",
+        "message": "'started_at' is a required property"
+      },
+      {
+        "path": "runs/41",
+        "message": "'started_at' is a required property"
+      },
+      {
+        "path": "runs/42",
+        "message": "'started_at' is a required property"
+      },
+      {
+        "path": "runs/43",
+        "message": "'started_at' is a required property"
+      },
+      {
+        "path": "runs/44",
+        "message": "'started_at' is a required property"
+      },
+      {
+        "path": "runs/45",
+        "message": "'started_at' is a required property"
+      },
+      {
+        "path": "runs/46",
+        "message": "'started_at' is a required property"
+      },
+      {
+        "path": "runs/47",
+        "message": "'started_at' is a required property"
+      },
+      {
+        "path": "runs/48",
+        "message": "'started_at' is a required property"
+      },
+      {
+        "path": "runs/49",
+        "message": "'started_at' is a required property"
+      },
+      {
+        "path": "runs/50",
+        "message": "'started_at' is a required property"
+      },
+      {
+        "path": "runs/51",
+        "message": "'started_at' is a required property"
+      }
+    ]
+  },
+  "final_analysis_acceptance": "BLOCKED: see data_audit.md; numerical checks do not establish missing provenance"
+}

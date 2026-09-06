@@ -1,0 +1,51 @@
+{
+  "created_at": "2026-09-06T00:32:13.365177+00:00",
+  "recovered_colab_files": 27,
+  "registry_label_value_mismatches": 0,
+  "data_fingerprints_reverified": {
+    "target_registry.json": "91901119f342d7d4ff9e052ceb7fce53bebacfe3fb593a7c1d7ff83a2e2978c6",
+    "individuals.json": "15f95b78fbe95640ac363054ced842619dcd7031cf89530d612df7e6d28c112f",
+    "negative_controls.json": "5fc92b3f3334b9c84f2537da35bb10a907a23e6531f0b997324587f469021e66",
+    "corpus/train.json": "7a059fc04ae21665a464a5cb68eb87d2fae597d736f82869c24866e21d0e1acf"
+  },
+  "repro_check": {
+    "passed": true,
+    "comparisons": [
+      {
+        "arm": "control",
+        "n_targets": 50,
+        "flips": 0,
+        "flip_rate": 0.0,
+        "criterion_bound": 0.2952000000000001,
+        "passed": true
+      },
+      {
+        "arm": "trained",
+        "n_targets": 50,
+        "flips": 0,
+        "flip_rate": 0.0,
+        "criterion_bound": 0.34319999999999995,
+        "passed": true
+      }
+    ],
+    "original_path": "artifacts/capacity_axis_20260902/recovered_colab/results/attempts/e3a__E3__gpt2_42_field-ssn-email_k20.parquet",
+    "repeat_path": "artifacts/capacity_axis_20260902/recovered_colab/results/attempts/e3a_repro__E3__gpt2_42_field-ssn-email_k20.parquet",
+    "scope": "Colab original code_dirty=true; repeat code_dirty=false; same recorded environment. Validates observed decisions, not clean launch or Cheaha checkpoint identity."
+  },
+  "main_code_dirty_counts": {
+    "False": 36,
+    "None": 6
+  },
+  "remaining_missing": [
+    "Cheaha E17 matching records for seeds 42,1337,2024 (Colab seed42 recovered only)",
+    "Cheaha executed checkpoint/content fingerprint; current Drive checkpoint is not proof of main model identity",
+    "Original full environment lock and complete launch configuration",
+    "Cleanliness evidence for 6 main shards with code.dirty=null",
+    "Slurm job terminal states, walltime/GPU allocation, failed/preempted jobs; SSH authentication unavailable"
+  ],
+  "new_imports": 49,
+  "imported_scope_counts": {
+    "cheaha_main": 42,
+    "colab_pilot": 7
+  }
+}

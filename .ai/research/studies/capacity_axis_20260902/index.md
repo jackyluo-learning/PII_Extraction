@@ -14,4 +14,9 @@
   carried verbatim per that archive's own instruction.
 - Inherits the codebase corrections verified in
   [`archive/convergent_validity_20260902`](../../archive/convergent_validity_20260902/DEFERRED.md).
-- [analysis.md](analysis.md) — verdicts, findings, defects
+- [Conditional analysis](analysis.md) — recomputed; final acceptance blocked, not closed
+- [Raw-data requirements and audit](reanalysis/data_audit.md)
+- [Declared analysis choices](reanalysis/method_choices.md)
+- [Independent statistics review](reanalysis/statistics_review.md)
+- [Reproduction and outstanding evidence](reanalysis/README.md)
+- [Superseded analysis](reanalysis/prior_analysis.md) — historical, not current evidence

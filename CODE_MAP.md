@@ -4,6 +4,16 @@ _Compiled 2026-08-31 against repo HEAD `5b6d27d`. This document answers three qu
 implements each concept in the paper, which experiments have actually run, and where the code and
 the paper disagree._
 
+**Scoped E3 update, 2026-09-05 (America/Chicago):** the original map above is historical,
+not a claim that the entire map was reverified at today's HEAD. The E3 paths and raw
+artifacts were rechecked from execution commit `eba523b` and analysis baseline `0fda481`.
+The 42 Cheaha shards are now local and complete as recorded attempts. Their conditional
+reanalysis is [here](.ai/research/studies/capacity_axis_20260902/analysis.md); final
+acceptance is blocked on historical launch/model pins, Cheaha E17 and scheduler accounting.
+The old analysis CLI is retired. Its replacement reads ledger-linked, checksum-checked
+raw files through `reanalysis/recompute.py`; `write_report.py` renders the resulting ledger.
+New validity issues are recorded as #16–#20 below. Other experiment statuses remain historical.
+
 Companion visual documents:
 - [GCG attack walkthrough](https://claude.ai/code/artifact/29d5ea65-d8be-4fbd-83cd-b593d80533fa) — one full attack, from random gibberish to early stop on a hit
 - [Experiment inventory](https://claude.ai/code/artifact/dc9d2854-37b1-4d05-93d6-062b43794123) — status of all 21 E-numbers
@@ -25,9 +35,11 @@ Companion visual documents:
    leftover 44%/45.5% placeholder numbers. `7874_Adversarial_Prompt_Optimi.pdf` is the earlier ACL
    submission. **Treat neither as current.**
 
-3. **`results/`, `data/`, and `models/` are gitignored and do not exist locally.** The data lives on
-   the cluster. Every run2 number below comes from `WRITING_GUIDE.md` and the draft PDF, not from a
-   fresh run.
+3. **`results/`, `data/`, and `models/` are gitignored.** E3's 42 Cheaha raw shards and
+   manifests are now local; recovered Colab artifacts live separately under
+   `artifacts/capacity_axis_20260902/recovered_colab/`, so same-named files do not overwrite
+   each other. The historical run2 numbers below still come from `WRITING_GUIDE.md` and the
+   draft PDF, not from this E3 audit.
 
 4. **The repo contains two parallel pipelines** — see the next section. This is the easiest trap to
    fall into when reading the code.
@@ -105,7 +117,7 @@ log.
 | **E17** | Covariate matching | `run_E17_match_controls` | ✅ ran (E1 prerequisite) | §6.1 · Alg 1; balance table not reported |
 | **E9** | ROC / AUC / TPR@FPR | `make_tables.table1_main` | ✅ has data | AUC column only; TPR@α unreported |
 | **E16** | Rank inversion | `make_tables.rank_inversion_e16` | ✅ has data | **appears 0 times in the draft** |
-| E3 | Capacity sweep, k ∈ {1…64} | `run_E3_capacity_sweep` + `slurm/exp_capacity.slurm` | ⏳ pending | Fig 4 has the analytic curve + 1 measured point |
+| E3 | Capacity sweep, k ∈ {0,1,…64}, 14 points × 3 seeds | `run_E3_capacity_sweep` + `slurm/exp_capacity.slurm`; ledger-linked `reanalysis/recompute.py` | 42 raw shards / 4,200 attempts verified; analysis acceptance blocked | Conditional measured curves and statistics regenerated; see E3 update above |
 | E5 | Frequency dose-response | `run_E5_frequency_response` | ⏳ pending | §3.6 describes the idea, no data |
 | E2 | Control-model (base) arm | `run_E2_control_model` | ⏳ pending | §3.3 defers to "a larger study" |
 | E7 | Budget-matched natural prompts | `run_E7_budget_matched` | ⏳ pending | §4 claims compute-matched |
@@ -218,6 +230,11 @@ Ordered by how urgently each must be settled before adding experiments.
 | 13 | **E17 matches with replacement** | `run_E17_match_controls` matches with replacement (50 controls covering 100 trained records); the paper does not mention this. It weakens the independent-binomial assumption and inflates effective n. |
 | 14 | **No disjointness assertion for D/C** | `generate_individuals(n, seed)` vs `generate_individuals(n, seed + 1000)` — a seed offset, with **no assertion that the generated values are disjoint**. Appendix B calls it a "disjoint seed stream". |
 | 15 | **β undefined when k_min = ∞** | Def. 3 takes a median, but a failed attack gives `k_min = ∞`. Pythia-2.8B's EMR(C) = 0/12 makes the median ∞. Needs a stated convention. |
+| 16 | **Boundary-rate uncertainty** | **Validity: yes.** The retired E3 driver gave [0,0] or [1,1] bootstrap intervals and called a full-hit email contrast structurally zero. The replacement uses disclosed effective-n Wilson and Newcombe/MOVER at boundaries. With 25 people/arm, zero hits do not resolve 1% error. |
+| 17 | **H2 rule and test family** | **Validity: yes.** The retired driver substituted a floor-only H2 after results and dropped H4 from its nominal four-test Holm family. The replacement applies the joint descriptive rule and keeps four slots; H2 has no prespecified global p and is explicitly untestable. Conditional bootstrap p implementations cannot retroactively complete the preregistration. |
+| 18 | **E17 matching versus achieved sample** | **Validity: yes.** Actual attacked email covariates fail the predeclared point SMD threshold. Recovered Colab E17 pair-weighted and deduplicated marginal diagnostics are now reported; missing Cheaha E17 files prevent declaring the main matching records verified. |
+| 19 | **Reference self-information versus a deterministic bound** | **Validity: yes.** The old report called H(t)/log2(V) a per-target deterministic capacity lower bound and claimed tightness. A reference model's self-information does not establish that bound for these targets or this success rule. The claim and corresponding guarantee overlay are withdrawn. |
+| 20 | **Provenance and compute acceptance** | **Validity: yes.** Six main manifests have unknown cleanliness; all lack a historical executed checkpoint content pin and complete launch provenance. Main attack-call elapsed time totals 26.251 h, exceeding the 24 A100-h budget under the recorded single-GPU execution, before overhead/failures. Scheduler allocation remains unknown. File completeness is not final study acceptance. |
 
 ---
 

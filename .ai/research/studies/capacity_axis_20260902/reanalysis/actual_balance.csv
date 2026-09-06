@@ -1,0 +1,7 @@
+scope,field,covariate,smd,ci,n_D,n_C,passes_abs_0_1
+actual Cheaha attacked target marginals,ssn,char_len,0.0,"[0.0, 0.0]",25,25,True
+actual Cheaha attacked target marginals,ssn,target_len_tokens,-0.07364596943186429,"[-0.6672461249826399, 0.4647580015448905]",25,25,True
+actual Cheaha attacked target marginals,ssn,target_H_bits,0.08170192903471514,"[-0.4925317565545299, 0.6425618605813822]",25,25,True
+actual Cheaha attacked target marginals,email,char_len,0.5029489291128494,"[-0.030923673554022098, 1.0984661433393839]",25,25,False
+actual Cheaha attacked target marginals,email,target_len_tokens,0.6129047021463004,"[0.06580666034392042, 1.315373291712935]",25,25,False
+actual Cheaha attacked target marginals,email,target_H_bits,0.5134837516181205,"[-0.024557998666582197, 1.1033591939814207]",25,25,False
