@@ -36,7 +36,7 @@
           "kind": "main",
           "status": "blocked",
           "tasks": 5,
-          "blocked_reason": "Raw main sweep and aggregate sacct accounting are recovered; historical checkpoint/full launch binding and one-to-one shard/retry attribution are not accepted."
+          "blocked_reason": "42 final main logs now bind to COMPLETED sacct rows and recover per-shard start times. Historical checkpoint/full-launch binding, six dirty=null manifests, and unlogged array-slot failure/retry attribution remain unresolved."
         },
         {
           "id": "phase-3",
@@ -44,7 +44,7 @@
           "kind": "analysis",
           "status": "blocked",
           "tasks": 5,
-          "blocked_reason": "Conditional analysis and complete descriptive figures are finished. Final acceptance remains blocked by the failed email balance gate, unresolved H2 global-test contract, and the remaining historical provenance/accounting gaps."
+          "blocked_reason": "Conditional analysis and complete descriptive figures are finished. Final acceptance remains blocked by the failed email balance gate, undefined H2 global-test contract, checkpoint/full launch binding, six dirty=null manifests, unlogged-slot attribution, and seven Colab start times."
         }
       ],
       "progress": {
@@ -63,13 +63,13 @@
         "est_cost_usd": 0,
         "budget_accelerator_hours": 24,
         "recorded_attack_elapsed_hours_main": 26.251341756780942,
-        "accelerator_hours_status": "sacct recovered a 222.987 completed-billing GPU-hour lower bound; per-shard allocation remains unresolved",
-        "failed_job_accounting_status": "aggregate states recovered: 43 completed, 1 failed, and 1 cancelled among 45 pii-expcap jobs; retry attribution remains unresolved",
+        "accelerator_hours_status": "42 final main shards now have timestamp-backed sacct matches; their matched billing GPU-hour lower bound is 222.268889; aggregate 45-job accounting remains for the unlogged slots and retries.",
+        "failed_job_accounting_status": "All 42 final main logs match COMPLETED sacct rows; one failed preflight and one pilot are preserved. Unlogged array-slot failure/cancel/retry attribution remains unavailable.",
         "budget_status": "the recovered completed-billing lower bound exceeds the approved 24 GPU-hours",
-        "note": "49 byte-addressed raw shards; 3 legacy rows excluded as superseded. Aggregate scheduler accounting is recovered, but one-to-one shard mapping, retry attribution, and historical checkpoint/full launch binding remain unresolved. $0 is the existing academic-charge estimate, not a complete compute ledger."
+        "note": "49 byte-addressed raw shards; 3 legacy rows excluded as superseded. The 42 final Cheaha logs are now bound to scheduler rows and start times; checkpoint/full-launch binding, six dirty=null manifests, unlogged slot attribution, and seven Colab start times remain unresolved."
       },
       "created_at": "2026-09-02T22:40:00-05:00",
-      "updated_at": "2026-09-06T21:03:09Z",
+      "updated_at": "2026-09-07T00:33:42.560780Z",
       "protocol_path": ".ai/research/studies/capacity_axis_20260902/protocol.md",
       "plan_path": ".ai/research/studies/capacity_axis_20260902/plan.json",
       "results_path": ".ai/research/studies/capacity_axis_20260902/results.json",
@@ -82,7 +82,7 @@
         "data_audit_path": ".ai/research/studies/capacity_axis_20260902/reanalysis/data_audit.md",
         "statistics_review_path": ".ai/research/studies/capacity_axis_20260902/reanalysis/statistics_review.md"
       },
-      "blocked_reason": "E17, exact environment records, manifests, and aggregate Slurm accounting are recovered. Final acceptance remains blocked by the failed email balance gate, unresolved H2 global-test contract, historical executed-checkpoint/full-launch binding, 6 dirty=null shards, shard-to-Slurm/retry attribution, and 49 missing historical started_at timestamps."
+      "blocked_reason": "E17, exact environment records, manifests, preserved Slurm logs, and timestamp-backed per-shard scheduler matches are recovered. Final acceptance remains blocked by the failed email balance gate, undefined H2 global-test contract, executed-checkpoint/full-launch binding, six dirty=null manifests, unlogged array-slot attribution, and seven Colab records without historical started_at."
     }
   ]
 }

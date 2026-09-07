@@ -157,7 +157,7 @@
       "source_stem": "e3a__E3__gpt2_1337_field-ssn-email_k0",
       "source_scope": "cheaha_main",
       "run_status": "completed",
-      "completion_basis": "full expected rows in recovered raw shard; scheduler terminal state not available",
+      "completion_basis": "full expected rows in recovered raw shard; Slurm stdout contains E3 DONE; matched sacct terminal state COMPLETED",
       "arm": "both",
       "seed": 1337,
       "config": {
@@ -241,6 +241,20 @@
           "bytes": 1238,
           "role": "logs",
           "evidence_kind": "launch_manifest"
+        },
+        {
+          "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40054137_14.out",
+          "sha256": "e31d4b5291290766d728913ec2baa92893e1b433907909c7c24adab4313caa6a",
+          "bytes": 2481,
+          "role": "logs",
+          "evidence_kind": "slurm_log"
+        },
+        {
+          "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40054137_14.err",
+          "sha256": "5782441f8c342306afb43fdda970104c1773bbce4420e886e98aab5bc1ad1da7",
+          "bytes": 497,
+          "role": "logs",
+          "evidence_kind": "slurm_log"
         }
       ],
       "code_dirty_state": "clean as recorded",
@@ -263,15 +277,30 @@
         }
       },
       "evaluation_population": "fixed synthetic person-field audit set, D versus C",
-      "accelerator_hours_status": "unknown; scheduler allocation unavailable",
-      "started_at_status": "unavailable in original manifest; current file times are not launch time"
+      "accelerator_hours_status": "sacct matched; billing=8 GPU-hour lower-bound allocation for one gres/gpu; task binding uses preserved stdout completion time",
+      "started_at_status": "recovered from Cheaha sacct Start; row matched to preserved remote Slurm stdout completion time within 2 seconds",
+      "started_at": "2026-09-04T12:14:05-05:00",
+      "accelerator_hours": 0.346667,
+      "scheduler": {
+        "job_id_raw": "40056791",
+        "array_submission_id": "40054137",
+        "array_task_id": 14,
+        "state": "COMPLETED",
+        "exit_code": "0:0",
+        "start": "2026-09-04T12:14:05-05:00",
+        "end": "2026-09-04T12:16:41-05:00",
+        "elapsed_raw": 156,
+        "alloc_tres": "billing=8,cpu=8,gres/gpu=1,mem=64G,node=1",
+        "match_seconds": 0.0,
+        "match_method": "remote stdout mtime to sacct End within 2 seconds"
+      }
     },
     {
       "run_id": "capacity_axis_20260902__5b84bd0a__s1337",
       "source_stem": "e3a__E3__gpt2_1337_field-ssn-email_k1",
       "source_scope": "cheaha_main",
       "run_status": "completed",
-      "completion_basis": "full expected rows in recovered raw shard; scheduler terminal state not available",
+      "completion_basis": "full expected rows in recovered raw shard; Slurm stdout contains E3 DONE; matched sacct terminal state COMPLETED",
       "arm": "both",
       "seed": 1337,
       "config": {
@@ -355,6 +384,20 @@
           "bytes": 1238,
           "role": "logs",
           "evidence_kind": "launch_manifest"
+        },
+        {
+          "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40054137_15.out",
+          "sha256": "713bb4acd577b55b933bd1e4df2d5d3b072a6eb9e4ec089c1dffd4807f448825",
+          "bytes": 2481,
+          "role": "logs",
+          "evidence_kind": "slurm_log"
+        },
+        {
+          "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40054137_15.err",
+          "sha256": "7517fde39cd002d919a29ff24e818c33774e3aab079a56891c99ca88c73fb242",
+          "bytes": 497,
+          "role": "logs",
+          "evidence_kind": "slurm_log"
         }
       ],
       "code_dirty_state": "clean as recorded",
@@ -377,15 +420,30 @@
         }
       },
       "evaluation_population": "fixed synthetic person-field audit set, D versus C",
-      "accelerator_hours_status": "unknown; scheduler allocation unavailable",
-      "started_at_status": "unavailable in original manifest; current file times are not launch time"
+      "accelerator_hours_status": "sacct matched; billing=8 GPU-hour lower-bound allocation for one gres/gpu; task binding uses preserved stdout completion time",
+      "started_at_status": "recovered from Cheaha sacct Start; row matched to preserved remote Slurm stdout completion time within 2 seconds",
+      "started_at": "2026-09-04T12:16:41-05:00",
+      "accelerator_hours": 4.357778,
+      "scheduler": {
+        "job_id_raw": "40056877",
+        "array_submission_id": "40054137",
+        "array_task_id": 15,
+        "state": "COMPLETED",
+        "exit_code": "0:0",
+        "start": "2026-09-04T12:16:41-05:00",
+        "end": "2026-09-04T12:49:22-05:00",
+        "elapsed_raw": 1961,
+        "alloc_tres": "billing=8,cpu=8,gres/gpu=1,mem=64G,node=1",
+        "match_seconds": 0.0,
+        "match_method": "remote stdout mtime to sacct End within 2 seconds"
+      }
     },
     {
       "run_id": "capacity_axis_20260902__4c8f494a__s1337",
       "source_stem": "e3a__E3__gpt2_1337_field-ssn-email_k12",
       "source_scope": "cheaha_main",
       "run_status": "completed",
-      "completion_basis": "full expected rows in recovered raw shard; scheduler terminal state not available",
+      "completion_basis": "full expected rows in recovered raw shard; Slurm stdout contains E3 DONE; matched sacct terminal state COMPLETED",
       "arm": "both",
       "seed": 1337,
       "config": {
@@ -469,6 +527,20 @@
           "bytes": 1240,
           "role": "logs",
           "evidence_kind": "launch_manifest"
+        },
+        {
+          "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40054137_21.out",
+          "sha256": "9b07e7fc02f7552d5b3b765181607f364f358a085fb4562e4c9843fa29a469be",
+          "bytes": 2487,
+          "role": "logs",
+          "evidence_kind": "slurm_log"
+        },
+        {
+          "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40054137_21.err",
+          "sha256": "fa8944ca1fe8873b603122755dadc210c7d54578aaf9dff0e30f43d690dcef8b",
+          "bytes": 497,
+          "role": "logs",
+          "evidence_kind": "slurm_log"
         }
       ],
       "code_dirty_state": "clean as recorded",
@@ -491,15 +563,30 @@
         }
       },
       "evaluation_population": "fixed synthetic person-field audit set, D versus C",
-      "accelerator_hours_status": "unknown; scheduler allocation unavailable",
-      "started_at_status": "unavailable in original manifest; current file times are not launch time"
+      "accelerator_hours_status": "sacct matched; billing=8 GPU-hour lower-bound allocation for one gres/gpu; task binding uses preserved stdout completion time",
+      "started_at_status": "recovered from Cheaha sacct Start; row matched to preserved remote Slurm stdout completion time within 2 seconds",
+      "started_at": "2026-09-04T13:20:15-05:00",
+      "accelerator_hours": 4.34,
+      "scheduler": {
+        "job_id_raw": "40057402",
+        "array_submission_id": "40054137",
+        "array_task_id": 21,
+        "state": "COMPLETED",
+        "exit_code": "0:0",
+        "start": "2026-09-04T13:20:15-05:00",
+        "end": "2026-09-04T13:52:48-05:00",
+        "elapsed_raw": 1953,
+        "alloc_tres": "billing=8,cpu=8,gres/gpu=1,mem=64G,node=1",
+        "match_seconds": 0.0,
+        "match_method": "remote stdout mtime to sacct End within 2 seconds"
+      }
     },
     {
       "run_id": "capacity_axis_20260902__805d9e2c__s1337",
       "source_stem": "e3a__E3__gpt2_1337_field-ssn-email_k16",
       "source_scope": "cheaha_main",
       "run_status": "completed",
-      "completion_basis": "full expected rows in recovered raw shard; scheduler terminal state not available",
+      "completion_basis": "full expected rows in recovered raw shard; Slurm stdout contains E3 DONE; matched sacct terminal state COMPLETED",
       "arm": "both",
       "seed": 1337,
       "config": {
@@ -583,6 +670,20 @@
           "bytes": 1240,
           "role": "logs",
           "evidence_kind": "launch_manifest"
+        },
+        {
+          "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40054137_22.out",
+          "sha256": "848e7bfea2182baafd00a3fcf1c168d1715af267b5b0b6d17546eb692deb5f0a",
+          "bytes": 2487,
+          "role": "logs",
+          "evidence_kind": "slurm_log"
+        },
+        {
+          "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40054137_22.err",
+          "sha256": "e6fc78461fa74dd547662adbe9d9fe9370d14566c26789fab132879fcaeaa141",
+          "bytes": 497,
+          "role": "logs",
+          "evidence_kind": "slurm_log"
         }
       ],
       "code_dirty_state": "clean as recorded",
@@ -605,15 +706,30 @@
         }
       },
       "evaluation_population": "fixed synthetic person-field audit set, D versus C",
-      "accelerator_hours_status": "unknown; scheduler allocation unavailable",
-      "started_at_status": "unavailable in original manifest; current file times are not launch time"
+      "accelerator_hours_status": "sacct matched; billing=8 GPU-hour lower-bound allocation for one gres/gpu; task binding uses preserved stdout completion time",
+      "started_at_status": "recovered from Cheaha sacct Start; row matched to preserved remote Slurm stdout completion time within 2 seconds",
+      "started_at": "2026-09-04T13:35:02-05:00",
+      "accelerator_hours": 4.38,
+      "scheduler": {
+        "job_id_raw": "40057436",
+        "array_submission_id": "40054137",
+        "array_task_id": 22,
+        "state": "COMPLETED",
+        "exit_code": "0:0",
+        "start": "2026-09-04T13:35:02-05:00",
+        "end": "2026-09-04T14:07:53-05:00",
+        "elapsed_raw": 1971,
+        "alloc_tres": "billing=8,cpu=8,gres/gpu=1,mem=64G,node=1",
+        "match_seconds": 1.0,
+        "match_method": "remote stdout mtime to sacct End within 2 seconds"
+      }
     },
     {
       "run_id": "capacity_axis_20260902__6e83b2f3__s1337",
       "source_stem": "e3a__E3__gpt2_1337_field-ssn-email_k2",
       "source_scope": "cheaha_main",
       "run_status": "completed",
-      "completion_basis": "full expected rows in recovered raw shard; scheduler terminal state not available",
+      "completion_basis": "full expected rows in recovered raw shard; Slurm stdout contains E3 DONE; matched sacct terminal state COMPLETED",
       "arm": "both",
       "seed": 1337,
       "config": {
@@ -697,6 +813,20 @@
           "bytes": 1238,
           "role": "logs",
           "evidence_kind": "launch_manifest"
+        },
+        {
+          "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40054137_16.out",
+          "sha256": "d909f04f7706f86719adfc8e7199ca57e06bda4efac48d2350ecfea8054d35e9",
+          "bytes": 2481,
+          "role": "logs",
+          "evidence_kind": "slurm_log"
+        },
+        {
+          "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40054137_16.err",
+          "sha256": "e19571dda9540f9ee61d23aad6a751d97d472fd864a1a02c98d97be1d5e93ca0",
+          "bytes": 497,
+          "role": "logs",
+          "evidence_kind": "slurm_log"
         }
       ],
       "code_dirty_state": "clean as recorded",
@@ -719,15 +849,30 @@
         }
       },
       "evaluation_population": "fixed synthetic person-field audit set, D versus C",
-      "accelerator_hours_status": "unknown; scheduler allocation unavailable",
-      "started_at_status": "unavailable in original manifest; current file times are not launch time"
+      "accelerator_hours_status": "sacct matched; billing=8 GPU-hour lower-bound allocation for one gres/gpu; task binding uses preserved stdout completion time",
+      "started_at_status": "recovered from Cheaha sacct Start; row matched to preserved remote Slurm stdout completion time within 2 seconds",
+      "started_at": "2026-09-04T12:17:11-05:00",
+      "accelerator_hours": 6.475556,
+      "scheduler": {
+        "job_id_raw": "40056912",
+        "array_submission_id": "40054137",
+        "array_task_id": 16,
+        "state": "COMPLETED",
+        "exit_code": "0:0",
+        "start": "2026-09-04T12:17:11-05:00",
+        "end": "2026-09-04T13:05:45-05:00",
+        "elapsed_raw": 2914,
+        "alloc_tres": "billing=8,cpu=8,gres/gpu=1,mem=64G,node=1",
+        "match_seconds": 1.0,
+        "match_method": "remote stdout mtime to sacct End within 2 seconds"
+      }
     },
     {
       "run_id": "capacity_axis_20260902__b5a0b0c1__s1337",
       "source_stem": "e3a__E3__gpt2_1337_field-ssn-email_k20",
       "source_scope": "cheaha_main",
       "run_status": "completed",
-      "completion_basis": "full expected rows in recovered raw shard; scheduler terminal state not available",
+      "completion_basis": "full expected rows in recovered raw shard; Slurm stdout contains E3 DONE; matched sacct terminal state COMPLETED",
       "arm": "both",
       "seed": 1337,
       "config": {
@@ -810,6 +955,20 @@
           "bytes": 1239,
           "role": "logs",
           "evidence_kind": "launch_manifest"
+        },
+        {
+          "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40054137_23.out",
+          "sha256": "c54f61c316fc36cb87cae3d26942a1242e5f38af920cffc15b4e60d9ff923e9c",
+          "bytes": 2487,
+          "role": "logs",
+          "evidence_kind": "slurm_log"
+        },
+        {
+          "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40054137_23.err",
+          "sha256": "376073f8dd1f2549fb185f4a5f0196be6454135af52e4b3a003ed54072c49b4e",
+          "bytes": 1647,
+          "role": "logs",
+          "evidence_kind": "slurm_log"
         }
       ],
       "code_dirty_state": "unknown (source manifest code.dirty=null)",
@@ -832,15 +991,30 @@
         }
       },
       "evaluation_population": "fixed synthetic person-field audit set, D versus C",
-      "accelerator_hours_status": "unknown; scheduler allocation unavailable",
-      "started_at_status": "unavailable in original manifest; current file times are not launch time"
+      "accelerator_hours_status": "sacct matched; billing=8 GPU-hour lower-bound allocation for one gres/gpu; task binding uses preserved stdout completion time",
+      "started_at_status": "recovered from Cheaha sacct Start; row matched to preserved remote Slurm stdout completion time within 2 seconds",
+      "started_at": "2026-09-04T13:35:59-05:00",
+      "accelerator_hours": 4.746667,
+      "scheduler": {
+        "job_id_raw": "40057440",
+        "array_submission_id": "40054137",
+        "array_task_id": 23,
+        "state": "COMPLETED",
+        "exit_code": "0:0",
+        "start": "2026-09-04T13:35:59-05:00",
+        "end": "2026-09-04T14:11:35-05:00",
+        "elapsed_raw": 2136,
+        "alloc_tres": "billing=8,cpu=8,gres/gpu=1,mem=64G,node=1",
+        "match_seconds": 0.0,
+        "match_method": "remote stdout mtime to sacct End within 2 seconds"
+      }
     },
     {
       "run_id": "capacity_axis_20260902__dd223768__s1337",
       "source_stem": "e3a__E3__gpt2_1337_field-ssn-email_k24",
       "source_scope": "cheaha_main",
       "run_status": "completed",
-      "completion_basis": "full expected rows in recovered raw shard; scheduler terminal state not available",
+      "completion_basis": "full expected rows in recovered raw shard; Slurm stdout contains E3 DONE; matched sacct terminal state COMPLETED",
       "arm": "both",
       "seed": 1337,
       "config": {
@@ -924,6 +1098,20 @@
           "bytes": 1240,
           "role": "logs",
           "evidence_kind": "launch_manifest"
+        },
+        {
+          "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40054137_24.out",
+          "sha256": "25ef9817f5ba3e98d2054aede78c35498f3cca86cf02d44a27fb0911034b74be",
+          "bytes": 2487,
+          "role": "logs",
+          "evidence_kind": "slurm_log"
+        },
+        {
+          "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40054137_24.err",
+          "sha256": "ecb82845ffa8a4ae91560e950832a4a2e24448074bf40076aa7d2dbac5a1403c",
+          "bytes": 497,
+          "role": "logs",
+          "evidence_kind": "slurm_log"
         }
       ],
       "code_dirty_state": "clean as recorded",
@@ -946,15 +1134,30 @@
         }
       },
       "evaluation_population": "fixed synthetic person-field audit set, D versus C",
-      "accelerator_hours_status": "unknown; scheduler allocation unavailable",
-      "started_at_status": "unavailable in original manifest; current file times are not launch time"
+      "accelerator_hours_status": "sacct matched; billing=8 GPU-hour lower-bound allocation for one gres/gpu; task binding uses preserved stdout completion time",
+      "started_at_status": "recovered from Cheaha sacct Start; row matched to preserved remote Slurm stdout completion time within 2 seconds",
+      "started_at": "2026-09-04T13:44:28-05:00",
+      "accelerator_hours": 4.626667,
+      "scheduler": {
+        "job_id_raw": "40057458",
+        "array_submission_id": "40054137",
+        "array_task_id": 24,
+        "state": "COMPLETED",
+        "exit_code": "0:0",
+        "start": "2026-09-04T13:44:28-05:00",
+        "end": "2026-09-04T14:19:10-05:00",
+        "elapsed_raw": 2082,
+        "alloc_tres": "billing=8,cpu=8,gres/gpu=1,mem=64G,node=1",
+        "match_seconds": 0.0,
+        "match_method": "remote stdout mtime to sacct End within 2 seconds"
+      }
     },
     {
       "run_id": "capacity_axis_20260902__04529cf3__s1337",
       "source_stem": "e3a__E3__gpt2_1337_field-ssn-email_k3",
       "source_scope": "cheaha_main",
       "run_status": "completed",
-      "completion_basis": "full expected rows in recovered raw shard; scheduler terminal state not available",
+      "completion_basis": "full expected rows in recovered raw shard; Slurm stdout contains E3 DONE; matched sacct terminal state COMPLETED",
       "arm": "both",
       "seed": 1337,
       "config": {
@@ -1038,6 +1241,20 @@
           "bytes": 1238,
           "role": "logs",
           "evidence_kind": "launch_manifest"
+        },
+        {
+          "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40054137_17.out",
+          "sha256": "bc4bf65f1f855d1938bb99ad9575df1ac184800f5eb45e1adfe86bd97aa13962",
+          "bytes": 2481,
+          "role": "logs",
+          "evidence_kind": "slurm_log"
+        },
+        {
+          "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40054137_17.err",
+          "sha256": "b7464968e33dba9991158c8952ada420d7e37da982bf3ead2022d934d6900b82",
+          "bytes": 497,
+          "role": "logs",
+          "evidence_kind": "slurm_log"
         }
       ],
       "code_dirty_state": "clean as recorded",
@@ -1060,15 +1277,30 @@
         }
       },
       "evaluation_population": "fixed synthetic person-field audit set, D versus C",
-      "accelerator_hours_status": "unknown; scheduler allocation unavailable",
-      "started_at_status": "unavailable in original manifest; current file times are not launch time"
+      "accelerator_hours_status": "sacct matched; billing=8 GPU-hour lower-bound allocation for one gres/gpu; task binding uses preserved stdout completion time",
+      "started_at_status": "recovered from Cheaha sacct Start; row matched to preserved remote Slurm stdout completion time within 2 seconds",
+      "started_at": "2026-09-04T12:34:27-05:00",
+      "accelerator_hours": 6.106667,
+      "scheduler": {
+        "job_id_raw": "40057236",
+        "array_submission_id": "40054137",
+        "array_task_id": 17,
+        "state": "COMPLETED",
+        "exit_code": "0:0",
+        "start": "2026-09-04T12:34:27-05:00",
+        "end": "2026-09-04T13:20:15-05:00",
+        "elapsed_raw": 2748,
+        "alloc_tres": "billing=8,cpu=8,gres/gpu=1,mem=64G,node=1",
+        "match_seconds": 0.0,
+        "match_method": "remote stdout mtime to sacct End within 2 seconds"
+      }
     },
     {
       "run_id": "capacity_axis_20260902__bb0a64d7__s1337",
       "source_stem": "e3a__E3__gpt2_1337_field-ssn-email_k32",
       "source_scope": "cheaha_main",
       "run_status": "completed",
-      "completion_basis": "full expected rows in recovered raw shard; scheduler terminal state not available",
+      "completion_basis": "full expected rows in recovered raw shard; Slurm stdout contains E3 DONE; matched sacct terminal state COMPLETED",
       "arm": "both",
       "seed": 1337,
       "config": {
@@ -1151,6 +1383,20 @@
           "bytes": 1239,
           "role": "logs",
           "evidence_kind": "launch_manifest"
+        },
+        {
+          "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40062184_25.out",
+          "sha256": "b87245c3bd83d820fe4794873a5e3012e4ab711db57a21d45fab951b3507d8a7",
+          "bytes": 2487,
+          "role": "logs",
+          "evidence_kind": "slurm_log"
+        },
+        {
+          "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40062184_25.err",
+          "sha256": "91c03121870ae5f88ac5996b0cd44b1d74d3f38d67d63361a1b7e1ec93d76edc",
+          "bytes": 1628,
+          "role": "logs",
+          "evidence_kind": "slurm_log"
         }
       ],
       "code_dirty_state": "unknown (source manifest code.dirty=null)",
@@ -1173,15 +1419,30 @@
         }
       },
       "evaluation_population": "fixed synthetic person-field audit set, D versus C",
-      "accelerator_hours_status": "unknown; scheduler allocation unavailable",
-      "started_at_status": "unavailable in original manifest; current file times are not launch time"
+      "accelerator_hours_status": "sacct matched; billing=8 GPU-hour lower-bound allocation for one gres/gpu; task binding uses preserved stdout completion time",
+      "started_at_status": "recovered from Cheaha sacct Start; row matched to preserved remote Slurm stdout completion time within 2 seconds",
+      "started_at": "2026-09-04T21:28:57-05:00",
+      "accelerator_hours": 4.977778,
+      "scheduler": {
+        "job_id_raw": "40063396",
+        "array_submission_id": "40062184",
+        "array_task_id": 25,
+        "state": "COMPLETED",
+        "exit_code": "0:0",
+        "start": "2026-09-04T21:28:57-05:00",
+        "end": "2026-09-04T22:06:17-05:00",
+        "elapsed_raw": 2240,
+        "alloc_tres": "billing=8,cpu=8,gres/gpu=1,mem=64G,node=1",
+        "match_seconds": 0.0,
+        "match_method": "remote stdout mtime to sacct End within 2 seconds"
+      }
     },
     {
       "run_id": "capacity_axis_20260902__ff7ff034__s1337",
       "source_stem": "e3a__E3__gpt2_1337_field-ssn-email_k4",
       "source_scope": "cheaha_main",
       "run_status": "completed",
-      "completion_basis": "full expected rows in recovered raw shard; scheduler terminal state not available",
+      "completion_basis": "full expected rows in recovered raw shard; Slurm stdout contains E3 DONE; matched sacct terminal state COMPLETED",
       "arm": "both",
       "seed": 1337,
       "config": {
@@ -1264,6 +1525,20 @@
           "bytes": 1237,
           "role": "logs",
           "evidence_kind": "launch_manifest"
+        },
+        {
+          "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40054137_18.out",
+          "sha256": "81f19d185b74c9f004e7b37a7967f19657061d3686a290e2c1eaca3ba174963b",
+          "bytes": 2481,
+          "role": "logs",
+          "evidence_kind": "slurm_log"
+        },
+        {
+          "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40054137_18.err",
+          "sha256": "ad009844e225fd5ae6cfd5da4eef7822fdcbe78ff7f53a9ee023136c2f03c169",
+          "bytes": 1627,
+          "role": "logs",
+          "evidence_kind": "slurm_log"
         }
       ],
       "code_dirty_state": "unknown (source manifest code.dirty=null)",
@@ -1286,15 +1561,30 @@
         }
       },
       "evaluation_population": "fixed synthetic person-field audit set, D versus C",
-      "accelerator_hours_status": "unknown; scheduler allocation unavailable",
-      "started_at_status": "unavailable in original manifest; current file times are not launch time"
+      "accelerator_hours_status": "sacct matched; billing=8 GPU-hour lower-bound allocation for one gres/gpu; task binding uses preserved stdout completion time",
+      "started_at_status": "recovered from Cheaha sacct Start; row matched to preserved remote Slurm stdout completion time within 2 seconds",
+      "started_at": "2026-09-04T12:42:34-05:00",
+      "accelerator_hours": 6.995556,
+      "scheduler": {
+        "job_id_raw": "40057253",
+        "array_submission_id": "40054137",
+        "array_task_id": 18,
+        "state": "COMPLETED",
+        "exit_code": "0:0",
+        "start": "2026-09-04T12:42:34-05:00",
+        "end": "2026-09-04T13:35:02-05:00",
+        "elapsed_raw": 3148,
+        "alloc_tres": "billing=8,cpu=8,gres/gpu=1,mem=64G,node=1",
+        "match_seconds": 0.0,
+        "match_method": "remote stdout mtime to sacct End within 2 seconds"
+      }
     },
     {
       "run_id": "capacity_axis_20260902__add01fe8__s1337",
       "source_stem": "e3a__E3__gpt2_1337_field-ssn-email_k48",
       "source_scope": "cheaha_main",
       "run_status": "completed",
-      "completion_basis": "full expected rows in recovered raw shard; scheduler terminal state not available",
+      "completion_basis": "full expected rows in recovered raw shard; Slurm stdout contains E3 DONE; matched sacct terminal state COMPLETED",
       "arm": "both",
       "seed": 1337,
       "config": {
@@ -1377,6 +1667,20 @@
           "bytes": 1239,
           "role": "logs",
           "evidence_kind": "launch_manifest"
+        },
+        {
+          "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40062184_26.out",
+          "sha256": "b1a8e1174e2c829e991fa045f0f1a8e8a875924941dd6c724dc583d1f5145669",
+          "bytes": 2487,
+          "role": "logs",
+          "evidence_kind": "slurm_log"
+        },
+        {
+          "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40062184_26.err",
+          "sha256": "7f092f83b980eb57d540153a3e26d3736571bdb9fde4826769673009b5a68294",
+          "bytes": 1945,
+          "role": "logs",
+          "evidence_kind": "slurm_log"
         }
       ],
       "code_dirty_state": "unknown (source manifest code.dirty=null)",
@@ -1399,15 +1703,30 @@
         }
       },
       "evaluation_population": "fixed synthetic person-field audit set, D versus C",
-      "accelerator_hours_status": "unknown; scheduler allocation unavailable",
-      "started_at_status": "unavailable in original manifest; current file times are not launch time"
+      "accelerator_hours_status": "sacct matched; billing=8 GPU-hour lower-bound allocation for one gres/gpu; task binding uses preserved stdout completion time",
+      "started_at_status": "recovered from Cheaha sacct Start; row matched to preserved remote Slurm stdout completion time within 2 seconds",
+      "started_at": "2026-09-04T21:32:22-05:00",
+      "accelerator_hours": 7.046667,
+      "scheduler": {
+        "job_id_raw": "40063442",
+        "array_submission_id": "40062184",
+        "array_task_id": 26,
+        "state": "COMPLETED",
+        "exit_code": "0:0",
+        "start": "2026-09-04T21:32:22-05:00",
+        "end": "2026-09-04T22:25:13-05:00",
+        "elapsed_raw": 3171,
+        "alloc_tres": "billing=8,cpu=8,gres/gpu=1,mem=64G,node=1",
+        "match_seconds": 0.0,
+        "match_method": "remote stdout mtime to sacct End within 2 seconds"
+      }
     },
     {
       "run_id": "capacity_axis_20260902__75e45407__s1337",
       "source_stem": "e3a__E3__gpt2_1337_field-ssn-email_k6",
       "source_scope": "cheaha_main",
       "run_status": "completed",
-      "completion_basis": "full expected rows in recovered raw shard; scheduler terminal state not available",
+      "completion_basis": "full expected rows in recovered raw shard; Slurm stdout contains E3 DONE; matched sacct terminal state COMPLETED",
       "arm": "both",
       "seed": 1337,
       "config": {
@@ -1491,6 +1810,20 @@
           "bytes": 1238,
           "role": "logs",
           "evidence_kind": "launch_manifest"
+        },
+        {
+          "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40054137_19.out",
+          "sha256": "b30850397c6de91b88da4d072bad5538e492f0ff5481611bd5b74cef0270da88",
+          "bytes": 2481,
+          "role": "logs",
+          "evidence_kind": "slurm_log"
+        },
+        {
+          "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40054137_19.err",
+          "sha256": "99ba92d2547fbef869717687fd1ecd48edc05cd7cbcc920faf20d511c55d69dd",
+          "bytes": 497,
+          "role": "logs",
+          "evidence_kind": "slurm_log"
         }
       ],
       "code_dirty_state": "clean as recorded",
@@ -1513,15 +1846,30 @@
         }
       },
       "evaluation_population": "fixed synthetic person-field audit set, D versus C",
-      "accelerator_hours_status": "unknown; scheduler allocation unavailable",
-      "started_at_status": "unavailable in original manifest; current file times are not launch time"
+      "accelerator_hours_status": "sacct matched; billing=8 GPU-hour lower-bound allocation for one gres/gpu; task binding uses preserved stdout completion time",
+      "started_at_status": "recovered from Cheaha sacct Start; row matched to preserved remote Slurm stdout completion time within 2 seconds",
+      "started_at": "2026-09-04T12:49:22-05:00",
+      "accelerator_hours": 6.215556,
+      "scheduler": {
+        "job_id_raw": "40057306",
+        "array_submission_id": "40054137",
+        "array_task_id": 19,
+        "state": "COMPLETED",
+        "exit_code": "0:0",
+        "start": "2026-09-04T12:49:22-05:00",
+        "end": "2026-09-04T13:35:59-05:00",
+        "elapsed_raw": 2797,
+        "alloc_tres": "billing=8,cpu=8,gres/gpu=1,mem=64G,node=1",
+        "match_seconds": 0.0,
+        "match_method": "remote stdout mtime to sacct End within 2 seconds"
+      }
     },
     {
       "run_id": "capacity_axis_20260902__2a6fb52a__s1337",
       "source_stem": "e3a__E3__gpt2_1337_field-ssn-email_k64",
       "source_scope": "cheaha_main",
       "run_status": "completed",
-      "completion_basis": "full expected rows in recovered raw shard; scheduler terminal state not available",
+      "completion_basis": "full expected rows in recovered raw shard; Slurm stdout contains E3 DONE; matched sacct terminal state COMPLETED",
       "arm": "both",
       "seed": 1337,
       "config": {
@@ -1604,6 +1952,20 @@
           "bytes": 1239,
           "role": "logs",
           "evidence_kind": "launch_manifest"
+        },
+        {
+          "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40062184_27.out",
+          "sha256": "e83ec2fca4abbc0946f7ebe6139e48c4a0794c1806d3bdb05e3bea20d64af00c",
+          "bytes": 2487,
+          "role": "logs",
+          "evidence_kind": "slurm_log"
+        },
+        {
+          "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40062184_27.err",
+          "sha256": "26082f9061f9b10c698629b75e11ce0964c5b818db795db9f52e710592626e71",
+          "bytes": 1650,
+          "role": "logs",
+          "evidence_kind": "slurm_log"
         }
       ],
       "code_dirty_state": "unknown (source manifest code.dirty=null)",
@@ -1626,15 +1988,30 @@
         }
       },
       "evaluation_population": "fixed synthetic person-field audit set, D versus C",
-      "accelerator_hours_status": "unknown; scheduler allocation unavailable",
-      "started_at_status": "unavailable in original manifest; current file times are not launch time"
+      "accelerator_hours_status": "sacct matched; billing=8 GPU-hour lower-bound allocation for one gres/gpu; task binding uses preserved stdout completion time",
+      "started_at_status": "recovered from Cheaha sacct Start; row matched to preserved remote Slurm stdout completion time within 2 seconds",
+      "started_at": "2026-09-04T21:32:22-05:00",
+      "accelerator_hours": 9.175556,
+      "scheduler": {
+        "job_id_raw": "40063443",
+        "array_submission_id": "40062184",
+        "array_task_id": 27,
+        "state": "COMPLETED",
+        "exit_code": "0:0",
+        "start": "2026-09-04T21:32:22-05:00",
+        "end": "2026-09-04T22:41:11-05:00",
+        "elapsed_raw": 4129,
+        "alloc_tres": "billing=8,cpu=8,gres/gpu=1,mem=64G,node=1",
+        "match_seconds": 0.0,
+        "match_method": "remote stdout mtime to sacct End within 2 seconds"
+      }
     },
     {
       "run_id": "capacity_axis_20260902__a48cb2ea__s1337",
       "source_stem": "e3a__E3__gpt2_1337_field-ssn-email_k8",
       "source_scope": "cheaha_main",
       "run_status": "completed",
-      "completion_basis": "full expected rows in recovered raw shard; scheduler terminal state not available",
+      "completion_basis": "full expected rows in recovered raw shard; Slurm stdout contains E3 DONE; matched sacct terminal state COMPLETED",
       "arm": "both",
       "seed": 1337,
       "config": {
@@ -1718,6 +2095,20 @@
           "bytes": 1238,
           "role": "logs",
           "evidence_kind": "launch_manifest"
+        },
+        {
+          "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40054137_20.out",
+          "sha256": "0b603ca8ec59b7611296e1732f23c82c6acbeb37fa9d61f94e52a3c11cbeeb9f",
+          "bytes": 2481,
+          "role": "logs",
+          "evidence_kind": "slurm_log"
+        },
+        {
+          "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40054137_20.err",
+          "sha256": "6ce80afb1bdeeb961970022f3a9d5b9594c9e0a509c756f7310707421489a522",
+          "bytes": 1802,
+          "role": "logs",
+          "evidence_kind": "slurm_log"
         }
       ],
       "code_dirty_state": "clean as recorded",
@@ -1740,15 +2131,30 @@
         }
       },
       "evaluation_population": "fixed synthetic person-field audit set, D versus C",
-      "accelerator_hours_status": "unknown; scheduler allocation unavailable",
-      "started_at_status": "unavailable in original manifest; current file times are not launch time"
+      "accelerator_hours_status": "sacct matched; billing=8 GPU-hour lower-bound allocation for one gres/gpu; task binding uses preserved stdout completion time",
+      "started_at_status": "recovered from Cheaha sacct Start; row matched to preserved remote Slurm stdout completion time within 2 seconds",
+      "started_at": "2026-09-04T13:05:45-05:00",
+      "accelerator_hours": 5.16,
+      "scheduler": {
+        "job_id_raw": "40057344",
+        "array_submission_id": "40054137",
+        "array_task_id": 20,
+        "state": "COMPLETED",
+        "exit_code": "0:0",
+        "start": "2026-09-04T13:05:45-05:00",
+        "end": "2026-09-04T13:44:27-05:00",
+        "elapsed_raw": 2322,
+        "alloc_tres": "billing=8,cpu=8,gres/gpu=1,mem=64G,node=1",
+        "match_seconds": 0.0,
+        "match_method": "remote stdout mtime to sacct End within 2 seconds"
+      }
     },
     {
       "run_id": "capacity_axis_20260902__2a000258__s2024",
       "source_stem": "e3a__E3__gpt2_2024_field-ssn-email_k0",
       "source_scope": "cheaha_main",
       "run_status": "completed",
-      "completion_basis": "full expected rows in recovered raw shard; scheduler terminal state not available",
+      "completion_basis": "full expected rows in recovered raw shard; Slurm stdout contains E3 DONE; matched sacct terminal state COMPLETED",
       "arm": "both",
       "seed": 2024,
       "config": {
@@ -1832,6 +2238,20 @@
           "bytes": 1238,
           "role": "logs",
           "evidence_kind": "launch_manifest"
+        },
+        {
+          "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40054137_28.out",
+          "sha256": "e052614674e391794c4320814107e2ea79006a42b98ae1e1801219109df97f2e",
+          "bytes": 2481,
+          "role": "logs",
+          "evidence_kind": "slurm_log"
+        },
+        {
+          "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40054137_28.err",
+          "sha256": "95684f1e0b245217efc71df651242d5ffb9f900ea5ac3ccc9339bbc9a4b59498",
+          "bytes": 497,
+          "role": "logs",
+          "evidence_kind": "slurm_log"
         }
       ],
       "code_dirty_state": "clean as recorded",
@@ -1854,15 +2274,30 @@
         }
       },
       "evaluation_population": "fixed synthetic person-field audit set, D versus C",
-      "accelerator_hours_status": "unknown; scheduler allocation unavailable",
-      "started_at_status": "unavailable in original manifest; current file times are not launch time"
+      "accelerator_hours_status": "sacct matched; billing=8 GPU-hour lower-bound allocation for one gres/gpu; task binding uses preserved stdout completion time",
+      "started_at_status": "recovered from Cheaha sacct Start; row matched to preserved remote Slurm stdout completion time within 2 seconds",
+      "started_at": "2026-09-04T13:52:48-05:00",
+      "accelerator_hours": 0.291111,
+      "scheduler": {
+        "job_id_raw": "40057482",
+        "array_submission_id": "40054137",
+        "array_task_id": 28,
+        "state": "COMPLETED",
+        "exit_code": "0:0",
+        "start": "2026-09-04T13:52:48-05:00",
+        "end": "2026-09-04T13:54:59-05:00",
+        "elapsed_raw": 131,
+        "alloc_tres": "billing=8,cpu=8,gres/gpu=1,mem=64G,node=1",
+        "match_seconds": 0.0,
+        "match_method": "remote stdout mtime to sacct End within 2 seconds"
+      }
     },
     {
       "run_id": "capacity_axis_20260902__5b84bd0a__s2024",
       "source_stem": "e3a__E3__gpt2_2024_field-ssn-email_k1",
       "source_scope": "cheaha_main",
       "run_status": "completed",
-      "completion_basis": "full expected rows in recovered raw shard; scheduler terminal state not available",
+      "completion_basis": "full expected rows in recovered raw shard; Slurm stdout contains E3 DONE; matched sacct terminal state COMPLETED",
       "arm": "both",
       "seed": 2024,
       "config": {
@@ -1946,6 +2381,20 @@
           "bytes": 1238,
           "role": "logs",
           "evidence_kind": "launch_manifest"
+        },
+        {
+          "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40054137_29.out",
+          "sha256": "b7d5c0730c16697818e1e3b82166e16fd82fbf8df29e3e4c49bc366be8fe3d96",
+          "bytes": 2481,
+          "role": "logs",
+          "evidence_kind": "slurm_log"
+        },
+        {
+          "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40054137_29.err",
+          "sha256": "5d1561d6582b1124e6d21285ffe74aca82973837747f845c3f3fad8890de61c0",
+          "bytes": 497,
+          "role": "logs",
+          "evidence_kind": "slurm_log"
         }
       ],
       "code_dirty_state": "clean as recorded",
@@ -1968,15 +2417,30 @@
         }
       },
       "evaluation_population": "fixed synthetic person-field audit set, D versus C",
-      "accelerator_hours_status": "unknown; scheduler allocation unavailable",
-      "started_at_status": "unavailable in original manifest; current file times are not launch time"
+      "accelerator_hours_status": "sacct matched; billing=8 GPU-hour lower-bound allocation for one gres/gpu; task binding uses preserved stdout completion time",
+      "started_at_status": "recovered from Cheaha sacct Start; row matched to preserved remote Slurm stdout completion time within 2 seconds",
+      "started_at": "2026-09-04T13:54:59-05:00",
+      "accelerator_hours": 4.022222,
+      "scheduler": {
+        "job_id_raw": "40057487",
+        "array_submission_id": "40054137",
+        "array_task_id": 29,
+        "state": "COMPLETED",
+        "exit_code": "0:0",
+        "start": "2026-09-04T13:54:59-05:00",
+        "end": "2026-09-04T14:25:09-05:00",
+        "elapsed_raw": 1810,
+        "alloc_tres": "billing=8,cpu=8,gres/gpu=1,mem=64G,node=1",
+        "match_seconds": 0.0,
+        "match_method": "remote stdout mtime to sacct End within 2 seconds"
+      }
     },
     {
       "run_id": "capacity_axis_20260902__4c8f494a__s2024",
       "source_stem": "e3a__E3__gpt2_2024_field-ssn-email_k12",
       "source_scope": "cheaha_main",
       "run_status": "completed",
-      "completion_basis": "full expected rows in recovered raw shard; scheduler terminal state not available",
+      "completion_basis": "full expected rows in recovered raw shard; Slurm stdout contains E3 DONE; matched sacct terminal state COMPLETED",
       "arm": "both",
       "seed": 2024,
       "config": {
@@ -2060,6 +2524,20 @@
           "bytes": 1240,
           "role": "logs",
           "evidence_kind": "launch_manifest"
+        },
+        {
+          "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40054137_35.out",
+          "sha256": "ee43dc4d49d9fbfd739732bbf6d2277f8a49ff3c7b134b02285f6346ea993aa2",
+          "bytes": 2487,
+          "role": "logs",
+          "evidence_kind": "slurm_log"
+        },
+        {
+          "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40054137_35.err",
+          "sha256": "357bdd8c33f3b78e7f8c7d798f4b10ca66bd4db6567259fa14ee476994fe9425",
+          "bytes": 497,
+          "role": "logs",
+          "evidence_kind": "slurm_log"
         }
       ],
       "code_dirty_state": "clean as recorded",
@@ -2082,15 +2560,30 @@
         }
       },
       "evaluation_population": "fixed synthetic person-field audit set, D versus C",
-      "accelerator_hours_status": "unknown; scheduler allocation unavailable",
-      "started_at_status": "unavailable in original manifest; current file times are not launch time"
+      "accelerator_hours_status": "sacct matched; billing=8 GPU-hour lower-bound allocation for one gres/gpu; task binding uses preserved stdout completion time",
+      "started_at_status": "recovered from Cheaha sacct Start; row matched to preserved remote Slurm stdout completion time within 2 seconds",
+      "started_at": "2026-09-04T15:03:08-05:00",
+      "accelerator_hours": 4.666667,
+      "scheduler": {
+        "job_id_raw": "40057666",
+        "array_submission_id": "40054137",
+        "array_task_id": 35,
+        "state": "COMPLETED",
+        "exit_code": "0:0",
+        "start": "2026-09-04T15:03:08-05:00",
+        "end": "2026-09-04T15:38:08-05:00",
+        "elapsed_raw": 2100,
+        "alloc_tres": "billing=8,cpu=8,gres/gpu=1,mem=64G,node=1",
+        "match_seconds": 0.0,
+        "match_method": "remote stdout mtime to sacct End within 2 seconds"
+      }
     },
     {
       "run_id": "capacity_axis_20260902__805d9e2c__s2024",
       "source_stem": "e3a__E3__gpt2_2024_field-ssn-email_k16",
       "source_scope": "cheaha_main",
       "run_status": "completed",
-      "completion_basis": "full expected rows in recovered raw shard; scheduler terminal state not available",
+      "completion_basis": "full expected rows in recovered raw shard; Slurm stdout contains E3 DONE; matched sacct terminal state COMPLETED",
       "arm": "both",
       "seed": 2024,
       "config": {
@@ -2174,6 +2667,20 @@
           "bytes": 1240,
           "role": "logs",
           "evidence_kind": "launch_manifest"
+        },
+        {
+          "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40054137_36.out",
+          "sha256": "ca7ed52625bc6fe22c075c090da3036d5a7fde80adf5e62a76b7545d7cce2d58",
+          "bytes": 2487,
+          "role": "logs",
+          "evidence_kind": "slurm_log"
+        },
+        {
+          "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40054137_36.err",
+          "sha256": "433a31ebfd81f1debb038170a62fa9d1003c8b2f783e6adb0e4295d6b1b416da",
+          "bytes": 497,
+          "role": "logs",
+          "evidence_kind": "slurm_log"
         }
       ],
       "code_dirty_state": "clean as recorded",
@@ -2196,15 +2703,30 @@
         }
       },
       "evaluation_population": "fixed synthetic person-field audit set, D versus C",
-      "accelerator_hours_status": "unknown; scheduler allocation unavailable",
-      "started_at_status": "unavailable in original manifest; current file times are not launch time"
+      "accelerator_hours_status": "sacct matched; billing=8 GPU-hour lower-bound allocation for one gres/gpu; task binding uses preserved stdout completion time",
+      "started_at_status": "recovered from Cheaha sacct Start; row matched to preserved remote Slurm stdout completion time within 2 seconds",
+      "started_at": "2026-09-04T15:05:50-05:00",
+      "accelerator_hours": 4.068889,
+      "scheduler": {
+        "job_id_raw": "40057676",
+        "array_submission_id": "40054137",
+        "array_task_id": 36,
+        "state": "COMPLETED",
+        "exit_code": "0:0",
+        "start": "2026-09-04T15:05:50-05:00",
+        "end": "2026-09-04T15:36:21-05:00",
+        "elapsed_raw": 1831,
+        "alloc_tres": "billing=8,cpu=8,gres/gpu=1,mem=64G,node=1",
+        "match_seconds": 1.0,
+        "match_method": "remote stdout mtime to sacct End within 2 seconds"
+      }
     },
     {
       "run_id": "capacity_axis_20260902__6e83b2f3__s2024",
       "source_stem": "e3a__E3__gpt2_2024_field-ssn-email_k2",
       "source_scope": "cheaha_main",
       "run_status": "completed",
-      "completion_basis": "full expected rows in recovered raw shard; scheduler terminal state not available",
+      "completion_basis": "full expected rows in recovered raw shard; Slurm stdout contains E3 DONE; matched sacct terminal state COMPLETED",
       "arm": "both",
       "seed": 2024,
       "config": {
@@ -2288,6 +2810,20 @@
           "bytes": 1238,
           "role": "logs",
           "evidence_kind": "launch_manifest"
+        },
+        {
+          "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40054137_30.out",
+          "sha256": "aff88bc237d06cc2873ca478cc4cbff930ab51b2c90deb772d5c9664fa3a2d30",
+          "bytes": 2481,
+          "role": "logs",
+          "evidence_kind": "slurm_log"
+        },
+        {
+          "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40054137_30.err",
+          "sha256": "7d1c8c3b809a71a10ac1bab237c5ebd4145ac6ca811c35d8e2abf5b5ad47ef71",
+          "bytes": 497,
+          "role": "logs",
+          "evidence_kind": "slurm_log"
         }
       ],
       "code_dirty_state": "clean as recorded",
@@ -2310,15 +2846,30 @@
         }
       },
       "evaluation_population": "fixed synthetic person-field audit set, D versus C",
-      "accelerator_hours_status": "unknown; scheduler allocation unavailable",
-      "started_at_status": "unavailable in original manifest; current file times are not launch time"
+      "accelerator_hours_status": "sacct matched; billing=8 GPU-hour lower-bound allocation for one gres/gpu; task binding uses preserved stdout completion time",
+      "started_at_status": "recovered from Cheaha sacct Start; row matched to preserved remote Slurm stdout completion time within 2 seconds",
+      "started_at": "2026-09-04T14:07:53-05:00",
+      "accelerator_hours": 6.388889,
+      "scheduler": {
+        "job_id_raw": "40057526",
+        "array_submission_id": "40054137",
+        "array_task_id": 30,
+        "state": "COMPLETED",
+        "exit_code": "0:0",
+        "start": "2026-09-04T14:07:53-05:00",
+        "end": "2026-09-04T14:55:48-05:00",
+        "elapsed_raw": 2875,
+        "alloc_tres": "billing=8,cpu=8,gres/gpu=1,mem=64G,node=1",
+        "match_seconds": 0.0,
+        "match_method": "remote stdout mtime to sacct End within 2 seconds"
+      }
     },
     {
       "run_id": "capacity_axis_20260902__b5a0b0c1__s2024",
       "source_stem": "e3a__E3__gpt2_2024_field-ssn-email_k20",
       "source_scope": "cheaha_main",
       "run_status": "completed",
-      "completion_basis": "full expected rows in recovered raw shard; scheduler terminal state not available",
+      "completion_basis": "full expected rows in recovered raw shard; Slurm stdout contains E3 DONE; matched sacct terminal state COMPLETED",
       "arm": "both",
       "seed": 2024,
       "config": {
@@ -2402,6 +2953,20 @@
           "bytes": 1240,
           "role": "logs",
           "evidence_kind": "launch_manifest"
+        },
+        {
+          "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40054137_37.out",
+          "sha256": "48d47280e40bee4f74d808373cf61f7a79ddd4b209dee57ea7f9501e91182c58",
+          "bytes": 2487,
+          "role": "logs",
+          "evidence_kind": "slurm_log"
+        },
+        {
+          "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40054137_37.err",
+          "sha256": "087de9b0f18968625d567faf2938ee955a20ac07f3f157f7f142c78f102bf802",
+          "bytes": 497,
+          "role": "logs",
+          "evidence_kind": "slurm_log"
         }
       ],
       "code_dirty_state": "clean as recorded",
@@ -2424,15 +2989,30 @@
         }
       },
       "evaluation_population": "fixed synthetic person-field audit set, D versus C",
-      "accelerator_hours_status": "unknown; scheduler allocation unavailable",
-      "started_at_status": "unavailable in original manifest; current file times are not launch time"
+      "accelerator_hours_status": "sacct matched; billing=8 GPU-hour lower-bound allocation for one gres/gpu; task binding uses preserved stdout completion time",
+      "started_at_status": "recovered from Cheaha sacct Start; row matched to preserved remote Slurm stdout completion time within 2 seconds",
+      "started_at": "2026-09-04T15:11:44-05:00",
+      "accelerator_hours": 4.808889,
+      "scheduler": {
+        "job_id_raw": "40057696",
+        "array_submission_id": "40054137",
+        "array_task_id": 37,
+        "state": "COMPLETED",
+        "exit_code": "0:0",
+        "start": "2026-09-04T15:11:44-05:00",
+        "end": "2026-09-04T15:47:48-05:00",
+        "elapsed_raw": 2164,
+        "alloc_tres": "billing=8,cpu=8,gres/gpu=1,mem=64G,node=1",
+        "match_seconds": 0.0,
+        "match_method": "remote stdout mtime to sacct End within 2 seconds"
+      }
     },
     {
       "run_id": "capacity_axis_20260902__dd223768__s2024",
       "source_stem": "e3a__E3__gpt2_2024_field-ssn-email_k24",
       "source_scope": "cheaha_main",
       "run_status": "completed",
-      "completion_basis": "full expected rows in recovered raw shard; scheduler terminal state not available",
+      "completion_basis": "full expected rows in recovered raw shard; Slurm stdout contains E3 DONE; matched sacct terminal state COMPLETED",
       "arm": "both",
       "seed": 2024,
       "config": {
@@ -2516,6 +3096,20 @@
           "bytes": 1240,
           "role": "logs",
           "evidence_kind": "launch_manifest"
+        },
+        {
+          "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40054137_38.out",
+          "sha256": "022bc74924ecb69ed8498658435d4bedade7e24e9120a2fe4de2b42b7fe4e033",
+          "bytes": 2487,
+          "role": "logs",
+          "evidence_kind": "slurm_log"
+        },
+        {
+          "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40054137_38.err",
+          "sha256": "f7ab9ae8dcad855c18bbd7abf87ce217d0e12a70a5a03a925daeafe02ed2f42b",
+          "bytes": 497,
+          "role": "logs",
+          "evidence_kind": "slurm_log"
         }
       ],
       "code_dirty_state": "clean as recorded",
@@ -2538,15 +3132,30 @@
         }
       },
       "evaluation_population": "fixed synthetic person-field audit set, D versus C",
-      "accelerator_hours_status": "unknown; scheduler allocation unavailable",
-      "started_at_status": "unavailable in original manifest; current file times are not launch time"
+      "accelerator_hours_status": "sacct matched; billing=8 GPU-hour lower-bound allocation for one gres/gpu; task binding uses preserved stdout completion time",
+      "started_at_status": "recovered from Cheaha sacct Start; row matched to preserved remote Slurm stdout completion time within 2 seconds",
+      "started_at": "2026-09-04T15:35:46-05:00",
+      "accelerator_hours": 4.42,
+      "scheduler": {
+        "job_id_raw": "40054137",
+        "array_submission_id": "40054137",
+        "array_task_id": 38,
+        "state": "COMPLETED",
+        "exit_code": "0:0",
+        "start": "2026-09-04T15:35:46-05:00",
+        "end": "2026-09-04T16:08:55-05:00",
+        "elapsed_raw": 1989,
+        "alloc_tres": "billing=8,cpu=8,gres/gpu=1,mem=64G,node=1",
+        "match_seconds": 0.0,
+        "match_method": "remote stdout mtime to sacct End within 2 seconds"
+      }
     },
     {
       "run_id": "capacity_axis_20260902__04529cf3__s2024",
       "source_stem": "e3a__E3__gpt2_2024_field-ssn-email_k3",
       "source_scope": "cheaha_main",
       "run_status": "completed",
-      "completion_basis": "full expected rows in recovered raw shard; scheduler terminal state not available",
+      "completion_basis": "full expected rows in recovered raw shard; Slurm stdout contains E3 DONE; matched sacct terminal state COMPLETED",
       "arm": "both",
       "seed": 2024,
       "config": {
@@ -2630,6 +3239,20 @@
           "bytes": 1238,
           "role": "logs",
           "evidence_kind": "launch_manifest"
+        },
+        {
+          "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40054137_31.out",
+          "sha256": "79ee5a27f6034e06752375b16089a5027922978711cd202c6ee7c597e0b32c7b",
+          "bytes": 2481,
+          "role": "logs",
+          "evidence_kind": "slurm_log"
+        },
+        {
+          "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40054137_31.err",
+          "sha256": "52c2252e970f4f01487735106375d8e7e7df602c40bebf996d188bed024c824b",
+          "bytes": 497,
+          "role": "logs",
+          "evidence_kind": "slurm_log"
         }
       ],
       "code_dirty_state": "clean as recorded",
@@ -2652,15 +3275,30 @@
         }
       },
       "evaluation_population": "fixed synthetic person-field audit set, D versus C",
-      "accelerator_hours_status": "unknown; scheduler allocation unavailable",
-      "started_at_status": "unavailable in original manifest; current file times are not launch time"
+      "accelerator_hours_status": "sacct matched; billing=8 GPU-hour lower-bound allocation for one gres/gpu; task binding uses preserved stdout completion time",
+      "started_at_status": "recovered from Cheaha sacct Start; row matched to preserved remote Slurm stdout completion time within 2 seconds",
+      "started_at": "2026-09-04T14:11:35-05:00",
+      "accelerator_hours": 6.873333,
+      "scheduler": {
+        "job_id_raw": "40057533",
+        "array_submission_id": "40054137",
+        "array_task_id": 31,
+        "state": "COMPLETED",
+        "exit_code": "0:0",
+        "start": "2026-09-04T14:11:35-05:00",
+        "end": "2026-09-04T15:03:08-05:00",
+        "elapsed_raw": 3093,
+        "alloc_tres": "billing=8,cpu=8,gres/gpu=1,mem=64G,node=1",
+        "match_seconds": 0.0,
+        "match_method": "remote stdout mtime to sacct End within 2 seconds"
+      }
     },
     {
       "run_id": "capacity_axis_20260902__bb0a64d7__s2024",
       "source_stem": "e3a__E3__gpt2_2024_field-ssn-email_k32",
       "source_scope": "cheaha_main",
       "run_status": "completed",
-      "completion_basis": "full expected rows in recovered raw shard; scheduler terminal state not available",
+      "completion_basis": "full expected rows in recovered raw shard; Slurm stdout contains E3 DONE; matched sacct terminal state COMPLETED",
       "arm": "both",
       "seed": 2024,
       "config": {
@@ -2744,6 +3382,20 @@
           "bytes": 1240,
           "role": "logs",
           "evidence_kind": "launch_manifest"
+        },
+        {
+          "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40062184_39.out",
+          "sha256": "e52c3a006134c49dd256961b4824a19160b806817f637528a8f1582d43e01b4e",
+          "bytes": 2487,
+          "role": "logs",
+          "evidence_kind": "slurm_log"
+        },
+        {
+          "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40062184_39.err",
+          "sha256": "c50d92a88a6e81c59f59139bd467fc2d1747249709e53f1b74c27b857cafd1b3",
+          "bytes": 497,
+          "role": "logs",
+          "evidence_kind": "slurm_log"
         }
       ],
       "code_dirty_state": "clean as recorded",
@@ -2766,15 +3418,30 @@
         }
       },
       "evaluation_population": "fixed synthetic person-field audit set, D versus C",
-      "accelerator_hours_status": "unknown; scheduler allocation unavailable",
-      "started_at_status": "unavailable in original manifest; current file times are not launch time"
+      "accelerator_hours_status": "sacct matched; billing=8 GPU-hour lower-bound allocation for one gres/gpu; task binding uses preserved stdout completion time",
+      "started_at_status": "recovered from Cheaha sacct Start; row matched to preserved remote Slurm stdout completion time within 2 seconds",
+      "started_at": "2026-09-04T22:06:17-05:00",
+      "accelerator_hours": 5.146667,
+      "scheduler": {
+        "job_id_raw": "40064187",
+        "array_submission_id": "40062184",
+        "array_task_id": 39,
+        "state": "COMPLETED",
+        "exit_code": "0:0",
+        "start": "2026-09-04T22:06:17-05:00",
+        "end": "2026-09-04T22:44:53-05:00",
+        "elapsed_raw": 2316,
+        "alloc_tres": "billing=8,cpu=8,gres/gpu=1,mem=64G,node=1",
+        "match_seconds": 0.0,
+        "match_method": "remote stdout mtime to sacct End within 2 seconds"
+      }
     },
     {
       "run_id": "capacity_axis_20260902__ff7ff034__s2024",
       "source_stem": "e3a__E3__gpt2_2024_field-ssn-email_k4",
       "source_scope": "cheaha_main",
       "run_status": "completed",
-      "completion_basis": "full expected rows in recovered raw shard; scheduler terminal state not available",
+      "completion_basis": "full expected rows in recovered raw shard; Slurm stdout contains E3 DONE; matched sacct terminal state COMPLETED",
       "arm": "both",
       "seed": 2024,
       "config": {
@@ -2858,6 +3525,20 @@
           "bytes": 1238,
           "role": "logs",
           "evidence_kind": "launch_manifest"
+        },
+        {
+          "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40054137_32.out",
+          "sha256": "9094d8f14287dd6572ec06bc4da0cd2380493ca1015209fb3952b87aa0db97ec",
+          "bytes": 2481,
+          "role": "logs",
+          "evidence_kind": "slurm_log"
+        },
+        {
+          "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40054137_32.err",
+          "sha256": "4b356b4dd9ced199447e71606ce1da0c571ed2564f0718c0fec9c4f9c7bdae5e",
+          "bytes": 497,
+          "role": "logs",
+          "evidence_kind": "slurm_log"
         }
       ],
       "code_dirty_state": "clean as recorded",
@@ -2880,15 +3561,30 @@
         }
       },
       "evaluation_population": "fixed synthetic person-field audit set, D versus C",
-      "accelerator_hours_status": "unknown; scheduler allocation unavailable",
-      "started_at_status": "unavailable in original manifest; current file times are not launch time"
+      "accelerator_hours_status": "sacct matched; billing=8 GPU-hour lower-bound allocation for one gres/gpu; task binding uses preserved stdout completion time",
+      "started_at_status": "recovered from Cheaha sacct Start; row matched to preserved remote Slurm stdout completion time within 2 seconds",
+      "started_at": "2026-09-04T14:19:10-05:00",
+      "accelerator_hours": 6.222222,
+      "scheduler": {
+        "job_id_raw": "40057549",
+        "array_submission_id": "40054137",
+        "array_task_id": 32,
+        "state": "COMPLETED",
+        "exit_code": "0:0",
+        "start": "2026-09-04T14:19:10-05:00",
+        "end": "2026-09-04T15:05:50-05:00",
+        "elapsed_raw": 2800,
+        "alloc_tres": "billing=8,cpu=8,gres/gpu=1,mem=64G,node=1",
+        "match_seconds": 1.0,
+        "match_method": "remote stdout mtime to sacct End within 2 seconds"
+      }
     },
     {
       "run_id": "capacity_axis_20260902__add01fe8__s2024",
       "source_stem": "e3a__E3__gpt2_2024_field-ssn-email_k48",
       "source_scope": "cheaha_main",
       "run_status": "completed",
-      "completion_basis": "full expected rows in recovered raw shard; scheduler terminal state not available",
+      "completion_basis": "full expected rows in recovered raw shard; Slurm stdout contains E3 DONE; matched sacct terminal state COMPLETED",
       "arm": "both",
       "seed": 2024,
       "config": {
@@ -2972,6 +3668,20 @@
           "bytes": 1240,
           "role": "logs",
           "evidence_kind": "launch_manifest"
+        },
+        {
+          "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40062184_40.out",
+          "sha256": "faa46f1eb5db385d686166719bd987518d20b22a0c2a0d3ba68504e1ce211114",
+          "bytes": 2487,
+          "role": "logs",
+          "evidence_kind": "slurm_log"
+        },
+        {
+          "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40062184_40.err",
+          "sha256": "f96edc35efaf32fd5be4c0b77ecbe158a29a802dc8c262d79698f881b900d32b",
+          "bytes": 497,
+          "role": "logs",
+          "evidence_kind": "slurm_log"
         }
       ],
       "code_dirty_state": "clean as recorded",
@@ -2994,15 +3704,30 @@
         }
       },
       "evaluation_population": "fixed synthetic person-field audit set, D versus C",
-      "accelerator_hours_status": "unknown; scheduler allocation unavailable",
-      "started_at_status": "unavailable in original manifest; current file times are not launch time"
+      "accelerator_hours_status": "sacct matched; billing=8 GPU-hour lower-bound allocation for one gres/gpu; task binding uses preserved stdout completion time",
+      "started_at_status": "recovered from Cheaha sacct Start; row matched to preserved remote Slurm stdout completion time within 2 seconds",
+      "started_at": "2026-09-04T22:25:13-05:00",
+      "accelerator_hours": 6.695556,
+      "scheduler": {
+        "job_id_raw": "40064497",
+        "array_submission_id": "40062184",
+        "array_task_id": 40,
+        "state": "COMPLETED",
+        "exit_code": "0:0",
+        "start": "2026-09-04T22:25:13-05:00",
+        "end": "2026-09-04T23:15:26-05:00",
+        "elapsed_raw": 3013,
+        "alloc_tres": "billing=8,cpu=8,gres/gpu=1,mem=64G,node=1",
+        "match_seconds": 0.0,
+        "match_method": "remote stdout mtime to sacct End within 2 seconds"
+      }
     },
     {
       "run_id": "capacity_axis_20260902__75e45407__s2024",
       "source_stem": "e3a__E3__gpt2_2024_field-ssn-email_k6",
       "source_scope": "cheaha_main",
       "run_status": "completed",
-      "completion_basis": "full expected rows in recovered raw shard; scheduler terminal state not available",
+      "completion_basis": "full expected rows in recovered raw shard; Slurm stdout contains E3 DONE; matched sacct terminal state COMPLETED",
       "arm": "both",
       "seed": 2024,
       "config": {
@@ -3086,6 +3811,20 @@
           "bytes": 1238,
           "role": "logs",
           "evidence_kind": "launch_manifest"
+        },
+        {
+          "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40054137_33.out",
+          "sha256": "4e7928baa6ac4c9ac20393c866295c3496eb4219a620e45758f23672ec048471",
+          "bytes": 2481,
+          "role": "logs",
+          "evidence_kind": "slurm_log"
+        },
+        {
+          "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40054137_33.err",
+          "sha256": "236fbf0b3926b3a7750d05fdde22ef32ec05e03d9796b3dd5cae552068b42bee",
+          "bytes": 497,
+          "role": "logs",
+          "evidence_kind": "slurm_log"
         }
       ],
       "code_dirty_state": "clean as recorded",
@@ -3108,15 +3847,30 @@
         }
       },
       "evaluation_population": "fixed synthetic person-field audit set, D versus C",
-      "accelerator_hours_status": "unknown; scheduler allocation unavailable",
-      "started_at_status": "unavailable in original manifest; current file times are not launch time"
+      "accelerator_hours_status": "sacct matched; billing=8 GPU-hour lower-bound allocation for one gres/gpu; task binding uses preserved stdout completion time",
+      "started_at_status": "recovered from Cheaha sacct Start; row matched to preserved remote Slurm stdout completion time within 2 seconds",
+      "started_at": "2026-09-04T14:25:09-05:00",
+      "accelerator_hours": 6.211111,
+      "scheduler": {
+        "job_id_raw": "40057573",
+        "array_submission_id": "40054137",
+        "array_task_id": 33,
+        "state": "COMPLETED",
+        "exit_code": "0:0",
+        "start": "2026-09-04T14:25:09-05:00",
+        "end": "2026-09-04T15:11:44-05:00",
+        "elapsed_raw": 2795,
+        "alloc_tres": "billing=8,cpu=8,gres/gpu=1,mem=64G,node=1",
+        "match_seconds": 1.0,
+        "match_method": "remote stdout mtime to sacct End within 2 seconds"
+      }
     },
     {
       "run_id": "capacity_axis_20260902__2a6fb52a__s2024",
       "source_stem": "e3a__E3__gpt2_2024_field-ssn-email_k64",
       "source_scope": "cheaha_main",
       "run_status": "completed",
-      "completion_basis": "full expected rows in recovered raw shard; scheduler terminal state not available",
+      "completion_basis": "full expected rows in recovered raw shard; Slurm stdout contains E3 DONE; matched sacct terminal state COMPLETED",
       "arm": "both",
       "seed": 2024,
       "config": {
@@ -3200,6 +3954,20 @@
           "bytes": 1240,
           "role": "logs",
           "evidence_kind": "launch_manifest"
+        },
+        {
+          "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40062184_41.out",
+          "sha256": "4cc838103619648ad50ea007af3830444b91e82b1413eae81fccc023e19dbfa8",
+          "bytes": 2487,
+          "role": "logs",
+          "evidence_kind": "slurm_log"
+        },
+        {
+          "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40062184_41.err",
+          "sha256": "71f6fa045ec828b87fc26406fdb66d455a17ee11c1d8d9f9ad021d15b7d93a48",
+          "bytes": 1634,
+          "role": "logs",
+          "evidence_kind": "slurm_log"
         }
       ],
       "code_dirty_state": "clean as recorded",
@@ -3222,15 +3990,30 @@
         }
       },
       "evaluation_population": "fixed synthetic person-field audit set, D versus C",
-      "accelerator_hours_status": "unknown; scheduler allocation unavailable",
-      "started_at_status": "unavailable in original manifest; current file times are not launch time"
+      "accelerator_hours_status": "sacct matched; billing=8 GPU-hour lower-bound allocation for one gres/gpu; task binding uses preserved stdout completion time",
+      "started_at_status": "recovered from Cheaha sacct Start; row matched to preserved remote Slurm stdout completion time within 2 seconds",
+      "started_at": "2026-09-04T22:28:15-05:00",
+      "accelerator_hours": 8.757778,
+      "scheduler": {
+        "job_id_raw": "40062184",
+        "array_submission_id": "40062184",
+        "array_task_id": 41,
+        "state": "COMPLETED",
+        "exit_code": "0:0",
+        "start": "2026-09-04T22:28:15-05:00",
+        "end": "2026-09-04T23:33:56-05:00",
+        "elapsed_raw": 3941,
+        "alloc_tres": "billing=8,cpu=8,gres/gpu=1,mem=64G,node=1",
+        "match_seconds": 0.0,
+        "match_method": "remote stdout mtime to sacct End within 2 seconds"
+      }
     },
     {
       "run_id": "capacity_axis_20260902__a48cb2ea__s2024",
       "source_stem": "e3a__E3__gpt2_2024_field-ssn-email_k8",
       "source_scope": "cheaha_main",
       "run_status": "completed",
-      "completion_basis": "full expected rows in recovered raw shard; scheduler terminal state not available",
+      "completion_basis": "full expected rows in recovered raw shard; Slurm stdout contains E3 DONE; matched sacct terminal state COMPLETED",
       "arm": "both",
       "seed": 2024,
       "config": {
@@ -3314,6 +4097,20 @@
           "bytes": 1238,
           "role": "logs",
           "evidence_kind": "launch_manifest"
+        },
+        {
+          "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40054137_34.out",
+          "sha256": "d9782e1126ed2790fff9be971df1e263c744946b095f72002738ceb2c5eb3826",
+          "bytes": 2481,
+          "role": "logs",
+          "evidence_kind": "slurm_log"
+        },
+        {
+          "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40054137_34.err",
+          "sha256": "dd8a88e66ba2c7ec87718efa2cf65cf0f53bf5cf95bc4b1aa651f2c3c44d8044",
+          "bytes": 497,
+          "role": "logs",
+          "evidence_kind": "slurm_log"
         }
       ],
       "code_dirty_state": "clean as recorded",
@@ -3336,15 +4133,30 @@
         }
       },
       "evaluation_population": "fixed synthetic person-field audit set, D versus C",
-      "accelerator_hours_status": "unknown; scheduler allocation unavailable",
-      "started_at_status": "unavailable in original manifest; current file times are not launch time"
+      "accelerator_hours_status": "sacct matched; billing=8 GPU-hour lower-bound allocation for one gres/gpu; task binding uses preserved stdout completion time",
+      "started_at_status": "recovered from Cheaha sacct Start; row matched to preserved remote Slurm stdout completion time within 2 seconds",
+      "started_at": "2026-09-04T14:55:49-05:00",
+      "accelerator_hours": 5.326667,
+      "scheduler": {
+        "job_id_raw": "40057648",
+        "array_submission_id": "40054137",
+        "array_task_id": 34,
+        "state": "COMPLETED",
+        "exit_code": "0:0",
+        "start": "2026-09-04T14:55:49-05:00",
+        "end": "2026-09-04T15:35:46-05:00",
+        "elapsed_raw": 2397,
+        "alloc_tres": "billing=8,cpu=8,gres/gpu=1,mem=64G,node=1",
+        "match_seconds": 0.0,
+        "match_method": "remote stdout mtime to sacct End within 2 seconds"
+      }
     },
     {
       "run_id": "capacity_axis_20260902__2a000258__s42",
       "source_stem": "e3a__E3__gpt2_42_field-ssn-email_k0",
       "source_scope": "cheaha_main",
       "run_status": "completed",
-      "completion_basis": "full expected rows in recovered raw shard; scheduler terminal state not available",
+      "completion_basis": "full expected rows in recovered raw shard; Slurm stdout contains E3 DONE; matched sacct terminal state COMPLETED",
       "arm": "both",
       "seed": 42,
       "config": {
@@ -3428,6 +4240,20 @@
           "bytes": 1236,
           "role": "logs",
           "evidence_kind": "launch_manifest"
+        },
+        {
+          "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40054137_0.out",
+          "sha256": "6dc6a94648121a618873d8f483d6f7ef01b3d11a266463c1814068d109b79a87",
+          "bytes": 2466,
+          "role": "logs",
+          "evidence_kind": "slurm_log"
+        },
+        {
+          "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40054137_0.err",
+          "sha256": "f5540ffb6a97238936d8fb0fd553660a0cfeb304d47492808bf8441bb46b02f1",
+          "bytes": 1693,
+          "role": "logs",
+          "evidence_kind": "slurm_log"
         }
       ],
       "code_dirty_state": "clean as recorded",
@@ -3450,15 +4276,30 @@
         }
       },
       "evaluation_population": "fixed synthetic person-field audit set, D versus C",
-      "accelerator_hours_status": "unknown; scheduler allocation unavailable",
-      "started_at_status": "unavailable in original manifest; current file times are not launch time"
+      "accelerator_hours_status": "sacct matched; billing=8 GPU-hour lower-bound allocation for one gres/gpu; task binding uses preserved stdout completion time",
+      "started_at_status": "recovered from Cheaha sacct Start; row matched to preserved remote Slurm stdout completion time within 2 seconds",
+      "started_at": "2026-09-04T10:49:03-05:00",
+      "accelerator_hours": 0.393333,
+      "scheduler": {
+        "job_id_raw": "40054138",
+        "array_submission_id": "40054137",
+        "array_task_id": 0,
+        "state": "COMPLETED",
+        "exit_code": "0:0",
+        "start": "2026-09-04T10:49:03-05:00",
+        "end": "2026-09-04T10:52:00-05:00",
+        "elapsed_raw": 177,
+        "alloc_tres": "billing=8,cpu=8,gres/gpu=1,mem=64G,node=1",
+        "match_seconds": 0.0,
+        "match_method": "remote stdout mtime to sacct End within 2 seconds"
+      }
     },
     {
       "run_id": "capacity_axis_20260902__5b84bd0a__s42",
       "source_stem": "e3a__E3__gpt2_42_field-ssn-email_k1",
       "source_scope": "cheaha_main",
       "run_status": "completed",
-      "completion_basis": "full expected rows in recovered raw shard; scheduler terminal state not available",
+      "completion_basis": "full expected rows in recovered raw shard; Slurm stdout contains E3 DONE; matched sacct terminal state COMPLETED",
       "arm": "both",
       "seed": 42,
       "config": {
@@ -3542,6 +4383,20 @@
           "bytes": 1236,
           "role": "logs",
           "evidence_kind": "launch_manifest"
+        },
+        {
+          "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40054137_1.out",
+          "sha256": "5f41029ad1fcca854c3594e65d3a21a77e55294eadcca914dc187ff402537225",
+          "bytes": 2466,
+          "role": "logs",
+          "evidence_kind": "slurm_log"
+        },
+        {
+          "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40054137_1.err",
+          "sha256": "1e17ef3e9cf988936a42795c7512b4c74adda4718d99bebe5b9dd93024502e9b",
+          "bytes": 963,
+          "role": "logs",
+          "evidence_kind": "slurm_log"
         }
       ],
       "code_dirty_state": "clean as recorded",
@@ -3564,15 +4419,30 @@
         }
       },
       "evaluation_population": "fixed synthetic person-field audit set, D versus C",
-      "accelerator_hours_status": "unknown; scheduler allocation unavailable",
-      "started_at_status": "unavailable in original manifest; current file times are not launch time"
+      "accelerator_hours_status": "sacct matched; billing=8 GPU-hour lower-bound allocation for one gres/gpu; task binding uses preserved stdout completion time",
+      "started_at_status": "recovered from Cheaha sacct Start; row matched to preserved remote Slurm stdout completion time within 2 seconds",
+      "started_at": "2026-09-04T10:49:03-05:00",
+      "accelerator_hours": 3.997778,
+      "scheduler": {
+        "job_id_raw": "40054139",
+        "array_submission_id": "40054137",
+        "array_task_id": 1,
+        "state": "COMPLETED",
+        "exit_code": "0:0",
+        "start": "2026-09-04T10:49:03-05:00",
+        "end": "2026-09-04T11:19:02-05:00",
+        "elapsed_raw": 1799,
+        "alloc_tres": "billing=8,cpu=8,gres/gpu=1,mem=64G,node=1",
+        "match_seconds": 0.0,
+        "match_method": "remote stdout mtime to sacct End within 2 seconds"
+      }
     },
     {
       "run_id": "capacity_axis_20260902__4c8f494a__s42",
       "source_stem": "e3a__E3__gpt2_42_field-ssn-email_k12",
       "source_scope": "cheaha_main",
       "run_status": "completed",
-      "completion_basis": "full expected rows in recovered raw shard; scheduler terminal state not available",
+      "completion_basis": "full expected rows in recovered raw shard; Slurm stdout contains E3 DONE; matched sacct terminal state COMPLETED",
       "arm": "both",
       "seed": 42,
       "config": {
@@ -3656,6 +4526,20 @@
           "bytes": 1238,
           "role": "logs",
           "evidence_kind": "launch_manifest"
+        },
+        {
+          "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40054137_7.out",
+          "sha256": "e025cf74fd50fe06498a44f597b37048ad0f23a1e14682d02f531a327e96a6b0",
+          "bytes": 2472,
+          "role": "logs",
+          "evidence_kind": "slurm_log"
+        },
+        {
+          "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40054137_7.err",
+          "sha256": "5176049af2460f72551013a69e15cb2275e1c4ce6cf5a86cd817986a22e07da6",
+          "bytes": 497,
+          "role": "logs",
+          "evidence_kind": "slurm_log"
         }
       ],
       "code_dirty_state": "clean as recorded",
@@ -3678,15 +4562,30 @@
         }
       },
       "evaluation_population": "fixed synthetic person-field audit set, D versus C",
-      "accelerator_hours_status": "unknown; scheduler allocation unavailable",
-      "started_at_status": "unavailable in original manifest; current file times are not launch time"
+      "accelerator_hours_status": "sacct matched; billing=8 GPU-hour lower-bound allocation for one gres/gpu; task binding uses preserved stdout completion time",
+      "started_at_status": "recovered from Cheaha sacct Start; row matched to preserved remote Slurm stdout completion time within 2 seconds",
+      "started_at": "2026-09-04T11:38:48-05:00",
+      "accelerator_hours": 4.704444,
+      "scheduler": {
+        "job_id_raw": "40055187",
+        "array_submission_id": "40054137",
+        "array_task_id": 7,
+        "state": "COMPLETED",
+        "exit_code": "0:0",
+        "start": "2026-09-04T11:38:48-05:00",
+        "end": "2026-09-04T12:14:05-05:00",
+        "elapsed_raw": 2117,
+        "alloc_tres": "billing=8,cpu=8,gres/gpu=1,mem=64G,node=1",
+        "match_seconds": 0.0,
+        "match_method": "remote stdout mtime to sacct End within 2 seconds"
+      }
     },
     {
       "run_id": "capacity_axis_20260902__805d9e2c__s42",
       "source_stem": "e3a__E3__gpt2_42_field-ssn-email_k16",
       "source_scope": "cheaha_main",
       "run_status": "completed",
-      "completion_basis": "full expected rows in recovered raw shard; scheduler terminal state not available",
+      "completion_basis": "full expected rows in recovered raw shard; Slurm stdout contains E3 DONE; matched sacct terminal state COMPLETED",
       "arm": "both",
       "seed": 42,
       "config": {
@@ -3770,6 +4669,20 @@
           "bytes": 1238,
           "role": "logs",
           "evidence_kind": "launch_manifest"
+        },
+        {
+          "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40054137_8.out",
+          "sha256": "1502a9e4176774206179f8fd633f095811d39d82e4a2617f3ef6341ddcc0a30d",
+          "bytes": 2472,
+          "role": "logs",
+          "evidence_kind": "slurm_log"
+        },
+        {
+          "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40054137_8.err",
+          "sha256": "5b1d83112119b946812c834f46afd2f51229e298e658cfa79d4704c5c63ad292",
+          "bytes": 1565,
+          "role": "logs",
+          "evidence_kind": "slurm_log"
         }
       ],
       "code_dirty_state": "clean as recorded",
@@ -3792,15 +4705,30 @@
         }
       },
       "evaluation_population": "fixed synthetic person-field audit set, D versus C",
-      "accelerator_hours_status": "unknown; scheduler allocation unavailable",
-      "started_at_status": "unavailable in original manifest; current file times are not launch time"
+      "accelerator_hours_status": "sacct matched; billing=8 GPU-hour lower-bound allocation for one gres/gpu; task binding uses preserved stdout completion time",
+      "started_at_status": "recovered from Cheaha sacct Start; row matched to preserved remote Slurm stdout completion time within 2 seconds",
+      "started_at": "2026-09-04T11:38:50-05:00",
+      "accelerator_hours": 4.157778,
+      "scheduler": {
+        "job_id_raw": "40055188",
+        "array_submission_id": "40054137",
+        "array_task_id": 8,
+        "state": "COMPLETED",
+        "exit_code": "0:0",
+        "start": "2026-09-04T11:38:50-05:00",
+        "end": "2026-09-04T12:10:01-05:00",
+        "elapsed_raw": 1871,
+        "alloc_tres": "billing=8,cpu=8,gres/gpu=1,mem=64G,node=1",
+        "match_seconds": 0.0,
+        "match_method": "remote stdout mtime to sacct End within 2 seconds"
+      }
     },
     {
       "run_id": "capacity_axis_20260902__6e83b2f3__s42",
       "source_stem": "e3a__E3__gpt2_42_field-ssn-email_k2",
       "source_scope": "cheaha_main",
       "run_status": "completed",
-      "completion_basis": "full expected rows in recovered raw shard; scheduler terminal state not available",
+      "completion_basis": "full expected rows in recovered raw shard; Slurm stdout contains E3 DONE; matched sacct terminal state COMPLETED",
       "arm": "both",
       "seed": 42,
       "config": {
@@ -3884,6 +4812,20 @@
           "bytes": 1236,
           "role": "logs",
           "evidence_kind": "launch_manifest"
+        },
+        {
+          "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40054137_2.out",
+          "sha256": "98d7da5aac540a4a32c88e8b43b39ea3a996c0afa533b962c4334103c9561f18",
+          "bytes": 2466,
+          "role": "logs",
+          "evidence_kind": "slurm_log"
+        },
+        {
+          "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40054137_2.err",
+          "sha256": "e6e06e1fd878522fe4dcf9f825e7c291e82db54a2147e688e58105ae3643feb7",
+          "bytes": 2085,
+          "role": "logs",
+          "evidence_kind": "slurm_log"
         }
       ],
       "code_dirty_state": "clean as recorded",
@@ -3906,15 +4848,30 @@
         }
       },
       "evaluation_population": "fixed synthetic person-field audit set, D versus C",
-      "accelerator_hours_status": "unknown; scheduler allocation unavailable",
-      "started_at_status": "unavailable in original manifest; current file times are not launch time"
+      "accelerator_hours_status": "sacct matched; billing=8 GPU-hour lower-bound allocation for one gres/gpu; task binding uses preserved stdout completion time",
+      "started_at_status": "recovered from Cheaha sacct Start; row matched to preserved remote Slurm stdout completion time within 2 seconds",
+      "started_at": "2026-09-04T10:49:03-05:00",
+      "accelerator_hours": 6.306667,
+      "scheduler": {
+        "job_id_raw": "40054140",
+        "array_submission_id": "40054137",
+        "array_task_id": 2,
+        "state": "COMPLETED",
+        "exit_code": "0:0",
+        "start": "2026-09-04T10:49:03-05:00",
+        "end": "2026-09-04T11:36:21-05:00",
+        "elapsed_raw": 2838,
+        "alloc_tres": "billing=8,cpu=8,gres/gpu=1,mem=64G,node=1",
+        "match_seconds": 0.0,
+        "match_method": "remote stdout mtime to sacct End within 2 seconds"
+      }
     },
     {
       "run_id": "capacity_axis_20260902__b5a0b0c1__s42",
       "source_stem": "e3a__E3__gpt2_42_field-ssn-email_k20",
       "source_scope": "cheaha_main",
       "run_status": "completed",
-      "completion_basis": "full expected rows in recovered raw shard; scheduler terminal state not available",
+      "completion_basis": "full expected rows in recovered raw shard; Slurm stdout contains E3 DONE; matched sacct terminal state COMPLETED",
       "arm": "both",
       "seed": 42,
       "config": {
@@ -3998,6 +4955,20 @@
           "bytes": 1238,
           "role": "logs",
           "evidence_kind": "launch_manifest"
+        },
+        {
+          "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40054137_9.out",
+          "sha256": "bf5d7e988cedd25d8f2cae8b1eb6c02fd3756034896f686ec2e1c915d3354c7e",
+          "bytes": 2472,
+          "role": "logs",
+          "evidence_kind": "slurm_log"
+        },
+        {
+          "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40054137_9.err",
+          "sha256": "0f8031d9a2e2733cac140d2e052c41c7e3365bd19637dd43700217b7feef7a68",
+          "bytes": 497,
+          "role": "logs",
+          "evidence_kind": "slurm_log"
         }
       ],
       "code_dirty_state": "clean as recorded",
@@ -4020,15 +4991,30 @@
         }
       },
       "evaluation_population": "fixed synthetic person-field audit set, D versus C",
-      "accelerator_hours_status": "unknown; scheduler allocation unavailable",
-      "started_at_status": "unavailable in original manifest; current file times are not launch time"
+      "accelerator_hours_status": "sacct matched; billing=8 GPU-hour lower-bound allocation for one gres/gpu; task binding uses preserved stdout completion time",
+      "started_at_status": "recovered from Cheaha sacct Start; row matched to preserved remote Slurm stdout completion time within 2 seconds",
+      "started_at": "2026-09-04T12:02:36-05:00",
+      "accelerator_hours": 4.246667,
+      "scheduler": {
+        "job_id_raw": "40056380",
+        "array_submission_id": "40054137",
+        "array_task_id": 9,
+        "state": "COMPLETED",
+        "exit_code": "0:0",
+        "start": "2026-09-04T12:02:36-05:00",
+        "end": "2026-09-04T12:34:27-05:00",
+        "elapsed_raw": 1911,
+        "alloc_tres": "billing=8,cpu=8,gres/gpu=1,mem=64G,node=1",
+        "match_seconds": 1.0,
+        "match_method": "remote stdout mtime to sacct End within 2 seconds"
+      }
     },
     {
       "run_id": "capacity_axis_20260902__dd223768__s42",
       "source_stem": "e3a__E3__gpt2_42_field-ssn-email_k24",
       "source_scope": "cheaha_main",
       "run_status": "completed",
-      "completion_basis": "full expected rows in recovered raw shard; scheduler terminal state not available",
+      "completion_basis": "full expected rows in recovered raw shard; Slurm stdout contains E3 DONE; matched sacct terminal state COMPLETED",
       "arm": "both",
       "seed": 42,
       "config": {
@@ -4112,6 +5098,20 @@
           "bytes": 1238,
           "role": "logs",
           "evidence_kind": "launch_manifest"
+        },
+        {
+          "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40054137_10.out",
+          "sha256": "f43832b4db22063e594abec9e00263903ab1dea91f28b19b57753e5140f7e7c1",
+          "bytes": 2473,
+          "role": "logs",
+          "evidence_kind": "slurm_log"
+        },
+        {
+          "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40054137_10.err",
+          "sha256": "bf8bd5ea889c13e2c835db6e3ff99a732be0b064b20b6e4d4eef2cbd56f160ec",
+          "bytes": 497,
+          "role": "logs",
+          "evidence_kind": "slurm_log"
         }
       ],
       "code_dirty_state": "clean as recorded",
@@ -4134,15 +5134,30 @@
         }
       },
       "evaluation_population": "fixed synthetic person-field audit set, D versus C",
-      "accelerator_hours_status": "unknown; scheduler allocation unavailable",
-      "started_at_status": "unavailable in original manifest; current file times are not launch time"
+      "accelerator_hours_status": "sacct matched; billing=8 GPU-hour lower-bound allocation for one gres/gpu; task binding uses preserved stdout completion time",
+      "started_at_status": "recovered from Cheaha sacct Start; row matched to preserved remote Slurm stdout completion time within 2 seconds",
+      "started_at": "2026-09-04T12:10:01-05:00",
+      "accelerator_hours": 4.34,
+      "scheduler": {
+        "job_id_raw": "40056636",
+        "array_submission_id": "40054137",
+        "array_task_id": 10,
+        "state": "COMPLETED",
+        "exit_code": "0:0",
+        "start": "2026-09-04T12:10:01-05:00",
+        "end": "2026-09-04T12:42:34-05:00",
+        "elapsed_raw": 1953,
+        "alloc_tres": "billing=8,cpu=8,gres/gpu=1,mem=64G,node=1",
+        "match_seconds": 0.0,
+        "match_method": "remote stdout mtime to sacct End within 2 seconds"
+      }
     },
     {
       "run_id": "capacity_axis_20260902__04529cf3__s42",
       "source_stem": "e3a__E3__gpt2_42_field-ssn-email_k3",
       "source_scope": "cheaha_main",
       "run_status": "completed",
-      "completion_basis": "full expected rows in recovered raw shard; scheduler terminal state not available",
+      "completion_basis": "full expected rows in recovered raw shard; Slurm stdout contains E3 DONE; matched sacct terminal state COMPLETED",
       "arm": "both",
       "seed": 42,
       "config": {
@@ -4226,6 +5241,20 @@
           "bytes": 1236,
           "role": "logs",
           "evidence_kind": "launch_manifest"
+        },
+        {
+          "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40054137_3.out",
+          "sha256": "16d4db50ee6116ef83213b3797f363ffa470bf4cb582af9a76417ed8b9cec3de",
+          "bytes": 2466,
+          "role": "logs",
+          "evidence_kind": "slurm_log"
+        },
+        {
+          "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40054137_3.err",
+          "sha256": "8cba013f817b5a024c409d525652ebacd119ee8ba19428754b10fe48bf39691f",
+          "bytes": 2019,
+          "role": "logs",
+          "evidence_kind": "slurm_log"
         }
       ],
       "code_dirty_state": "clean as recorded",
@@ -4248,15 +5277,30 @@
         }
       },
       "evaluation_population": "fixed synthetic person-field audit set, D versus C",
-      "accelerator_hours_status": "unknown; scheduler allocation unavailable",
-      "started_at_status": "unavailable in original manifest; current file times are not launch time"
+      "accelerator_hours_status": "sacct matched; billing=8 GPU-hour lower-bound allocation for one gres/gpu; task binding uses preserved stdout completion time",
+      "started_at_status": "recovered from Cheaha sacct Start; row matched to preserved remote Slurm stdout completion time within 2 seconds",
+      "started_at": "2026-09-04T10:49:03-05:00",
+      "accelerator_hours": 6.633333,
+      "scheduler": {
+        "job_id_raw": "40054141",
+        "array_submission_id": "40054137",
+        "array_task_id": 3,
+        "state": "COMPLETED",
+        "exit_code": "0:0",
+        "start": "2026-09-04T10:49:03-05:00",
+        "end": "2026-09-04T11:38:48-05:00",
+        "elapsed_raw": 2985,
+        "alloc_tres": "billing=8,cpu=8,gres/gpu=1,mem=64G,node=1",
+        "match_seconds": 0.0,
+        "match_method": "remote stdout mtime to sacct End within 2 seconds"
+      }
     },
     {
       "run_id": "capacity_axis_20260902__bb0a64d7__s42",
       "source_stem": "e3a__E3__gpt2_42_field-ssn-email_k32",
       "source_scope": "cheaha_main",
       "run_status": "completed",
-      "completion_basis": "full expected rows in recovered raw shard; scheduler terminal state not available",
+      "completion_basis": "full expected rows in recovered raw shard; Slurm stdout contains E3 DONE; matched sacct terminal state COMPLETED",
       "arm": "both",
       "seed": 42,
       "config": {
@@ -4340,6 +5384,20 @@
           "bytes": 1238,
           "role": "logs",
           "evidence_kind": "launch_manifest"
+        },
+        {
+          "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40054142_11.out",
+          "sha256": "cd33fdf48148aa75892c74d5b828629ac0033f7a7123f6fa060f6d463e379e7c",
+          "bytes": 2473,
+          "role": "logs",
+          "evidence_kind": "slurm_log"
+        },
+        {
+          "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40054142_11.err",
+          "sha256": "9948342f255cd7adc189c7b8c58d5702d9d9b0639a07da3304576519550969cb",
+          "bytes": 497,
+          "role": "logs",
+          "evidence_kind": "slurm_log"
         }
       ],
       "code_dirty_state": "clean as recorded",
@@ -4362,15 +5420,30 @@
         }
       },
       "evaluation_population": "fixed synthetic person-field audit set, D versus C",
-      "accelerator_hours_status": "unknown; scheduler allocation unavailable",
-      "started_at_status": "unavailable in original manifest; current file times are not launch time"
+      "accelerator_hours_status": "sacct matched; billing=8 GPU-hour lower-bound allocation for one gres/gpu; task binding uses preserved stdout completion time",
+      "started_at_status": "recovered from Cheaha sacct Start; row matched to preserved remote Slurm stdout completion time within 2 seconds",
+      "started_at": "2026-09-04T15:47:48-05:00",
+      "accelerator_hours": 5.026667,
+      "scheduler": {
+        "job_id_raw": "40057925",
+        "array_submission_id": "40054142",
+        "array_task_id": 11,
+        "state": "COMPLETED",
+        "exit_code": "0:0",
+        "start": "2026-09-04T15:47:48-05:00",
+        "end": "2026-09-04T16:25:30-05:00",
+        "elapsed_raw": 2262,
+        "alloc_tres": "billing=8,cpu=8,gres/gpu=1,mem=64G,node=1",
+        "match_seconds": 0.0,
+        "match_method": "remote stdout mtime to sacct End within 2 seconds"
+      }
     },
     {
       "run_id": "capacity_axis_20260902__ff7ff034__s42",
       "source_stem": "e3a__E3__gpt2_42_field-ssn-email_k4",
       "source_scope": "cheaha_main",
       "run_status": "completed",
-      "completion_basis": "full expected rows in recovered raw shard; scheduler terminal state not available",
+      "completion_basis": "full expected rows in recovered raw shard; Slurm stdout contains E3 DONE; matched sacct terminal state COMPLETED",
       "arm": "both",
       "seed": 42,
       "config": {
@@ -4454,6 +5527,20 @@
           "bytes": 1236,
           "role": "logs",
           "evidence_kind": "launch_manifest"
+        },
+        {
+          "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40054137_4.out",
+          "sha256": "435ef9b4bde0d1bf687f0e314f34b56d65b88e50f49d903cf15ea13057f6b634",
+          "bytes": 2466,
+          "role": "logs",
+          "evidence_kind": "slurm_log"
+        },
+        {
+          "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40054137_4.err",
+          "sha256": "0966e37142fd87cb7240ffa754baf3e89d959bcbbbbb4f2a870e40b58855d75a",
+          "bytes": 497,
+          "role": "logs",
+          "evidence_kind": "slurm_log"
         }
       ],
       "code_dirty_state": "clean as recorded",
@@ -4476,15 +5563,30 @@
         }
       },
       "evaluation_population": "fixed synthetic person-field audit set, D versus C",
-      "accelerator_hours_status": "unknown; scheduler allocation unavailable",
-      "started_at_status": "unavailable in original manifest; current file times are not launch time"
+      "accelerator_hours_status": "sacct matched; billing=8 GPU-hour lower-bound allocation for one gres/gpu; task binding uses preserved stdout completion time",
+      "started_at_status": "recovered from Cheaha sacct Start; row matched to preserved remote Slurm stdout completion time within 2 seconds",
+      "started_at": "2026-09-04T10:52:00-05:00",
+      "accelerator_hours": 6.244444,
+      "scheduler": {
+        "job_id_raw": "40054164",
+        "array_submission_id": "40054137",
+        "array_task_id": 4,
+        "state": "COMPLETED",
+        "exit_code": "0:0",
+        "start": "2026-09-04T10:52:00-05:00",
+        "end": "2026-09-04T11:38:50-05:00",
+        "elapsed_raw": 2810,
+        "alloc_tres": "billing=8,cpu=8,gres/gpu=1,mem=64G,node=1",
+        "match_seconds": 0.0,
+        "match_method": "remote stdout mtime to sacct End within 2 seconds"
+      }
     },
     {
       "run_id": "capacity_axis_20260902__add01fe8__s42",
       "source_stem": "e3a__E3__gpt2_42_field-ssn-email_k48",
       "source_scope": "cheaha_main",
       "run_status": "completed",
-      "completion_basis": "full expected rows in recovered raw shard; scheduler terminal state not available",
+      "completion_basis": "full expected rows in recovered raw shard; Slurm stdout contains E3 DONE; matched sacct terminal state COMPLETED",
       "arm": "both",
       "seed": 42,
       "config": {
@@ -4568,6 +5670,20 @@
           "bytes": 1238,
           "role": "logs",
           "evidence_kind": "launch_manifest"
+        },
+        {
+          "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40054142_12.out",
+          "sha256": "764ca5160ab2d3f9b74352fba2d9a3b48904e1b7e4e86b3540170fcde707c4f2",
+          "bytes": 2473,
+          "role": "logs",
+          "evidence_kind": "slurm_log"
+        },
+        {
+          "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40054142_12.err",
+          "sha256": "e6117d4b4159096f46970ba2cce0406bb4052d2e2f14fb36775dc793e42fcf27",
+          "bytes": 497,
+          "role": "logs",
+          "evidence_kind": "slurm_log"
         }
       ],
       "code_dirty_state": "clean as recorded",
@@ -4590,15 +5706,30 @@
         }
       },
       "evaluation_population": "fixed synthetic person-field audit set, D versus C",
-      "accelerator_hours_status": "unknown; scheduler allocation unavailable",
-      "started_at_status": "unavailable in original manifest; current file times are not launch time"
+      "accelerator_hours_status": "sacct matched; billing=8 GPU-hour lower-bound allocation for one gres/gpu; task binding uses preserved stdout completion time",
+      "started_at_status": "recovered from Cheaha sacct Start; row matched to preserved remote Slurm stdout completion time within 2 seconds",
+      "started_at": "2026-09-04T16:25:30-05:00",
+      "accelerator_hours": 6.955556,
+      "scheduler": {
+        "job_id_raw": "40058091",
+        "array_submission_id": "40054142",
+        "array_task_id": 12,
+        "state": "COMPLETED",
+        "exit_code": "0:0",
+        "start": "2026-09-04T16:25:30-05:00",
+        "end": "2026-09-04T17:17:40-05:00",
+        "elapsed_raw": 3130,
+        "alloc_tres": "billing=8,cpu=8,gres/gpu=1,mem=64G,node=1",
+        "match_seconds": 1.0,
+        "match_method": "remote stdout mtime to sacct End within 2 seconds"
+      }
     },
     {
       "run_id": "capacity_axis_20260902__75e45407__s42",
       "source_stem": "e3a__E3__gpt2_42_field-ssn-email_k6",
       "source_scope": "cheaha_main",
       "run_status": "completed",
-      "completion_basis": "full expected rows in recovered raw shard; scheduler terminal state not available",
+      "completion_basis": "full expected rows in recovered raw shard; Slurm stdout contains E3 DONE; matched sacct terminal state COMPLETED",
       "arm": "both",
       "seed": 42,
       "config": {
@@ -4681,6 +5812,20 @@
           "bytes": 1235,
           "role": "logs",
           "evidence_kind": "launch_manifest"
+        },
+        {
+          "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40054137_5.out",
+          "sha256": "277e82eb4e0b87447c7580b75c6a8642aa5698e621796f316cddccda6a45d558",
+          "bytes": 2466,
+          "role": "logs",
+          "evidence_kind": "slurm_log"
+        },
+        {
+          "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40054137_5.err",
+          "sha256": "10963e3c33278e4394e4650370fa7b73d1de71b0dd04ee9176a72e7e951bd465",
+          "bytes": 497,
+          "role": "logs",
+          "evidence_kind": "slurm_log"
         }
       ],
       "code_dirty_state": "unknown (source manifest code.dirty=null)",
@@ -4703,15 +5848,30 @@
         }
       },
       "evaluation_population": "fixed synthetic person-field audit set, D versus C",
-      "accelerator_hours_status": "unknown; scheduler allocation unavailable",
-      "started_at_status": "unavailable in original manifest; current file times are not launch time"
+      "accelerator_hours_status": "sacct matched; billing=8 GPU-hour lower-bound allocation for one gres/gpu; task binding uses preserved stdout completion time",
+      "started_at_status": "recovered from Cheaha sacct Start; row matched to preserved remote Slurm stdout completion time within 2 seconds",
+      "started_at": "2026-09-04T11:19:03-05:00",
+      "accelerator_hours": 5.806667,
+      "scheduler": {
+        "job_id_raw": "40054967",
+        "array_submission_id": "40054137",
+        "array_task_id": 5,
+        "state": "COMPLETED",
+        "exit_code": "0:0",
+        "start": "2026-09-04T11:19:03-05:00",
+        "end": "2026-09-04T12:02:36-05:00",
+        "elapsed_raw": 2613,
+        "alloc_tres": "billing=8,cpu=8,gres/gpu=1,mem=64G,node=1",
+        "match_seconds": 0.0,
+        "match_method": "remote stdout mtime to sacct End within 2 seconds"
+      }
     },
     {
       "run_id": "capacity_axis_20260902__2a6fb52a__s42",
       "source_stem": "e3a__E3__gpt2_42_field-ssn-email_k64",
       "source_scope": "cheaha_main",
       "run_status": "completed",
-      "completion_basis": "full expected rows in recovered raw shard; scheduler terminal state not available",
+      "completion_basis": "full expected rows in recovered raw shard; Slurm stdout contains E3 DONE; matched sacct terminal state COMPLETED",
       "arm": "both",
       "seed": 42,
       "config": {
@@ -4795,6 +5955,20 @@
           "bytes": 1238,
           "role": "logs",
           "evidence_kind": "launch_manifest"
+        },
+        {
+          "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40054142_13.out",
+          "sha256": "209afb3d01957c88419f4035497e3dad75a5c7932f628a4c6fbfa443fc1393b5",
+          "bytes": 2473,
+          "role": "logs",
+          "evidence_kind": "slurm_log"
+        },
+        {
+          "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40054142_13.err",
+          "sha256": "9e6ae803c3e7a4db09f0462e1f1a5060c76187521e1fcf9f817a750f3af74dfc",
+          "bytes": 497,
+          "role": "logs",
+          "evidence_kind": "slurm_log"
         }
       ],
       "code_dirty_state": "clean as recorded",
@@ -4817,15 +5991,30 @@
         }
       },
       "evaluation_population": "fixed synthetic person-field audit set, D versus C",
-      "accelerator_hours_status": "unknown; scheduler allocation unavailable",
-      "started_at_status": "unavailable in original manifest; current file times are not launch time"
+      "accelerator_hours_status": "sacct matched; billing=8 GPU-hour lower-bound allocation for one gres/gpu; task binding uses preserved stdout completion time",
+      "started_at_status": "recovered from Cheaha sacct Start; row matched to preserved remote Slurm stdout completion time within 2 seconds",
+      "started_at": "2026-09-04T17:17:40-05:00",
+      "accelerator_hours": 9.162222,
+      "scheduler": {
+        "job_id_raw": "40059510",
+        "array_submission_id": "40054142",
+        "array_task_id": 13,
+        "state": "COMPLETED",
+        "exit_code": "0:0",
+        "start": "2026-09-04T17:17:40-05:00",
+        "end": "2026-09-04T18:26:23-05:00",
+        "elapsed_raw": 4123,
+        "alloc_tres": "billing=8,cpu=8,gres/gpu=1,mem=64G,node=1",
+        "match_seconds": 0.0,
+        "match_method": "remote stdout mtime to sacct End within 2 seconds"
+      }
     },
     {
       "run_id": "capacity_axis_20260902__a48cb2ea__s42",
       "source_stem": "e3a__E3__gpt2_42_field-ssn-email_k8",
       "source_scope": "cheaha_main",
       "run_status": "completed",
-      "completion_basis": "full expected rows in recovered raw shard; scheduler terminal state not available",
+      "completion_basis": "full expected rows in recovered raw shard; Slurm stdout contains E3 DONE; matched sacct terminal state COMPLETED",
       "arm": "both",
       "seed": 42,
       "config": {
@@ -4909,6 +6098,20 @@
           "bytes": 1236,
           "role": "logs",
           "evidence_kind": "launch_manifest"
+        },
+        {
+          "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40054137_6.out",
+          "sha256": "bd933f67337c344a19521989051bf5048ada4a3d972d2f8510284fee366423e4",
+          "bytes": 2466,
+          "role": "logs",
+          "evidence_kind": "slurm_log"
+        },
+        {
+          "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40054137_6.err",
+          "sha256": "5268125ec4359b8941c059a4021d52e6822608c101d4fd4334edbeed013018af",
+          "bytes": 1473,
+          "role": "logs",
+          "evidence_kind": "slurm_log"
         }
       ],
       "code_dirty_state": "clean as recorded",
@@ -4931,8 +6134,23 @@
         }
       },
       "evaluation_population": "fixed synthetic person-field audit set, D versus C",
-      "accelerator_hours_status": "unknown; scheduler allocation unavailable",
-      "started_at_status": "unavailable in original manifest; current file times are not launch time"
+      "accelerator_hours_status": "sacct matched; billing=8 GPU-hour lower-bound allocation for one gres/gpu; task binding uses preserved stdout completion time",
+      "started_at_status": "recovered from Cheaha sacct Start; row matched to preserved remote Slurm stdout completion time within 2 seconds",
+      "started_at": "2026-09-04T11:36:21-05:00",
+      "accelerator_hours": 5.442222,
+      "scheduler": {
+        "job_id_raw": "40055162",
+        "array_submission_id": "40054137",
+        "array_task_id": 6,
+        "state": "COMPLETED",
+        "exit_code": "0:0",
+        "start": "2026-09-04T11:36:21-05:00",
+        "end": "2026-09-04T12:17:10-05:00",
+        "elapsed_raw": 2449,
+        "alloc_tres": "billing=8,cpu=8,gres/gpu=1,mem=64G,node=1",
+        "match_seconds": 0.0,
+        "match_method": "remote stdout mtime to sacct End within 2 seconds"
+      }
     },
     {
       "run_id": "capacity_axis_20260902__1f6b799d__s42",
@@ -6029,8 +7247,8 @@
         "历史执行 checkpoint 内容指纹并与每个 Cheaha 分片绑定",
         "超出 manifest PII_* 字段的不可变完整 launch 记录",
         "6 个 code.dirty=null 主 manifest 的历史清洁证据",
-        "分片与 Slurm 作业的一对一映射及失败/重试归属",
-        "49 条导入运行记录的历史 started_at 时间戳"
+        "未生成最终日志的数组槽位的失败/取消及重试归属",
+        "7 条 Colab 导入记录的历史 started_at 时间戳"
       ],
       "new_imports": 49,
       "imported_scope_counts": {
@@ -6191,11 +7409,145 @@
         }
       },
       "source_materials_recovered": [
-        "Cheaha E17 matching records for seeds 42, 1337, and 2024",
         "42 Cheaha manifests and their resolved PII_* fields",
+        "44 preserved Cheaha Slurm stdout/stderr logs (42 final main, one failed preflight, one pilot)",
+        "Cheaha E17 matching records for seeds 42, 1337, and 2024",
         "Exact pip freeze with manifest-matching hash",
         "Slurm sacct export with pii-expcap terminal states and elapsed allocations"
-      ]
+      ],
+      "slurm_logs": {
+        "archive": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence.tar.gz",
+        "archive_bytes": 11053,
+        "archive_sha256": "81caf14a9161a4f07a1adba0fe62024b212810801b7d518b9af385d653f4ee81",
+        "log_pairs": 44,
+        "main_log_pairs": 42,
+        "main_done_markers": 42,
+        "main_scheduler_matches": 42,
+        "main_scheduler_states": {
+          "COMPLETED": 42
+        },
+        "main_scheduler_job_ids": 42,
+        "main_started_at_recovered": 42,
+        "main_billing_gpu_hours_lower_bound": 222.268889,
+        "submission_groups": {
+          "40053007": {
+            "logs": 1,
+            "tasks": [
+              0
+            ],
+            "done": 0,
+            "scheduler_states": {}
+          },
+          "40053058": {
+            "logs": 1,
+            "tasks": [
+              0
+            ],
+            "done": 1,
+            "scheduler_states": {
+              "COMPLETED": 1
+            }
+          },
+          "40054137": {
+            "logs": 33,
+            "tasks": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10,
+              14,
+              15,
+              16,
+              17,
+              18,
+              19,
+              20,
+              21,
+              22,
+              23,
+              24,
+              28,
+              29,
+              30,
+              31,
+              32,
+              33,
+              34,
+              35,
+              36,
+              37,
+              38
+            ],
+            "done": 33,
+            "scheduler_states": {
+              "COMPLETED": 33
+            }
+          },
+          "40054142": {
+            "logs": 3,
+            "tasks": [
+              11,
+              12,
+              13
+            ],
+            "done": 3,
+            "scheduler_states": {
+              "COMPLETED": 3
+            }
+          },
+          "40062184": {
+            "logs": 6,
+            "tasks": [
+              25,
+              26,
+              27,
+              39,
+              40,
+              41
+            ],
+            "done": 6,
+            "scheduler_states": {
+              "COMPLETED": 6
+            }
+          }
+        },
+        "early_or_failed_logs": [
+          {
+            "out_path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40053007_0.out",
+            "array_submission_id": "40053007",
+            "done_marker": false,
+            "scheduler": null
+          },
+          {
+            "out_path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40053058_0.out",
+            "array_submission_id": "40053058",
+            "done_marker": true,
+            "scheduler": {
+              "job_id_raw": "40053058",
+              "state": "COMPLETED",
+              "exit_code": "0:0",
+              "start": "2026-09-04T10:34:06",
+              "end": "2026-09-04T10:39:29",
+              "elapsed_raw": 323,
+              "alloc_tres": "billing=8,cpu=8,gres/gpu=1,mem=64G,node=1",
+              "match_seconds": 1.0,
+              "match_method": "remote stdout mtime to sacct End within 2 seconds"
+            }
+          }
+        ],
+        "binding_note": "The preserved remote stdout mtime uniquely matches each final main log to a pii-expcap sacct End within 2 seconds. The historical sacct export omitted ArrayTaskID, so the binding is timestamp-backed and auditable but is not a direct ArrayTaskID field."
+      },
+      "historical_binding": {
+        "scheduler_mapping": "Resolved for all 42 final main shards by timestamp-backed matching of preserved stdout to sacct; task-level attribution for unlogged array slots is still unavailable.",
+        "started_at": "Resolved for 42 Cheaha main records from matched sacct Start; the 7 imported Colab records remain without historical start times."
+      }
     },
     "inference_scope": "Conditional reanalysis of complete recorded main attempts. Not yet confirmatory or ready for closeout.",
     "prior_analysis_superseded": true,
@@ -30879,7 +32231,7 @@
     "authoritative_estimates": "reanalysis.estimates; legacy root-level derived results are retained as superseded history",
     "completion_accepted": false,
     "statistics_review_path": ".ai/research/studies/capacity_axis_20260902/reanalysis/statistics_review.md",
-    "blocked_reason": "E17, exact environment records, manifests, and aggregate Slurm accounting are recovered. Final acceptance remains blocked by the failed email balance gate, unresolved H2 global-test contract, historical executed-checkpoint/full-launch binding, 6 dirty=null shards, shard-to-Slurm/retry attribution, and 49 missing historical started_at timestamps.",
+    "blocked_reason": "Final acceptance remains blocked by the failed email balance gate, undefined H2 global-test contract, executed-checkpoint/full-launch binding, six dirty=null manifests, unlogged array-slot failure/retry attribution, and seven Colab records without historical started_at.",
     "updated_at": "2026-09-06T21:03:09Z",
     "task_prediction_evidence": {
       "training": {
@@ -30952,6 +32304,136 @@
       },
       "cost_scope": "Colab cost pilots only, dirty manifests. Mean wallclock over recorded attacks with different actual early stopping. The notebook T=10 comparison is not a fixed-step complexity test; per-step candidate count is not inferred from timings."
     },
-    "cheaha_recovery_audit_path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha_recovery_audit.json"
+    "cheaha_recovery_audit_path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha_recovery_audit.json",
+    "cheaha_slurm_log_provenance_path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha_slurm_log_provenance.csv",
+    "cheaha_slurm_log_summary": {
+      "archive": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence.tar.gz",
+      "archive_bytes": 11053,
+      "archive_sha256": "81caf14a9161a4f07a1adba0fe62024b212810801b7d518b9af385d653f4ee81",
+      "log_pairs": 44,
+      "main_log_pairs": 42,
+      "main_done_markers": 42,
+      "main_scheduler_matches": 42,
+      "main_scheduler_states": {
+        "COMPLETED": 42
+      },
+      "main_scheduler_job_ids": 42,
+      "main_started_at_recovered": 42,
+      "main_billing_gpu_hours_lower_bound": 222.268889,
+      "submission_groups": {
+        "40053007": {
+          "logs": 1,
+          "tasks": [
+            0
+          ],
+          "done": 0,
+          "scheduler_states": {}
+        },
+        "40053058": {
+          "logs": 1,
+          "tasks": [
+            0
+          ],
+          "done": 1,
+          "scheduler_states": {
+            "COMPLETED": 1
+          }
+        },
+        "40054137": {
+          "logs": 33,
+          "tasks": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            24,
+            28,
+            29,
+            30,
+            31,
+            32,
+            33,
+            34,
+            35,
+            36,
+            37,
+            38
+          ],
+          "done": 33,
+          "scheduler_states": {
+            "COMPLETED": 33
+          }
+        },
+        "40054142": {
+          "logs": 3,
+          "tasks": [
+            11,
+            12,
+            13
+          ],
+          "done": 3,
+          "scheduler_states": {
+            "COMPLETED": 3
+          }
+        },
+        "40062184": {
+          "logs": 6,
+          "tasks": [
+            25,
+            26,
+            27,
+            39,
+            40,
+            41
+          ],
+          "done": 6,
+          "scheduler_states": {
+            "COMPLETED": 6
+          }
+        }
+      },
+      "early_or_failed_logs": [
+        {
+          "out_path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40053007_0.out",
+          "array_submission_id": "40053007",
+          "done_marker": false,
+          "scheduler": null
+        },
+        {
+          "out_path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40053058_0.out",
+          "array_submission_id": "40053058",
+          "done_marker": true,
+          "scheduler": {
+            "job_id_raw": "40053058",
+            "state": "COMPLETED",
+            "exit_code": "0:0",
+            "start": "2026-09-04T10:34:06",
+            "end": "2026-09-04T10:39:29",
+            "elapsed_raw": 323,
+            "alloc_tres": "billing=8,cpu=8,gres/gpu=1,mem=64G,node=1",
+            "match_seconds": 1.0,
+            "match_method": "remote stdout mtime to sacct End within 2 seconds"
+          }
+        }
+      ],
+      "binding_note": "The preserved remote stdout mtime uniquely matches each final main log to a pii-expcap sacct End within 2 seconds. The historical sacct export omitted ArrayTaskID, so the binding is timestamp-backed and auditable but is not a direct ArrayTaskID field."
+    }
   }
 }

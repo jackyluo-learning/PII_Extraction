@@ -152,7 +152,7 @@ def main():
             assert not errors, schema_report[name]
         else:
             imported = [e for e in errors if len(e.absolute_path) >= 2 and list(e.absolute_path)[0] == 'runs' and list(e.absolute_path)[1] >= 3]
-            assert len(imported) == 49
+            assert len(imported) == 7
             assert all(e.message == "'started_at' is a required property" for e in imported)
     paths = {ROOT / p for p in checked}
     recovered = read(OUT / 'recovery_manifest.json')
@@ -172,12 +172,13 @@ def main():
         'descriptive_artifacts_checked': len(descriptive['artifacts']),
         'bootstrap_draws': 10000, 'report_local_links_checked': link_count,
         'registry_and_plan_schema': 'PASS',
-        'strict_results_schema': 'INCOMPLETE: 49 imported rows lack historical started_at; excluded legacy rows retain original schema errors',
+        'strict_results_schema': 'INCOMPLETE: 7 imported Colab rows lack historical started_at; excluded legacy rows retain original schema errors',
         'schema_errors': schema_report,
         'final_analysis_acceptance': (
             'BLOCKED: see analysis.md and data_audit.md; numerical checks do not '
-            'resolve missing historical provenance, the failed email balance gate, '
-            'or the undefined H2 global-test contract'
+            'resolve the executed-checkpoint/full-launch binding, six dirty=null '
+            'manifests, unlogged array-slot attribution, seven Colab started_at '
+            'gaps, the failed email balance gate, or the undefined H2 global-test contract'
         ),
     }
     (OUT / 'verification.json').write_text(json.dumps(result, ensure_ascii=False, indent=2) + '\n')

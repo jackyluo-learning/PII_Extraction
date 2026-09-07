@@ -1,5 +1,425 @@
 [
   {
+    "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40054137_0.err",
+    "bytes": 1693,
+    "sha256": "f5540ffb6a97238936d8fb0fd553660a0cfeb304d47492808bf8441bb46b02f1"
+  },
+  {
+    "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40054137_0.out",
+    "bytes": 2466,
+    "sha256": "6dc6a94648121a618873d8f483d6f7ef01b3d11a266463c1814068d109b79a87"
+  },
+  {
+    "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40054137_1.err",
+    "bytes": 963,
+    "sha256": "1e17ef3e9cf988936a42795c7512b4c74adda4718d99bebe5b9dd93024502e9b"
+  },
+  {
+    "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40054137_1.out",
+    "bytes": 2466,
+    "sha256": "5f41029ad1fcca854c3594e65d3a21a77e55294eadcca914dc187ff402537225"
+  },
+  {
+    "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40054137_10.err",
+    "bytes": 497,
+    "sha256": "bf8bd5ea889c13e2c835db6e3ff99a732be0b064b20b6e4d4eef2cbd56f160ec"
+  },
+  {
+    "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40054137_10.out",
+    "bytes": 2473,
+    "sha256": "f43832b4db22063e594abec9e00263903ab1dea91f28b19b57753e5140f7e7c1"
+  },
+  {
+    "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40054137_14.err",
+    "bytes": 497,
+    "sha256": "5782441f8c342306afb43fdda970104c1773bbce4420e886e98aab5bc1ad1da7"
+  },
+  {
+    "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40054137_14.out",
+    "bytes": 2481,
+    "sha256": "e31d4b5291290766d728913ec2baa92893e1b433907909c7c24adab4313caa6a"
+  },
+  {
+    "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40054137_15.err",
+    "bytes": 497,
+    "sha256": "7517fde39cd002d919a29ff24e818c33774e3aab079a56891c99ca88c73fb242"
+  },
+  {
+    "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40054137_15.out",
+    "bytes": 2481,
+    "sha256": "713bb4acd577b55b933bd1e4df2d5d3b072a6eb9e4ec089c1dffd4807f448825"
+  },
+  {
+    "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40054137_16.err",
+    "bytes": 497,
+    "sha256": "e19571dda9540f9ee61d23aad6a751d97d472fd864a1a02c98d97be1d5e93ca0"
+  },
+  {
+    "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40054137_16.out",
+    "bytes": 2481,
+    "sha256": "d909f04f7706f86719adfc8e7199ca57e06bda4efac48d2350ecfea8054d35e9"
+  },
+  {
+    "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40054137_17.err",
+    "bytes": 497,
+    "sha256": "b7464968e33dba9991158c8952ada420d7e37da982bf3ead2022d934d6900b82"
+  },
+  {
+    "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40054137_17.out",
+    "bytes": 2481,
+    "sha256": "bc4bf65f1f855d1938bb99ad9575df1ac184800f5eb45e1adfe86bd97aa13962"
+  },
+  {
+    "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40054137_18.err",
+    "bytes": 1627,
+    "sha256": "ad009844e225fd5ae6cfd5da4eef7822fdcbe78ff7f53a9ee023136c2f03c169"
+  },
+  {
+    "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40054137_18.out",
+    "bytes": 2481,
+    "sha256": "81f19d185b74c9f004e7b37a7967f19657061d3686a290e2c1eaca3ba174963b"
+  },
+  {
+    "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40054137_19.err",
+    "bytes": 497,
+    "sha256": "99ba92d2547fbef869717687fd1ecd48edc05cd7cbcc920faf20d511c55d69dd"
+  },
+  {
+    "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40054137_19.out",
+    "bytes": 2481,
+    "sha256": "b30850397c6de91b88da4d072bad5538e492f0ff5481611bd5b74cef0270da88"
+  },
+  {
+    "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40054137_2.err",
+    "bytes": 2085,
+    "sha256": "e6e06e1fd878522fe4dcf9f825e7c291e82db54a2147e688e58105ae3643feb7"
+  },
+  {
+    "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40054137_2.out",
+    "bytes": 2466,
+    "sha256": "98d7da5aac540a4a32c88e8b43b39ea3a996c0afa533b962c4334103c9561f18"
+  },
+  {
+    "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40054137_20.err",
+    "bytes": 1802,
+    "sha256": "6ce80afb1bdeeb961970022f3a9d5b9594c9e0a509c756f7310707421489a522"
+  },
+  {
+    "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40054137_20.out",
+    "bytes": 2481,
+    "sha256": "0b603ca8ec59b7611296e1732f23c82c6acbeb37fa9d61f94e52a3c11cbeeb9f"
+  },
+  {
+    "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40054137_21.err",
+    "bytes": 497,
+    "sha256": "fa8944ca1fe8873b603122755dadc210c7d54578aaf9dff0e30f43d690dcef8b"
+  },
+  {
+    "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40054137_21.out",
+    "bytes": 2487,
+    "sha256": "9b07e7fc02f7552d5b3b765181607f364f358a085fb4562e4c9843fa29a469be"
+  },
+  {
+    "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40054137_22.err",
+    "bytes": 497,
+    "sha256": "e6fc78461fa74dd547662adbe9d9fe9370d14566c26789fab132879fcaeaa141"
+  },
+  {
+    "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40054137_22.out",
+    "bytes": 2487,
+    "sha256": "848e7bfea2182baafd00a3fcf1c168d1715af267b5b0b6d17546eb692deb5f0a"
+  },
+  {
+    "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40054137_23.err",
+    "bytes": 1647,
+    "sha256": "376073f8dd1f2549fb185f4a5f0196be6454135af52e4b3a003ed54072c49b4e"
+  },
+  {
+    "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40054137_23.out",
+    "bytes": 2487,
+    "sha256": "c54f61c316fc36cb87cae3d26942a1242e5f38af920cffc15b4e60d9ff923e9c"
+  },
+  {
+    "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40054137_24.err",
+    "bytes": 497,
+    "sha256": "ecb82845ffa8a4ae91560e950832a4a2e24448074bf40076aa7d2dbac5a1403c"
+  },
+  {
+    "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40054137_24.out",
+    "bytes": 2487,
+    "sha256": "25ef9817f5ba3e98d2054aede78c35498f3cca86cf02d44a27fb0911034b74be"
+  },
+  {
+    "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40054137_28.err",
+    "bytes": 497,
+    "sha256": "95684f1e0b245217efc71df651242d5ffb9f900ea5ac3ccc9339bbc9a4b59498"
+  },
+  {
+    "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40054137_28.out",
+    "bytes": 2481,
+    "sha256": "e052614674e391794c4320814107e2ea79006a42b98ae1e1801219109df97f2e"
+  },
+  {
+    "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40054137_29.err",
+    "bytes": 497,
+    "sha256": "5d1561d6582b1124e6d21285ffe74aca82973837747f845c3f3fad8890de61c0"
+  },
+  {
+    "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40054137_29.out",
+    "bytes": 2481,
+    "sha256": "b7d5c0730c16697818e1e3b82166e16fd82fbf8df29e3e4c49bc366be8fe3d96"
+  },
+  {
+    "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40054137_3.err",
+    "bytes": 2019,
+    "sha256": "8cba013f817b5a024c409d525652ebacd119ee8ba19428754b10fe48bf39691f"
+  },
+  {
+    "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40054137_3.out",
+    "bytes": 2466,
+    "sha256": "16d4db50ee6116ef83213b3797f363ffa470bf4cb582af9a76417ed8b9cec3de"
+  },
+  {
+    "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40054137_30.err",
+    "bytes": 497,
+    "sha256": "7d1c8c3b809a71a10ac1bab237c5ebd4145ac6ca811c35d8e2abf5b5ad47ef71"
+  },
+  {
+    "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40054137_30.out",
+    "bytes": 2481,
+    "sha256": "aff88bc237d06cc2873ca478cc4cbff930ab51b2c90deb772d5c9664fa3a2d30"
+  },
+  {
+    "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40054137_31.err",
+    "bytes": 497,
+    "sha256": "52c2252e970f4f01487735106375d8e7e7df602c40bebf996d188bed024c824b"
+  },
+  {
+    "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40054137_31.out",
+    "bytes": 2481,
+    "sha256": "79ee5a27f6034e06752375b16089a5027922978711cd202c6ee7c597e0b32c7b"
+  },
+  {
+    "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40054137_32.err",
+    "bytes": 497,
+    "sha256": "4b356b4dd9ced199447e71606ce1da0c571ed2564f0718c0fec9c4f9c7bdae5e"
+  },
+  {
+    "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40054137_32.out",
+    "bytes": 2481,
+    "sha256": "9094d8f14287dd6572ec06bc4da0cd2380493ca1015209fb3952b87aa0db97ec"
+  },
+  {
+    "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40054137_33.err",
+    "bytes": 497,
+    "sha256": "236fbf0b3926b3a7750d05fdde22ef32ec05e03d9796b3dd5cae552068b42bee"
+  },
+  {
+    "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40054137_33.out",
+    "bytes": 2481,
+    "sha256": "4e7928baa6ac4c9ac20393c866295c3496eb4219a620e45758f23672ec048471"
+  },
+  {
+    "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40054137_34.err",
+    "bytes": 497,
+    "sha256": "dd8a88e66ba2c7ec87718efa2cf65cf0f53bf5cf95bc4b1aa651f2c3c44d8044"
+  },
+  {
+    "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40054137_34.out",
+    "bytes": 2481,
+    "sha256": "d9782e1126ed2790fff9be971df1e263c744946b095f72002738ceb2c5eb3826"
+  },
+  {
+    "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40054137_35.err",
+    "bytes": 497,
+    "sha256": "357bdd8c33f3b78e7f8c7d798f4b10ca66bd4db6567259fa14ee476994fe9425"
+  },
+  {
+    "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40054137_35.out",
+    "bytes": 2487,
+    "sha256": "ee43dc4d49d9fbfd739732bbf6d2277f8a49ff3c7b134b02285f6346ea993aa2"
+  },
+  {
+    "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40054137_36.err",
+    "bytes": 497,
+    "sha256": "433a31ebfd81f1debb038170a62fa9d1003c8b2f783e6adb0e4295d6b1b416da"
+  },
+  {
+    "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40054137_36.out",
+    "bytes": 2487,
+    "sha256": "ca7ed52625bc6fe22c075c090da3036d5a7fde80adf5e62a76b7545d7cce2d58"
+  },
+  {
+    "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40054137_37.err",
+    "bytes": 497,
+    "sha256": "087de9b0f18968625d567faf2938ee955a20ac07f3f157f7f142c78f102bf802"
+  },
+  {
+    "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40054137_37.out",
+    "bytes": 2487,
+    "sha256": "48d47280e40bee4f74d808373cf61f7a79ddd4b209dee57ea7f9501e91182c58"
+  },
+  {
+    "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40054137_38.err",
+    "bytes": 497,
+    "sha256": "f7ab9ae8dcad855c18bbd7abf87ce217d0e12a70a5a03a925daeafe02ed2f42b"
+  },
+  {
+    "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40054137_38.out",
+    "bytes": 2487,
+    "sha256": "022bc74924ecb69ed8498658435d4bedade7e24e9120a2fe4de2b42b7fe4e033"
+  },
+  {
+    "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40054137_4.err",
+    "bytes": 497,
+    "sha256": "0966e37142fd87cb7240ffa754baf3e89d959bcbbbbb4f2a870e40b58855d75a"
+  },
+  {
+    "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40054137_4.out",
+    "bytes": 2466,
+    "sha256": "435ef9b4bde0d1bf687f0e314f34b56d65b88e50f49d903cf15ea13057f6b634"
+  },
+  {
+    "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40054137_5.err",
+    "bytes": 497,
+    "sha256": "10963e3c33278e4394e4650370fa7b73d1de71b0dd04ee9176a72e7e951bd465"
+  },
+  {
+    "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40054137_5.out",
+    "bytes": 2466,
+    "sha256": "277e82eb4e0b87447c7580b75c6a8642aa5698e621796f316cddccda6a45d558"
+  },
+  {
+    "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40054137_6.err",
+    "bytes": 1473,
+    "sha256": "5268125ec4359b8941c059a4021d52e6822608c101d4fd4334edbeed013018af"
+  },
+  {
+    "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40054137_6.out",
+    "bytes": 2466,
+    "sha256": "bd933f67337c344a19521989051bf5048ada4a3d972d2f8510284fee366423e4"
+  },
+  {
+    "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40054137_7.err",
+    "bytes": 497,
+    "sha256": "5176049af2460f72551013a69e15cb2275e1c4ce6cf5a86cd817986a22e07da6"
+  },
+  {
+    "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40054137_7.out",
+    "bytes": 2472,
+    "sha256": "e025cf74fd50fe06498a44f597b37048ad0f23a1e14682d02f531a327e96a6b0"
+  },
+  {
+    "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40054137_8.err",
+    "bytes": 1565,
+    "sha256": "5b1d83112119b946812c834f46afd2f51229e298e658cfa79d4704c5c63ad292"
+  },
+  {
+    "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40054137_8.out",
+    "bytes": 2472,
+    "sha256": "1502a9e4176774206179f8fd633f095811d39d82e4a2617f3ef6341ddcc0a30d"
+  },
+  {
+    "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40054137_9.err",
+    "bytes": 497,
+    "sha256": "0f8031d9a2e2733cac140d2e052c41c7e3365bd19637dd43700217b7feef7a68"
+  },
+  {
+    "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40054137_9.out",
+    "bytes": 2472,
+    "sha256": "bf5d7e988cedd25d8f2cae8b1eb6c02fd3756034896f686ec2e1c915d3354c7e"
+  },
+  {
+    "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40054142_11.err",
+    "bytes": 497,
+    "sha256": "9948342f255cd7adc189c7b8c58d5702d9d9b0639a07da3304576519550969cb"
+  },
+  {
+    "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40054142_11.out",
+    "bytes": 2473,
+    "sha256": "cd33fdf48148aa75892c74d5b828629ac0033f7a7123f6fa060f6d463e379e7c"
+  },
+  {
+    "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40054142_12.err",
+    "bytes": 497,
+    "sha256": "e6117d4b4159096f46970ba2cce0406bb4052d2e2f14fb36775dc793e42fcf27"
+  },
+  {
+    "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40054142_12.out",
+    "bytes": 2473,
+    "sha256": "764ca5160ab2d3f9b74352fba2d9a3b48904e1b7e4e86b3540170fcde707c4f2"
+  },
+  {
+    "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40054142_13.err",
+    "bytes": 497,
+    "sha256": "9e6ae803c3e7a4db09f0462e1f1a5060c76187521e1fcf9f817a750f3af74dfc"
+  },
+  {
+    "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40054142_13.out",
+    "bytes": 2473,
+    "sha256": "209afb3d01957c88419f4035497e3dad75a5c7932f628a4c6fbfa443fc1393b5"
+  },
+  {
+    "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40062184_25.err",
+    "bytes": 1628,
+    "sha256": "91c03121870ae5f88ac5996b0cd44b1d74d3f38d67d63361a1b7e1ec93d76edc"
+  },
+  {
+    "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40062184_25.out",
+    "bytes": 2487,
+    "sha256": "b87245c3bd83d820fe4794873a5e3012e4ab711db57a21d45fab951b3507d8a7"
+  },
+  {
+    "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40062184_26.err",
+    "bytes": 1945,
+    "sha256": "7f092f83b980eb57d540153a3e26d3736571bdb9fde4826769673009b5a68294"
+  },
+  {
+    "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40062184_26.out",
+    "bytes": 2487,
+    "sha256": "b1a8e1174e2c829e991fa045f0f1a8e8a875924941dd6c724dc583d1f5145669"
+  },
+  {
+    "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40062184_27.err",
+    "bytes": 1650,
+    "sha256": "26082f9061f9b10c698629b75e11ce0964c5b818db795db9f52e710592626e71"
+  },
+  {
+    "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40062184_27.out",
+    "bytes": 2487,
+    "sha256": "e83ec2fca4abbc0946f7ebe6139e48c4a0794c1806d3bdb05e3bea20d64af00c"
+  },
+  {
+    "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40062184_39.err",
+    "bytes": 497,
+    "sha256": "c50d92a88a6e81c59f59139bd467fc2d1747249709e53f1b74c27b857cafd1b3"
+  },
+  {
+    "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40062184_39.out",
+    "bytes": 2487,
+    "sha256": "e52c3a006134c49dd256961b4824a19160b806817f637528a8f1582d43e01b4e"
+  },
+  {
+    "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40062184_40.err",
+    "bytes": 497,
+    "sha256": "f96edc35efaf32fd5be4c0b77ecbe158a29a802dc8c262d79698f881b900d32b"
+  },
+  {
+    "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40062184_40.out",
+    "bytes": 2487,
+    "sha256": "faa46f1eb5db385d686166719bd987518d20b22a0c2a0d3ba68504e1ce211114"
+  },
+  {
+    "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40062184_41.err",
+    "bytes": 1634,
+    "sha256": "71f6fa045ec828b87fc26406fdb66d455a17ee11c1d8d9f9ad021d15b7d93a48"
+  },
+  {
+    "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40062184_41.out",
+    "bytes": 2487,
+    "sha256": "4cc838103619648ad50ea007af3830444b91e82b1413eae81fccc023e19dbfa8"
+  },
+  {
     "path": "artifacts/capacity_axis_20260902/bootstrap/censored_bootstrap.npz",
     "bytes": 277078,
     "sha256": "8d36b571c97e4be79635c5b67a52b710319fcba69ddaaee3e22ed6b489a9b9f4"

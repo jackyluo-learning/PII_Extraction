@@ -5,22 +5,22 @@
 已从台账关联的 42 个 Cheaha 原始分片重新计算，共 4,200 次攻击；每组 25 人、50 个目标，三个攻击种子。旧分析被撤回为历史版本，见 [prior_analysis.md](reanalysis/prior_analysis.md)。
 H1：ρ=0.9890，95% CI [0.9779, 0.9945]，支持记录数据中的上升趋势。H3：k=20 的差为 +1.33 pp [-7.33, +10.00]，未排除零。
 H2：1% 误报条件不可分辨；零命中的保守 Wilson 上界为 10.33%，不再接受旧版的 [0,0] 区间或“不存在可用容量”结论。H4：γ=3.484，95% CI [2.811, 4.209]，在声明的 Weibull 工作模型下排除比例关系。
-**状态：Cheaha 来源材料已部分恢复；统计重算和完整描述图已完成，但最终分析验收仍未通过。** 来源侧仍有历史绑定缺口；设计侧还有email平衡门失败和H2全局检验合同未定义。这不是已接受的确认性研究，也未结项。主分片记录的攻击耗时为 26.25 h；sacct 还记录了 45 个主作业，已完成作业的计费 GPU-h 下限为 222.987，但仍缺逐分片映射、历史 checkpoint 绑定和完整运行时间戳。
+**状态：Cheaha 原始日志已补回；统计重算和完整描述图已完成，但最终分析验收仍未通过。** 42 个最终主分片的 `.out/.err` 均已保存；每个 `.out` 的 `E3 DONE` 和远端结束时间都与 `sacct` 的 `COMPLETED` 记录逐一匹配，并恢复了 42 个 `started_at`。设计侧还有 email 平衡门失败和 H2 全局检验合同未定义；历史 checkpoint 绑定、6 个 `dirty=null` 分片的清洁证据和未生成最终日志的数组槽位归属仍缺。这不是已接受的确认性研究，也未结项。主分片记录的攻击耗时为 26.25 h；42 个最终主分片的 sacct 计费 GPU-h 下限为 222.269，45 作业汇总的 222.987 还包含已完成的额外作业。
 
 ## “Cheaha 来源材料缺口阻塞”具体指什么
 
-这里的“阻塞”是**正式确认性验收与研究结项的阻塞**，不是统计程序无法运行，也不是 42 个主扫描分片或 4,200 行攻击结果缺失。Cheaha 的 E17、42 个 manifest、精确 pip freeze 和 sacct 汇总已经恢复；仍缺的是把每个结果绑定到当时执行的 checkpoint、不可变的完整 launch 记录、6 个 `code.dirty=null` 分片的历史清洁证据、逐分片的 Slurm 失败/重试归属，以及 49 条导入记录的历史 `started_at`。
+这里的“阻塞”是**正式确认性验收与研究结项的阻塞**，不是统计程序无法运行，也不是 42 个主扫描分片或 4,200 行攻击结果缺失。Cheaha 的 E17、42 个 manifest、精确 pip freeze、Slurm 日志和 sacct 汇总已经恢复；42 个最终主分片的调度行和开始时间也已通过日志结束时间匹配。仍缺的是把每个结果绑定到当时执行的 checkpoint、不可变的完整 launch 记录、6 个 `code.dirty=null` 分片的历史清洁证据、未生成最终日志的数组槽位的失败/重试归属，以及 7 条 Colab 导入记录的历史 `started_at`。
 
 | 材料状态 | 阻塞的验收门 | 对当前重算的影响 | 仍需的证据 |
 |---|---|---|---|
 | 执行 checkpoint 的内容指纹及训练—攻击关联仍缺 | 模型身份与五项 pin | 不改变已存 parquet 的算术结果；无法证明主扫描攻击的是计划中的那个模型 | 历史 checkpoint 文件或可信 SHA256，以及与各主分片的绑定记录 |
 | PII_* 配置已在 manifest 中恢复；完整不可变 launch 记录和 6 个 dirty=unknown 分片的历史清洁证据仍缺 | 配置、环境与代码清洁性 | 精确环境已可复核；未记录的运行差异和历史工作树状态仍无法排除 | 完整 resolved launch 记录、不可变环境/镜像标识、历史 git 状态或等价记录 |
 | E17 已恢复：42、1337、2024 各600行；三份字节相同，控制匹配观察到有放回 | D/C 可比性与成员性解释 | matching 证据已不再是缺口；三份相同意味着它们不是独立 seed matching 证据 | 若要证明 matching 随 seed 变化，需独立且不同的 E17 记录；当前结果仅证明已恢复这三份文件 |
-| sacct 已恢复：pii-expcap 45个作业，43完成、1失败、1取消；逐分片映射和失败/重试归属仍缺 | 预算、失败处理与运行完整性 | 可报告调度汇总和 GPU-h 下限；无法把每个作业终态归给具体 manifest | 原始作业日志、array/shard 映射和失败/重试清单 |
-| 49条导入运行记录缺历史 started_at | 严格运行台账 schema | 不改变已保存攻击行或统计量；但不能把导入记录当作完整的历史运行日志 | Cheaha 作业 start 时间与每个 manifest 的可验证绑定 |
+| sacct 已恢复：pii-expcap 45个作业，43完成、1失败、1取消；42个最终主分片日志已逐一匹配到 COMPLETED 行 | 预算、失败处理与运行完整性 | 可报告每个最终主分片的开始时间和计费 GPU-h 下限；未生成最终日志的数组槽位仍不能归属 | 缺失数组槽位的原始 task-level 状态、失败/重试清单 |
+| 42条 Cheaha 主记录已恢复 started_at；7条 Colab 导入记录仍缺历史时间 | 严格运行台账 schema | 不改变已保存攻击行或统计量；7条 Colab 记录不能被当作完整历史运行日志 | Colab 运行端的原始启动时间或外部运行记录 |
 
 
-因此当前状态应读成：**Cheaha 来源恢复完成了一部分；条件性数值重算与描述图完成；来源链验收仍被五项历史绑定缺口阻塞；加上email平衡门失败和H2合同缺口，研究尚未结项。** 当前数值可作为“给定这些已保存攻击行”的条件性结果，但不能升级成无保留的确认性结论。
+因此当前状态应读成：**Cheaha 结果、日志和最终主分片调度绑定已恢复；条件性数值重算与描述图完成；来源链验收仍被 checkpoint/full-launch、6 个 dirty=null 分片和未记录数组槽位归属阻塞；加上 email 平衡门失败、H2 合同缺口和 7 条 Colab 时间缺口，研究尚未结项。** 当前数值可作为“给定这些已保存攻击行”的条件性结果，但不能升级成无保留的确认性结论。
 
 ## Ledger Audit
 
@@ -28,18 +28,18 @@ H2：1% 误报条件不可分辨；零命中的保守 Wilson 上界为 10.33%，
 |---|---|---|
 | 完整性 | 42/42 k×seed；84/84 两组单元；168/168 字段单元；4,200 行 | 每个目标全部 42 个测量齐全，无重复或关键缺失 |
 | 标签/判定 | 逐行用运行版本 exact_match 重算一致；与找回注册表一致 | 验证记录内部一致性与标签，不等于重新运行模型 |
-| 运行状态 | 新增49条基于原始文件的记录：42主扫描＋7 Colab pilot/cost/repro | 3条旧pilot保留并排除，避免同名路径误指Cheaha；没有伪造调度退出状态 |
+| 运行状态 | 新增49条基于原始文件的记录：42主扫描＋7 Colab pilot/cost/repro | 42条主扫描已有日志与COMPLETED调度匹配；3条旧pilot保留并排除，避免同名路径误指Cheaha |
 | 五项 pins | 42份manifest；代码commit、Python/Torch/Transformers/lifelines和pip-freeze hash一致；36份dirty=false，6份unknown | 缺执行checkpoint哈希、完整不可变launch记录；unknown未改成false |
 | 数据 | 四份找回Colab文件的完整SHA256与历史短哈希一致 | 不是每个Cheaha分片的独立数据/模型快照 |
 | 复现 | 独立核对Colab original/repro：每组50目标，均0次flip，判定通过 | original为dirty=true且代码版本不同；不升级为clean Cheaha复现 |
 | 排除 | Colab pilot/cost/repro不进主分析，旧同名引用被替代且保留 | 没有删掉未知cleanliness的6个主分片挑选有利子集；整体仅条件性 |
 | 种子 | 42、1337、2024，全格齐全，达到协议3种子下限 | 同一批人的重复攻击；不是3次独立训练或150名独立对象 |
 | 匹配 | Cheaha 42/1337/2024 各600条E17均已恢复；三份字节相同，控制匹配有放回 | matching 来源已恢复，但字节相同的 seed 文件不提供独立 matching 变化；仍保留Colab SMD作为单独诊断 |
-| 算力 | 主分片攻击耗时 26.251 h；sacct记录45个pii-expcap作业（43完成、1失败、1取消），已完成计费GPU-h下限 222.987 | 逐分片映射和失败/重试归属缺失，GPU-h是调度下限而非每行精确分摊 |
+| 算力 | 主分片攻击耗时 26.251 h；42个最终主分片均匹配到 COMPLETED sacct 行，计费GPU-h下限 222.269；45作业汇总为222.987 | 42个最终分片已有逐片调度行；GPU-h是调度计费下限；未生成最终日志的数组槽位仍无法归属 |
 
 
-审计文件：[初次逐行审计（补证前快照）](reanalysis/raw_data_audit.json)、[Cheaha来源恢复审计](reanalysis/cheaha_recovery_audit.json)、[补证审计](reanalysis/post_recovery_audit.json)、[合同审查](reanalysis/contract_audit.md)、[实现审查](reanalysis/implementation_audit.md)。
-虽然 Cheaha 的部分来源材料已恢复，历史 checkpoint 绑定、不可变 launch 记录、6 个 dirty=unknown 分片的清洁证据、逐分片调度归属和完整 started_at 仍不足，因此全部主扫描记录继续标为 `confirmatory_eligible=false`；以下检验展示在已记录攻击数据上的条件性结果，不掩盖这一资格限制。
+审计文件：[初次逐行审计（补证前快照）](reanalysis/raw_data_audit.json)、[Cheaha来源恢复审计](reanalysis/cheaha_recovery_audit.json)、[逐分片日志—调度绑定](reanalysis/cheaha_slurm_log_provenance.csv)、[补证审计](reanalysis/post_recovery_audit.json)、[合同审查](reanalysis/contract_audit.md)、[实现审查](reanalysis/implementation_audit.md)。
+虽然 Cheaha 的结果、日志和最终主分片调度归属已恢复，历史 checkpoint 绑定、不可变 launch 记录、6 个 dirty=unknown 分片的清洁证据、未生成最终日志的数组槽位归属和 7 条 Colab 的 started_at 仍不足，因此全部主扫描记录继续标为 `confirmatory_eligible=false`；以下检验展示在已记录攻击数据上的条件性结果，不掩盖这一资格限制。
 
 ## 预注册假设与条件性结果（Preregistered hypotheses and conditional results）
 
@@ -63,7 +63,7 @@ H2：1% 误报条件不可分辨；零命中的保守 Wilson 上界为 10.33%，
 
 ### 完整曲线
 
-| k | 每组 人/目标/尝试/种子 | **α：控制组（95% CI）** | 训练组 EMR（95% CI） | τ=D−C（95% CI，百分点） | 区间 | 攻击耗时 C/D（h）；GPU-h未知 |
+| k | 每组 人/目标/尝试/种子 | **α：控制组（95% CI）** | 训练组 EMR（95% CI） | τ=D−C（95% CI，百分点） | 区间 | 攻击耗时 C/D（h）；GPU-h见审计 |
 |---|---|---|---|---|---|---|
 | 0 | 25 / 50 / 150 / 3 | 0.00% [0.00, 10.33] | 0.00% [0.00, 10.33] | +0.00 pp [-10.33, +10.33] | W/M | 0.009 / 0.009 |
 | 1 | 25 / 50 / 150 / 3 | 0.00% [0.00, 10.33] | 0.00% [0.00, 10.33] | +0.00 pp [-10.33, +10.33] | W/M | 0.732 / 0.735 |
@@ -81,7 +81,7 @@ H2：1% 误报条件不可分辨；零命中的保守 Wilson 上界为 10.33%，
 | 64 | 25 / 50 / 150 / 3 | 96.67% [94.00, 99.33] | 90.67% [86.00, 95.33] | -6.00 pp [-11.33, -0.67] | B | 1.569 / 1.686 |
 
 
-B：10,000次独立D/C人员bootstrap，每次在所有k复用同一人样本，seed=20240601；W/M：遇到0/n或n/n时改用Wilson及Newcombe/MOVER。Wilson采用设计的保守n_eff=50/1.5=33.33，三种子不被当成新人。表中τ的数字是百分点；每个点的区间为描述性点区间，并非同时置信带。GPU分配小时未知，耗时栏只计攻击调用。
+B：10,000次独立D/C人员bootstrap，每次在所有k复用同一人样本，seed=20240601；W/M：遇到0/n或n/n时改用Wilson及Newcombe/MOVER。Wilson采用设计的保守n_eff=50/1.5=33.33，三种子不被当成新人。表中τ的数字是百分点；每个点的区间为描述性点区间，并非同时置信带。耗时栏只计攻击调用；42个最终主分片的逐片 sacct 计费 GPU-h 下限已写入 [Cheaha 日志绑定表](reanalysis/cheaha_slurm_log_provenance.csv)，合计 222.269 GPU-h。
 
 ![容量与组间信号](../../../../artifacts/capacity_axis_20260902/figures/capacity_and_signal.png)
 图1：预注册的主估计量，25人/组、3种子；阴影/误差棒为上述95%点区间。k=1.49只标示设计中的理论参照，不是本数据推出的边界。旧版把参考模型H(t)变成逐目标确定性下界的解释已撤回；尚未验证的理论概率上界不叠加成经验保证。
@@ -353,8 +353,8 @@ $$
 |---|---|---|---|---|
 | t0-cp | Every gate's test passes and the tree is clean. | 多项数据门可复核，但三项工程门未重跑，且历史 clean-tree/完整 pin 证据不全。 | checkpoint 未整体满足 | 部分复核 |
 | t1-cp | All four pilot criteria met. | anchor、样本臂和 Colab flip 判据有证据；成本结论与来源身份仍有限制。 | 四项 pilot 条件未能整体确认 | 部分复核 |
-| t2-cp | The ledger is complete and the invariants hold. | 攻击矩阵完整且逐行可重算；E17、精确环境和sacct已恢复，但checkpoint绑定、完整不可变launch、6个dirty=unknown历史清洁证据及逐分片Slurm归属仍缺，已记录攻击耗时 26.251 h。 | ledger 数值完整，阶段验收未通过 | 缺失证据阻塞 |
-| t3-cp | Every hypothesis has a verdict or an explicit undecidable. | 每个假设已有条件性判定或明确不可判定；Cheaha matching、环境锁和sacct汇总已恢复，但checkpoint历史绑定、6个dirty=unknown清洁证据、逐分片调度归属仍缺。 | 字面预测满足；完整阶段验收仍未通过 | 缺失证据阻塞 |
+| t2-cp | The ledger is complete and the invariants hold. | 攻击矩阵完整且逐行可重算；E17、精确环境、Slurm日志和42个最终分片的逐片调度行已恢复，但checkpoint绑定、完整不可变launch、6个dirty=unknown历史清洁证据及未生成最终日志的数组槽位归属仍缺，已记录攻击耗时 26.251 h。 | ledger 数值完整，阶段验收未通过 | 缺失证据阻塞 |
+| t3-cp | Every hypothesis has a verdict or an explicit undecidable. | 每个假设已有条件性判定或明确不可判定；Cheaha matching、环境锁、日志和最终主分片调度绑定已恢复，但checkpoint历史绑定、6个dirty=unknown清洁证据、未记录数组槽位归属和7条Colab started_at仍缺。 | 字面预测满足；完整阶段验收仍未通过 | 缺失证据阻塞 |
 
 
 ## Threats to Validity
@@ -372,8 +372,8 @@ $$
 
 ## Compute
 
-控制组已记录攻击耗时 13.022 h，训练组 13.229 h，合计 **26.251 h**。每份manifest记录1张A100；sacct的已完成主作业计费 GPU-h 下限为 **222.987**，已比批准24 A100-h高出至少 198.987 h（按该下限计）。
-这不包括加载、匹配、日志、训练、Colab pilot及失败/中断。**不能报告总GPU-h=0，也不能报告预算内。** sacct 已提供作业级汇总，但失败/取消作业尚未一对一绑定到具体 manifest，不能把该下限当作每个结果的精确分摊；本次重分析为本机CPU计算，未新增GPU实验。
+控制组已记录攻击耗时 13.022 h，训练组 13.229 h，合计 **26.251 h**。42个最终主分片的 sacct 计费 GPU-h 下限为 **222.269**，45个pii-expcap作业的已完成汇总为 **222.987**，已比批准24 A100-h高出至少 198.987 h（按完整汇总下限计）。
+这不包括加载、匹配、日志、训练、Colab pilot及失败/中断。**不能报告总GPU-h=0，也不能报告预算内。** 42个最终分片已有作业级绑定，但未生成最终日志的数组槽位仍不能归属；本次重分析为本机CPU计算，未新增GPU实验。
 
 ## Limitations
 
@@ -389,6 +389,6 @@ $$
 - 没有把参考模型的H(t)证明为生成目标的确定性容量门槛，也没有证明Proposition1逐目标“紧”。
 - 没有证明一个通用β可以跨字段、目标格式、模型规模、优化器或计算预算迁移。
 - 没有把探索性AUC、宽峰区间、缺乏显著性或被保留的零假设升级成确认性发现。
-- Cheaha 来源材料已部分恢复，但没有完成逐分片历史绑定与失败/重试归属核验；研究仍未达到最终分析验收和结项条件。
+- Cheaha 42个最终主分片的日志与调度行已完成时间戳绑定；历史 checkpoint/full-launch、6个dirty=null分片、未记录数组槽位归属和7条Colab started_at仍未补齐，研究仍未达到最终分析验收和结项条件。
 
 复算入口：`reanalysis/recompute.py`；完整描述图入口：`reanalysis/render_descriptive_figures.py`；报表入口：`reanalysis/write_report.py`。参数与环境见[方法约定](reanalysis/method_choices.md)、[环境记录](reanalysis/analysis_environment.txt)。完整表：[curve_table.csv](reanalysis/curve_table.csv)、[seed_rates.csv](reanalysis/seed_rates.csv)、[抽取率与计数](reanalysis/extraction_rates_and_counts_full.csv)、[字段计数](reanalysis/extraction_counts_by_field_full.csv)、[靶标×k成功矩阵](reanalysis/target_success_by_k_full.csv)、[actual_balance.csv](reanalysis/actual_balance.csv)、[探索性AUC](reanalysis/auc_exploratory.csv)。

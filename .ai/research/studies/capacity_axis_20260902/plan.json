@@ -256,10 +256,10 @@
           "status": "blocked",
           "prediction": "The ledger is complete and the invariants hold.",
           "falsification": "Any shard is missing without a recorded run_status and reason.",
-          "blocked_reason": "42 raw shards and manifests are complete; sacct recovered 45 pii-expcap jobs (43 completed, 1 failed, 1 cancelled) and a 222.987 completed-billing GPU-hour lower bound. Historical checkpoint/full launch binding, shard-to-Slurm mapping, and failed/retry attribution remain unresolved."
+          "blocked_reason": "42 final main logs bind to COMPLETED sacct rows and recover per-shard start times. Checkpoint/full-launch binding, six dirty=null manifests, and unlogged array-slot failure/retry attribution remain unresolved."
         }
       ],
-      "blocked_reason": "Raw main sweep and aggregate sacct accounting are recovered; historical checkpoint/full launch binding and one-to-one shard/retry attribution are not accepted."
+      "blocked_reason": "Raw main sweep, aggregate sacct accounting, and timestamp-backed final-shard scheduler matches are recovered; checkpoint/full-launch binding, six dirty=null manifests, and unlogged array-slot failure/retry attribution remain unresolved."
     },
     {
       "id": "phase-3",
@@ -310,10 +310,10 @@
           "status": "blocked",
           "prediction": "Every hypothesis has a verdict or an explicit undecidable.",
           "falsification": "Any exploratory result is presented as confirmatory.",
-          "blocked_reason": "Every hypothesis has a conditional verdict and the complete descriptive figures are ledger-linked. Final acceptance remains blocked by the failed email balance gate, unresolved H2 global-test contract, historical checkpoint/full launch binding, 6 dirty=null shards, shard-to-Slurm/retry attribution, and 49 missing historical started_at timestamps."
+          "blocked_reason": "Every hypothesis has a conditional verdict and the complete descriptive figures are ledger-linked. Final acceptance remains blocked by the failed email balance gate, undefined H2 global-test contract, checkpoint/full-launch binding, six dirty=null manifests, unlogged-slot attribution, and seven Colab start times."
         }
       ],
-      "blocked_reason": "Conditional analysis and complete descriptive figures are finished. Final acceptance remains blocked by the failed email balance gate, unresolved H2 global-test contract, and the remaining historical provenance/accounting gaps."
+      "blocked_reason": "Conditional analysis and complete descriptive figures are finished. Final acceptance remains blocked by the failed email balance gate, undefined H2 global-test contract, and remaining historical binding gaps."
     }
   ],
   "reanalysis": {

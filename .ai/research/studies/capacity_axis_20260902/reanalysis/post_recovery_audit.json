@@ -40,8 +40,8 @@
     "历史执行 checkpoint 内容指纹并与每个 Cheaha 分片绑定",
     "超出 manifest PII_* 字段的不可变完整 launch 记录",
     "6 个 code.dirty=null 主 manifest 的历史清洁证据",
-    "分片与 Slurm 作业的一对一映射及失败/重试归属",
-    "49 条导入运行记录的历史 started_at 时间戳"
+    "未生成最终日志的数组槽位的失败/取消及重试归属",
+    "7 条 Colab 导入记录的历史 started_at 时间戳"
   ],
   "new_imports": 49,
   "imported_scope_counts": {
@@ -202,9 +202,143 @@
     }
   },
   "source_materials_recovered": [
-    "Cheaha E17 matching records for seeds 42, 1337, and 2024",
     "42 Cheaha manifests and their resolved PII_* fields",
+    "44 preserved Cheaha Slurm stdout/stderr logs (42 final main, one failed preflight, one pilot)",
+    "Cheaha E17 matching records for seeds 42, 1337, and 2024",
     "Exact pip freeze with manifest-matching hash",
     "Slurm sacct export with pii-expcap terminal states and elapsed allocations"
-  ]
+  ],
+  "slurm_logs": {
+    "archive": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence.tar.gz",
+    "archive_bytes": 11053,
+    "archive_sha256": "81caf14a9161a4f07a1adba0fe62024b212810801b7d518b9af385d653f4ee81",
+    "log_pairs": 44,
+    "main_log_pairs": 42,
+    "main_done_markers": 42,
+    "main_scheduler_matches": 42,
+    "main_scheduler_states": {
+      "COMPLETED": 42
+    },
+    "main_scheduler_job_ids": 42,
+    "main_started_at_recovered": 42,
+    "main_billing_gpu_hours_lower_bound": 222.268889,
+    "submission_groups": {
+      "40053007": {
+        "logs": 1,
+        "tasks": [
+          0
+        ],
+        "done": 0,
+        "scheduler_states": {}
+      },
+      "40053058": {
+        "logs": 1,
+        "tasks": [
+          0
+        ],
+        "done": 1,
+        "scheduler_states": {
+          "COMPLETED": 1
+        }
+      },
+      "40054137": {
+        "logs": 33,
+        "tasks": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          28,
+          29,
+          30,
+          31,
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38
+        ],
+        "done": 33,
+        "scheduler_states": {
+          "COMPLETED": 33
+        }
+      },
+      "40054142": {
+        "logs": 3,
+        "tasks": [
+          11,
+          12,
+          13
+        ],
+        "done": 3,
+        "scheduler_states": {
+          "COMPLETED": 3
+        }
+      },
+      "40062184": {
+        "logs": 6,
+        "tasks": [
+          25,
+          26,
+          27,
+          39,
+          40,
+          41
+        ],
+        "done": 6,
+        "scheduler_states": {
+          "COMPLETED": 6
+        }
+      }
+    },
+    "early_or_failed_logs": [
+      {
+        "out_path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40053007_0.out",
+        "array_submission_id": "40053007",
+        "done_marker": false,
+        "scheduler": null
+      },
+      {
+        "out_path": ".ai/research/studies/capacity_axis_20260902/reanalysis/cheaha-extra-evidence/slurm/logs/pii-expcap-40053058_0.out",
+        "array_submission_id": "40053058",
+        "done_marker": true,
+        "scheduler": {
+          "job_id_raw": "40053058",
+          "state": "COMPLETED",
+          "exit_code": "0:0",
+          "start": "2026-09-04T10:34:06",
+          "end": "2026-09-04T10:39:29",
+          "elapsed_raw": 323,
+          "alloc_tres": "billing=8,cpu=8,gres/gpu=1,mem=64G,node=1",
+          "match_seconds": 1.0,
+          "match_method": "remote stdout mtime to sacct End within 2 seconds"
+        }
+      }
+    ],
+    "binding_note": "The preserved remote stdout mtime uniquely matches each final main log to a pii-expcap sacct End within 2 seconds. The historical sacct export omitted ArrayTaskID, so the binding is timestamp-backed and auditable but is not a direct ArrayTaskID field."
+  },
+  "historical_binding": {
+    "scheduler_mapping": "Resolved for all 42 final main shards by timestamp-backed matching of preserved stdout to sacct; task-level attribution for unlogged array slots is still unavailable.",
+    "started_at": "Resolved for 42 Cheaha main records from matched sacct Start; the 7 imported Colab records remain without historical start times."
+  }
 }

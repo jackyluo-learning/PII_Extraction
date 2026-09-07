@@ -1,10 +1,12 @@
 # E3 audited reanalysis
 
 The computation is conditional on the recorded raw artifacts. Cheaha access is now
-working and a source bundle has been recovered, but final analysis acceptance remains
-**blocked**; the study is not ready for closeout. The main execution checkpoint is
-still reopened because completed raw files do not establish historical checkpoint
-binding or one-to-one scheduler attribution.
+working and the source bundle plus preserved Slurm logs have been recovered, but final
+analysis acceptance remains **blocked**; the study is not ready for closeout. All 42
+final main shards now have timestamp-backed scheduler matches and historical start
+times. The execution checkpoint is still reopened because the executed checkpoint,
+full launch record, six unknown dirty states, and unlogged array-slot attribution
+remain unresolved.
 
 ## Start here
 
@@ -30,16 +32,17 @@ superseded history; the authoritative current results are explicitly namespaced 
 | Training checkpoint identity and data snapshot | Bind measured attacks to the intended trained model and corpus | Recovered Colab data and current model hash; registry labels rechecked | Historical executed Cheaha checkpoint hash, training/log lineage and per-run data binding absent |
 | E17 original matching records | Main seeds 42/1337/2024; pair-weighted and deduplicated marginal SMD | Cheaha seed42/1337/2024 each recovered (600 rows); controls show matching with replacement | The three seed-named files are byte-identical, so they do not provide independent seed matching variation |
 | Original pilot/cost/repro raw data | Audit pilot gates, costs and target-level decision flips | 7 Colab shards plus manifests recovered; zero flip comparison rechecked | Dirty original/code boundary disclosed; not a clean Cheaha replay |
-| Scheduler and failure evidence | Every main/smoke/failed/interrupted job, state, allocation, elapsed time | sacct recovered: 45 pii-expcap jobs (43 completed, 1 failed, 1 cancelled); completed billing GPU-h lower bound 222.987 | One-to-one shard mapping and failed/retried task attribution absent |
-| Historical start timestamps | Required by the strict run-ledger schema | Not present in recovered manifests | Never substitute file mtime or import time for launch time |
+| Scheduler and failure evidence | Every main/smoke/failed/interrupted job, state, allocation, elapsed time | sacct recovered: 45 pii-expcap jobs (43 completed, 1 failed, 1 cancelled); 42 final main stdout logs match COMPLETED rows and recover 222.269 billing GPU-h lower bound | Array slots without final logs still lack task-level failure/retry attribution |
+| Historical start timestamps | Required by the strict run-ledger schema | 42 Cheaha main starts recovered from matched sacct rows; 7 Colab imports remain unavailable | Do not substitute file mtime or import time for the seven missing Colab launch times |
 
 The three legacy rows stay excluded and retain their original schema. The 49 new
 byte-addressed imports use canonical hashes of **observed** configuration fields with
 the per-run seed excluded. This is retrospective identity, not proof of a complete
-launch-time configuration. Known scalar fields follow the harness schema. Missing
-historical `started_at` keeps these imports from passing strict run-schema validation;
-`verification.json` records the exact remaining errors. Unknown optional pins are
-omitted with explicit status fields, never replaced by false, zero or invented dates.
+launch-time configuration. Known scalar fields follow the harness schema. The 42
+Cheaha rows now carry matched historical `started_at`; seven Colab imports remain
+without launch times, so `verification.json` records those exact remaining errors.
+Unknown optional pins are omitted with explicit status fields, never replaced by false,
+zero or invented dates.
 
 ## Reproduce the available-data calculations
 
@@ -86,10 +89,12 @@ sweep. PNG files are rendered at 300 dpi and matching vector PDFs are provided.
 ## Complete the Cheaha evidence
 
 An authenticated Cheaha session recovered the first-stage source bundle at
-`reanalysis/cheaha-e3-evidence.tar.gz`. Its audit is in
-[cheaha_recovery_audit.json](cheaha_recovery_audit.json). The collection script remains
-available for a future authenticated session if detailed job logs or a shard-to-job
-mapping can be recovered:
+`reanalysis/cheaha-e3-evidence.tar.gz` and the detailed log bundle at
+`reanalysis/cheaha-extra-evidence.tar.gz`. Their audit is in
+[cheaha_recovery_audit.json](cheaha_recovery_audit.json), and the per-shard binding is
+in [cheaha_slurm_log_provenance.csv](cheaha_slurm_log_provenance.csv). The collection
+script remains available for a future authenticated session if the missing checkpoint
+or unlogged array-slot records can be recovered:
 
 ```bash
 bash collect_cheaha_evidence.sh
