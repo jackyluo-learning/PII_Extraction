@@ -225,20 +225,6 @@ def diagnostics(df,km,idx):
     return {'per_seed_kmin':per_seed,'actual_marginal_balance':balance,'recovered_colab_e17_balance':e17,'direct_beta_brackets':beta,'complete_case_linear':{'intercept':fit.intercept,'intercept_ci':interval(lin[:,0]),'slope':fit.slope,'slope_ci':interval(lin[:,1]),'inverse_slope_bits_per_token':1/fit.slope,'label':'complete-case diagnostic only'},'H_variance_control':{'total':total,'within_field':within,'between_field':between,'within_fraction':within/total,'by_field':{f:{'n':len(g),'sd':float(g.H_bits.std()),'range':float(g.H_bits.max()-g.H_bits.min())} for f,g in c.groupby('field')}},'nonmonotone_by_arm':{a:{'n_targets':len(g),'count':int(g.nonmonotone.sum()),'fraction':float(g.nonmonotone.mean())} for a,g in km.groupby('arm')}}
 
 
-def auc_exploratory(df,idx):
-    wc=np.stack([(idx['control']==j).sum(axis=1) for j in range(25)],axis=1)/25
-    wd=np.stack([(idx['trained']==j).sum(axis=1) for j in range(25)],axis=1)/25
-    rows=[]
-    for field in ['ssn','email','pooled']:
-        for k in POS:
-            sub=df[(df.capacity_k==k)&(True if field=='pooled' else df.field==field)];arrays={}
-            for a in ['control','trained']:
-                g=sub[sub.target_membership==a].sort_values(['person_id','field','seed']);arrays[a]=-g.final_target_nll.to_numpy().reshape(25,-1)
-            ds=arrays['trained'];cs=arrays['control'];compare=(ds[:,None,:,None]>cs[None,:,None,:]).mean(axis=(2,3))+.5*(ds[:,None,:,None]==cs[None,:,None,:]).mean(axis=(2,3));rr=np.einsum('bi,ij,bj->b',wd,compare,wc,optimize=True)
-            rows.append({'label':'(exploratory)','field':field,'k':int(k),'auc':float(compare.mean()),'ci':interval(rr),'n_persons_per_arm':25,'n_seeds':3,'multiple_comparison_note':'pointwise exploratory intervals, no confirmatory discovery claim'})
-    return rows
-
-
 def figures(R):
     import os
     os.environ.setdefault('MPLCONFIGDIR','/private/tmp/e3-mpl-cache')
@@ -261,10 +247,6 @@ def figures(R):
             rr=[r for r in R['seed_rates'] if r['seed']==s and r['arm']==arm];ax.plot([r['k'] for r in rr],[r['rate'] for r in rr],'o-',label=str(s),alpha=.8)
         ax.set_xscale('symlog',linthresh=1);ax.set_xlim(-.12,72);ax.set_xticks([0,1,2,4,8,16,32,64]);ax.set_xticklabels([0,1,2,4,8,16,32,64]);ax.set_ylim(-.02,1.04);ax.set_title(arm.title());ax.set_xlabel('Free prompt tokens k');ax.set_ylabel('Exact-match rate');ax.legend(title='Attack seed');ax.grid(alpha=.15)
     fig.savefig(dest/'seed_spread.png');fig.savefig(dest/'seed_spread.pdf');plt.close(fig)
-    fig,ax=plt.subplots(figsize=(6.5,4.2),constrained_layout=True)
-    for field,color in [('ssn','#266c98'),('email','#ba462c')]:
-        rr=[r for r in R['auc_exploratory'] if r['field']==field];xx=np.array([r['k'] for r in rr]);yy=np.array([r['auc'] for r in rr]);ci=np.array([r['ci'] for r in rr]);ax.plot(xx,yy,'o-',label=field,color=color);ax.fill_between(xx,ci[:,0],ci[:,1],alpha=.12,color=color)
-    ax.axhline(.5,color='gray',ls='--');ax.set_xscale('log',base=2);ax.set_ylim(0,1);ax.set_xlabel('Free prompt tokens k');ax.set_ylabel('AUC of -NLL');ax.set_title('Exploratory, pointwise intervals');ax.legend();fig.savefig(dest/'auc_exploratory.png');fig.savefig(dest/'auc_exploratory.pdf');plt.close(fig)
 
 
 def main():
@@ -280,7 +262,7 @@ def main():
     for (s,k,a),g in df.groupby(['seed','capacity_k','target_membership'],sort=True,observed=True):R['seed_rates'].append({'seed':int(s),'k':int(k),'arm':a,'rate':float(g.exact_match.mean()),'hits':int(g.exact_match.sum()),'attempts':len(g)})
     R['hypotheses']['H3']['seed_values']=[r for r in R['seed_rates'] if r['k']==20]
     km=kmin(df);km.to_csv(OUT/'kmin_recomputed.csv',index=False)
-    R['diagnostics']=diagnostics(df,km,idx);R['auc_exploratory']=auc_exploratory(df,idx)
+    R['diagnostics']=diagnostics(df,km,idx)
     save(R,OUT/'intermediate_results.json')
     print('Curve, balance and exploratory calculations complete; starting censored fits.',flush=True)
     R['hypotheses']['H4']=aft(km,idx,args.n_fit)

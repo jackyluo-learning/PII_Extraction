@@ -430,16 +430,6 @@
     "sha256": "91b093f6078f59ec438e0d128469ac4abc7f0e9654ced1d48e3eca7e01df9ce3"
   },
   {
-    "path": "artifacts/capacity_axis_20260902/figures/auc_exploratory.pdf",
-    "bytes": 15580,
-    "sha256": "917d9c6bf503b645733cda66db4042b150eb7235cc2f0128a9836806a4835562"
-  },
-  {
-    "path": "artifacts/capacity_axis_20260902/figures/auc_exploratory.png",
-    "bytes": 82520,
-    "sha256": "bf24987b9a0ea92724a412711a742c0e2be3e561e7dd2366b2d3c6d60eb45bb3"
-  },
-  {
     "path": "artifacts/capacity_axis_20260902/figures/capacity_and_signal.pdf",
     "bytes": 19558,
     "sha256": "8d059ab44863ffbd703c2d22747aa0de14de05b2f36218db370632247e3e5102"
