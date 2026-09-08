@@ -20,3 +20,9 @@
 - [Independent statistics review](reanalysis/statistics_review.md)
 - [Reproduction and outstanding evidence](reanalysis/README.md)
 - [Superseded analysis](reanalysis/prior_analysis.md) — historical, not current evidence
+
+## 汇报材料
+
+- [中文图解汇报（Markdown）](briefing.md) — 完整D/C曲线、字段与靶标图、匹配诊断及H1-H5；条件性结果
+- [中文图解汇报（15页PDF）](../../../../output/pdf/E3_实验结果汇报.pdf)
+- [汇报来源与校验记录](reanalysis/briefing_manifest.json)

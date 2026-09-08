@@ -1,0 +1,634 @@
+{
+  "description": "Document extraction and illustration; no new hypothesis tests or model runs.",
+  "authority": "results.json/reanalysis/estimates",
+  "pages": 15,
+  "source_main_shards_sha256_checked": 42,
+  "target_k_cells_checked": 1400,
+  "total_attack_records_represented": 4200,
+  "inputs": [
+    {
+      "path": ".ai/research/studies/capacity_axis_20260902/analysis.md",
+      "sha256": "2b728fbf9638919f9f5d1e3afb6b4d3c87bb2a0a5839cf107706dd7b96be8a7b"
+    },
+    {
+      "path": ".ai/research/studies/capacity_axis_20260902/design.md",
+      "sha256": "d40047a2fa5c6bf3760758de9edbb07c0f5af355d9b7a128bc232bb8ad0183fc"
+    },
+    {
+      "path": ".ai/research/studies/capacity_axis_20260902/protocol.md",
+      "sha256": "5ab6e07e8e69c08f2cb850bc306a55f9907b678609cfbf13dacb91d8d19ee363"
+    },
+    {
+      "path": ".ai/research/studies/capacity_axis_20260902/results.json",
+      "sha256": "57162e0281d8aff2b21f1e6020531820474d399a57c18a9f0abded95ac47d76b"
+    },
+    {
+      "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/curve_table.csv",
+      "sha256": "350cae90ab245ec9e754fa9e264200702f3cfca721fd840ebc808d2ffe03c4fb"
+    },
+    {
+      "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/extraction_rates_and_counts_full.csv",
+      "sha256": "8e7e4113bdbb52a8a359e6363445fe5f7e04df3fc0d89438c94a619ceca12e18"
+    },
+    {
+      "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/extraction_counts_by_field_full.csv",
+      "sha256": "cefc2559cf0c9abda9be5c517d2312069a4161db66d10aee6a8523c4d0d304e0"
+    },
+    {
+      "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/target_success_by_k_full.csv",
+      "sha256": "e05a45f062e0079813bfaf604d5e6165c53200ddb865c3fa4d72fed7353e658a"
+    },
+    {
+      "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/actual_balance.csv",
+      "sha256": "0ab649a1f9fca2ad14d7a66410ba1fdfb8b0b9cb7ddd19474a6df7c2ad4ad120"
+    }
+  ],
+  "outputs": [
+    {
+      "path": ".ai/research/studies/capacity_axis_20260902/briefing.md",
+      "sha256": "c3130c5b16f46c31bf41929009c7e0043308bee7b366390ffacbf91fb15f02ed"
+    },
+    {
+      "path": "output/pdf/E3_实验结果汇报.pdf",
+      "sha256": "df7605ac2ed3df45bac7d7b5b10764070cabfec0e1e1d58b146735374ca7fa25"
+    }
+  ],
+  "layout": [
+    {
+      "page": 1,
+      "kind": "paragraph",
+      "bottom": 111,
+      "text": "先用含 D 的语料微调，再冻结同一个模型，分别尝试生成 D 和 C。"
+    },
+    {
+      "page": 1,
+      "kind": "figure",
+      "bottom": 343.5153901216894,
+      "file": "workflow.png"
+    },
+    {
+      "page": 1,
+      "kind": "paragraph",
+      "bottom": 389.336,
+      "text": "D：微调中出现过的目标；C：从本次微调语料中排除的目标。例如 D 是 alice17@example.org，C 是 bruce24@exa"
+    },
+    {
+      "page": 1,
+      "kind": "paragraph",
+      "bottom": 433.672,
+      "text": "攻击时改变什么？本次GCG攻击利用梯度搜索提示中可修改的token（文本片段），优化器知道要生成的目标。k是可修改位置的数量；模型权重保持冻"
+    },
+    {
+      "page": 1,
+      "kind": "paragraph",
+      "bottom": 527.672,
+      "text": "本次主扫描：一个 GPT-2 124M 微调模型；每组25人，每人SSN（社会安全号码格式）和email两个合成字段，共50靶标/组。三个s"
+    },
+    {
+      "page": 2,
+      "kind": "paragraph",
+      "bottom": 111,
+      "text": "随着 k 增大，两组抽取率都升高；判断成员差异还要比较 D 与 C 的距离。"
+    },
+    {
+      "page": 2,
+      "kind": "figure",
+      "bottom": 434,
+      "file": "rates_full.png"
+    },
+    {
+      "page": 2,
+      "kind": "paragraph",
+      "bottom": 455.168,
+      "text": "读图：蓝色是D，橙色是C。α（forcing floor）就是C的抽取率；τ是D抽取率减C抽取率，单位为“百分点”。例如82.00%−80."
+    },
+    {
+      "page": 2,
+      "kind": "paragraph",
+      "bottom": 492.168,
+      "text": "每个总体点为150次攻击/组（25人×2字段×3seed）；每个字段点为75次攻击/组。误差线是95%点区间，表示估计的不确定性，不是95%"
+    },
+    {
+      "page": 2,
+      "kind": "paragraph",
+      "bottom": 527.168,
+      "text": "成功沿用实验的exact_match规则：规范化后，完整目标值出现在生成文本中；不要求整段输出只含目标。k=0是单独的固定提示基线，提示/优"
+    },
+    {
+      "page": 3,
+      "kind": "paragraph",
+      "bottom": 111,
+      "text": "每格读作“75次攻击中成功了几次”；它不是成功人数。"
+    },
+    {
+      "page": 3,
+      "kind": "figure",
+      "bottom": 370.5669291338583,
+      "file": "counts_full.png"
+    },
+    {
+      "page": 3,
+      "kind": "paragraph",
+      "bottom": 422.168,
+      "text": "实际例子：k=20。SSN中D成功48/75次，C成功46/75次；email中两组均成功75/75次。合并后D为123/150，C为121"
+    },
+    {
+      "page": 3,
+      "kind": "paragraph",
+      "bottom": 468.504,
+      "text": "为什么不能称作75个样本？同一个人、同一个字段被攻击了三次，这三次相关。同一人还有两个字段。因此统计区间按人员重采样，不能把重复攻击当成新增"
+    },
+    {
+      "page": 3,
+      "kind": "paragraph",
+      "bottom": 528.504,
+      "text": "本图保留全14个k、全部4个组别/字段组合，共56格；无插值、无筛选。整数计数本身不带误差线，抽取率的区间见上一页。唯一靶标的成功次数与重复"
+    },
+    {
+      "page": 4,
+      "kind": "paragraph",
+      "bottom": 111,
+      "text": "一行是一个匿名靶标，一列是一个 k；0、1、2、3 表示三个 seed 中的成功次数。"
+    },
+    {
+      "page": 4,
+      "kind": "figure",
+      "bottom": 490,
+      "file": "targets_ssn.png"
+    },
+    {
+      "page": 4,
+      "kind": "paragraph",
+      "bottom": 511,
+      "text": "颜色越深表示三次尝试中成功越多；3表示本次三个seed全成功，并不保证未来必成功。D01和C01是不同组的匿名编号，不表示它们构成E17匹配"
+    },
+    {
+      "page": 4,
+      "kind": "paragraph",
+      "bottom": 542,
+      "text": "每个面板包含全部25个靶标；排序仅用于阅读。保留“成功后在更大k失败”的格子；未将首次成功之后全部补成成功。k=0仍为单独基线。"
+    },
+    {
+      "page": 5,
+      "kind": "paragraph",
+      "bottom": 111,
+      "text": "一行是一个匿名靶标，一列是一个 k；0、1、2、3 表示三个 seed 中的成功次数。"
+    },
+    {
+      "page": 5,
+      "kind": "figure",
+      "bottom": 490,
+      "file": "targets_email.png"
+    },
+    {
+      "page": 5,
+      "kind": "paragraph",
+      "bottom": 511,
+      "text": "颜色越深表示三次尝试中成功越多；3表示本次三个seed全成功，并不保证未来必成功。D01和C01是不同组的匿名编号，不表示它们构成E17匹配"
+    },
+    {
+      "page": 5,
+      "kind": "paragraph",
+      "bottom": 542,
+      "text": "每个面板包含全部25个靶标；排序仅用于阅读。保留“成功后在更大k失败”的格子；未将首次成功之后全部补成成功。k=0仍为单独基线。"
+    },
+    {
+      "page": 6,
+      "kind": "paragraph",
+      "bottom": 111,
+      "text": "括号内是95%区间；差值为百分点。D、C两组与全部14个k均保留。"
+    },
+    {
+      "page": 6,
+      "kind": "table",
+      "bottom": 473.94000000000005
+    },
+    {
+      "page": 6,
+      "kind": "paragraph",
+      "bottom": 512.94,
+      "text": "每行每组：25人、50靶标、150次攻击、3个seed。人员重采样：10,000次bootstrap；边界法：零命中时使用Wilson有效样"
+    },
+    {
+      "page": 6,
+      "kind": "paragraph",
+      "bottom": 531.94,
+      "text": "耗时是攻击调用时间，不等于GPU计费时间。全部主扫描攻击调用合计26.25小时；42个最终分片对应的调度计费下限为222.269 GPU小时"
+    },
+    {
+      "page": 7,
+      "kind": "paragraph",
+      "bottom": 111,
+      "text": "不属于 H1-H5 的统计检验；它检查两组在训练经历之外是否足够相似。"
+    },
+    {
+      "page": 7,
+      "kind": "paragraph",
+      "bottom": 170.336,
+      "text": "E17做什么？从未训练目标池中，为D选择同一字段、长度和参考难度尽量接近的C。匹配不要求字符串相同；匹配记录也不保证最终入选的两组已经平衡。"
+    },
+    {
+      "page": 7,
+      "kind": "figure",
+      "bottom": 393.836,
+      "file": "balance.png"
+    },
+    {
+      "page": 7,
+      "kind": "table",
+      "bottom": 341.50800000000004
+    },
+    {
+      "page": 7,
+      "kind": "paragraph",
+      "bottom": 452.152,
+      "text": "变量如何理解？字符数是字符串有多少个字符；token数是分词器把它切成多少块；H是参考模型认为这个字符串有多“意外”的信息量（bits），越"
+    },
+    {
+      "page": 7,
+      "kind": "paragraph",
+      "bottom": 494.304,
+      "text": "诊断结果：SMD=(D均值−C均值)/合并标准差，越接近0越相似。SSN三项点估计均满足预定 |SMD|<0.1；email三项均未满足，且"
+    },
+    {
+      "page": 7,
+      "kind": "paragraph",
+      "bottom": 518.304,
+      "text": "每字段25人/组。email不平衡限制H2/H3/H5的成员性解释；当前表不能算出它造成多少抽取率差异。H4只使用C，不依赖D/C匹配差值。"
+    },
+    {
+      "page": 8,
+      "kind": "paragraph",
+      "bottom": 111,
+      "text": "当前数据支持总体上升趋势；局部点仍可能回落。"
+    },
+    {
+      "page": 8,
+      "kind": "figure",
+      "bottom": 373.74285714285713,
+      "file": "h1_floor.png"
+    },
+    {
+      "page": 8,
+      "kind": "paragraph",
+      "bottom": 191.504,
+      "text": "实验前假设零假设：C抽取率α与k无关，总体曲线为平。实验前预期：α随k单调不降。这里考察C，不是D−C。"
+    },
+    {
+      "page": 8,
+      "kind": "paragraph",
+      "bottom": 272.176,
+      "text": "怎样判断用Spearman相关系数ρ衡量排序趋势，接近+1表示强上升。按人员重新抽样并重复计算，所得95%区间完全大于0才通过。这个判据不能"
+    },
+    {
+      "page": 8,
+      "kind": "paragraph",
+      "bottom": 352.84799999999996,
+      "text": "结果ρ=0.989095%区间 [0.9779, 0.9945]每组25人中的C组、50目标、3个攻击seed。"
+    },
+    {
+      "page": 8,
+      "kind": "paragraph",
+      "bottom": 432.336,
+      "text": "是否符合预期？符合总体上升判据。例如C在k=20为80.67%，到k=64为96.67%；但k=32到48由92.00%降至91.33%。因"
+    },
+    {
+      "page": 8,
+      "kind": "paragraph",
+      "bottom": 476.672,
+      "text": "对论文的意义与下一步：未参与微调的目标也会随攻击容量增加而更常被命中，因此“抽取成功”本身不足以归因于训练记忆。跨模型、其他攻击器能否复现这"
+    },
+    {
+      "page": 8,
+      "kind": "paragraph",
+      "bottom": 514.672,
+      "text": "原始p=0.000100；Holm调整p=0.000400。p衡量在零假设与计算模型成立时，出现当前或更极端统计结果的程度；它不是假设为真的"
+    },
+    {
+      "page": 9,
+      "kind": "paragraph",
+      "bottom": 111,
+      "text": "原始1%要求尚未分辨：观察到0次成功，也不能确认总体成功率不超过1%。"
+    },
+    {
+      "page": 9,
+      "kind": "figure",
+      "bottom": 378.74285714285713,
+      "file": "h2_floor.png"
+    },
+    {
+      "page": 9,
+      "kind": "paragraph",
+      "bottom": 207.672,
+      "text": "实验前假设存在某个k≥1，使控制组真实成功率α不超过1%。推广写法是α≤ε；ε表示允许的C成功率上限，例如1%、5%或9%。"
+    },
+    {
+      "page": 9,
+      "kind": "paragraph",
+      "bottom": 271.176,
+      "text": "预定判据要求α的95%区间上界≤ε，不能只看观察成功率。在“命中即判断为训练成员”的规则下，C被误判的概率就是α。"
+    },
+    {
+      "page": 9,
+      "kind": "paragraph",
+      "bottom": 351.84799999999996,
+      "text": "结果与判定k=1、2、3均为0/150次命中；但保守区间上界仍为10.33%，高于1%。因此未确认1%条件，也未证明它不可能成立。"
+    },
+    {
+      "page": 9,
+      "kind": "paragraph",
+      "bottom": 441.336,
+      "text": "为什么图上k=4的上界反而较低？它观察到2/150次成功（1.33%），主分析用人员bootstrap得到上界3.33%；零命中的k=1-3"
+    },
+    {
+      "page": 9,
+      "kind": "paragraph",
+      "bottom": 485.672,
+      "text": "对结果的影响：k=4是否满足5%上限依赖区间方法。若也按同一Wilson约定计算，其上界为12.60%。所以“5%时有k=4”只能作为当前表"
+    },
+    {
+      "page": 9,
+      "kind": "paragraph",
+      "bottom": 509.672,
+      "text": "设计预估约9%的分辨范围；按实际采用的保守区间，零命中上界为10.33%，两者不是同一个数。下一步需要预先统一区间方法和所需精度，再增加独立"
+    },
+    {
+      "page": 10,
+      "kind": "paragraph",
+      "bottom": 111,
+      "text": "目前没有同时得到“C足够低”与“D明显高于C”支持的 k。"
+    },
+    {
+      "page": 10,
+      "kind": "table",
+      "bottom": 434.942
+    },
+    {
+      "page": 10,
+      "kind": "paragraph",
+      "bottom": 209.672,
+      "text": "为什么加第二个条件？如果D和C都很少成功，虽然C低，攻击也不一定能区分训练成员。成员识别还需要D的成功率明显高于C。"
+    },
+    {
+      "page": 10,
+      "kind": "paragraph",
+      "bottom": 272.176,
+      "text": "“明显高于”怎么读？对差值τ=D−C计算95%区间；整个区间在0右边（下界>0）才支持D更高。区间跨0则方向未分辨。"
+    },
+    {
+      "page": 10,
+      "kind": "paragraph",
+      "bottom": 369.01599999999996,
+      "text": "与设计原文的关系原文只要求“差值区间不含0”，没有限定正向。按字面，在ε=100%时k=64也入选，但其D−C为−6.00个百分点，方向相反"
+    },
+    {
+      "page": 10,
+      "kind": "paragraph",
+      "bottom": 462.942,
+      "text": "表中k是当前混合区间规则下的描述性映射；5%、9%、10%行出现k=4的原因见上一页。100%上限几乎放弃控制误报，k=64的负差值也不能作"
+    },
+    {
+      "page": 10,
+      "kind": "paragraph",
+      "bottom": 509.942,
+      "text": "最终判定：1%条件未分辨；没有得到支持的正向联合操作点。设计未规定跨所有k如何做一个整体检验（“全局检验”），故不能宣称已正式证明“任何k都"
+    },
+    {
+      "page": 11,
+      "kind": "paragraph",
+      "bottom": 111,
+      "text": "D=82.00%，C=80.67%；差值+1.33个百分点，但不确定区间仍跨过0。"
+    },
+    {
+      "page": 11,
+      "kind": "figure",
+      "bottom": 366,
+      "file": "h3_difference.png"
+    },
+    {
+      "page": 11,
+      "kind": "paragraph",
+      "bottom": 208.672,
+      "text": "实验前假设与意义固定k=20，检验总体差值是否为0（双侧）。这是论文已有主点的校准，检验扣除C的forcing floor后还剩多少差异；它"
+    },
+    {
+      "page": 11,
+      "kind": "paragraph",
+      "bottom": 270.176,
+      "text": "预定判据D−C的95%人员bootstrap区间排除0，才拒绝“总体差值为0”。本次区间为[−7.33,+10.00]个百分点，包含0。"
+    },
+    {
+      "page": 11,
+      "kind": "paragraph",
+      "bottom": 348.84799999999996,
+      "text": "判定与新问题尚不能分辨成员差异，也不能证明两组等效或模型没有记忆。后续应先定义多大的差异才有实际意义，再安排足够人员检验。"
+    },
+    {
+      "page": 11,
+      "kind": "table",
+      "bottom": 481.528
+    },
+    {
+      "page": 11,
+      "kind": "paragraph",
+      "bottom": 506.528,
+      "text": "同一主扫描；k=20攻击耗时C/D=0.782/0.766小时。原始p=0.825617，Holm p=1.000000。email全部观察"
+    },
+    {
+      "page": 11,
+      "kind": "paragraph",
+      "bottom": 536.528,
+      "text": "三个seed的总体D/C分别为80%/78%、86%/86%、80%/78%（每个seed50次/组）。它们展示重复攻击波动，不增加独立人员"
+    },
+    {
+      "page": 12,
+      "kind": "paragraph",
+      "bottom": 111,
+      "text": "假设是：目标信息量 H 翻倍，所需首次命中容量 k_min 也约翻倍。"
+    },
+    {
+      "page": 12,
+      "kind": "paragraph",
+      "bottom": 157.24,
+      "text": "实验前假设：k_min(t) ≈ H(t) / β。H4只使用控制组C，希望用一个固定的β，把目标信息量转换成需要的提示容量。"
+    },
+    {
+      "page": 12,
+      "kind": "table",
+      "bottom": 296.61
+    },
+    {
+      "page": 12,
+      "kind": "paragraph",
+      "bottom": 330.37,
+      "text": "示意例子（不是实测数据）：若β=10 bits/token，H=40 bits对应k_min≈4；H=80 bits对应k_min≈8。两者"
+    },
+    {
+      "page": 12,
+      "kind": "paragraph",
+      "bottom": 399.65,
+      "text": "为什么拟合里会出现斜率γ？把比例公式两边取对数：log(k_min) ≈ log(H) − log(β)再允许数据自由决定斜率：log(k_"
+    },
+    {
+      "page": 12,
+      "kind": "paragraph",
+      "bottom": 430.73,
+      "text": "新增符号的含义log：对数变换。a：直线截距。γ（gamma）：对数坐标上的斜率。error：H未解释的差异与攻击随机性。"
+    },
+    {
+      "page": 12,
+      "kind": "paragraph",
+      "bottom": 457.73,
+      "text": "比例关系要求γ=1，且此时a=−log(β)。如果γ不等于1，就不能再从截距a报告一个通用的bits/token换算常数。H是参考模型的描述"
+    },
+    {
+      "page": 13,
+      "kind": "paragraph",
+      "bottom": 111,
+      "text": "γ的95%区间排除1；在当前工作模型下，简单比例关系不适合这些控制目标。"
+    },
+    {
+      "page": 13,
+      "kind": "figure",
+      "bottom": 346.8571428571429,
+      "file": "h4_gamma.png"
+    },
+    {
+      "page": 13,
+      "kind": "paragraph",
+      "bottom": 206.672,
+      "text": "斜率怎样算出来？对50个C目标，先记录每个目标的首次成功网格。例如在k=4失败、k=6首次成功，阈值工作模型将其记为(4,6]的区间信息。"
+    },
+    {
+      "page": 13,
+      "kind": "paragraph",
+      "bottom": 270.176,
+      "text": "用Weibull统计模型，寻找让这些区间观察最可能出现的参数（最大似然估计），得到γ。再按25名人员重抽样并重复拟合10,000次，得到95"
+    },
+    {
+      "page": 13,
+      "kind": "paragraph",
+      "bottom": 333.68,
+      "text": "预定判据γ的95%区间排除1，反驳简单比例形式。这里检验γ是否为1，不是检验它是否为0。"
+    },
+    {
+      "page": 13,
+      "kind": "paragraph",
+      "bottom": 390.76,
+      "text": "结果：γ=3.484486，95%区间[2.811469, 4.209360]；原始p=0.000100，Holm p=0.000400。区"
+    },
+    {
+      "page": 13,
+      "kind": "paragraph",
+      "bottom": 437.096,
+      "text": "这一判定有何限制？控制组7/50个靶标在首次成功后，于某个更大的k又全部失败。也就是说，“失败→成功→失败”真实存在；首次命中不是确定的能力"
+    },
+    {
+      "page": 13,
+      "kind": "paragraph",
+      "bottom": 483.432,
+      "text": "对论文与下一步：不能据此给出一个可迁移的通用β。需要进一步检查字段差异、攻击随机性和非线性关系；这些是新研究方向，不能把γ≈3.48当成已经"
+    },
+    {
+      "page": 13,
+      "kind": "paragraph",
+      "bottom": 520.432,
+      "text": "“工作模型”是这次估计使用的统计近似，并非物理定律。本页沿用当前主分析的“三个seed首次任一命中”口径；Weibull工作分布及p算法为重"
+    },
+    {
+      "page": 14,
+      "kind": "paragraph",
+      "bottom": 111,
+      "text": "k=4和12是当前并列最高点，但尚未定位一个稳定、可靠的最优容量。"
+    },
+    {
+      "page": 14,
+      "kind": "figure",
+      "bottom": 375.25714285714287,
+      "file": "h5_peak.png"
+    },
+    {
+      "page": 14,
+      "kind": "paragraph",
+      "bottom": 206.672,
+      "text": "实验前假设预期差值τ随k先升后降，在1与64之间出现内部峰；对照是单调或平坦关系。H5研究D−C的峰，不是D或C自身成功率的峰。"
+    },
+    {
+      "page": 14,
+      "kind": "paragraph",
+      "bottom": 287.344,
+      "text": "为什么叫探索性？实验前就判断当前人数不足以可靠识别峰形，因此H5只用于提出后续问题，不作为确认性发现，也不参加H1-H4的Holm校正。"
+    },
+    {
+      "page": 14,
+      "kind": "paragraph",
+      "bottom": 368.01599999999996,
+      "text": "预定判断思路重复抽样看最高点落在哪里，其95%位置包络应避开两端；同时用弯曲方向检查是否确有“先升后降”。重分析保留所有并列最高点。"
+    },
+    {
+      "page": 14,
+      "kind": "paragraph",
+      "bottom": 435.336,
+      "text": "观察结果：k=4、12并列+2.67个百分点，但各自差值区间均跨0。峰位置的95%包络为[4,48]，范围很宽；它表示最高点位置的不确定性，"
+    },
+    {
+      "page": 14,
+      "kind": "paragraph",
+      "bottom": 479.672,
+      "text": "是否符合假设？位置条件在字面上通过。b是拟合曲线的弯曲系数，负值表示向下弯；本次b=-0.00391，95%区间[-0.01660, 0.0"
+    },
+    {
+      "page": 14,
+      "kind": "paragraph",
+      "bottom": 503.672,
+      "text": "下一步：先规定峰值至少应高出两侧多少，再增加独立人员并加密候选容量。当前不能宣称k=4或12最优，也不能因证据不足就宣称曲线平坦。b仅是对l"
+    },
+    {
+      "page": 15,
+      "kind": "paragraph",
+      "bottom": 111,
+      "text": "本文件完整呈现所选结果；数值重算已完成，研究的正式验收仍未通过。"
+    },
+    {
+      "page": 15,
+      "kind": "paragraph",
+      "bottom": 192.504,
+      "text": "目前可以汇报什么？已保存的42个Cheaha主分片覆盖完整14个k与3个攻击seed，共4,200次攻击；本文件中的曲线、字段计数与逐靶标矩"
+    },
+    {
+      "page": 15,
+      "kind": "paragraph",
+      "bottom": 275.176,
+      "text": "为什么仍称“条件性结果”？现有攻击数据可以复算，但仍缺当时执行模型的指纹与各分片的完整启动绑定，6个分片的历史代码清洁性未知；部分失败/重试"
+    },
+    {
+      "page": 15,
+      "kind": "paragraph",
+      "bottom": 357.84799999999996,
+      "text": "哪些结论不能从这里推出？不能把攻击命中直接叫作训练记忆；不能把未显著叫作两组相同；不能把一次首次成功叫作确定门槛；也不能把探索性的候选k作为"
+    },
+    {
+      "page": 15,
+      "kind": "paragraph",
+      "bottom": 421.13199999999995,
+      "text": "成本口径C攻击调用13.022小时；D为13.229小时。主分片调度计费合计至少222.269 GPU小时，包含调用之外的占用；两种计时不能"
+    },
+    {
+      "page": 15,
+      "kind": "paragraph",
+      "bottom": 192.504,
+      "text": "数据与文档索引以下路径均相对本研究目录；Markdown版提供可点击链接。所有图沿用纠错重分析数值，没有新增模型实验。"
+    },
+    {
+      "page": 15,
+      "kind": "table",
+      "bottom": 465.048
+    },
+    {
+      "page": 15,
+      "kind": "paragraph",
+      "bottom": 545,
+      "text": "本汇报保留总体曲线、字段/靶标描述、匹配诊断及H1-H5。字段拆分和H5均明确标注探索性；未把原先删除的连续评分分析重新加入。"
+    }
+  ]
+}

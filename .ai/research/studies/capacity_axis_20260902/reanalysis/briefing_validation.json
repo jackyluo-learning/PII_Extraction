@@ -1,0 +1,11 @@
+{
+  "pdf_pages": 15,
+  "figure_count_in_markdown": 11,
+  "all_markdown_links_resolve": true,
+  "unrendered_latex_or_removed_scores_found": false,
+  "source_main_shards_sha256_checked": 42,
+  "target_by_k_cells_checked": 1400,
+  "page_rendering": "All 15 pages rendered with pdftoppm and visually reviewed; H4 text collision corrected.",
+  "pdf_sha256": "df7605ac2ed3df45bac7d7b5b10764070cabfec0e1e1d58b146735374ca7fa25",
+  "pdf_size_bytes": 2166427
+}

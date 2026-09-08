@@ -23,7 +23,7 @@ flat=[]
 for field,rows in R['curves'].items():
  for x in rows:
   flat.append({'field':field,'k':x['k'],'n_persons_per_arm':25,'n_seeds':3,'n_targets_per_arm':x['control']['n_targets'],'n_attempts_per_arm':x['control']['n_attempts'],'alpha':x['control']['estimate'],'alpha_lower':x['control']['ci'][0],'alpha_upper':x['control']['ci'][1],'emr_D':x['trained']['estimate'],'emr_D_lower':x['trained']['ci'][0],'emr_D_upper':x['trained']['ci'][1],'tau':x['tau'],'tau_lower':x['tau_ci'][0],'tau_upper':x['tau_ci'][1],'interval_method':x['tau_interval_method'],'C_attack_elapsed_h':x['control']['attempt_elapsed_hours'],'D_attack_elapsed_h':x['trained']['attempt_elapsed_hours'],'allocated_GPU_h':'unknown'})
-csvout('isotonic_summary.csv',H['H1']['isotonic_summary']);csvout('curve_table.csv',flat);csvout('seed_rates.csv',R['seed_rates']);csvout('actual_balance.csv',D['actual_marginal_balance']);csvout('colab_e17_balance.csv',D['recovered_colab_e17_balance']);csvout('auc_exploratory.csv',R['auc_exploratory'])
+csvout('isotonic_summary.csv',H['H1']['isotonic_summary']);csvout('curve_table.csv',flat);csvout('seed_rates.csv',R['seed_rates']);csvout('actual_balance.csv',D['actual_marginal_balance']);csvout('colab_e17_balance.csv',D['recovered_colab_e17_balance'])
 fulltime=sum(R['compute']['main_attempt_elapsed_hours'].values());excess=fulltime-24
 sched=CHEAHA.get('scheduler',{})
 sched_gpu_h=sched.get('completed_billing_gpu_hours_lower_bound')
@@ -116,6 +116,20 @@ B：10,000次独立D/C人员bootstrap，每次在所有k复用同一人样本，
 
 三张补充图都只使用`results.json`登记并逐文件校验SHA256的42个Cheaha主扫描分片，共4,200条记录；不混入Colab pilot、cost或repro结果。总体曲线的数值地位仍是“给定这些恢复行的条件性结果”，字段和靶标图不能产生确认性发现。对应完整表为[抽取率与计数](reanalysis/extraction_rates_and_counts_full.csv)、[字段计数](reanalysis/extraction_counts_by_field_full.csv)和[靶标×k成功矩阵](reanalysis/target_success_by_k_full.csv)。
 
+### D/C匹配平衡诊断（不属于 H1–H5 的统计检验）
+
+E17 是为 D/C 成员比较选择控制目标的匹配记录：对每个训练目标 D，尽量选择一个未训练目标 C，使两者属于同一字段，并在字符长度、token 长度和 `H(t)` 上相近。这样做是为了排除一个替代解释：如果 D 目标普遍更短或更容易，D 的成功率较高可能只是目标难度不同，而不是训练成员性。SMD 是比较两组这些变量差异的标准化均值差。它服务于 H2、H3 和 H5 的 D/C 解释，不进入 H4：H4 只在控制组内拟合 `k_min` 与 `H(t)`，不使用 D 组，也不使用 D/C 平衡作为估计量。该表属于数据/匹配诊断，不应被读成 H4 的证据。
+
+这里要区分“相同目标”和“相同实验条件”。E1/E3 **没有**让同一个字符串同时作为 D 和 C，因为一个字符串不能同时是“训练过”和“未训练过”。D、C 使用的是不同的目标记录；它们相同的是模型、攻击器、步数、判定规则和字段类型。E1/E3 还把每一组自己的目标子集固定下来，使同一组目标在不同 `k` 下重复测量；“固定 target subset”不等于 D 与 C 共享同一批字符串。
+
+训练与评估分两个阶段：微调阶段只使用 D 所属的训练数据，C 目标被排除在微调数据之外；微调完成后冻结同一个模型 checkpoint，再分别对 D 和 C 运行攻击。C 不是用来训练第二个模型的，也不是与 D 一起微调的控制模型。
+
+{table(['实际攻击字段','协变量','nD/nC','SMD；95%bootstrap CI','|SMD|<0.1'],[[x['field'],x['covariate'],f"{x['n_D']}/{x['n_C']}",num(x['smd'])+' '+ci(x['ci']),'是' if x['passes_abs_0_1'] else '否'] for x in D['actual_marginal_balance']])}
+
+SMD 的 0.1 是预定诊断阈值，不是显著性检验。SSN 的三项协变量基本平衡；email 三项的点估计 SMD 都超过 0.1，说明 D/C 在 email 的长度和 `H(t)` 分布不够可比。因此 email 的 D/C 差异不能干净地解释为成员性，H2、H3 和 H5 的成员解释需要保守。该诊断不改变 H4，因为 H4 只使用控制组。
+
+完整的 Colab E17 双 SMD 表见 [colab_e17_balance.csv](reanalysis/colab_e17_balance.csv)。Cheaha 三个 seed 的 E17 文件已经恢复，但三份字节相同；它们证明了保存的 matching 输入结构，不提供独立的 seed matching 变化。
+
 ### H1 — 容量与 forcing floor 的上升关系
 
 **实验前假设。** H1 关注控制组的 forcing floor 是否随可优化提示容量上升。零假设 H0 是 αₖ 与 k 无关，即曲线总体为平；方向性备择假设是 αₖ 在 k=1…64 上单调不降。这个假设讨论的是控制组也能被攻击强行生成目标的概率，不是 D/C 成员差异。
@@ -170,11 +184,23 @@ email达到样本全命中仍有非零总体不确定性；其差值不再被写
 
 ### H4 — k_min 与 H 的比例模型
 
-**实验前假设。** H4 检验 forcing 容量是否服从比例关系 k_min≈H/β。最终治理规则把它写成控制组的 log-log 模型：若比例关系成立，log k_min 对 log H(t) 的斜率 γ 应等于1。
+**实验前假设。** H4 只检验一个问题：控制组目标的首次 forcing 容量 `k_min(t)` 是否与目标信息量 `H(t)` 成正比，即 `k_min≈H/β`。`k_min(t)` 定义为该目标在固定扫描网格中第一次出现精确命中的容量；主定义取三个固定攻击 seed 中任一 seed 首次命中的最小容量。
 
-**预定判据。** 以三个固定种子中任一攻击首次命中的最小网格容量定义 k_min，保留区间删失和右删失；在控制组拟合 log-log 模型，并按人员 bootstrap。若 γ 的95% CI 排除1，就反驳比例模型。H4 进入四项 Holm 校正家族。设计没有预先固定 Weibull 误差分布，因此该分布是明确披露的工作模型限制。
+**预定判据。** 在控制组拟合区间删失、右删失的 log-log 模型：
 
-**观察结果。** 对控制组25名人员、50个目标进行10,000次人员重拟合，无最终失败。γ={H['H4']['gamma']:.6f}，95% CI {ci(H['H4']['gamma_ci'],6)}，原始p={H['H4']['p_raw']:.6f}，条件性Holm p={R['holm']['H4']['p_holm']:.6f}。截距={H['H4']['intercept_log_scale']:.3f}，95% CI {ci(H['H4']['intercept_ci'])}；exp(−截距)={H['H4']['beta_scale_exp_minus_intercept']:.3e}，区间 {ci(H['H4']['beta_scale_ci'],1)}。log-normal 事后模型诊断给出 γ={H['H4']['lognormal_distribution_sensitivity']['gamma']:.3f}，只作探索性敏感性检查。
+```text
+log k_min = intercept + γ · log H(t) + error
+```
+
+这里每一项都有明确含义：`H(t)` 是参考模型给目标字符串 `t` 的自信息量，单位是 bits；`k_min(t)` 是该目标第一次被精确强制生成时所需的最小自由提示 token 数；`β` 是理论上每个自由 token 能承载的 forcing 信息量，单位是 bits/token；`γ` 是 log-log 图上的斜率；`intercept` 是 log-log 直线的截距；`error` 表示目标之间未被 `H(t)` 解释的差异以及攻击随机性。`log` 的底数不影响 `γ` 是否等于 1，只会改变截距的数值表达。
+
+原始比例假设 `k_min≈H/β` 可以改写为 `log k_min≈log H−log β`。因此在 log-log 模型中，比例关系对应 `γ=1`，而不是凭空引入一个斜率；`γ` 就是把原始公式拟合到数据后得到的比例指数。若 `γ=1`，截距才可以转换为 `−log β`；若 `γ≠1`，就不能把截距解释成通用 `β`。
+
+比例关系要求斜率 `γ=1`。因此只有 `γ` 的 95% 区间排除 1，才反驳比例模型。H4 属于 H1–H4 四项检验家族；Weibull 是本次拟合使用的工作分布，不是已经被独立验证的物理定律。
+
+**如何得到斜率。** 每个控制目标只提供一个区间信息：如果首次命中发生在 `k=6`，真实阈值被记为 `(4,6]`；如果到 `k=64` 仍未命中，则记为 `>64`。在 50 个控制目标上，用这个区间/右删失信息拟合 Weibull 工作模型，最大化其删失似然，得到原始数据的 `γ` 点估计；随后按人员重抽样并重新拟合 10,000 次，取 bootstrap 分位数作为区间。
+
+**观察结果。** 这样得到 γ={H['H4']['gamma']:.6f}，95% CI {ci(H['H4']['gamma_ci'],6)}，未校正 bootstrap p={H['H4']['p_raw']:.6f}，四项家族 Holm 校正后 p={R['holm']['H4']['p_holm']:.6f}。
 
 **判定。** γ 的区间完全排除1，因此在声明的 Weibull 工作模型下 H4 被反驳。这个结果针对比例形式，不是对所有 forcing 模型的反证。
 
@@ -182,7 +208,9 @@ email达到样本全命中仍有非零总体不确定性；其差值不再被写
 
 ### 四项家族与判据
 
-{table(['假设','原始p或保留值','Holm p','条件性解读'],[[h,num(R['holm'][h]['p_raw_or_reserved'],6),num(R['holm'][h]['p_holm'],6),{'H1':'趋势判据支持','H2':'联合检验未定义；p=1保留位置','H3':'不拒绝零；不是等效','H4':'拒绝γ=1'}[h]] for h in ['H1','H2','H3','H4']])}
+表中的“未校正 p”是每个假设单独计算、尚未考虑 H1–H4 多重检验的 p 值。`Holm p` 是在这四项检验中控制家族错误率后的调整值。H2 没有预先定义有效的联合检验，所以 `1.000000` 是保留位置的占位值，不是从 H2 数据算出的 p 值；H1、H3、H4 的数值则是各自的未校正 p 和 Holm 调整结果。
+
+{table(['假设','未校正 p（H2为保留占位）','Holm p','条件性解读'],[[h,num(R['holm'][h]['p_raw_or_reserved'],6),num(R['holm'][h]['p_holm'],6),{'H1':'趋势判据支持','H2':'联合检验未定义；p=1保留位置','H3':'不拒绝零；不是等效','H4':'拒绝γ=1'}[h]] for h in ['H1','H2','H3','H4']])}
 
 家族始终是四项，不丢弃H4。p算法是本次明确披露的补充实现，采用有限Monte Carlo加一校正；最小可报告值1/10001，绝不报告p=0。H3离散边界已用整数成功次数独立核对。Holm并不能补足未预注册的联合H2检验或来源缺口，所以这些是条件性重分析输出。
 
@@ -198,18 +226,11 @@ email达到样本全命中仍有非零总体不确定性；其差值不再被写
 Tobit次要规格：level-scale截距={H['H4']['secondary_tobit']['intercept']:.3f}，CI {ci(H['H4']['secondary_tobit']['intercept_ci'])}；斜率={H['H4']['secondary_tobit']['slope_tokens_per_bit']:.3f} tokens/bit，CI {ci(H['H4']['secondary_tobit']['slope_ci'])}，n=25控制人，10,000次人员重抽样。Complete-case线性截距={D['complete_case_linear']['intercept']:.3f}，CI {ci(D['complete_case_linear']['intercept_ci'])}；斜率={D['complete_case_linear']['slope']:.3f}，CI {ci(D['complete_case_linear']['slope_ci'])}。后者仅作删失诊断，未替换AFT。
 本样本右删失比例={H['H4']['right_censored_fraction']:.3f}，未触发高删失的Turnbull替代条件。控制组 {H['H4']['nonmonotone_targets']}/50 目标出现命中后在更大k失效，违背AFT吸收阈值假设。H的控制组方差：总={D['H_variance_control']['total']:.3f}，字段内={D['H_variance_control']['within_field']:.3f}，字段间={D['H_variance_control']['between_field']:.3f}；不能仅凭两字段不同就断言总方差都来自字段间。
 
-### 各seed首次命中敏感性（exploratory）
+### 每个攻击 seed 的首次命中描述（不改变 H4 主定义）
 
 {table(['标签','seed / 字段','n人','median首次命中k；95%CI','右删失目标','非单调目标'],[[x['label'],f"{x['seed']} / {x['field']}",x['n_persons'],num(x['median_first_hit_k'],1)+' '+ci(x['median_ci'],1),x['right_censored_targets'],x['nonmonotone_targets']] for x in D['per_seed_kmin']])}
 
-单seed行均为探索性敏感性；主定义仍是固定三个seed中的首次任一命中，未按这里的数值择优切换。
-
-### 平衡与原始E17
-
-{table(['实际攻击字段','协变量','nD/nC','SMD；95%bootstrap CI','|SMD|<0.1'],[[x['field'],x['covariate'],f"{x['n_D']}/{x['n_C']}",num(x['smd'])+' '+ci(x['ci']),'是' if x['passes_abs_0_1'] else '否'] for x in D['actual_marginal_balance']])}
-
-SMD的0.1是预定诊断阈值，不是显著性测试。SSN字符长度两组都固定相同，因此SMD=0不意味着可检测该协变量的变异；email三项都未过点估计平衡门槛，影响D/C的成员解释。
-[完整Colab E17双SMD表](reanalysis/colab_e17_balance.csv)同时包含配对加权与控制去重边际、全匹配人群与实际D子集。其来源明确为Colab seed42。Cheaha 三个 seed 的 E17 文件已经恢复，但三份字节相同；它们证明了保存的 matching 输入结构（控制记录有放回），不提供独立的 seed matching 变化。来源摘要见 [Cheaha恢复审计](reanalysis/cheaha_recovery_audit.json)。
+这些数值是原始实验输出的描述性汇总，但“把单个 seed 单独拿出来作为敏感性分析”不是 H4 预先规定的确认性检验。H4 的主定义把三个 seed 合并，取“任一 seed 首次命中”的最小 `k`；这里一次只使用一个 seed，检查 `k_min` 是否依赖某个攻击 seed。它不重新估计 H4 的 `γ`，也不是 H1、H3 或 H5 的假设检验，因此不能替代 H4 主结果。若要把它作为确认性结果，必须在实验前规定单 seed 的估计量和判据。
 
 ## Exploratory Findings
 
@@ -224,30 +245,6 @@ SMD的0.1是预定诊断阈值，不是显著性测试。SSN字符长度两组�
 **判定。** 位置包络排除了两个端点，满足位置条件的字面要求；曲率证据没有排除平坦关系，而且峰位置区间很宽。H5 因此判为探索性不确定，不能声称已经定位内部峰值，也不能声称曲线平坦。
 
 **解释与新推论。** {ci(H['H5']['argmax_envelope_ci'],0)} 只能作为下一次扫描的候选区域。结果提出的后续假设是：在更高人员样本量和更密的中段网格下，τ_rec(k) 是否存在稳定的内部峰，并且峰值是否高于两侧一个预注册的最小实际差异。新实验还需预先定义平坦曲线的等效界。
-
-### NLL/AUC（exploratory）
-
-**NLL（negative log-likelihood，负对数似然）** 衡量模型在最终优化提示 $x^*$ 下给完整目标 token 序列 $t=(t_1,\ldots,t_T)$ 分配了多少概率：
-
-$$
-\mathrm{{NLL}}(t \mid x^*) = -\sum_{{i=1}}^{{T}} \ln p_\theta\!\left(t_i \mid x^*, t_1,\ldots,t_{{i-1}}\right).
-$$
-
-原始字段 `final_target_nll` 以 nats 为单位，是整个目标序列的总和，并未除以 token 数。NLL 越小，表示模型认为该目标在该提示下越可能；它提供了比“是否精确生成”更连续的信号。由于序列总 NLL 会受目标长度影响，跨字段或长度不同目标的比较可能混入长度效应，因此这里保留字段拆分，并把合并分析仅作为探索性结果。
-
-**AUC（area under the receiver operating characteristic curve，ROC 曲线下面积）** 使用 $s=-\operatorname{{NLL}}$ 作为成员分数，并把 trained 目标记为 D、control 目标记为 C。本报告的样本 AUC 等价于：
-
-$$
-\mathrm{{AUC}} = \Pr\!\left(s_D > s_C\right) + \frac{{1}}{{2}}\Pr\!\left(s_D = s_C\right),
-$$
-
-即随机抽取一个 D 分数和一个 C 分数时，D 的 NLL 更低的排序概率，平局计一半。AUC=0.5 表示没有排序分离；AUC>0.5 表示 D 倾向于具有更低 NLL；AUC<0.5 表示方向相反；AUC=1 表示样本中所有 D/C 分数都按该方向正确排序。这里在每个字段和 k 内汇总三个固定攻击种子，并以人作为 bootstrap 重采样单位。AUC 是无阈值的排序统计量，不是“某目标属于训练集”的概率、某个固定阈值的分类准确率，也不能单独证明记忆或隐私泄露。
-
-{table(['行标签','字段/k','n人每组/种子','AUC及95%人员bootstrap CI','GPU-h'],[[x['label'],f"{x['field']} / {x['k']}",'25 / 3',num(x['auc'])+' '+ci(x['ci']),'未知；重用主扫描'] for x in R['auc_exploratory'] if x['field']!='pooled' and x['k'] in [1,2,3,8,20,64]])}
-
-![探索性NLL分析](../../../../artifacts/capacity_axis_20260902/figures/auc_exploratory.png)
-图2：所有行和曲线均为探索性；每组25人，3种子，10,000次人员bootstrap，阴影为未经多重比较校正的95%点区间。低k的候选分离值得后续预注册验证，不能据相邻多个区间宣称独立重复发现。email失衡、共同目标和不同早停程度都限制机制解释。
-不将原始TPR/FPR点比值称为“certifiable ε”。本次尚未建立独立阈值校准样本、所需错误率的有效同时界和DP解释条件，故不提供确认性ε下界。旧版“信息论逐目标下界紧”的结论同样撤回。
 
 ## Deviations from Preregistration
 
@@ -270,7 +267,7 @@ __PREDICTIONS__
 
 ## Threats to Validity
 
-- A1/matching：实际email的三项SMD未过预设门槛；Cheaha三份E17已恢复且字节相同，仍没有独立seed matching变化证据。组间差值和AUC不应直接归因为训练成员性。
+- A1/matching：实际email的三项SMD未过预设门槛；Cheaha三份E17已恢复且字节相同，仍没有独立seed matching变化证据。email组间差值不应直接归因为训练成员性。
 - 新增CODE_MAP #16–#21逐项记录本次发现及Validity标记；#21说明H2的部分floor-only资格依赖区间方法切换，一致Wilson敏感性不能升级为确认性结论。
 - CODE_MAP旧问题#1/#15（β单位及删失）：本次保留删失，另给比率；γ失配时不把截距当通用bits/token。H4并未因数据右删失少就免除非单调命中假设问题。
 - CODE_MAP #7（CI不一致）：本次逐行标明B/W/M；边界格不再出现无依据的零宽区间。#8及#10的目标/提示差异：k0单列；没有把anchored对比混入本研究。
@@ -299,10 +296,10 @@ __PREDICTIONS__
 - 没有证明缺少成员信号、模型不记忆、隐私安全或满足任何DP保证。
 - 没有把参考模型的H(t)证明为生成目标的确定性容量门槛，也没有证明Proposition1逐目标“紧”。
 - 没有证明一个通用β可以跨字段、目标格式、模型规模、优化器或计算预算迁移。
-- 没有把探索性AUC、宽峰区间、缺乏显著性或被保留的零假设升级成确认性发现。
+- 没有把宽峰区间、缺乏显著性或被保留的零假设升级成确认性发现。
 - Cheaha 来源材料已部分恢复，但没有完成逐分片历史绑定与失败/重试归属核验；研究仍未达到最终分析验收和结项条件。
 
-复算入口：`reanalysis/recompute.py`；完整描述图入口：`reanalysis/render_descriptive_figures.py`；报表入口：`reanalysis/write_report.py`。参数与环境见[方法约定](reanalysis/method_choices.md)、[环境记录](reanalysis/analysis_environment.txt)。完整表：[curve_table.csv](reanalysis/curve_table.csv)、[seed_rates.csv](reanalysis/seed_rates.csv)、[抽取率与计数](reanalysis/extraction_rates_and_counts_full.csv)、[字段计数](reanalysis/extraction_counts_by_field_full.csv)、[靶标×k成功矩阵](reanalysis/target_success_by_k_full.csv)、[actual_balance.csv](reanalysis/actual_balance.csv)、[探索性AUC](reanalysis/auc_exploratory.csv)。
+复算入口：`reanalysis/recompute.py`；完整描述图入口：`reanalysis/render_descriptive_figures.py`；报表入口：`reanalysis/write_report.py`。参数与环境见[方法约定](reanalysis/method_choices.md)、[环境记录](reanalysis/analysis_environment.txt)。完整表：[curve_table.csv](reanalysis/curve_table.csv)、[seed_rates.csv](reanalysis/seed_rates.csv)、[抽取率与计数](reanalysis/extraction_rates_and_counts_full.csv)、[字段计数](reanalysis/extraction_counts_by_field_full.csv)、[靶标×k成功矩阵](reanalysis/target_success_by_k_full.csv)、[actual_balance.csv](reanalysis/actual_balance.csv)。
 '''
 plan=json.loads((O/'prior_plan.json').read_text())
 prediction_audit={
