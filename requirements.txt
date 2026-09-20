@@ -8,6 +8,7 @@ scipy>=1.11.0
 numpy>=1.24.0
 pandas>=2.0.0
 pyarrow>=12.0.0        # per-attempt parquet log (attempt_log.py) + make_tables.py
+matplotlib>=3.6.0      # local analysis figures (PNG/PDF)
 tqdm>=4.65.0
 # Proper statistical inference (two-way ANOVA, Logit p-values) — replaces the
 # previous hand-rolled/degenerate significance tests.
