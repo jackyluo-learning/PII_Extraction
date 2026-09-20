@@ -12,6 +12,7 @@ venv/
 .ipynb_checkpoints/
 
 # Caches / cluster logs
+.tmp/
 .hf_cache/
 slurm/logs/*
 !slurm/logs/.gitkeep

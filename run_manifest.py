@@ -30,6 +30,7 @@ import json
 import os
 import subprocess
 import sys
+from collections import Counter
 from typing import Dict, List, Optional, Sequence, Tuple
 
 
@@ -155,20 +156,177 @@ def compare(paths: Sequence[str]) -> Dict:
     -- if the target set moved, the paired design across k is gone, and the
     surviving agreement is a subset chosen after seeing the data.
     """
-    seen: Dict[str, set] = {"target_subset_hash": set(), "gcg_iters": set()}
+    if not paths:
+        return {
+            "ok": False,
+            "n_shards": 0,
+            "distinct": {},
+            "shards": [],
+            "errors": ["no run manifests supplied"],
+        }
+
+    manifests = []
+    for path in paths:
+        with open(path) as stream:
+            manifests.append((path, json.load(stream)))
+
+    # Historical E3a manifests only carried the two original invariants.  E3b
+    # deliberately carries enough information to prove that every shard used
+    # the same immutable target file, exact input bytes, resolved attack
+    # configuration, code commit, environment, and accelerator class.  Turn on
+    # the strict contract as soon as any supplied manifest advertises the new
+    # frozen-target fields; mixing E3a and E3b is therefore also a hard failure.
+    strict_e3b = any(
+        "frozen_targets" in manifest
+        or "resolved_sweep_config_sha256" in manifest
+        or "input_fingerprints" in manifest
+        for _, manifest in manifests
+    )
+
+    invariant_paths = {
+        "target_subset_hash": ("target_subset_hash",),
+        "gcg_iters": ("gcg_iters",),
+    }
+    if strict_e3b:
+        invariant_paths.update({
+            "n_targets": ("n_targets",),
+            "arm_sizes": ("arm_sizes",),
+            "tier_composition": ("tier_composition",),
+            "target_manifest_sha256": ("frozen_targets", "manifest_sha256"),
+            "target_payload_sha256": ("frozen_targets", "payload_sha256"),
+            "target_values_sha256": ("frozen_targets", "target_values_sha256"),
+            "pair_assignment_sha256": ("frozen_targets", "pair_assignment_sha256"),
+            "registry_sha256": ("input_fingerprints", "registry", "sha256"),
+            "corpus_sha256": ("input_fingerprints", "corpus", "sha256"),
+            "checkpoint_sha256": ("input_fingerprints", "checkpoint", "sha256"),
+            "resolved_sweep_config_sha256": ("resolved_sweep_config_sha256",),
+            "code_commit": ("code", "commit"),
+            "pip_freeze_sha256_16": ("env", "pip_freeze_sha256_16"),
+            "accelerator_name": ("accelerator", "name"),
+        })
+
+    missing = object()
+
+    def nested(manifest: Dict, keys: Sequence[str]):
+        value = manifest
+        for key in keys:
+            if not isinstance(value, dict) or key not in value:
+                return missing
+            value = value[key]
+        return value
+
+    # Sets cannot hold dictionaries.  Canonical JSON also makes semantically
+    # identical dicts compare equal regardless of key insertion order.
+    def canonical(value) -> str:
+        if value is missing:
+            return "<MISSING>"
+        return json.dumps(value, sort_keys=True, separators=(",", ":"),
+                          ensure_ascii=False)
+
+    seen: Dict[str, set] = {key: set() for key in invariant_paths}
     rows = []
-    for p in paths:
-        with open(p) as f:
-            m = json.load(f)
-        rows.append({"path": p, "k": m["shard"]["capacity_k"],
-                     "seed": m["shard"]["seed"],
-                     "target_subset_hash": m["target_subset_hash"],
-                     "gcg_iters": m["gcg_iters"]})
-        for key in seen:
-            seen[key].add(m[key])
-    ok = all(len(v) == 1 for v in seen.values())
-    return {"ok": ok, "n_shards": len(rows),
-            "distinct": {k: sorted(v) for k, v in seen.items()}, "shards": rows}
+    errors = []
+    coordinates = []
+    expected_coordinates = None
+    for path, manifest in manifests:
+        shard = manifest.get("shard", {})
+        row = {
+            "path": path,
+            "k": shard.get("capacity_k"),
+            "seed": shard.get("seed"),
+            "target_subset_hash": manifest.get("target_subset_hash"),
+            "gcg_iters": manifest.get("gcg_iters"),
+        }
+        if strict_e3b:
+            dirty = nested(manifest, ("code", "dirty"))
+            row["code_dirty"] = None if dirty is missing else dirty
+            if dirty is not False:
+                errors.append(
+                    f"{path}: code.dirty must be false for an admissible E3b shard"
+                )
+            config = nested(manifest, ("resolved_sweep_config",))
+            config_hash = nested(manifest, ("resolved_sweep_config_sha256",))
+            if config is not missing:
+                calculated_hash = hashlib.sha256(
+                    json.dumps(config, sort_keys=True, separators=(",", ":"),
+                               ensure_ascii=False, allow_nan=False).encode("utf-8")
+                ).hexdigest()
+                if config_hash is missing or config_hash != calculated_hash:
+                    errors.append(f"{path}: resolved sweep config hash mismatch")
+                try:
+                    declared = {
+                        (int(seed), int(k))
+                        for seed in config["seeds"] for k in config["k_grid"]
+                    }
+                except (KeyError, TypeError, ValueError):
+                    errors.append(f"{path}: invalid resolved sweep k_grid/seeds")
+                else:
+                    if len(declared) != 42:
+                        errors.append(
+                            f"{path}: resolved sweep must declare exactly 42 k×seed coordinates"
+                        )
+                    if expected_coordinates is None:
+                        expected_coordinates = declared
+                    elif declared != expected_coordinates:
+                        errors.append(f"{path}: resolved sweep coordinate set mismatch")
+            coordinates.append((shard.get("seed"), shard.get("capacity_k")))
+        rows.append(row)
+        for key, key_path in invariant_paths.items():
+            value = nested(manifest, key_path)
+            seen[key].add(canonical(value))
+            if strict_e3b and value is missing:
+                errors.append(f"{path}: missing {'.'.join(key_path)}")
+
+    for key, values in seen.items():
+        if len(values) != 1:
+            errors.append(f"cross-shard mismatch: {key}")
+        elif strict_e3b and values == {"null"}:
+            errors.append(f"E3b provenance value is null: {key}")
+
+    coordinate_report = None
+    if strict_e3b:
+        counts = Counter(coordinates)
+        duplicates = sorted(
+            [[seed, k, count] for (seed, k), count in counts.items() if count > 1],
+            key=lambda row: (str(row[0]), str(row[1])),
+        )
+        observed = set(coordinates)
+        expected = expected_coordinates or set()
+        missing_coordinates = sorted(
+            [[seed, k] for seed, k in expected - observed],
+            key=lambda row: (row[0], row[1]),
+        )
+        extra_coordinates = sorted(
+            [[seed, k] for seed, k in observed - expected],
+            key=lambda row: (str(row[0]), str(row[1])),
+        )
+        if len(rows) != 42:
+            errors.append(f"E3b requires exactly 42 shard manifests; found {len(rows)}")
+        if duplicates:
+            errors.append("duplicate E3b k/seed coordinates")
+        if missing_coordinates:
+            errors.append("missing E3b k/seed coordinates")
+        if extra_coordinates:
+            errors.append("unexpected E3b k/seed coordinates")
+        coordinate_report = {
+            "expected_count": len(expected),
+            "observed_count": len(rows),
+            "unique_observed_count": len(observed),
+            "duplicates": duplicates,
+            "missing": missing_coordinates,
+            "extra": extra_coordinates,
+        }
+
+    ok = not errors
+    return {
+        "ok": ok,
+        "strict_e3b": strict_e3b,
+        "n_shards": len(rows),
+        "distinct": {key: sorted(values) for key, values in seen.items()},
+        "shards": rows,
+        "coordinates": coordinate_report,
+        "errors": errors,
+    }
 
 
 # ---------------------------------------------------------------------------

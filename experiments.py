@@ -63,6 +63,11 @@ from config import (
 from attempt_log import AttemptLogger, target_self_information
 from evaluate import exact_match, cap_targets, even_subset
 import run_manifest
+from e3_target_manifest import (
+    TargetManifestError,
+    canonical_sha256,
+    validate_manifest as validate_e3_target_manifest,
+)
 from gcg_attack import GCGAttack, format_target, TARGET_FORMATS, attack_fields
 from discovery_attacks import (
     _compass_prompts, _multiquery_prompts, _batched_generate,
@@ -851,36 +856,85 @@ def run_E3_capacity_sweep(model_name: str, seed: int) -> str:
     A single k may be pinned via env PII_CAP_K (for k-parallel SLURM tasks); the
     shard_tag then encodes it so parallel tasks never collide.
     """
-    random.seed(seed)
-    torch.manual_seed(seed)
     fields = _active_fields()
-
-    ctx = _Ctx(model_name, "finetuned", seed)
-    model, tok = _load_model(model_name, "finetuned")
-
-    registry = _load_registry()
-    trained, controls = _split_registry(registry)
-    matched = _matched_control_entries(ctx, seed, controls) or controls
-
-    # Even spacing, NOT a raw prefix: the registry is laid out in frequency-tier
-    # blocks, so trained[:25] would contain 10 people at f=1, 15 at f=5 and NONE
-    # at f=20 -- 60% of the trained population and the most-memorised tier.
     n_t = exp_cfg.capacity_sweep_n_targets
-    d_subset = even_subset(trained, n_t)
-    c_subset = even_subset(matched, n_t)
+    N = gcg_cfg.max_iterations_N
+
+    # E3b fixes its targets before any new outcome exists.  Do not silently
+    # reconstruct E17 or fall back to the full registry here: the historical
+    # path collapsed target-level matches to a person set and then selected an
+    # unrelated C subset.  A missing/altered manifest is therefore a hard fail
+    # that happens before either model is loaded onto the GPU.
+    target_manifest_path = os.environ.get("PII_E3_TARGET_MANIFEST")
+    if not target_manifest_path:
+        raise TargetManifestError(
+            "E3 requires PII_E3_TARGET_MANIFEST; build and verify the frozen "
+            "target set with e3_target_manifest.py before launching any shard"
+        )
+    checkpoint_path = os.path.join(MODEL_DIR, model_name.replace("/", "_"))
+    frozen = validate_e3_target_manifest(
+        target_manifest_path,
+        registry_path=os.path.join(DATA_DIR, "target_registry.json"),
+        corpus_path=os.path.join(DATA_DIR, "corpus", "train.json"),
+        checkpoint_path=checkpoint_path,
+        expected_fields=fields,
+        expected_people_per_arm=n_t,
+    )
+    target_manifest = frozen["manifest"]
+    contract = target_manifest["execution_contract"]
+    if contract["model_name"] != model_name or contract["model_state"] != "finetuned":
+        raise TargetManifestError("Model/state differs from the frozen E3 execution contract")
+    if list(contract["fields"]) != list(fields):
+        raise TargetManifestError("PII_FIELDS differs from the frozen E3 execution contract")
+    if int(contract["gcg_iters"]) != N:
+        raise TargetManifestError(
+            f"PII_GCG_ITERS={N} differs from frozen value {contract['gcg_iters']}"
+        )
+    if seed not in {int(value) for value in contract["seeds"]}:
+        raise TargetManifestError(f"Seed {seed} is outside the frozen E3 seed set")
+
+    pinned = os.environ.get("PII_CAP_K")
+    k_grid = [int(pinned)] if pinned else [int(k) for k in contract["k_grid"]]
+    if any(k not in {int(value) for value in contract["k_grid"]} for k in k_grid):
+        raise TargetManifestError(f"Requested k grid {k_grid} exceeds the frozen contract")
+
+    d_subset = frozen["trained_entries"]
+    c_subset = frozen["control_entries"]
     subset = ([(e, "trained", int(e["frequency"])) for e in d_subset]
               + [(e, "control", 0) for e in c_subset])
     _tiers = Counter(int(e["frequency"]) for e in d_subset)
     print(f"  [E3] |D|={len(d_subset)} tiers={dict(sorted(_tiers.items()))} "
           f"|C|={len(c_subset)}")
 
-    pinned = os.environ.get("PII_CAP_K")
-    k_grid = [int(pinned)] if pinned else exp_cfg.capacity_k_grid
     extra = f"k{pinned}" if pinned else ""
+
+    # Only now allocate models.  Structural/provenance errors above should cost
+    # zero accelerator time.
+    random.seed(seed)
+    torch.manual_seed(seed)
+    ctx = _Ctx(model_name, "finetuned", seed)
+    model, tok = _load_model(model_name, "finetuned")
 
     shard_tag = _shard_tag(model_name, seed, fields, extra)
     logger = AttemptLogger(ctx.run_id, "E3", shard_tag)
-    N = gcg_cfg.max_iterations_N
+
+    resolved_sweep_config = {
+        "target_set_id": target_manifest["target_set_id"],
+        "target_manifest_sha256": frozen["manifest_sha256"],
+        "model_name": model_name,
+        "model_state": "finetuned",
+        "fields": list(fields),
+        "k_grid": [int(k) for k in contract["k_grid"]],
+        "seeds": [int(value) for value in contract["seeds"]],
+        "gcg_iters": N,
+        "candidates_per_position_B": gcg_cfg.candidates_per_position_B,
+        "candidate_evaluations_per_step": gcg_cfg.effective_eval_batch,
+        "candidate_minibatch": gcg_cfg.effective_minibatch,
+        "early_stop_on_exact_match": gcg_cfg.early_stop_on_exact_match,
+        "extraction_check_interval": gcg_cfg.extraction_check_interval,
+        "decision_rule": "field-normalized substring exact_match",
+    }
+    resolved_sweep_config_sha256 = canonical_sha256(resolved_sweep_config)
 
     # Per-shard manifest. Written BEFORE any attack, so a shard that dies still
     # leaves its pins behind. target_subset_hash and gcg_iters must be identical
@@ -896,6 +950,23 @@ def run_E3_capacity_sweep(model_name: str, seed: int) -> str:
             gcg_iters=N, subset_pairs=_pairs,
             tier_composition=dict(_tiers),
             arm_sizes={"D": len(d_subset), "C": len(c_subset)},
+            extra={
+                "frozen_targets": {
+                    "path": os.path.abspath(target_manifest_path),
+                    "manifest_sha256": frozen["manifest_sha256"],
+                    "payload_sha256": target_manifest["integrity"]["payload_sha256"],
+                    "target_values_sha256": frozen["target_values_sha256"],
+                    "pair_assignment_sha256": frozen["pair_assignment_sha256"],
+                },
+                "input_fingerprints": frozen["source"],
+                "resolved_sweep_config": resolved_sweep_config,
+                "resolved_sweep_config_sha256": resolved_sweep_config_sha256,
+                "scheduler": {
+                    "slurm_job_id": os.environ.get("SLURM_JOB_ID"),
+                    "slurm_array_job_id": os.environ.get("SLURM_ARRAY_JOB_ID"),
+                    "slurm_array_task_id": os.environ.get("SLURM_ARRAY_TASK_ID"),
+                },
+            },
         ),
         os.path.join(RESULTS_DIR, "manifests"), f"{ctx.run_id}__E3__{shard_tag}")
     n = 0

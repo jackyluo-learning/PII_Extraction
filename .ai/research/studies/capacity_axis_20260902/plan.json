@@ -4,7 +4,13 @@
   "compute_budget": {
     "accelerator_hours": 24,
     "est_cost_usd": 0,
-    "approved_at": "2026-09-03T00:00:00-05:00"
+    "approved_at": "2026-09-03T00:00:00-05:00",
+    "e3b_repair_amendment": {
+      "approved_at": "2026-09-20T00:00:00-05:00",
+      "estimated_accelerator_hours": 30,
+      "authorization": "Use all practical Cheaha A100 resources to finish the no-retrain repair as quickly as possible; no additional per-seed approval checkpoint is required.",
+      "estimate_basis": "The completed E3a sweep consumed approximately 27.8 attack elapsed GPU-hours; E3b repeats the same 42-shard attack grid plus one reproducibility shard."
+    }
   },
   "phases": [
     {
@@ -314,6 +320,60 @@
         }
       ],
       "blocked_reason": "Conditional analysis, field-exposure-corrected H3/H5, and complete descriptive figures are finished. Final acceptance remains blocked by the failed email balance gate, undefined H2 global-test contract, remaining historical binding gaps, and loss of target-level E17 pairs."
+    },
+    {
+      "id": "phase-4-e3b-repair",
+      "name": "Review fix — field-exposed frozen E3b rerun",
+      "kind": "review-fixes",
+      "status": "doing",
+      "tasks": [
+        {
+          "id": "t4-1",
+          "name": "Land immutable target-manifest and provenance gates",
+          "description": "Implement a pre-outcome frozen target manifest, require E3 to validate it before GPU allocation, and record target/data/checkpoint/config/code/environment/accelerator fingerprints per shard. Unit tests cover deterministic stratified selection, joint person-level Hungarian matching without replacement, byte-level tamper detection, frozen-file immutability, and strict cross-shard comparison.",
+          "status": "done",
+          "prediction": "The harness deterministically selects 25 unique D and 25 unique C people and rejects any altered input, reused control, dirty code tree, or cross-shard fingerprint mismatch before analysis.",
+          "falsification": "A modified source, assignment, configuration, commit, environment, or target file can pass validation, or a formal shard can run without the frozen manifest.",
+          "commit_provenance_status": "Implementation and tests complete locally; formal launch remains gated on a clean committed tree."
+        },
+        {
+          "id": "t4-2",
+          "name": "Build and freeze the E3b D/C target set before outcomes",
+          "description": "On the unchanged recovered corpus and checkpoint, scan every registry person at field level. From the complete eligible D pool, select exact frequency quotas {1:3,5:7,20:15}; then jointly match SSN and email covariates at person level to 25 distinct corpus-absent controls using a Hungarian assignment. Before freezing, require all six marginal balance diagnostics (character length, token length, and H(t) for both fields) to have |SMD| <= 0.1; failure names the offending field/covariate and blocks launch. Freeze the 25 pairs and all source hashes before any e3b result shard exists.",
+          "status": "backlog",
+          "prediction": "The recovered data yield 92 fully exposed D people (3 at f=1, 29 at f=5, 60 at f=20); the frozen subset has 50/50 exposed D fields and 0/50 exposed C fields, with exact selected quotas 3/7/15 and 25 controls without replacement.",
+          "falsification": "Any selected D field is absent, any selected C field is present, a control is reused, an exact quota cannot be met, any one of the six marginal |SMD| values exceeds 0.1 or is undefined, or e3b outcome files predate the manifest.",
+          "est_accelerator_hours": 0.1
+        },
+        {
+          "id": "t4-3",
+          "name": "Pilot and reproducibility gates",
+          "description": "Run the formal k=0, seed=42 shard first; require 100 rows and zero control exact matches. Run k=20, seed=42 once in the formal run and once under an explicitly excluded e3b_repro run id; require identical target/input/config fingerprints and report per-arm flip rates before releasing the remaining array.",
+          "status": "backlog",
+          "prediction": "The k=0 control rate remains 0 and the repeated k=20 shard reproduces within the pre-existing person-level flip-rate criterion.",
+          "falsification": "k=0 produces a control hit, either shard is incomplete, fingerprints differ, or repeat variation exceeds the registered criterion; the 40 remaining shards stay blocked.",
+          "est_accelerator_hours": 1.0
+        },
+        {
+          "id": "t4-4",
+          "name": "Run the 42-shard E3b repair on the existing checkpoint",
+          "description": "Submit the same 14 k values x 3 attack seeds on Cheaha A100 nodes with no restrictive array concurrency cap after the pilot gate. Do not retrain. Every shard must contain the same frozen 25 D/25 C people, two fields, N=200, and exactly one k/seed coordinate.",
+          "status": "backlog",
+          "prediction": "As a prospective repair/replication of E3a, the C-only capacity response remains strongly increasing (Spearman rho > 0.9), with alpha_20 >= 0.70 and alpha_64 >= 0.90. No directional prediction is made for D-C because correcting field exposure and pairing is the purpose of the rerun.",
+          "falsification": "The C curve has rho <= 0, either high-k threshold fails, a shard changes any invariant, or fewer than 42 admissible shards complete.",
+          "arms": ["trained", "control"],
+          "seeds": [42, 1337, 2024],
+          "est_accelerator_hours": 29.0
+        },
+        {
+          "id": "t4-5",
+          "name": "Accept, import, and reanalyse E3b",
+          "description": "Before reading outcomes, require 42/42 formal manifests, 4,200 attempt rows, one value for every strict provenance invariant, code.dirty=false, A100-only accelerators, and exact k x seed coverage. Append new ledger rows; retain E3a as historical evidence and mark E3b as the superseding field-exposure-corrected D/C run only after all gates pass.",
+          "status": "backlog",
+          "prediction": "All structural and provenance gates pass, permitting the same preregistered E3 estimators to be rerun without a post-outcome exclusion rule.",
+          "falsification": "Any source/hash/config mismatch, dirty or missing code state, duplicate coordinate, missing shard, incomplete row count, or target exposure violation blocks confirmatory D/C analysis."
+        }
+      ]
     }
   ],
   "reanalysis": {
@@ -322,6 +382,6 @@
     "prior_plan": "reanalysis/prior_plan.json",
     "stage": "conditional computation, complete descriptive figures, and independent numeric review complete; final acceptance blocked",
     "completion_accepted": false,
-    "updated_at": "2026-09-06T21:03:09Z"
+    "updated_at": "2026-09-20T00:00:00-05:00"
   }
 }
