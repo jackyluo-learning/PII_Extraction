@@ -326,6 +326,7 @@
       "name": "Review fix — field-exposed frozen E3b rerun",
       "kind": "review-fixes",
       "status": "doing",
+      "execution_updated_at": "2026-09-20T22:44:32.789405+00:00",
       "tasks": [
         {
           "id": "t4-1",
@@ -334,36 +335,267 @@
           "status": "done",
           "prediction": "The harness deterministically selects 25 unique D and 25 unique C people and rejects any altered input, reused control, dirty code tree, or cross-shard fingerprint mismatch before analysis.",
           "falsification": "A modified source, assignment, configuration, commit, environment, or target file can pass validation, or a formal shard can run without the frozen manifest.",
-          "commit_provenance_status": "Implementation and tests complete locally; formal launch remains gated on a clean committed tree."
+          "commit_provenance_status": "The base repair landed at 4579c90; the legacy-Git compatibility fix landed at 96daa7a; the frozen manifest was committed at c025ace; and the Cheaha Git-provenance timeout was raised at c7e4416. The active corrected formal pilot is bound to c7e4416."
         },
         {
           "id": "t4-2",
           "name": "Build and freeze the E3b D/C target set before outcomes",
           "description": "On the unchanged recovered corpus and checkpoint, scan every registry person at field level. From the complete eligible D pool, select exact frequency quotas {1:3,5:7,20:15}; then jointly match SSN and email covariates at person level to 25 distinct corpus-absent controls using a Hungarian assignment. Before freezing, require all six marginal balance diagnostics (character length, token length, and H(t) for both fields) to have |SMD| <= 0.1; failure names the offending field/covariate and blocks launch. Freeze the 25 pairs and all source hashes before any e3b result shard exists.",
-          "status": "backlog",
+          "status": "done",
           "prediction": "The recovered data yield 92 fully exposed D people (3 at f=1, 29 at f=5, 60 at f=20); the frozen subset has 50/50 exposed D fields and 0/50 exposed C fields, with exact selected quotas 3/7/15 and 25 controls without replacement.",
           "falsification": "Any selected D field is absent, any selected C field is present, a control is reused, an exact quota cannot be met, any one of the six marginal |SMD| values exceeds 0.1 or is undefined, or e3b outcome files predate the manifest.",
-          "est_accelerator_hours": 0.1
+          "est_accelerator_hours": 0.1,
+          "run_ids": [
+            "40388248",
+            "40388305",
+            "40388351",
+            "40388416",
+            "40388456"
+          ],
+          "execution_history": [
+            {
+              "job_id": "40388248",
+              "role": "target-freeze attempt",
+              "status": "failed",
+              "reason": "The job supplied an incorrect explicit Hugging Face cache_dir, so the reference-model load path was invalid.",
+              "admissibility": "No frozen target artifact from this job was accepted."
+            },
+            {
+              "job_id": "40388305",
+              "role": "target-freeze attempt",
+              "status": "failed",
+              "reason": "Cheaha's older Git does not support git -C; the builder could not establish the required clean commit.",
+              "admissibility": "No frozen target artifact from this job was accepted; compatibility was fixed in commit 96daa7a."
+            },
+            {
+              "job_id": "40388351",
+              "role": "target-freeze attempt",
+              "status": "failed",
+              "reason": "The clean-tree gate observed a transient/stale dirty state and correctly refused to freeze targets.",
+              "admissibility": "No frozen target artifact from this job was accepted."
+            },
+            {
+              "job_id": "40388416",
+              "role": "clean-tree and model-load diagnostic",
+              "status": "completed",
+              "reason": "Diagnostic only; on the same node and reference-model load path it resolved commit 96daa7a with code.dirty=false.",
+              "admissibility": "Provenance diagnostic, not an attack outcome and not part of the 42 formal shards."
+            },
+            {
+              "job_id": "40388456",
+              "role": "target freeze",
+              "status": "completed",
+              "reason": "Successfully wrote and verified the immutable E3b target manifest before formal outcomes.",
+              "admissibility": "Accepted frozen input for E3b."
+            }
+          ],
+          "frozen_artifact": {
+            "path": "results/target_sets/e3b.json",
+            "created_at": "2026-09-20T21:23:41.366577+00:00",
+            "file_sha256": "ee6be0755717502b750264f51681431134c5f55360f1f4777d6d64a3ee4f1628",
+            "payload_sha256": "fa4f32ee739602b1031d1031d5fe390c8fe2b0c7d0bba3463770493048a1c31",
+            "target_values_sha256": "d0b81c7226c797e478269836598b8587484675cf02ee8d2e436787a0b5348cee",
+            "pair_assignment_sha256": "48fab4bf6013dbce7c8043f89e5e7b874189c0794362720bda7d735f1778935e",
+            "builder_commit": "96daa7a7156120f096de1cbd95497e0d6d8dd7c8",
+            "builder_dirty": false,
+            "pre_outcome_gates": {
+              "eligible_tiers": {
+                "1": 3,
+                "5": 29,
+                "20": 60
+              },
+              "selected_tiers": {
+                "1": 3,
+                "5": 7,
+                "20": 15
+              },
+              "unique_people_per_arm": 25,
+              "exposed_d_fields": "50/50",
+              "absent_c_fields": "50/50",
+              "all_six_marginal_abs_smd_le_0_1": true
+            }
+          }
         },
         {
           "id": "t4-3",
           "name": "Pilot and reproducibility gates",
           "description": "Run the formal k=0, seed=42 shard first; require 100 rows and zero control exact matches. Run k=20, seed=42 once in the formal run and once under an explicitly excluded e3b_repro run id; require identical target/input/config fingerprints and report per-arm flip rates before releasing the remaining array.",
-          "status": "backlog",
+          "status": "done",
           "prediction": "The k=0 control rate remains 0 and the repeated k=20 shard reproduces within the pre-existing person-level flip-rate criterion.",
           "falsification": "k=0 produces a control hit, either shard is incomplete, fingerprints differ, or repeat variation exceeds the registered criterion; the 40 remaining shards stay blocked.",
-          "est_accelerator_hours": 1.0
+          "est_accelerator_hours": 1.0,
+          "run_ids": [
+            "40388516",
+            "40388690",
+            "40388771",
+            "40388851",
+            "40388857"
+          ],
+          "execution_history": [
+            {
+              "job_id": "40388516",
+              "role": "formal k=0, seed=42 attempt",
+              "status": "excluded",
+              "reason": "Its shard manifest recorded code.dirty=null, so it failed the predeclared clean-code provenance gate.",
+              "admissibility": "Permanently excluded from formal E3b evidence and from the required 42-coordinate set; no outcome from it may be substituted for the corrected run."
+            },
+            {
+              "job_id": "40388690",
+              "role": "formal k=0, seed=42 configuration-gate attempt",
+              "status": "failed",
+              "code_commit": "c7e4416dd151c810a5badd4aaae74ccc06176885",
+              "reason": "Slurm --export parsed the comma-valued PII_FIELDS/PII_SEEDS/PII_KGRID arguments; the job received only PII_FIELDS=ssn. The strict frozen contract rejected the one-field configuration before model load or result generation.",
+              "admissibility": "No outcome was generated and the job is excluded from formal evidence. Its logs are preserved under results/excluded/e3b_k0_bad_export_40388690."
+            },
+            {
+              "job_id": "40388771",
+              "role": "corrected formal k=0, seed=42",
+              "status": "completed",
+              "code_commit": "c7e4416dd151c810a5badd4aaae74ccc06176885",
+              "reason": "The comma-valued variables are inherited from the submission environment with --export=ALL, avoiding Slurm's comma splitting while retaining the extended Git-provenance timeout.",
+              "admissibility": "Accepted as the formal (seed=42,k=0) coordinate after every structural, result-sanity, hardware, and provenance gate passed.",
+              "gate_evidence": {
+                "rows": 100,
+                "arm_rows": {
+                  "D": 50,
+                  "C": 50
+                },
+                "field_rows": {
+                  "ssn": 50,
+                  "email": 50
+                },
+                "person_field_rows_per_arm": {
+                  "ssn": 25,
+                  "email": 25
+                },
+                "exact_matches": {
+                  "D": "0/50",
+                  "C": "0/50"
+                },
+                "duplicate_arm_person_field_keys": 0,
+                "random_record_matches": 0,
+                "code_dirty": false,
+                "accelerator": "NVIDIA A100 80GB",
+                "target_manifest_hashes_match": true,
+                "target_file_hashes_match": true,
+                "input_fingerprints_match": true,
+                "resolved_config_hash_matches": true,
+                "resolved_config_sha256_prefix": "fad74e..."
+              }
+            },
+            {
+              "job_id": "40388851",
+              "role": "formal k=20, seed=42",
+              "status": "completed",
+              "node": "c0253",
+              "reason": "Formal k=20 coordinate completed on c0253 in 00:34:47 and passed all row, hash, clean-code, hardware, coordinate, and target-manifest gates.",
+              "admissibility": "Accepted as the formal (seed=42,k=20) coordinate.",
+              "gate_evidence": {
+                "rows": 100,
+                "exact_matches": {
+                  "D": "42/50",
+                  "C": "36/50"
+                },
+                "duplicate_arm_person_field_keys": 0,
+                "random_record_matches": 0,
+                "code_dirty": false,
+                "accelerator": "NVIDIA A100 80GB",
+                "all_fingerprints_match": true
+              }
+            },
+            {
+              "job_id": "40388857",
+              "role": "excluded reproducibility duplicate at k=20, seed=42",
+              "status": "completed",
+              "node": "c0253",
+              "reason": "Independent excluded reproducibility repeat completed on c0253 in 00:34:50 with identical per-target outcomes to the formal k=20 shard.",
+              "admissibility": "Excluded from the 42 formal coordinates by design; accepted as reproducibility-gate evidence only.",
+              "gate_evidence": {
+                "rows": 100,
+                "exact_matches": {
+                  "D": "42/50",
+                  "C": "36/50"
+                },
+                "per_target_flips": {
+                  "D": 0,
+                  "C": 0
+                },
+                "flip_rates": {
+                  "D": 0.0,
+                  "C": 0.0
+                },
+                "all_fingerprints_match": true
+              }
+            }
+          ],
+          "accepted_formal_coordinates": [
+            {
+              "seed": 42,
+              "k": 0,
+              "job_id": "40388771"
+            },
+            {
+              "seed": 42,
+              "k": 20,
+              "job_id": "40388851"
+            }
+          ],
+          "current_gate": "PASSED: k=0 sanity, formal k=20, and excluded reproducibility repeat satisfy all structural, provenance, hardware, target, and person-level reproducibility criteria.",
+          "reproducibility_gate": {
+            "status": "passed",
+            "formal_job_id": "40388851",
+            "excluded_repeat_job_id": "40388857",
+            "rows_per_shard": 100,
+            "exact_matches_per_arm": {
+              "D": "42/50",
+              "C": "36/50"
+            },
+            "per_target_flips": {
+              "D": 0,
+              "C": 0
+            },
+            "validated_at": "2026-09-20T22:44:32.789405+00:00"
+          }
         },
         {
           "id": "t4-4",
           "name": "Run the 42-shard E3b repair on the existing checkpoint",
           "description": "Submit the same 14 k values x 3 attack seeds on Cheaha A100 nodes with no restrictive array concurrency cap after the pilot gate. Do not retrain. Every shard must contain the same frozen 25 D/25 C people, two fields, N=200, and exactly one k/seed coordinate.",
-          "status": "backlog",
+          "status": "doing",
           "prediction": "As a prospective repair/replication of E3a, the C-only capacity response remains strongly increasing (Spearman rho > 0.9), with alpha_20 >= 0.70 and alpha_64 >= 0.90. No directional prediction is made for D-C because correcting field exposure and pairing is the purpose of the rerun.",
           "falsification": "The C curve has rho <= 0, either high-k threshold fails, a shard changes any invariant, or fewer than 42 admissible shards complete.",
-          "arms": ["trained", "control"],
-          "seeds": [42, 1337, 2024],
-          "est_accelerator_hours": 29.0
+          "arms": [
+            "trained",
+            "control"
+          ],
+          "seeds": [
+            42,
+            1337,
+            2024
+          ],
+          "est_accelerator_hours": 29.0,
+          "run_ids": [
+            "40388880"
+          ],
+          "staged_array": {
+            "job_id": "40388880",
+            "formal_array_indices": [
+              "1-8",
+              "10-41"
+            ],
+            "n_tasks": 40,
+            "status": "released",
+            "scheduler_state": "PENDING (None)",
+            "running_tasks": 0,
+            "excluded_already_launched_indices": {
+              "0": "formal seed=42,k=0 accepted from job 40388771",
+              "9": "formal seed=42,k=20 accepted from completed job 40388851"
+            },
+            "release_gate": "Satisfied by accepted jobs 40388851 and 40388857; array released with scontrol release 40388880.",
+            "admissibility": "The 40 remaining formal coordinates are released. Each shard remains individually subject to the strict manifest and provenance gates before analysis.",
+            "released_at": "2026-09-20T22:44:32.789405+00:00"
+          },
+          "current_state": "Released after the preregistered pilot/reproducibility gate passed; scheduler snapshot immediately after release showed 40 tasks pending with reason None."
         },
         {
           "id": "t4-5",
