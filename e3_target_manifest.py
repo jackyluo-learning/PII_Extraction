@@ -323,7 +323,7 @@ def _git_state(repo_root: os.PathLike[str] | str) -> Dict[str, Any]:
         try:
             return subprocess.run(
                 ("git", *args), cwd=str(repo_root), check=True,
-                capture_output=True, text=True, timeout=10,
+                capture_output=True, text=True, timeout=120,
             ).stdout.strip()
         except Exception:
             return None

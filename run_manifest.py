@@ -37,7 +37,7 @@ from typing import Dict, List, Optional, Sequence, Tuple
 def _git(*args: str) -> Optional[str]:
     try:
         return subprocess.run(("git",) + args, capture_output=True, text=True,
-                              timeout=10, check=True).stdout.strip()
+                              timeout=120, check=True).stdout.strip()
     except Exception:
         return None
 
