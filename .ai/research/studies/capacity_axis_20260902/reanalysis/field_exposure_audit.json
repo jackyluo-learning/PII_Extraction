@@ -1,0 +1,56 @@
+{
+  "status": "verified_field_level_exposure_mismatch",
+  "created_at": "2026-09-20T15:13:02.585241+00:00",
+  "unit": "(person_id, field)",
+  "matching_rule": {
+    "email": "NFKC + lowercase + collapsed whitespace substring, matching evaluate.normalize_text semantics",
+    "ssn": "digits-only substring, matching evaluate.exact_match(field='ssn') semantics"
+  },
+  "sources": {
+    "results_ledger": ".ai/research/studies/capacity_axis_20260902/results.json",
+    "results_ledger_sha256": "9be967dc6d98b033a65ab08a98c81cfa70e032568ae422b0764fa597bd276c0d",
+    "registered_raw_shards": 42,
+    "registered_raw_shard_unique_sha256": 42,
+    "recovered_train_text": "artifacts/capacity_axis_20260902/recovered_colab/data/corpus/train.json",
+    "recovered_train_text_sha256": "7a059fc04ae21665a464a5cb68eb87d2fae597d736f82869c24866e21d0e1acf",
+    "recovered_train_text_expected_sha256": "7a059fc04ae21665a464a5cb68eb87d2fae597d736f82869c24866e21d0e1acf"
+  },
+  "counts": {
+    "trained_targets": 50,
+    "present": 48,
+    "absent": 2,
+    "by_field": {
+      "email": {
+        "targets": 25,
+        "present": 25,
+        "absent": 0
+      },
+      "ssn": {
+        "targets": 25,
+        "present": 23,
+        "absent": 2
+      }
+    }
+  },
+  "absent_targets_anonymized": [
+    {
+      "anonymous_target_id": "5da225967dc7",
+      "field": "ssn",
+      "train_frequency_person_level": 1,
+      "field_value_present_in_recovered_train_text": false
+    },
+    {
+      "anonymous_target_id": "ce819cbf5c01",
+      "field": "ssn",
+      "train_frequency_person_level": 1,
+      "field_value_present_in_recovered_train_text": false
+    }
+  ],
+  "person_level_frequency_check": {
+    "1": 6,
+    "5": 14,
+    "20": 30
+  },
+  "interpretation": "All 50 targets carry a positive person-level train_frequency label, but two SSN field values do not occur in the recovered fine-tuning text. Person-level membership is therefore not identical to field-level exposure. These two targets should not be silently moved into the untouched control arm because other fields for the same people were exposed. Define a field-exposure stratum or exclude them with their matched pairs under a declared rule before final H2-joint/H3/H5 and D-C figure estimates.",
+  "provenance_limit": "The recovered train.json hash matches the registered recovered artifact, but the study still lacks an immutable per-shard proof binding this corpus and the executed checkpoint."
+}
