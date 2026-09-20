@@ -13,11 +13,11 @@
 | 排除 | Colab pilot/cost/repro不进主分析，旧同名引用被替代且保留 | 没有删掉未知cleanliness的6个主分片挑选有利子集；整体仅条件性 |
 | 种子 | 42、1337、2024，全格齐全，达到协议3种子下限 | 同一批人的重复攻击；不是3次独立训练或150名独立对象 |
 | 匹配 | Cheaha 42/1337/2024 各600条E17均已恢复；三份字节相同，控制匹配有放回 | matching 来源已恢复，但字节相同的 seed 文件不提供独立 matching 变化；仍保留Colab SMD作为单独诊断 |
-| 算力 | 主分片攻击耗时 26.251 h；42个最终主分片逐一匹配到COMPLETED sacct行，计费GPU-h下限 222.269；45作业汇总为222.987 | 最终分片已有逐片调度行；GPU-h是调度下限；未生成最终日志的数组槽位仍不能归属 |
+| 算力 | 主分片攻击耗时 26.251 h；42个最终主分片逐一匹配到COMPLETED行，计费GPU-h下限 222.268889；45作业汇总为 222.987 | 最终分片已有逐片调度行；GPU-h是调度下限；未生成最终日志的数组槽位仍不能归属 |
 
 
 审计文件：[初次逐行审计（补证前快照）](reanalysis/raw_data_audit.json)、[Cheaha来源恢复审计](reanalysis/cheaha_recovery_audit.json)、[逐分片日志—调度绑定](reanalysis/cheaha_slurm_log_provenance.csv)、[补证审计](reanalysis/post_recovery_audit.json)、[合同审查](reanalysis/contract_audit.md)、[实现审查](reanalysis/implementation_audit.md)。
-虽然 Cheaha 的结果、日志和最终主分片调度归属已恢复，历史 checkpoint 绑定、不可变 launch 记录、6 个 dirty=unknown 分片的清洁证据、未生成最终日志的数组槽位归属和 7 条 Colab 的 started_at 仍不足，因此全部主扫描记录继续标为 `confirmatory_eligible=false`；以下检验展示在已记录攻击数据上的条件性结果，不掩盖这一资格限制。
+虽然 Cheaha 的结果、日志和最终主分片调度归属已恢复，历史checkpoint绑定、不可变launch记录、6个dirty=unknown分片的清洁证据、未生成最终日志的数组槽位归属和7条Colab的started_at仍不足，因此全部主扫描记录继续标为 `confirmatory_eligible=false`；以下检验展示在已记录攻击数据上的条件性结果，不掩盖这一资格限制。
 
 
 ## 仍需Cheaha补证
@@ -26,4 +26,4 @@
 - 超出 manifest PII_* 字段的不可变完整 launch 记录
 - 6 个 code.dirty=null 主 manifest 的历史清洁证据
 - 未生成最终日志的数组槽位的失败/取消及重试归属
-- 7 条 Colab 导入运行记录的历史 started_at 时间戳
+- 7 条 Colab 导入记录的历史 started_at 时间戳

@@ -2,8 +2,9 @@
 from pathlib import Path
 import json,csv
 ROOT=Path(__file__).resolve().parents[5];S=ROOT/'.ai/research/studies/capacity_axis_20260902';O=S/'reanalysis';A=ROOT/'artifacts/capacity_axis_20260902'
-L=json.loads((S/'results.json').read_text());R=L['reanalysis']['estimates'];H=R['hypotheses'];P=L['reanalysis']['post_recovery_audit'];CHEAHA=P.get('cheaha_recovery',{});D=R['diagnostics']
+L=json.loads((S/'results.json').read_text());R=L['reanalysis']['estimates'];H=R['hypotheses'];FC=L['reanalysis']['field_exposure_corrected'];FCH=FC['hypotheses'];P=L['reanalysis']['post_recovery_audit'];CHEAHA=P.get('cheaha_recovery',{});D=R['diagnostics']
 T=L['reanalysis']['task_prediction_evidence']
+SLR=L['reanalysis'].get('cheaha_slurm_log_summary',{})
 def num(x,n=3):return '未得' if x is None else f'{x:.{n}f}'
 def ci(x,n=3):return f'[{num(x[0],n)}, {num(x[1],n)}]'
 def diff(v,b):return f'{100*v:+.2f} pp [{100*b[0]:+.2f}, {100*b[1]:+.2f}]'
@@ -19,6 +20,10 @@ mainrows=[]
 for x in R['curves']['pooled']:
  mainrows.append([x['k'],f"25 / 50 / 150 / {x['n_seeds']}",rate(x['control']['estimate'],x['control']['ci']),rate(x['trained']['estimate'],x['trained']['ci']),diff(x['tau'],x['tau_ci']),'W/M' if 'MOVER' in x['tau_interval_method'] else 'B',f"{x['control']['attempt_elapsed_hours']:.3f} / {x['trained']['attempt_elapsed_hours']:.3f}"])
 curve_table=table(['k','每组 人/目标/尝试/种子','**α：控制组（95% CI）**','训练组 EMR（95% CI）','τ=D−C（95% CI，百分点）','区间','攻击耗时 C/D（h）；GPU-h未知'],mainrows)
+corrected_curve_table=table(
+ ['k','每组目标/尝试/种子','C（95% CI）','D（95% CI）','τ=D−C（95% CI，百分点）','区间'],
+ [[x['k'],f"48 / {x['control']['n_attempts']} / {x['n_seeds']}",rate(x['control']['estimate'],x['control']['ci']),rate(x['trained']['estimate'],x['trained']['ci']),diff(x['tau'],x['tau_ci']),'W/M' if 'MOVER' in x['tau_interval_method'] else 'B'] for x in FC['curves']['pooled']]
+)
 flat=[]
 for field,rows in R['curves'].items():
  for x in rows:
@@ -41,23 +46,23 @@ summary=rf'''# E3 重新分析：原始证据审计后的条件性结果
 
 ## Summary
 
-已从台账关联的 42 个 Cheaha 原始分片重新计算，共 4,200 次攻击；每组 25 人、50 个目标，三个攻击种子。旧分析被撤回为历史版本，见 [prior_analysis.md](reanalysis/prior_analysis.md)。
-H1：ρ={H['H1']['rho']:.4f}，95% CI {ci(H['H1']['ci'],4)}，支持记录数据中的上升趋势。H3：k=20 的差为 {diff(H['H3']['tau'],H['H3']['ci'])}，未排除零。
+已从台账关联的 42 个 Cheaha 原始分片重新计算，共 4,200 次攻击；每组原有 25 人、50 个目标，三个攻击种子。字段暴露复核发现两个 D-SSN 没有出现在恢复的微调文本中。按用户提出的成对排除原则处理后，实际可执行规则是排除这两个D、一个原始E17匹配C和一个事后近邻C；因此这是**字段数量平衡的控制集**，不能称为完整配对样本。更正后的D/C比较使用每组48个目标、共4,032行。这个排除在看过结果后决定，属于明确披露的事后偏离。旧分析被撤回为历史版本，见 [prior_analysis.md](reanalysis/prior_analysis.md)。
+H1：ρ={H['H1']['rho']:.4f}，95% CI {ci(H['H1']['ci'],4)}，支持记录数据中的上升趋势。更正后的 H3：k=20 的差为 {diff(FCH['H3']['tau'],FCH['H3']['ci'])}，未排除零。
 H2：1% 误报条件不可分辨；零命中的保守 Wilson 上界为 {100*H['H2']['zero_count_wilson_upper']:.2f}%，不再接受旧版的 [0,0] 区间或“不存在可用容量”结论。H4：γ={H['H4']['gamma']:.3f}，95% CI {ci(H['H4']['gamma_ci'])}，在声明的 Weibull 工作模型下排除比例关系。
-**状态：Cheaha 来源材料已部分恢复；统计重算和完整描述图已完成，但最终分析验收仍未通过。** 来源侧仍有历史绑定缺口；设计侧还有email平衡门失败和H2全局检验合同未定义。这不是已接受的确认性研究，也未结项。主分片记录的攻击耗时为 {fulltime:.2f} h；sacct 还记录了 {sched.get('pii_expcap_jobs','未得')} 个主作业，已完成作业的计费 GPU-h 下限为 {sched_gpu_h if sched_gpu_h is not None else '未得'}，但仍缺逐分片映射、历史 checkpoint 绑定和完整运行时间戳。
+**状态：Cheaha 来源材料已部分恢复；字段暴露更正后的统计重算和描述图已完成，但最终分析验收仍未通过。** 42个最终主分片现已逐一绑定到COMPLETED调度行并恢复开始时间；来源侧仍缺历史checkpoint和完整launch绑定，且无法归属没有最终日志的数组槽位。设计侧还有email平衡门失败、H2全局检验合同未定义，以及实际攻击代码丢失E17逐目标配对这一实现偏离。这不是已接受的确认性研究，也未结项。主分片记录的攻击耗时为 {fulltime:.2f} h；42个最终主分片的计费GPU-h下限为 {SLR.get('main_billing_gpu_hours_lower_bound','未得')}，45作业汇总为 {sched_gpu_h if sched_gpu_h is not None else '未得'}。
 
 ## “Cheaha 来源材料缺口阻塞”具体指什么
 
-这里的“阻塞”是**正式确认性验收与研究结项的阻塞**，不是统计程序无法运行，也不是 42 个主扫描分片或 4,200 行攻击结果缺失。Cheaha 的 E17、42 个 manifest、精确 pip freeze 和 sacct 汇总已经恢复；仍缺的是把每个结果绑定到当时执行的 checkpoint、不可变的完整 launch 记录、6 个 `code.dirty=null` 分片的历史清洁证据、逐分片的 Slurm 失败/重试归属，以及 49 条导入记录的历史 `started_at`。
+这里的“阻塞”是**正式确认性验收与研究结项的阻塞**，不是统计程序无法运行，也不是 42 个主扫描分片或 4,200 行攻击结果缺失。Cheaha 的 E17、42 个 manifest、精确 pip freeze、42个最终日志到COMPLETED调度行的时间戳绑定及主分片开始时间已经恢复；仍缺的是把每个结果绑定到当时执行的checkpoint、不可变的完整launch记录、6个`code.dirty=null`分片的历史清洁证据、未生成最终日志的数组槽位的失败/取消/重试归属，以及7条Colab导入记录的历史`started_at`。
 
 {table(['材料状态','阻塞的验收门','对当前重算的影响','仍需的证据'],[
 ['执行 checkpoint 的内容指纹及训练—攻击关联仍缺','模型身份与五项 pin','不改变已存 parquet 的算术结果；无法证明主扫描攻击的是计划中的那个模型','历史 checkpoint 文件或可信 SHA256，以及与各主分片的绑定记录'],
 [f"PII_* 配置已在 manifest 中恢复；完整不可变 launch 记录和 {dirty_unknown} 个 dirty=unknown 分片的历史清洁证据仍缺",'配置、环境与代码清洁性','精确环境已可复核；未记录的运行差异和历史工作树状态仍无法排除','完整 resolved launch 记录、不可变环境/镜像标识、历史 git 状态或等价记录'],
 ['E17 已恢复：42、1337、2024 各600行；三份字节相同，控制匹配观察到有放回','D/C 可比性与成员性解释','matching 证据已不再是缺口；三份相同意味着它们不是独立 seed matching 证据','若要证明 matching 随 seed 变化，需独立且不同的 E17 记录；当前结果仅证明已恢复这三份文件'],
-['sacct 已恢复：pii-expcap 45个作业，43完成、1失败、1取消；逐分片映射和失败/重试归属仍缺','预算、失败处理与运行完整性','可报告调度汇总和 GPU-h 下限；无法把每个作业终态归给具体 manifest','原始作业日志、array/shard 映射和失败/重试清单'],
-['49条导入运行记录缺历史 started_at','严格运行台账 schema','不改变已保存攻击行或统计量；但不能把导入记录当作完整的历史运行日志','Cheaha 作业 start 时间与每个 manifest 的可验证绑定']])}
+['42个最终主分片已逐一匹配COMPLETED调度行；45作业汇总另含失败/取消','预算、失败处理与运行完整性','最终分片调度身份和GPU-h下限可审计；无最终日志的数组槽位仍无法归属','未生成最终日志槽位的失败/取消/重试清单'],
+['42个主分片已恢复started_at；7条Colab导入记录仍缺历史started_at','严格运行台账 schema','主扫描时间链已改善；Colab导入记录仍不是完整历史日志','7条Colab记录的历史started_at']])}
 
-因此当前状态应读成：**Cheaha 来源恢复完成了一部分；条件性数值重算与描述图完成；来源链验收仍被五项历史绑定缺口阻塞；加上email平衡门失败和H2合同缺口，研究尚未结项。** 当前数值可作为“给定这些已保存攻击行”的条件性结果，但不能升级成无保留的确认性结论。
+因此当前状态应读成：**Cheaha主结果、最终日志和调度绑定已经恢复；条件性数值重算与描述图完成；历史checkpoint/launch、部分代码清洁性和无日志槽位仍阻塞来源链验收；加上email平衡门、E17配对丢失和H2合同缺口，研究尚未结项。** 当前数值可作为“给定这些已保存攻击行”的条件性结果，但不能升级成无保留的确认性结论。
 
 ## Ledger Audit
 
@@ -71,10 +76,10 @@ H2：1% 误报条件不可分辨；零命中的保守 Wilson 上界为 {100*H['H
 ['排除','Colab pilot/cost/repro不进主分析，旧同名引用被替代且保留','没有删掉未知cleanliness的6个主分片挑选有利子集；整体仅条件性'],
 ['种子','42、1337、2024，全格齐全，达到协议3种子下限','同一批人的重复攻击；不是3次独立训练或150名独立对象'],
 ['匹配','Cheaha 42/1337/2024 各600条E17均已恢复；三份字节相同，控制匹配有放回','matching 来源已恢复，但字节相同的 seed 文件不提供独立 matching 变化；仍保留Colab SMD作为单独诊断'],
-['算力',f"主分片攻击耗时 {fulltime:.3f} h；sacct记录45个pii-expcap作业（43完成、1失败、1取消），已完成计费GPU-h下限 {sched_gpu_h if sched_gpu_h is not None else '未得'}",'逐分片映射和失败/重试归属缺失，GPU-h是调度下限而非每行精确分摊']])}
+['算力',f"主分片攻击耗时 {fulltime:.3f} h；42个最终主分片逐一匹配到COMPLETED行，计费GPU-h下限 {SLR.get('main_billing_gpu_hours_lower_bound','未得')}；45作业汇总为 {sched_gpu_h if sched_gpu_h is not None else '未得'}",'最终分片已有逐片调度行；GPU-h是调度下限；未生成最终日志的数组槽位仍不能归属']])}
 
-审计文件：[初次逐行审计（补证前快照）](reanalysis/raw_data_audit.json)、[Cheaha来源恢复审计](reanalysis/cheaha_recovery_audit.json)、[补证审计](reanalysis/post_recovery_audit.json)、[合同审查](reanalysis/contract_audit.md)、[实现审查](reanalysis/implementation_audit.md)。
-虽然 Cheaha 的部分来源材料已恢复，历史 checkpoint 绑定、不可变 launch 记录、6 个 dirty=unknown 分片的清洁证据、逐分片调度归属和完整 started_at 仍不足，因此全部主扫描记录继续标为 `confirmatory_eligible=false`；以下检验展示在已记录攻击数据上的条件性结果，不掩盖这一资格限制。
+审计文件：[初次逐行审计（补证前快照）](reanalysis/raw_data_audit.json)、[Cheaha来源恢复审计](reanalysis/cheaha_recovery_audit.json)、[逐分片日志—调度绑定](reanalysis/cheaha_slurm_log_provenance.csv)、[补证审计](reanalysis/post_recovery_audit.json)、[合同审查](reanalysis/contract_audit.md)、[实现审查](reanalysis/implementation_audit.md)。
+虽然 Cheaha 的结果、日志和最终主分片调度归属已恢复，历史checkpoint绑定、不可变launch记录、6个dirty=unknown分片的清洁证据、未生成最终日志的数组槽位归属和7条Colab的started_at仍不足，因此全部主扫描记录继续标为 `confirmatory_eligible=false`；以下检验展示在已记录攻击数据上的条件性结果，不掩盖这一资格限制。
 
 ## 预注册假设与条件性结果（Preregistered hypotheses and conditional results）
 
@@ -115,6 +120,25 @@ B：10,000次独立D/C人员bootstrap，每次在所有k复用同一人样本，
 补充图S3（探索性、描述性）：四个面板各含25个匿名靶标和全部14个`k`；每格颜色是该靶标在三个固定攻击seed中的成功次数0–3。靶标定义为`(arm, person_id, field)`，不使用会随probe表示改变的原始`target_string`；图中不显示姓名或目标值。每个面板按首次观察到任一seed成功的`k`、总成功次数和稳定匿名编号排序；这是事后可视化排序，不把后续失败补成成功，也不把首次命中解释为真正单调阈值。三个seed是同一批人员上的重复攻击，不是三次独立训练。
 
 三张补充图都只使用`results.json`登记并逐文件校验SHA256的42个Cheaha主扫描分片，共4,200条记录；不混入Colab pilot、cost或repro结果。总体曲线的数值地位仍是“给定这些恢复行的条件性结果”，字段和靶标图不能产生确认性发现。对应完整表为[抽取率与计数](reanalysis/extraction_rates_and_counts_full.csv)、[字段计数](reanalysis/extraction_counts_by_field_full.csv)和[靶标×k成功矩阵](reanalysis/target_success_by_k_full.csv)。
+
+#### 字段暴露更正后的 D/C 曲线（当前用于 H3、H5 和成员性解释）
+
+恢复微调文本后逐字段核对发现，原先标为 D 的 25 个 SSN 中有两个并未实际进入恢复的微调文本。两个 D-SSN 和两个 C-SSN 在全部 `k`、全部攻击种子上排除；email 不变。因此更正后的每组为 23 个 SSN + 25 个 email = 48 个目标，共保留4,032行。由于第二个C不是恢复的原始配对，这里准确的名称是**字段数量平衡后的事后更正**。这个规则是在看过数据后确定的，**不是预注册排除规则**，所以更正结果仍是条件性的，不能被包装成原始确认性检验。
+
+还有一项实现偏离：E17 原本保存了逐 D 目标的匹配 C，但实际 E3 路径随后只保留了去重和截断后的控制人员集合，丢失了逐目标配对关系。两个待排除 D 中，一个原始 E17 匹配 C 确实进入了攻击，因此直接排除；另一个原始匹配 C 没有被攻击，无法从不存在的攻击行中排除。本次对后者按 E17 相同的三个协变量——字符长度、token 长度和 `H(t)`——从真正被攻击的 C-SSN 中选择最近者；标准化平方距离为 {FC['exclusions'][0]['fallback_standardized_squared_distance']:.6f}。这是透明的事后替代，不是恢复出的原始配对。
+
+{corrected_curve_table}
+
+![字段暴露更正后的D/C抽取率](../../../../artifacts/capacity_axis_20260902/figures/field_exposure_corrected/extraction_rates_by_k_field_exposure_corrected.png)
+图S4：字段暴露更正后的总体与字段曲线。总体每组48个目标；SSN每组23个目标；email每组25个目标。此图和下列两图取代未过滤版本用于 D/C 成员性解释。
+
+![字段暴露更正后的字段计数](../../../../artifacts/capacity_axis_20260902/figures/field_exposure_corrected/extraction_counts_by_field_field_exposure_corrected.png)
+图S5：更正后的逐字段精确命中计数。SSN每格分母69（23目标×3种子），email每格分母75。
+
+![字段暴露更正后的靶标成功矩阵](../../../../artifacts/capacity_axis_20260902/figures/field_exposure_corrected/target_success_by_k_field_exposure_corrected.png)
+图S6：更正后的匿名靶标×`k`成功次数。被排除目标不再进入排序或色块。
+
+更正台账见[机器可读结果](reanalysis/field_exposure_corrected.json)、[完整曲线CSV](reanalysis/field_exposure_corrected_curve.csv)和[匿名排除记录](reanalysis/field_exposure_exclusions.csv)。原始50/50图保留为审计轨迹，但不再用于 H3、H5 或 D/C 成员性结论。H1、H2、H4只使用控制组定义的估计量，继续保留完整控制总体，不因这次字段暴露更正而改写。
 
 ### D/C匹配平衡诊断（不属于 H1–H5 的统计检验）
 
@@ -172,15 +196,19 @@ SMD 的 0.1 是预定诊断阈值，不是显著性检验。SSN 的三项协变�
 
 **预定判据。** 使用同一批人员在三个固定攻击种子上的记录，以人员为重采样单位构造 τrec(20) 的95% bootstrap CI。只有区间排除0才拒绝零假设；H3 进入四项 Holm 校正家族。设计提到区间若“足够窄”可以形成有用界限，但没有提前给出何为足够窄，所以不能事后把未显著结果解释成等效。
 
-**观察结果。** D={rate(R['curves']['pooled'][9]['trained']['estimate'],R['curves']['pooled'][9]['trained']['ci'])}；C={rate(R['curves']['pooled'][9]['control']['estimate'],R['curves']['pooled'][9]['control']['ci'])}。τ={diff(H['H3']['tau'],H['H3']['ci'])}，每组25名人员、50个目标、3个固定种子；centered bootstrap 原始p={H['H3']['p_raw']:.6f}，Holm p={R['holm']['H3']['p_holm']:.6f}。
+**字段暴露复核与偏离。** 原始主分析把每组50个目标都纳入 H3；其未过滤结果为 τ={diff(H['H3']['tau'],H['H3']['ci'])}。复核恢复的微调文本后，两个 D-SSN 没有真正进入训练文本，因此这个50/50结果不再用于成员性解释。事后排除后每组剩48个目标；其中第二个 C 是从已实际攻击的 C-SSN 中按 E17 三项协变量事后最近匹配，原因是原始 E17 配对 C 未进入攻击清单。因此本分析只恢复了字段数量平衡，没有恢复逐目标配对。这个修正不改变 H3 的估计量，但改变了分析样本，必须作为偏离报告。
 
-{table(['字段','每组人/目标/种子','D及95%CI','C及95%CI','τ及95%CI（百分点）','C/D攻击小时；GPU未知'],[[f,'25 / '+str(next(x for x in R['curves'][f] if x['k']==20)['control']['n_targets'])+' / 3',rate((x:=next(x for x in R['curves'][f] if x['k']==20))['trained']['estimate'],x['trained']['ci']),rate(x['control']['estimate'],x['control']['ci']),diff(x['tau'],x['tau_ci']),f"{x['control']['attempt_elapsed_hours']:.3f}/{x['trained']['attempt_elapsed_hours']:.3f}"] for f in ['ssn','email']])}
+**更正后的观察结果。** D={rate(FC['curves']['pooled'][9]['trained']['estimate'],FC['curves']['pooled'][9]['trained']['ci'])}；C={rate(FC['curves']['pooled'][9]['control']['estimate'],FC['curves']['pooled'][9]['control']['ci'])}。τ={diff(FCH['H3']['tau'],FCH['H3']['ci'])}，每组25名人员、48个目标、3个固定种子；centered bootstrap 原始p={FCH['H3']['p_raw']:.6f}，保留四项家族后的Holm p={FC['holm']['H3']['p_holm']:.6f}。
+
+**近邻C选择敏感性。** 把第二个被排除C依次换成其余所有可用、实际攻击过的C-SSN，`k=20` 的D−C点差范围仅为 {100*FC['fallback_control_sensitivity']['k20_tau_min']:+.3f} 到 {100*FC['fallback_control_sensitivity']['k20_tau_max']:+.3f} 个百分点；所选近邻给出 {100*FC['fallback_control_sensitivity']['selected_fallback_k20_tau']:+.3f}。这说明“未检测到H3差异”的数值不由某一个近邻选择驱动，但不恢复E17逐目标配对，也不解决email平衡失败。
+
+{table(['字段','每组人/目标/种子','D及95%CI','C及95%CI','τ及95%CI（百分点）'],[[f,str((x:=next(x for x in FC['curves'][f] if x['k']==20))['control']['n_persons'])+' / '+str(x['control']['n_targets'])+' / 3',rate(x['trained']['estimate'],x['trained']['ci']),rate(x['control']['estimate'],x['control']['ci']),diff(x['tau'],x['tau_ci'])] for f in ['ssn','email']])}
 
 email达到样本全命中仍有非零总体不确定性；其差值不再被写成确定的结构性零。SSN区间更宽，合并值不能替代字段级限制。
 
 **判定。** 置信区间包含0，未满足拒绝 H0 的判据，H3 为不确定结果。它既不是“发现成员差异”，也不是“两组等效”或“模型没有记忆”的证据。
 
-**结果含义与新推论。** 当前数据把总体差异约束在 -7.33 到 +10.00 个百分点，但设计没有实用等效界。后续应先规定最小有意义效应 δ，再进行有足够功效的等效性或界限检验；字段级结果还提示该设计应单独处理 SSN 和 email 的不同饱和行为。
+**结果含义与新推论。** 更正数据把总体差异约束在 {100*FCH['H3']['ci'][0]:+.2f} 到 {100*FCH['H3']['ci'][1]:+.2f} 个百分点，但设计没有实用等效界。点估计恰为0不表示“两组相同”已经被证明；该区间仍允许约9个百分点的正向或负向差异。后续应先规定最小有意义效应 δ，再进行有足够功效的等效性或界限检验；字段级结果还提示该设计应单独处理 SSN 和 email 的不同饱和行为。
 
 ### H4 — k_min 与 H 的比例模型
 
@@ -210,7 +238,7 @@ log k_min = intercept + γ · log H(t) + error
 
 表中的“未校正 p”是每个假设单独计算、尚未考虑 H1–H4 多重检验的 p 值。`Holm p` 是在这四项检验中控制家族错误率后的调整值。H2 没有预先定义有效的联合检验，所以 `1.000000` 是保留位置的占位值，不是从 H2 数据算出的 p 值；H1、H3、H4 的数值则是各自的未校正 p 和 Holm 调整结果。
 
-{table(['假设','未校正 p（H2为保留占位）','Holm p','条件性解读'],[[h,num(R['holm'][h]['p_raw_or_reserved'],6),num(R['holm'][h]['p_holm'],6),{'H1':'趋势判据支持','H2':'联合检验未定义；p=1保留位置','H3':'不拒绝零；不是等效','H4':'拒绝γ=1'}[h]] for h in ['H1','H2','H3','H4']])}
+{table(['假设','未校正 p（H2为保留占位）','Holm p','条件性解读'],[[h,num(FC['holm'][h]['p_raw_or_reserved'],6),num(FC['holm'][h]['p_holm'],6),{'H1':'趋势判据支持','H2':'联合检验未定义；p=1保留位置','H3':'字段暴露更正后不拒绝零；不是等效','H4':'拒绝γ=1'}[h]] for h in ['H1','H2','H3','H4']])}
 
 家族始终是四项，不丢弃H4。p算法是本次明确披露的补充实现，采用有限Monte Carlo加一校正；最小可报告值1/10001，绝不报告p=0。H3离散边界已用整数成功次数独立核对。Holm并不能补足未预注册的联合H2检验或来源缺口，所以这些是条件性重分析输出。
 
@@ -240,11 +268,11 @@ Tobit次要规格：level-scale截距={H['H4']['secondary_tobit']['intercept']:.
 
 **预定探索性判据。** 在每个人员 bootstrap 重抽样中保留全部并列最大点，构造 argmax 位置的 95% 包络；包络需排除端点 {{1,64}}。二次模型 τ_rec(k)=a log k+b(log k)^2 中的 b<0 是辅助曲率证据。位置与曲率应合并解释，而不能只挑其中有利的一项。
 
-**观察结果。** 观测曲线的并列最大点为 k={H['H5']['observed_maximizers']}；保留并列峰后的 95% 位置包络为 {ci(H['H5']['argmax_envelope_ci'],0)}，10,000 次重抽样中有 {H['H5']['tied_maximum_replicates']} 次出现并列最大值。二次项 b={H['H5']['quadratic_logk_coefficient']:.5f}，95% CI {ci(H['H5']['quadratic_ci'],5)}，探索性单侧 p={H['H5']['quadratic_one_sided_p']:.4f}；只保留第一个 argmax 的敏感性 CI 为 {ci(H['H5']['first_argmax_ci'],0)}。
+**字段暴露复核与更正后的观察结果。** 原先50/50曲线不再用于 H5。对两个未暴露 D-SSN 及两个 C-SSN 作上述字段数量平衡的事后更正后，观测曲线的唯一最大点为 k={FCH['H5']['observed_maximizers']}；保留并列峰后的 95% 位置包络为 {ci(FCH['H5']['argmax_envelope_ci'],0)}，10,000 次重抽样中有 {FCH['H5']['tied_maximum_replicates']} 次出现并列最大值。二次项 b={FCH['H5']['quadratic_logk_coefficient']:.5f}，95% CI {ci(FCH['H5']['quadratic_ci'],5)}，探索性单侧 p={FCH['H5']['quadratic_one_sided_p']:.4f}；只保留第一个 argmax 的敏感性 CI 为 {ci(FCH['H5']['first_argmax_ci'],0)}。
 
-**判定。** 位置包络排除了两个端点，满足位置条件的字面要求；曲率证据没有排除平坦关系，而且峰位置区间很宽。H5 因此判为探索性不确定，不能声称已经定位内部峰值，也不能声称曲线平坦。
+**判定。** 探索性argmax规则的字面条件得到满足，因为位置包络排除了两个端点；二次曲率区间却包含0，没有独立支持先升后降，而且峰位置区间很宽。加上email平衡门失败，H5只能判为探索性不确定：可说曲线提示内部最大值，但不能声称 `k=4` 是稳定最优点，也不能声称曲线平坦。
 
-**解释与新推论。** {ci(H['H5']['argmax_envelope_ci'],0)} 只能作为下一次扫描的候选区域。结果提出的后续假设是：在更高人员样本量和更密的中段网格下，τ_rec(k) 是否存在稳定的内部峰，并且峰值是否高于两侧一个预注册的最小实际差异。新实验还需预先定义平坦曲线的等效界。
+**解释与新推论。** {ci(FCH['H5']['argmax_envelope_ci'],0)} 只能作为下一次扫描的候选区域。结果提出的后续假设是：在更高人员样本量和更密的中段网格下，τ_rec(k) 是否存在稳定的内部峰，并且峰值是否高于两侧一个预注册的最小实际差异。新实验还需预先定义平坦曲线的等效界。
 
 ## Deviations from Preregistration
 
@@ -256,6 +284,7 @@ Tobit次要规格：level-scale截距={H['H4']['secondary_tobit']['intercept']:.
 6. 报告由ledger驱动的专用生成器生成，取代报告规范中“只能make_tables.py”的旧实现路径；全部数字可追至results.json及带哈希原始文件，没有手工表格抄数。
 7. 找回的Colab文件独立存放，绝不覆盖同名Cheaha文件；Cheaha三份E17和42份manifest也以独立恢复包记录。新补录身份哈希表示本次观察到的manifest字段，不伪装为历史完整配置hash；未知清洁状态、模型身份和逐分片账目继续未知。
 8. 阅读完整曲线后增加全k一致Wilson区间及MOVER对照，明确标为事后方法敏感性。有效n基于假设ICC而非测得ICC；它揭示H2部分floor-only资格依赖区间切换，不改变H2不可判定。
+9. 字段暴露复核发生在结果产生后：两个标为D的SSN没有出现在恢复的微调文本中。本次按随后决定排除这两个D及两个C，重算H3、H5和D/C图。实际E3攻击路径丢失逐目标E17配对；其中一个原始匹配C未被攻击，故以相同三项协变量从被攻击C-SSN中事后选最近者。这个偏离公开保留，不能追溯成预注册配对排除。
 
 ## Predictions vs. Outcomes
 
@@ -267,7 +296,7 @@ __PREDICTIONS__
 
 ## Threats to Validity
 
-- A1/matching：实际email的三项SMD未过预设门槛；Cheaha三份E17已恢复且字节相同，仍没有独立seed matching变化证据。email组间差值不应直接归因为训练成员性。
+- A1/matching：实际email的三项SMD未过预设门槛；Cheaha三份E17已恢复且字节相同，仍没有独立seed matching变化证据。执行代码又把逐目标E17配对降成控制人员集合，因此一个字段暴露排除只能事后近邻替代。email组间差值和更正后的总体差值都不能无条件归因为训练成员性。
 - 新增CODE_MAP #16–#21逐项记录本次发现及Validity标记；#21说明H2的部分floor-only资格依赖区间方法切换，一致Wilson敏感性不能升级为确认性结论。
 - CODE_MAP旧问题#1/#15（β单位及删失）：本次保留删失，另给比率；γ失配时不把截距当通用bits/token。H4并未因数据右删失少就免除非单调命中假设问题。
 - CODE_MAP #7（CI不一致）：本次逐行标明B/W/M；边界格不再出现无依据的零宽区间。#8及#10的目标/提示差异：k0单列；没有把anchored对比混入本研究。
@@ -280,12 +309,12 @@ __PREDICTIONS__
 
 ## Compute
 
-控制组已记录攻击耗时 {R['compute']['main_attempt_elapsed_hours']['control']:.3f} h，训练组 {R['compute']['main_attempt_elapsed_hours']['trained']:.3f} h，合计 **{fulltime:.3f} h**。每份manifest记录1张A100；sacct的已完成主作业计费 GPU-h 下限为 **{sched_gpu_h if sched_gpu_h is not None else '未得'}**，已比批准24 A100-h高出至少 {sched_gpu_h-24 if sched_gpu_h is not None else '未得'} h（按该下限计）。
-这不包括加载、匹配、日志、训练、Colab pilot及失败/中断。**不能报告总GPU-h=0，也不能报告预算内。** sacct 已提供作业级汇总，但失败/取消作业尚未一对一绑定到具体 manifest，不能把该下限当作每个结果的精确分摊；本次重分析为本机CPU计算，未新增GPU实验。
+控制组已记录攻击耗时 {R['compute']['main_attempt_elapsed_hours']['control']:.3f} h，训练组 {R['compute']['main_attempt_elapsed_hours']['trained']:.3f} h，合计 **{fulltime:.3f} h**。每份manifest记录1张A100；42个最终主分片逐一匹配调度行后的计费GPU-h下限为 **{SLR.get('main_billing_gpu_hours_lower_bound','未得')}**，45作业汇总的已完成计费GPU-h下限为 **{sched_gpu_h if sched_gpu_h is not None else '未得'}**，均高于批准的24 A100-h。
+这不包括训练、Colab pilot以及无法归属到最终日志的失败/中断槽位。**不能报告总GPU-h=0，也不能报告预算内。** 最终42个分片已有可审计的时间戳调度绑定；未生成最终日志的槽位仍不能逐一归因。本次重分析为本机CPU计算，未新增GPU实验。
 
 ## Limitations
 
-合成PII模板及固定目标限制外部有效性。恢复文件的源数据元信息可查，但预训练污染没有独立排查；匹配误差与字符串归一化规则都有构念误差。没有人工独立标注noise-floor估计。零命中组的有效n基于明确假设；既没有由零观察测出ICC，也没有由三个seed扩大到新人员。H3的CI仍允许有实际意义的正负差，不能报告“无信号”。
+合成PII模板及固定目标限制外部有效性。恢复文件的源数据元信息可查，但预训练污染没有独立排查；匹配误差与字符串归一化规则都有构念误差。字段暴露排除是看过结果后的纠错，其中一个C来自事后近邻而非执行时保留的原始配对。没有人工独立标注noise-floor估计。零命中组的有效n基于明确假设；既没有由零观察测出ICC，也没有由三个seed扩大到新人员。更正后H3的CI仍允许有实际意义的正负差，不能报告“无信号”。
 
 ![各个种子的曲线](../../../../artifacts/capacity_axis_20260902/figures/seed_spread.png)
 图3：每条线对应一个预定攻击种子；每组25人、2字段。此图展示原始seed spread，无误差棒；推断的重采样单位仍为人。seed42与2024在部分k一致不等于独立训练复现。
@@ -297,9 +326,10 @@ __PREDICTIONS__
 - 没有把参考模型的H(t)证明为生成目标的确定性容量门槛，也没有证明Proposition1逐目标“紧”。
 - 没有证明一个通用β可以跨字段、目标格式、模型规模、优化器或计算预算迁移。
 - 没有把宽峰区间、缺乏显著性或被保留的零假设升级成确认性发现。
+- 字段暴露更正后的D=C点估计和p=1没有证明两组等效；H3区间仍跨越约正负9个百分点。
 - Cheaha 来源材料已部分恢复，但没有完成逐分片历史绑定与失败/重试归属核验；研究仍未达到最终分析验收和结项条件。
 
-复算入口：`reanalysis/recompute.py`；完整描述图入口：`reanalysis/render_descriptive_figures.py`；报表入口：`reanalysis/write_report.py`。参数与环境见[方法约定](reanalysis/method_choices.md)、[环境记录](reanalysis/analysis_environment.txt)。完整表：[curve_table.csv](reanalysis/curve_table.csv)、[seed_rates.csv](reanalysis/seed_rates.csv)、[抽取率与计数](reanalysis/extraction_rates_and_counts_full.csv)、[字段计数](reanalysis/extraction_counts_by_field_full.csv)、[靶标×k成功矩阵](reanalysis/target_success_by_k_full.csv)、[actual_balance.csv](reanalysis/actual_balance.csv)。
+主复算入口：`reanalysis/recompute.py`；字段暴露更正入口：`reanalysis/recompute_field_exposure_corrected.py`；完整描述图入口：`reanalysis/render_descriptive_figures.py`；报表入口：`reanalysis/write_report.py`。参数与环境见[方法约定](reanalysis/method_choices.md)、[环境记录](reanalysis/analysis_environment.txt)。完整表：[curve_table.csv](reanalysis/curve_table.csv)、[字段暴露更正曲线](reanalysis/field_exposure_corrected_curve.csv)、[匿名排除记录](reanalysis/field_exposure_exclusions.csv)、[seed_rates.csv](reanalysis/seed_rates.csv)、[抽取率与计数](reanalysis/extraction_rates_and_counts_full.csv)、[字段计数](reanalysis/extraction_counts_by_field_full.csv)、[靶标×k成功矩阵](reanalysis/target_success_by_k_full.csv)、[actual_balance.csv](reanalysis/actual_balance.csv)。
 '''
 plan=json.loads((O/'prior_plan.json').read_text())
 prediction_audit={

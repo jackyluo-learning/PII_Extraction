@@ -292,7 +292,7 @@
           "status": "blocked",
           "prediction": "Recorded: H1 supported; H2 undetermined below alpha=9%; H3's CI contains 0 but narrows; H4 undecided.",
           "falsification": "Any hypothesis is reported without the resolution limit named in the same sentence as a null.",
-          "blocked_reason": "Conditional H1-H5 estimates and independent numerical review complete; confirmatory eligibility and H2 global test specification remain unresolved."
+          "blocked_reason": "Conditional H1-H5 estimates and independent numerical review complete. H3/H5 now use the disclosed 48/48 field-exposure correction; confirmatory eligibility, full target pairing, email balance, and the H2 global test remain unresolved."
         },
         {
           "id": "t3-4",
@@ -310,10 +310,10 @@
           "status": "blocked",
           "prediction": "Every hypothesis has a verdict or an explicit undecidable.",
           "falsification": "Any exploratory result is presented as confirmatory.",
-          "blocked_reason": "Every hypothesis has a conditional verdict and the complete descriptive figures are ledger-linked. Final acceptance remains blocked by the failed email balance gate, undefined H2 global-test contract, checkpoint/full-launch binding, six dirty=null manifests, unlogged-slot attribution, and seven Colab start times."
+          "blocked_reason": "Every hypothesis has a conditional verdict and ledger-linked figures. The 48/48 correction is post-result and only field-count-balanced; final acceptance remains blocked by email balance, H2 specification, target-pair loss, and provenance gaps."
         }
       ],
-      "blocked_reason": "Conditional analysis and complete descriptive figures are finished. Final acceptance remains blocked by the failed email balance gate, undefined H2 global-test contract, and remaining historical binding gaps."
+      "blocked_reason": "Conditional analysis, field-exposure-corrected H3/H5, and complete descriptive figures are finished. Final acceptance remains blocked by the failed email balance gate, undefined H2 global-test contract, remaining historical binding gaps, and loss of target-level E17 pairs."
     }
   ],
   "reanalysis": {

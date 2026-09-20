@@ -178,7 +178,8 @@ def main():
             'BLOCKED: see analysis.md and data_audit.md; numerical checks do not '
             'resolve the executed-checkpoint/full-launch binding, six dirty=null '
             'manifests, unlogged array-slot attribution, seven Colab started_at '
-            'gaps, the failed email balance gate, or the undefined H2 global-test contract'
+            'gaps, the failed email balance gate, the lost target-level E17 pairs and post-result '
+            'field-exposure correction, or the undefined H2 global-test contract'
         ),
     }
     (OUT / 'verification.json').write_text(json.dumps(result, ensure_ascii=False, indent=2) + '\n')

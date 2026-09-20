@@ -18,6 +18,8 @@
 - [Raw-data requirements and audit](reanalysis/data_audit.md)
 - [Declared analysis choices](reanalysis/method_choices.md)
 - [Independent statistics review](reanalysis/statistics_review.md)
+- [Field-exposure-corrected results](reanalysis/field_exposure_corrected.json) — post-result paired exclusion; current H3/H5 D/C estimands
+- [Field-exposure correction exclusions](reanalysis/field_exposure_exclusions.csv) — anonymous audit trail
 - [Reproduction and outstanding evidence](reanalysis/README.md)
 - [Superseded analysis](reanalysis/prior_analysis.md) — historical, not current evidence
 

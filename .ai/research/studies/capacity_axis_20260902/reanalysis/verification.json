@@ -9,7 +9,7 @@
   "descriptive_field_count_cells": 56,
   "descriptive_artifacts_checked": 9,
   "bootstrap_draws": 10000,
-  "report_local_links_checked": 31,
+  "report_local_links_checked": 35,
   "registry_and_plan_schema": "PASS",
   "strict_results_schema": "INCOMPLETE: 7 imported Colab rows lack historical started_at; excluded legacy rows retain original schema errors",
   "schema_errors": {
@@ -142,5 +142,5 @@
       }
     ]
   },
-  "final_analysis_acceptance": "BLOCKED: see analysis.md and data_audit.md; numerical checks do not resolve the executed-checkpoint/full-launch binding, six dirty=null manifests, unlogged array-slot attribution, seven Colab started_at gaps, the failed email balance gate, or the undefined H2 global-test contract"
+  "final_analysis_acceptance": "BLOCKED: see analysis.md and data_audit.md; numerical checks do not resolve the executed-checkpoint/full-launch binding, six dirty=null manifests, unlogged array-slot attribution, seven Colab started_at gaps, the failed email balance gate, the lost target-level E17 pairs and post-result field-exposure correction, or the undefined H2 global-test contract"
 }

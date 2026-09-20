@@ -1,0 +1,1673 @@
+{
+  "status": "post-result_field_exposure_corrected_D_C_analysis",
+  "created_at": "2026-09-20T16:34:10.777957+00:00",
+  "supersedes": "unfiltered H3, H5, and D/C descriptive figures for membership interpretation",
+  "does_not_supersede": "H1, H2, and H4, which retain the full control population",
+  "deviation": "Two SSN field values labelled trained at person level were absent from the recovered fine-tuning text. The exclusion was decided after inspection and is not preregistered.",
+  "pairing_limitation": "E17 field pairs were discarded by the executed control-person deduplication/capping path. One original E17 paired C was not attacked, so the nearest actually attacked C-SSN under the same three covariates was substituted post hoc.",
+  "source_rows_before": 4200,
+  "source_rows_after": 4032,
+  "n_targets_per_arm": 48,
+  "n_people_per_arm": 25,
+  "n_attack_seeds": 3,
+  "exclusions": [
+    {
+      "trained_target_id": "9e83edf1243d",
+      "field": "ssn",
+      "control_target_id": "74bec0339b17",
+      "pair_method": "posthoc_nearest_attacked_C_same_E17_covariates",
+      "original_e17_control_was_attacked": false,
+      "fallback_standardized_squared_distance": 0.0011327589415344318
+    },
+    {
+      "trained_target_id": "703a11f5095d",
+      "field": "ssn",
+      "control_target_id": "a926f741a6a5",
+      "pair_method": "original_E17_pair",
+      "original_e17_control_was_attacked": true,
+      "fallback_standardized_squared_distance": null
+    }
+  ],
+  "curves": {
+    "pooled": [
+      {
+        "k": 0,
+        "n_seeds": 3,
+        "control": {
+          "estimate": 0.0,
+          "ci": [
+            0.0,
+            0.10462010226646294
+          ],
+          "interval_method": "Wilson with target-cluster ICC=0.5 effective n",
+          "n_persons": 25,
+          "n_targets": 48,
+          "n_attempts": 144,
+          "successes": 0,
+          "n_eff_if_wilson": 32.87671232876713
+        },
+        "trained": {
+          "estimate": 0.0,
+          "ci": [
+            0.0,
+            0.10462010226646294
+          ],
+          "interval_method": "Wilson with target-cluster ICC=0.5 effective n",
+          "n_persons": 25,
+          "n_targets": 48,
+          "n_attempts": 144,
+          "successes": 0,
+          "n_eff_if_wilson": 32.87671232876713
+        },
+        "tau": 0.0,
+        "tau_ci": [
+          -0.10462010226646294,
+          0.10462010226646294
+        ],
+        "tau_interval_method": "Newcombe/MOVER from Wilson intervals with target-cluster ICC=0.5 effective n"
+      },
+      {
+        "k": 1,
+        "n_seeds": 3,
+        "control": {
+          "estimate": 0.0,
+          "ci": [
+            0.0,
+            0.10462010226646294
+          ],
+          "interval_method": "Wilson with target-cluster ICC=0.5 effective n",
+          "n_persons": 25,
+          "n_targets": 48,
+          "n_attempts": 144,
+          "successes": 0,
+          "n_eff_if_wilson": 32.87671232876713
+        },
+        "trained": {
+          "estimate": 0.0,
+          "ci": [
+            0.0,
+            0.10462010226646294
+          ],
+          "interval_method": "Wilson with target-cluster ICC=0.5 effective n",
+          "n_persons": 25,
+          "n_targets": 48,
+          "n_attempts": 144,
+          "successes": 0,
+          "n_eff_if_wilson": 32.87671232876713
+        },
+        "tau": 0.0,
+        "tau_ci": [
+          -0.10462010226646294,
+          0.10462010226646294
+        ],
+        "tau_interval_method": "Newcombe/MOVER from Wilson intervals with target-cluster ICC=0.5 effective n"
+      },
+      {
+        "k": 2,
+        "n_seeds": 3,
+        "control": {
+          "estimate": 0.0,
+          "ci": [
+            0.0,
+            0.10462010226646294
+          ],
+          "interval_method": "Wilson with target-cluster ICC=0.5 effective n",
+          "n_persons": 25,
+          "n_targets": 48,
+          "n_attempts": 144,
+          "successes": 0,
+          "n_eff_if_wilson": 32.87671232876713
+        },
+        "trained": {
+          "estimate": 0.0,
+          "ci": [
+            0.0,
+            0.10462010226646294
+          ],
+          "interval_method": "Wilson with target-cluster ICC=0.5 effective n",
+          "n_persons": 25,
+          "n_targets": 48,
+          "n_attempts": 144,
+          "successes": 0,
+          "n_eff_if_wilson": 32.87671232876713
+        },
+        "tau": 0.0,
+        "tau_ci": [
+          -0.10462010226646294,
+          0.10462010226646294
+        ],
+        "tau_interval_method": "Newcombe/MOVER from Wilson intervals with target-cluster ICC=0.5 effective n"
+      },
+      {
+        "k": 3,
+        "n_seeds": 3,
+        "control": {
+          "estimate": 0.0,
+          "ci": [
+            0.0,
+            0.10462010226646294
+          ],
+          "interval_method": "Wilson with target-cluster ICC=0.5 effective n",
+          "n_persons": 25,
+          "n_targets": 48,
+          "n_attempts": 144,
+          "successes": 0,
+          "n_eff_if_wilson": 32.87671232876713
+        },
+        "trained": {
+          "estimate": 0.0,
+          "ci": [
+            0.0,
+            0.10462010226646294
+          ],
+          "interval_method": "Wilson with target-cluster ICC=0.5 effective n",
+          "n_persons": 25,
+          "n_targets": 48,
+          "n_attempts": 144,
+          "successes": 0,
+          "n_eff_if_wilson": 32.87671232876713
+        },
+        "tau": 0.0,
+        "tau_ci": [
+          -0.10462010226646294,
+          0.10462010226646294
+        ],
+        "tau_interval_method": "Newcombe/MOVER from Wilson intervals with target-cluster ICC=0.5 effective n"
+      },
+      {
+        "k": 4,
+        "n_seeds": 3,
+        "control": {
+          "estimate": 0.013888888888888888,
+          "ci": [
+            0.0,
+            0.034722222222222224
+          ],
+          "interval_method": "person-clustered percentile bootstrap",
+          "n_persons": 25,
+          "n_targets": 48,
+          "n_attempts": 144,
+          "successes": 2,
+          "n_eff_if_wilson": 32.87671232876713
+        },
+        "trained": {
+          "estimate": 0.041666666666666664,
+          "ci": [
+            0.006802721088435374,
+            0.09219858156028368
+          ],
+          "interval_method": "person-clustered percentile bootstrap",
+          "n_persons": 25,
+          "n_targets": 48,
+          "n_attempts": 144,
+          "successes": 6,
+          "n_eff_if_wilson": 32.87671232876713
+        },
+        "tau": 0.027777777777777776,
+        "tau_ci": [
+          -0.014030612244897957,
+          0.08144927536231884
+        ],
+        "tau_interval_method": "independent-arm person-clustered percentile bootstrap"
+      },
+      {
+        "k": 6,
+        "n_seeds": 3,
+        "control": {
+          "estimate": 0.2847222222222222,
+          "ci": [
+            0.2152777777777778,
+            0.3546099290780142
+          ],
+          "interval_method": "person-clustered percentile bootstrap",
+          "n_persons": 25,
+          "n_targets": 48,
+          "n_attempts": 144,
+          "successes": 41,
+          "n_eff_if_wilson": 32.87671232876713
+        },
+        "trained": {
+          "estimate": 0.20833333333333334,
+          "ci": [
+            0.1276595744680851,
+            0.2907801418439716
+          ],
+          "interval_method": "person-clustered percentile bootstrap",
+          "n_persons": 25,
+          "n_targets": 48,
+          "n_attempts": 144,
+          "successes": 30,
+          "n_eff_if_wilson": 32.87671232876713
+        },
+        "tau": -0.07638888888888887,
+        "tau_ci": [
+          -0.18439716312056736,
+          0.03200544710637881
+        ],
+        "tau_interval_method": "independent-arm person-clustered percentile bootstrap"
+      },
+      {
+        "k": 8,
+        "n_seeds": 3,
+        "control": {
+          "estimate": 0.4861111111111111,
+          "ci": [
+            0.40816326530612246,
+            0.562962962962963
+          ],
+          "interval_method": "person-clustered percentile bootstrap",
+          "n_persons": 25,
+          "n_targets": 48,
+          "n_attempts": 144,
+          "successes": 70,
+          "n_eff_if_wilson": 32.87671232876713
+        },
+        "trained": {
+          "estimate": 0.4861111111111111,
+          "ci": [
+            0.4097222222222222,
+            0.5602836879432624
+          ],
+          "interval_method": "person-clustered percentile bootstrap",
+          "n_persons": 25,
+          "n_targets": 48,
+          "n_attempts": 144,
+          "successes": 70,
+          "n_eff_if_wilson": 32.87671232876713
+        },
+        "tau": 0.0,
+        "tau_ci": [
+          -0.10865339346570353,
+          0.10685941043083902
+        ],
+        "tau_interval_method": "independent-arm person-clustered percentile bootstrap"
+      },
+      {
+        "k": 12,
+        "n_seeds": 3,
+        "control": {
+          "estimate": 0.6527777777777778,
+          "ci": [
+            0.5833333333333334,
+            0.7246376811594203
+          ],
+          "interval_method": "person-clustered percentile bootstrap",
+          "n_persons": 25,
+          "n_targets": 48,
+          "n_attempts": 144,
+          "successes": 94,
+          "n_eff_if_wilson": 32.87671232876713
+        },
+        "trained": {
+          "estimate": 0.6666666666666666,
+          "ci": [
+            0.6,
+            0.7346938775510204
+          ],
+          "interval_method": "person-clustered percentile bootstrap",
+          "n_persons": 25,
+          "n_targets": 48,
+          "n_attempts": 144,
+          "successes": 96,
+          "n_eff_if_wilson": 32.87671232876713
+        },
+        "tau": 0.01388888888888884,
+        "tau_ci": [
+          -0.08553733682803985,
+          0.11111111111111105
+        ],
+        "tau_interval_method": "independent-arm person-clustered percentile bootstrap"
+      },
+      {
+        "k": 16,
+        "n_seeds": 3,
+        "control": {
+          "estimate": 0.7569444444444444,
+          "ci": [
+            0.6938775510204082,
+            0.8194444444444444
+          ],
+          "interval_method": "person-clustered percentile bootstrap",
+          "n_persons": 25,
+          "n_targets": 48,
+          "n_attempts": 144,
+          "successes": 109,
+          "n_eff_if_wilson": 32.87671232876713
+        },
+        "trained": {
+          "estimate": 0.7361111111111112,
+          "ci": [
+            0.6802721088435374,
+            0.7959183673469388
+          ],
+          "interval_method": "person-clustered percentile bootstrap",
+          "n_persons": 25,
+          "n_targets": 48,
+          "n_attempts": 144,
+          "successes": 106,
+          "n_eff_if_wilson": 32.87671232876713
+        },
+        "tau": -0.02083333333333326,
+        "tau_ci": [
+          -0.10509424603174607,
+          0.06530615260288514
+        ],
+        "tau_interval_method": "independent-arm person-clustered percentile bootstrap"
+      },
+      {
+        "k": 20,
+        "n_seeds": 3,
+        "control": {
+          "estimate": 0.8194444444444444,
+          "ci": [
+            0.75,
+            0.8819444444444444
+          ],
+          "interval_method": "person-clustered percentile bootstrap",
+          "n_persons": 25,
+          "n_targets": 48,
+          "n_attempts": 144,
+          "successes": 118,
+          "n_eff_if_wilson": 32.87671232876713
+        },
+        "trained": {
+          "estimate": 0.8194444444444444,
+          "ci": [
+            0.7551020408163265,
+            0.8819444444444444
+          ],
+          "interval_method": "person-clustered percentile bootstrap",
+          "n_persons": 25,
+          "n_targets": 48,
+          "n_attempts": 144,
+          "successes": 118,
+          "n_eff_if_wilson": 32.87671232876713
+        },
+        "tau": 0.0,
+        "tau_ci": [
+          -0.0895814061054579,
+          0.09254535147392284
+        ],
+        "tau_interval_method": "independent-arm person-clustered percentile bootstrap"
+      },
+      {
+        "k": 24,
+        "n_seeds": 3,
+        "control": {
+          "estimate": 0.875,
+          "ci": [
+            0.8188405797101449,
+            0.927536231884058
+          ],
+          "interval_method": "person-clustered percentile bootstrap",
+          "n_persons": 25,
+          "n_targets": 48,
+          "n_attempts": 144,
+          "successes": 126,
+          "n_eff_if_wilson": 32.87671232876713
+        },
+        "trained": {
+          "estimate": 0.8194444444444444,
+          "ci": [
+            0.7482993197278912,
+            0.8865248226950354
+          ],
+          "interval_method": "person-clustered percentile bootstrap",
+          "n_persons": 25,
+          "n_targets": 48,
+          "n_attempts": 144,
+          "successes": 118,
+          "n_eff_if_wilson": 32.87671232876713
+        },
+        "tau": -0.05555555555555558,
+        "tau_ci": [
+          -0.14285767055048976,
+          0.030612896222318633
+        ],
+        "tau_interval_method": "independent-arm person-clustered percentile bootstrap"
+      },
+      {
+        "k": 32,
+        "n_seeds": 3,
+        "control": {
+          "estimate": 0.9305555555555556,
+          "ci": [
+            0.891156462585034,
+            0.9659863945578231
+          ],
+          "interval_method": "person-clustered percentile bootstrap",
+          "n_persons": 25,
+          "n_targets": 48,
+          "n_attempts": 144,
+          "successes": 134,
+          "n_eff_if_wilson": 32.87671232876713
+        },
+        "trained": {
+          "estimate": 0.8888888888888888,
+          "ci": [
+            0.8297872340425532,
+            0.9432624113475178
+          ],
+          "interval_method": "person-clustered percentile bootstrap",
+          "n_persons": 25,
+          "n_targets": 48,
+          "n_attempts": 144,
+          "successes": 128,
+          "n_eff_if_wilson": 32.87671232876713
+        },
+        "tau": -0.04166666666666674,
+        "tau_ci": [
+          -0.11111111111111105,
+          0.025653930050281007
+        ],
+        "tau_interval_method": "independent-arm person-clustered percentile bootstrap"
+      },
+      {
+        "k": 48,
+        "n_seeds": 3,
+        "control": {
+          "estimate": 0.9097222222222222,
+          "ci": [
+            0.855072463768116,
+            0.9574468085106383
+          ],
+          "interval_method": "person-clustered percentile bootstrap",
+          "n_persons": 25,
+          "n_targets": 48,
+          "n_attempts": 144,
+          "successes": 131,
+          "n_eff_if_wilson": 32.87671232876713
+        },
+        "trained": {
+          "estimate": 0.9236111111111112,
+          "ci": [
+            0.8680555555555556,
+            0.9710144927536232
+          ],
+          "interval_method": "person-clustered percentile bootstrap",
+          "n_persons": 25,
+          "n_targets": 48,
+          "n_attempts": 144,
+          "successes": 133,
+          "n_eff_if_wilson": 32.87671232876713
+        },
+        "tau": 0.01388888888888895,
+        "tau_ci": [
+          -0.05949124330583302,
+          0.08500085034013612
+        ],
+        "tau_interval_method": "independent-arm person-clustered percentile bootstrap"
+      },
+      {
+        "k": 64,
+        "n_seeds": 3,
+        "control": {
+          "estimate": 0.9722222222222222,
+          "ci": [
+            0.9455782312925171,
+            0.9931972789115646
+          ],
+          "interval_method": "person-clustered percentile bootstrap",
+          "n_persons": 25,
+          "n_targets": 48,
+          "n_attempts": 144,
+          "successes": 140,
+          "n_eff_if_wilson": 32.87671232876713
+        },
+        "trained": {
+          "estimate": 0.9027777777777778,
+          "ci": [
+            0.8541666666666666,
+            0.9455782312925171
+          ],
+          "interval_method": "person-clustered percentile bootstrap",
+          "n_persons": 25,
+          "n_targets": 48,
+          "n_attempts": 144,
+          "successes": 130,
+          "n_eff_if_wilson": 32.87671232876713
+        },
+        "tau": -0.06944444444444442,
+        "tau_ci": [
+          -0.12334627788056328,
+          -0.0171513526779815
+        ],
+        "tau_interval_method": "independent-arm person-clustered percentile bootstrap"
+      }
+    ],
+    "ssn": [
+      {
+        "k": 0,
+        "n_seeds": 3,
+        "control": {
+          "estimate": 0.0,
+          "ci": [
+            0.0,
+            0.14311661845042686
+          ],
+          "interval_method": "Wilson with target-cluster ICC=0.5 effective n",
+          "n_persons": 23,
+          "n_targets": 23,
+          "n_attempts": 69,
+          "successes": 0,
+          "n_eff_if_wilson": 23.0
+        },
+        "trained": {
+          "estimate": 0.0,
+          "ci": [
+            0.0,
+            0.14311661845042686
+          ],
+          "interval_method": "Wilson with target-cluster ICC=0.5 effective n",
+          "n_persons": 23,
+          "n_targets": 23,
+          "n_attempts": 69,
+          "successes": 0,
+          "n_eff_if_wilson": 23.0
+        },
+        "tau": 0.0,
+        "tau_ci": [
+          -0.14311661845042686,
+          0.14311661845042686
+        ],
+        "tau_interval_method": "Newcombe/MOVER from Wilson intervals with target-cluster ICC=0.5 effective n"
+      },
+      {
+        "k": 1,
+        "n_seeds": 3,
+        "control": {
+          "estimate": 0.0,
+          "ci": [
+            0.0,
+            0.14311661845042686
+          ],
+          "interval_method": "Wilson with target-cluster ICC=0.5 effective n",
+          "n_persons": 23,
+          "n_targets": 23,
+          "n_attempts": 69,
+          "successes": 0,
+          "n_eff_if_wilson": 23.0
+        },
+        "trained": {
+          "estimate": 0.0,
+          "ci": [
+            0.0,
+            0.14311661845042686
+          ],
+          "interval_method": "Wilson with target-cluster ICC=0.5 effective n",
+          "n_persons": 23,
+          "n_targets": 23,
+          "n_attempts": 69,
+          "successes": 0,
+          "n_eff_if_wilson": 23.0
+        },
+        "tau": 0.0,
+        "tau_ci": [
+          -0.14311661845042686,
+          0.14311661845042686
+        ],
+        "tau_interval_method": "Newcombe/MOVER from Wilson intervals with target-cluster ICC=0.5 effective n"
+      },
+      {
+        "k": 2,
+        "n_seeds": 3,
+        "control": {
+          "estimate": 0.0,
+          "ci": [
+            0.0,
+            0.14311661845042686
+          ],
+          "interval_method": "Wilson with target-cluster ICC=0.5 effective n",
+          "n_persons": 23,
+          "n_targets": 23,
+          "n_attempts": 69,
+          "successes": 0,
+          "n_eff_if_wilson": 23.0
+        },
+        "trained": {
+          "estimate": 0.0,
+          "ci": [
+            0.0,
+            0.14311661845042686
+          ],
+          "interval_method": "Wilson with target-cluster ICC=0.5 effective n",
+          "n_persons": 23,
+          "n_targets": 23,
+          "n_attempts": 69,
+          "successes": 0,
+          "n_eff_if_wilson": 23.0
+        },
+        "tau": 0.0,
+        "tau_ci": [
+          -0.14311661845042686,
+          0.14311661845042686
+        ],
+        "tau_interval_method": "Newcombe/MOVER from Wilson intervals with target-cluster ICC=0.5 effective n"
+      },
+      {
+        "k": 3,
+        "n_seeds": 3,
+        "control": {
+          "estimate": 0.0,
+          "ci": [
+            0.0,
+            0.14311661845042686
+          ],
+          "interval_method": "Wilson with target-cluster ICC=0.5 effective n",
+          "n_persons": 23,
+          "n_targets": 23,
+          "n_attempts": 69,
+          "successes": 0,
+          "n_eff_if_wilson": 23.0
+        },
+        "trained": {
+          "estimate": 0.0,
+          "ci": [
+            0.0,
+            0.14311661845042686
+          ],
+          "interval_method": "Wilson with target-cluster ICC=0.5 effective n",
+          "n_persons": 23,
+          "n_targets": 23,
+          "n_attempts": 69,
+          "successes": 0,
+          "n_eff_if_wilson": 23.0
+        },
+        "tau": 0.0,
+        "tau_ci": [
+          -0.14311661845042686,
+          0.14311661845042686
+        ],
+        "tau_interval_method": "Newcombe/MOVER from Wilson intervals with target-cluster ICC=0.5 effective n"
+      },
+      {
+        "k": 4,
+        "n_seeds": 3,
+        "control": {
+          "estimate": 0.0,
+          "ci": [
+            0.0,
+            0.14311661845042686
+          ],
+          "interval_method": "Wilson with target-cluster ICC=0.5 effective n",
+          "n_persons": 23,
+          "n_targets": 23,
+          "n_attempts": 69,
+          "successes": 0,
+          "n_eff_if_wilson": 23.0
+        },
+        "trained": {
+          "estimate": 0.0,
+          "ci": [
+            0.0,
+            0.14311661845042686
+          ],
+          "interval_method": "Wilson with target-cluster ICC=0.5 effective n",
+          "n_persons": 23,
+          "n_targets": 23,
+          "n_attempts": 69,
+          "successes": 0,
+          "n_eff_if_wilson": 23.0
+        },
+        "tau": 0.0,
+        "tau_ci": [
+          -0.14311661845042686,
+          0.14311661845042686
+        ],
+        "tau_interval_method": "Newcombe/MOVER from Wilson intervals with target-cluster ICC=0.5 effective n"
+      },
+      {
+        "k": 6,
+        "n_seeds": 3,
+        "control": {
+          "estimate": 0.0,
+          "ci": [
+            0.0,
+            0.14311661845042686
+          ],
+          "interval_method": "Wilson with target-cluster ICC=0.5 effective n",
+          "n_persons": 23,
+          "n_targets": 23,
+          "n_attempts": 69,
+          "successes": 0,
+          "n_eff_if_wilson": 23.0
+        },
+        "trained": {
+          "estimate": 0.014492753623188406,
+          "ci": [
+            0.0,
+            0.043478260869565216
+          ],
+          "interval_method": "person-clustered percentile bootstrap",
+          "n_persons": 23,
+          "n_targets": 23,
+          "n_attempts": 69,
+          "successes": 1,
+          "n_eff_if_wilson": 23.0
+        },
+        "tau": 0.014492753623188406,
+        "tau_ci": [
+          -0.1292511433614137,
+          0.16687528971304966
+        ],
+        "tau_interval_method": "Newcombe/MOVER from Wilson intervals with target-cluster ICC=0.5 effective n"
+      },
+      {
+        "k": 8,
+        "n_seeds": 3,
+        "control": {
+          "estimate": 0.11594202898550725,
+          "ci": [
+            0.043478260869565216,
+            0.2028985507246377
+          ],
+          "interval_method": "person-clustered percentile bootstrap",
+          "n_persons": 23,
+          "n_targets": 23,
+          "n_attempts": 69,
+          "successes": 8,
+          "n_eff_if_wilson": 23.0
+        },
+        "trained": {
+          "estimate": 0.11594202898550725,
+          "ci": [
+            0.043478260869565216,
+            0.2028985507246377
+          ],
+          "interval_method": "person-clustered percentile bootstrap",
+          "n_persons": 23,
+          "n_targets": 23,
+          "n_attempts": 69,
+          "successes": 8,
+          "n_eff_if_wilson": 23.0
+        },
+        "tau": 0.0,
+        "tau_ci": [
+          -0.11594202898550723,
+          0.11594202898550723
+        ],
+        "tau_interval_method": "independent-arm person-clustered percentile bootstrap"
+      },
+      {
+        "k": 12,
+        "n_seeds": 3,
+        "control": {
+          "estimate": 0.2898550724637681,
+          "ci": [
+            0.15942028985507245,
+            0.42028985507246375
+          ],
+          "interval_method": "person-clustered percentile bootstrap",
+          "n_persons": 23,
+          "n_targets": 23,
+          "n_attempts": 69,
+          "successes": 20,
+          "n_eff_if_wilson": 23.0
+        },
+        "trained": {
+          "estimate": 0.3188405797101449,
+          "ci": [
+            0.2028985507246377,
+            0.4492753623188406
+          ],
+          "interval_method": "person-clustered percentile bootstrap",
+          "n_persons": 23,
+          "n_targets": 23,
+          "n_attempts": 69,
+          "successes": 22,
+          "n_eff_if_wilson": 23.0
+        },
+        "tau": 0.028985507246376774,
+        "tau_ci": [
+          -0.1449275362318841,
+          0.21739130434782608
+        ],
+        "tau_interval_method": "independent-arm person-clustered percentile bootstrap"
+      },
+      {
+        "k": 16,
+        "n_seeds": 3,
+        "control": {
+          "estimate": 0.4927536231884058,
+          "ci": [
+            0.36231884057971014,
+            0.6231884057971014
+          ],
+          "interval_method": "person-clustered percentile bootstrap",
+          "n_persons": 23,
+          "n_targets": 23,
+          "n_attempts": 69,
+          "successes": 34,
+          "n_eff_if_wilson": 23.0
+        },
+        "trained": {
+          "estimate": 0.4492753623188406,
+          "ci": [
+            0.3333333333333333,
+            0.5652173913043478
+          ],
+          "interval_method": "person-clustered percentile bootstrap",
+          "n_persons": 23,
+          "n_targets": 23,
+          "n_attempts": 69,
+          "successes": 31,
+          "n_eff_if_wilson": 23.0
+        },
+        "tau": -0.043478260869565244,
+        "tau_ci": [
+          -0.21739130434782605,
+          0.13043478260869562
+        ],
+        "tau_interval_method": "independent-arm person-clustered percentile bootstrap"
+      },
+      {
+        "k": 20,
+        "n_seeds": 3,
+        "control": {
+          "estimate": 0.6231884057971014,
+          "ci": [
+            0.4927536231884058,
+            0.7536231884057971
+          ],
+          "interval_method": "person-clustered percentile bootstrap",
+          "n_persons": 23,
+          "n_targets": 23,
+          "n_attempts": 69,
+          "successes": 43,
+          "n_eff_if_wilson": 23.0
+        },
+        "trained": {
+          "estimate": 0.6231884057971014,
+          "ci": [
+            0.4927536231884058,
+            0.7536231884057971
+          ],
+          "interval_method": "person-clustered percentile bootstrap",
+          "n_persons": 23,
+          "n_targets": 23,
+          "n_attempts": 69,
+          "successes": 43,
+          "n_eff_if_wilson": 23.0
+        },
+        "tau": 0.0,
+        "tau_ci": [
+          -0.18840579710144928,
+          0.18840579710144922
+        ],
+        "tau_interval_method": "independent-arm person-clustered percentile bootstrap"
+      },
+      {
+        "k": 24,
+        "n_seeds": 3,
+        "control": {
+          "estimate": 0.7391304347826086,
+          "ci": [
+            0.6231884057971014,
+            0.8405797101449275
+          ],
+          "interval_method": "person-clustered percentile bootstrap",
+          "n_persons": 23,
+          "n_targets": 23,
+          "n_attempts": 69,
+          "successes": 51,
+          "n_eff_if_wilson": 23.0
+        },
+        "trained": {
+          "estimate": 0.6231884057971014,
+          "ci": [
+            0.4782608695652174,
+            0.7536231884057971
+          ],
+          "interval_method": "person-clustered percentile bootstrap",
+          "n_persons": 23,
+          "n_targets": 23,
+          "n_attempts": 69,
+          "successes": 43,
+          "n_eff_if_wilson": 23.0
+        },
+        "tau": -0.1159420289855072,
+        "tau_ci": [
+          -0.30434782608695643,
+          0.07246376811594202
+        ],
+        "tau_interval_method": "independent-arm person-clustered percentile bootstrap"
+      },
+      {
+        "k": 32,
+        "n_seeds": 3,
+        "control": {
+          "estimate": 0.855072463768116,
+          "ci": [
+            0.7681159420289855,
+            0.927536231884058
+          ],
+          "interval_method": "person-clustered percentile bootstrap",
+          "n_persons": 23,
+          "n_targets": 23,
+          "n_attempts": 69,
+          "successes": 59,
+          "n_eff_if_wilson": 23.0
+        },
+        "trained": {
+          "estimate": 0.7681159420289855,
+          "ci": [
+            0.6521739130434783,
+            0.8695652173913043
+          ],
+          "interval_method": "person-clustered percentile bootstrap",
+          "n_persons": 23,
+          "n_targets": 23,
+          "n_attempts": 69,
+          "successes": 53,
+          "n_eff_if_wilson": 23.0
+        },
+        "tau": -0.08695652173913049,
+        "tau_ci": [
+          -0.23188405797101452,
+          0.0434782608695653
+        ],
+        "tau_interval_method": "independent-arm person-clustered percentile bootstrap"
+      },
+      {
+        "k": 48,
+        "n_seeds": 3,
+        "control": {
+          "estimate": 0.8115942028985508,
+          "ci": [
+            0.6956521739130435,
+            0.9130434782608695
+          ],
+          "interval_method": "person-clustered percentile bootstrap",
+          "n_persons": 23,
+          "n_targets": 23,
+          "n_attempts": 69,
+          "successes": 56,
+          "n_eff_if_wilson": 23.0
+        },
+        "trained": {
+          "estimate": 0.8405797101449275,
+          "ci": [
+            0.7246376811594203,
+            0.927536231884058
+          ],
+          "interval_method": "person-clustered percentile bootstrap",
+          "n_persons": 23,
+          "n_targets": 23,
+          "n_attempts": 69,
+          "successes": 58,
+          "n_eff_if_wilson": 23.0
+        },
+        "tau": 0.02898550724637672,
+        "tau_ci": [
+          -0.13043478260869557,
+          0.17391304347826086
+        ],
+        "tau_interval_method": "independent-arm person-clustered percentile bootstrap"
+      },
+      {
+        "k": 64,
+        "n_seeds": 3,
+        "control": {
+          "estimate": 0.9420289855072463,
+          "ci": [
+            0.8840579710144928,
+            0.9855072463768116
+          ],
+          "interval_method": "person-clustered percentile bootstrap",
+          "n_persons": 23,
+          "n_targets": 23,
+          "n_attempts": 69,
+          "successes": 65,
+          "n_eff_if_wilson": 23.0
+        },
+        "trained": {
+          "estimate": 0.7971014492753623,
+          "ci": [
+            0.6956521739130435,
+            0.8840579710144928
+          ],
+          "interval_method": "person-clustered percentile bootstrap",
+          "n_persons": 23,
+          "n_targets": 23,
+          "n_attempts": 69,
+          "successes": 55,
+          "n_eff_if_wilson": 23.0
+        },
+        "tau": -0.14492753623188404,
+        "tau_ci": [
+          -0.26086956521739124,
+          -0.04347826086956519
+        ],
+        "tau_interval_method": "independent-arm person-clustered percentile bootstrap"
+      }
+    ],
+    "email": [
+      {
+        "k": 0,
+        "n_seeds": 3,
+        "control": {
+          "estimate": 0.0,
+          "ci": [
+            0.0,
+            0.13319225093904846
+          ],
+          "interval_method": "Wilson with target-cluster ICC=0.5 effective n",
+          "n_persons": 25,
+          "n_targets": 25,
+          "n_attempts": 75,
+          "successes": 0,
+          "n_eff_if_wilson": 25.0
+        },
+        "trained": {
+          "estimate": 0.0,
+          "ci": [
+            0.0,
+            0.13319225093904846
+          ],
+          "interval_method": "Wilson with target-cluster ICC=0.5 effective n",
+          "n_persons": 25,
+          "n_targets": 25,
+          "n_attempts": 75,
+          "successes": 0,
+          "n_eff_if_wilson": 25.0
+        },
+        "tau": 0.0,
+        "tau_ci": [
+          -0.13319225093904846,
+          0.13319225093904846
+        ],
+        "tau_interval_method": "Newcombe/MOVER from Wilson intervals with target-cluster ICC=0.5 effective n"
+      },
+      {
+        "k": 1,
+        "n_seeds": 3,
+        "control": {
+          "estimate": 0.0,
+          "ci": [
+            0.0,
+            0.13319225093904846
+          ],
+          "interval_method": "Wilson with target-cluster ICC=0.5 effective n",
+          "n_persons": 25,
+          "n_targets": 25,
+          "n_attempts": 75,
+          "successes": 0,
+          "n_eff_if_wilson": 25.0
+        },
+        "trained": {
+          "estimate": 0.0,
+          "ci": [
+            0.0,
+            0.13319225093904846
+          ],
+          "interval_method": "Wilson with target-cluster ICC=0.5 effective n",
+          "n_persons": 25,
+          "n_targets": 25,
+          "n_attempts": 75,
+          "successes": 0,
+          "n_eff_if_wilson": 25.0
+        },
+        "tau": 0.0,
+        "tau_ci": [
+          -0.13319225093904846,
+          0.13319225093904846
+        ],
+        "tau_interval_method": "Newcombe/MOVER from Wilson intervals with target-cluster ICC=0.5 effective n"
+      },
+      {
+        "k": 2,
+        "n_seeds": 3,
+        "control": {
+          "estimate": 0.0,
+          "ci": [
+            0.0,
+            0.13319225093904846
+          ],
+          "interval_method": "Wilson with target-cluster ICC=0.5 effective n",
+          "n_persons": 25,
+          "n_targets": 25,
+          "n_attempts": 75,
+          "successes": 0,
+          "n_eff_if_wilson": 25.0
+        },
+        "trained": {
+          "estimate": 0.0,
+          "ci": [
+            0.0,
+            0.13319225093904846
+          ],
+          "interval_method": "Wilson with target-cluster ICC=0.5 effective n",
+          "n_persons": 25,
+          "n_targets": 25,
+          "n_attempts": 75,
+          "successes": 0,
+          "n_eff_if_wilson": 25.0
+        },
+        "tau": 0.0,
+        "tau_ci": [
+          -0.13319225093904846,
+          0.13319225093904846
+        ],
+        "tau_interval_method": "Newcombe/MOVER from Wilson intervals with target-cluster ICC=0.5 effective n"
+      },
+      {
+        "k": 3,
+        "n_seeds": 3,
+        "control": {
+          "estimate": 0.0,
+          "ci": [
+            0.0,
+            0.13319225093904846
+          ],
+          "interval_method": "Wilson with target-cluster ICC=0.5 effective n",
+          "n_persons": 25,
+          "n_targets": 25,
+          "n_attempts": 75,
+          "successes": 0,
+          "n_eff_if_wilson": 25.0
+        },
+        "trained": {
+          "estimate": 0.0,
+          "ci": [
+            0.0,
+            0.13319225093904846
+          ],
+          "interval_method": "Wilson with target-cluster ICC=0.5 effective n",
+          "n_persons": 25,
+          "n_targets": 25,
+          "n_attempts": 75,
+          "successes": 0,
+          "n_eff_if_wilson": 25.0
+        },
+        "tau": 0.0,
+        "tau_ci": [
+          -0.13319225093904846,
+          0.13319225093904846
+        ],
+        "tau_interval_method": "Newcombe/MOVER from Wilson intervals with target-cluster ICC=0.5 effective n"
+      },
+      {
+        "k": 4,
+        "n_seeds": 3,
+        "control": {
+          "estimate": 0.02666666666666667,
+          "ci": [
+            0.0,
+            0.06666666666666667
+          ],
+          "interval_method": "person-clustered percentile bootstrap",
+          "n_persons": 25,
+          "n_targets": 25,
+          "n_attempts": 75,
+          "successes": 2,
+          "n_eff_if_wilson": 25.0
+        },
+        "trained": {
+          "estimate": 0.08,
+          "ci": [
+            0.013333333333333334,
+            0.17333333333333334
+          ],
+          "interval_method": "person-clustered percentile bootstrap",
+          "n_persons": 25,
+          "n_targets": 25,
+          "n_attempts": 75,
+          "successes": 6,
+          "n_eff_if_wilson": 25.0
+        },
+        "tau": 0.05333333333333333,
+        "tau_ci": [
+          -0.02666666666666667,
+          0.16
+        ],
+        "tau_interval_method": "independent-arm person-clustered percentile bootstrap"
+      },
+      {
+        "k": 6,
+        "n_seeds": 3,
+        "control": {
+          "estimate": 0.5466666666666666,
+          "ci": [
+            0.41333333333333333,
+            0.68
+          ],
+          "interval_method": "person-clustered percentile bootstrap",
+          "n_persons": 25,
+          "n_targets": 25,
+          "n_attempts": 75,
+          "successes": 41,
+          "n_eff_if_wilson": 25.0
+        },
+        "trained": {
+          "estimate": 0.38666666666666666,
+          "ci": [
+            0.24,
+            0.5466666666666666
+          ],
+          "interval_method": "person-clustered percentile bootstrap",
+          "n_persons": 25,
+          "n_targets": 25,
+          "n_attempts": 75,
+          "successes": 29,
+          "n_eff_if_wilson": 25.0
+        },
+        "tau": -0.15999999999999998,
+        "tau_ci": [
+          -0.36,
+          0.05333333333333329
+        ],
+        "tau_interval_method": "independent-arm person-clustered percentile bootstrap"
+      },
+      {
+        "k": 8,
+        "n_seeds": 3,
+        "control": {
+          "estimate": 0.8266666666666667,
+          "ci": [
+            0.7066666666666667,
+            0.9333333333333333
+          ],
+          "interval_method": "person-clustered percentile bootstrap",
+          "n_persons": 25,
+          "n_targets": 25,
+          "n_attempts": 75,
+          "successes": 62,
+          "n_eff_if_wilson": 25.0
+        },
+        "trained": {
+          "estimate": 0.8266666666666667,
+          "ci": [
+            0.72,
+            0.92
+          ],
+          "interval_method": "person-clustered percentile bootstrap",
+          "n_persons": 25,
+          "n_targets": 25,
+          "n_attempts": 75,
+          "successes": 62,
+          "n_eff_if_wilson": 25.0
+        },
+        "tau": 0.0,
+        "tau_ci": [
+          -0.1466666666666666,
+          0.14666666666666672
+        ],
+        "tau_interval_method": "independent-arm person-clustered percentile bootstrap"
+      },
+      {
+        "k": 12,
+        "n_seeds": 3,
+        "control": {
+          "estimate": 0.9866666666666667,
+          "ci": [
+            0.96,
+            1.0
+          ],
+          "interval_method": "person-clustered percentile bootstrap",
+          "n_persons": 25,
+          "n_targets": 25,
+          "n_attempts": 75,
+          "successes": 74,
+          "n_eff_if_wilson": 25.0
+        },
+        "trained": {
+          "estimate": 0.9866666666666667,
+          "ci": [
+            0.96,
+            1.0
+          ],
+          "interval_method": "person-clustered percentile bootstrap",
+          "n_persons": 25,
+          "n_targets": 25,
+          "n_attempts": 75,
+          "successes": 74,
+          "n_eff_if_wilson": 25.0
+        },
+        "tau": 0.0,
+        "tau_ci": [
+          -0.040000000000000036,
+          0.040000000000000036
+        ],
+        "tau_interval_method": "independent-arm person-clustered percentile bootstrap"
+      },
+      {
+        "k": 16,
+        "n_seeds": 3,
+        "control": {
+          "estimate": 1.0,
+          "ci": [
+            0.8668077490609515,
+            1.0
+          ],
+          "interval_method": "Wilson with target-cluster ICC=0.5 effective n",
+          "n_persons": 25,
+          "n_targets": 25,
+          "n_attempts": 75,
+          "successes": 75,
+          "n_eff_if_wilson": 25.0
+        },
+        "trained": {
+          "estimate": 1.0,
+          "ci": [
+            0.8668077490609515,
+            1.0
+          ],
+          "interval_method": "Wilson with target-cluster ICC=0.5 effective n",
+          "n_persons": 25,
+          "n_targets": 25,
+          "n_attempts": 75,
+          "successes": 75,
+          "n_eff_if_wilson": 25.0
+        },
+        "tau": 0.0,
+        "tau_ci": [
+          -0.13319225093904852,
+          0.13319225093904852
+        ],
+        "tau_interval_method": "Newcombe/MOVER from Wilson intervals with target-cluster ICC=0.5 effective n"
+      },
+      {
+        "k": 20,
+        "n_seeds": 3,
+        "control": {
+          "estimate": 1.0,
+          "ci": [
+            0.8668077490609515,
+            1.0
+          ],
+          "interval_method": "Wilson with target-cluster ICC=0.5 effective n",
+          "n_persons": 25,
+          "n_targets": 25,
+          "n_attempts": 75,
+          "successes": 75,
+          "n_eff_if_wilson": 25.0
+        },
+        "trained": {
+          "estimate": 1.0,
+          "ci": [
+            0.8668077490609515,
+            1.0
+          ],
+          "interval_method": "Wilson with target-cluster ICC=0.5 effective n",
+          "n_persons": 25,
+          "n_targets": 25,
+          "n_attempts": 75,
+          "successes": 75,
+          "n_eff_if_wilson": 25.0
+        },
+        "tau": 0.0,
+        "tau_ci": [
+          -0.13319225093904852,
+          0.13319225093904852
+        ],
+        "tau_interval_method": "Newcombe/MOVER from Wilson intervals with target-cluster ICC=0.5 effective n"
+      },
+      {
+        "k": 24,
+        "n_seeds": 3,
+        "control": {
+          "estimate": 1.0,
+          "ci": [
+            0.8668077490609515,
+            1.0
+          ],
+          "interval_method": "Wilson with target-cluster ICC=0.5 effective n",
+          "n_persons": 25,
+          "n_targets": 25,
+          "n_attempts": 75,
+          "successes": 75,
+          "n_eff_if_wilson": 25.0
+        },
+        "trained": {
+          "estimate": 1.0,
+          "ci": [
+            0.8668077490609515,
+            1.0
+          ],
+          "interval_method": "Wilson with target-cluster ICC=0.5 effective n",
+          "n_persons": 25,
+          "n_targets": 25,
+          "n_attempts": 75,
+          "successes": 75,
+          "n_eff_if_wilson": 25.0
+        },
+        "tau": 0.0,
+        "tau_ci": [
+          -0.13319225093904852,
+          0.13319225093904852
+        ],
+        "tau_interval_method": "Newcombe/MOVER from Wilson intervals with target-cluster ICC=0.5 effective n"
+      },
+      {
+        "k": 32,
+        "n_seeds": 3,
+        "control": {
+          "estimate": 1.0,
+          "ci": [
+            0.8668077490609515,
+            1.0
+          ],
+          "interval_method": "Wilson with target-cluster ICC=0.5 effective n",
+          "n_persons": 25,
+          "n_targets": 25,
+          "n_attempts": 75,
+          "successes": 75,
+          "n_eff_if_wilson": 25.0
+        },
+        "trained": {
+          "estimate": 1.0,
+          "ci": [
+            0.8668077490609515,
+            1.0
+          ],
+          "interval_method": "Wilson with target-cluster ICC=0.5 effective n",
+          "n_persons": 25,
+          "n_targets": 25,
+          "n_attempts": 75,
+          "successes": 75,
+          "n_eff_if_wilson": 25.0
+        },
+        "tau": 0.0,
+        "tau_ci": [
+          -0.13319225093904852,
+          0.13319225093904852
+        ],
+        "tau_interval_method": "Newcombe/MOVER from Wilson intervals with target-cluster ICC=0.5 effective n"
+      },
+      {
+        "k": 48,
+        "n_seeds": 3,
+        "control": {
+          "estimate": 1.0,
+          "ci": [
+            0.8668077490609515,
+            1.0
+          ],
+          "interval_method": "Wilson with target-cluster ICC=0.5 effective n",
+          "n_persons": 25,
+          "n_targets": 25,
+          "n_attempts": 75,
+          "successes": 75,
+          "n_eff_if_wilson": 25.0
+        },
+        "trained": {
+          "estimate": 1.0,
+          "ci": [
+            0.8668077490609515,
+            1.0
+          ],
+          "interval_method": "Wilson with target-cluster ICC=0.5 effective n",
+          "n_persons": 25,
+          "n_targets": 25,
+          "n_attempts": 75,
+          "successes": 75,
+          "n_eff_if_wilson": 25.0
+        },
+        "tau": 0.0,
+        "tau_ci": [
+          -0.13319225093904852,
+          0.13319225093904852
+        ],
+        "tau_interval_method": "Newcombe/MOVER from Wilson intervals with target-cluster ICC=0.5 effective n"
+      },
+      {
+        "k": 64,
+        "n_seeds": 3,
+        "control": {
+          "estimate": 1.0,
+          "ci": [
+            0.8668077490609515,
+            1.0
+          ],
+          "interval_method": "Wilson with target-cluster ICC=0.5 effective n",
+          "n_persons": 25,
+          "n_targets": 25,
+          "n_attempts": 75,
+          "successes": 75,
+          "n_eff_if_wilson": 25.0
+        },
+        "trained": {
+          "estimate": 1.0,
+          "ci": [
+            0.8668077490609515,
+            1.0
+          ],
+          "interval_method": "Wilson with target-cluster ICC=0.5 effective n",
+          "n_persons": 25,
+          "n_targets": 25,
+          "n_attempts": 75,
+          "successes": 75,
+          "n_eff_if_wilson": 25.0
+        },
+        "tau": 0.0,
+        "tau_ci": [
+          -0.13319225093904852,
+          0.13319225093904852
+        ],
+        "tau_interval_method": "Newcombe/MOVER from Wilson intervals with target-cluster ICC=0.5 effective n"
+      }
+    ]
+  },
+  "hypotheses": {
+    "H3": {
+      "status": "post-result field-exposure correction; supersedes unfiltered H3 for D/C interpretation",
+      "tau": 0.0,
+      "ci": [
+        -0.0895814061054579,
+        0.09254535147392284
+      ],
+      "p_raw": 1.0,
+      "n_persons_per_arm": 25,
+      "n_targets_per_arm": 48,
+      "n_seeds": 3,
+      "rule": "same H3 k=20 estimator and person-clustered interval after declared post-result field-exposure correction"
+    },
+    "H5": {
+      "label": "(exploratory), field-exposure corrected, underpowered",
+      "observed_maximizers": [
+        4
+      ],
+      "argmax_envelope_ci": [
+        4.0,
+        48.0
+      ],
+      "first_argmax_ci": [
+        4.0,
+        48.0
+      ],
+      "tied_maximum_replicates": 405,
+      "quadratic_logk_coefficient": -0.002131644638159402,
+      "quadratic_ci": [
+        -0.01606802378753389,
+        0.012101110749771951
+      ],
+      "quadratic_one_sided_p": 0.38396160383961603,
+      "status": "post-result field-exposure correction; supersedes unfiltered H5 for D/C interpretation"
+    }
+  },
+  "holm": {
+    "H1": {
+      "p_raw_or_reserved": 9.999000099990002e-05,
+      "p_holm": 0.00039996000399960006,
+      "reject_at_0_05": true,
+      "H2_reserved_not_tested": false
+    },
+    "H4": {
+      "p_raw_or_reserved": 9.999000099990002e-05,
+      "p_holm": 0.00039996000399960006,
+      "reject_at_0_05": true,
+      "H2_reserved_not_tested": false
+    },
+    "H2": {
+      "p_raw_or_reserved": 1.0,
+      "p_holm": 1.0,
+      "reject_at_0_05": false,
+      "H2_reserved_not_tested": true
+    },
+    "H3": {
+      "p_raw_or_reserved": 1.0,
+      "p_holm": 1.0,
+      "reject_at_0_05": false,
+      "H2_reserved_not_tested": false
+    }
+  },
+  "fallback_control_sensitivity": {
+    "label": "post-hoc fallback-C robustness diagnostic; does not restore E17 pairing",
+    "n_eligible_attacked_C_SSN_choices": 24,
+    "k20_tau_min": -0.01388888888888895,
+    "k20_tau_max": 0.00694444444444442,
+    "selected_fallback_k20_tau": 0.0
+  },
+  "artifacts": [
+    {
+      "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/field_exposure_corrected_curve.csv",
+      "bytes": 10394,
+      "sha256": "be6fac09a6168bb886a513de81983a231de30f5bbc3a932952b0133b70b5c3fa"
+    },
+    {
+      "path": ".ai/research/studies/capacity_axis_20260902/reanalysis/field_exposure_exclusions.csv",
+      "bytes": 286,
+      "sha256": "697c2bfe56d3ef7da54954590b57e79ddac16ccb7dfeff35123ec5fe161120f3"
+    },
+    {
+      "path": "artifacts/capacity_axis_20260902/figures/field_exposure_corrected/extraction_rates_by_k_field_exposure_corrected.png",
+      "bytes": 287131,
+      "sha256": "c735f94cd98403545a03b5385f475b9236e77b4f83324cc8e62818d12cf18a4e"
+    },
+    {
+      "path": "artifacts/capacity_axis_20260902/figures/field_exposure_corrected/extraction_rates_by_k_field_exposure_corrected.pdf",
+      "bytes": 25813,
+      "sha256": "0ca5e3982c99dc4cd022a7d9506ccc67c63752e3bfaa7bd19a737e592cc1126d"
+    },
+    {
+      "path": "artifacts/capacity_axis_20260902/figures/field_exposure_corrected/tau_by_k_field_exposure_corrected.png",
+      "bytes": 148961,
+      "sha256": "b548e18282949b519bfaca5bb724211cc8e00f02b5a091ed21673fcc1602bd15"
+    },
+    {
+      "path": "artifacts/capacity_axis_20260902/figures/field_exposure_corrected/tau_by_k_field_exposure_corrected.pdf",
+      "bytes": 17002,
+      "sha256": "7581b7ffa2119d243e1e3974ed1224affae35d98448e6f455a0b13481580fa3a"
+    },
+    {
+      "path": "artifacts/capacity_axis_20260902/figures/field_exposure_corrected/extraction_counts_by_field_field_exposure_corrected.png",
+      "bytes": 190599,
+      "sha256": "80de2b230aef0334bea332e6c69dbe906b4c22009ea74bca597a0fc6f68f9bb5"
+    },
+    {
+      "path": "artifacts/capacity_axis_20260902/figures/field_exposure_corrected/extraction_counts_by_field_field_exposure_corrected.pdf",
+      "bytes": 35911,
+      "sha256": "ac357005fdb3c116ed8d53dc94fec4daf1ce59bd3a0c494e2b2f97426cde3536"
+    },
+    {
+      "path": "artifacts/capacity_axis_20260902/figures/field_exposure_corrected/target_success_by_k_field_exposure_corrected.png",
+      "bytes": 341870,
+      "sha256": "900ea0ccb2e2e56f7a04da4ad32c2666cd85ac04658607506b3ae6a8050047de"
+    },
+    {
+      "path": "artifacts/capacity_axis_20260902/figures/field_exposure_corrected/target_success_by_k_field_exposure_corrected.pdf",
+      "bytes": 34707,
+      "sha256": "1b9ad1e965facc1eb44511b58448c14fdd7eb2e97a05d533e8a6bdaa722e1553"
+    }
+  ]
+}
