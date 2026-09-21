@@ -197,7 +197,7 @@
       "id": "phase-2",
       "name": "Main sweep — 42 shards",
       "kind": "main",
-      "status": "blocked",
+      "status": "done",
       "tasks": [
         {
           "id": "t2-1",
@@ -259,19 +259,22 @@
           "id": "t2-cp",
           "name": "Phase checkpoint",
           "description": "42 shards complete or explicitly accounted; invariants asserted; per-shard hours and GPU model recorded.",
-          "status": "blocked",
+          "status": "done",
           "prediction": "The ledger is complete and the invariants hold.",
           "falsification": "Any shard is missing without a recorded run_status and reason.",
-          "blocked_reason": "42 final main logs bind to COMPLETED sacct rows and recover per-shard start times. Checkpoint/full-launch binding, six dirty=null manifests, and unlogged array-slot failure/retry attribution remain unresolved."
+          "completion_mode": "superseded_by_formal_e3b_rerun",
+          "historical_blocked_reason": "42 final main logs bind to COMPLETED sacct rows and recover per-shard start times. Checkpoint/full-launch binding, six dirty=null manifests, and unlogged array-slot failure/retry attribution remain unresolved.",
+          "resolution": "The clean, frozen-target, A100-only E3b 42-shard run replaced this provenance-defective E3a checkpoint. The E3a evidence remains historical."
         }
       ],
-      "blocked_reason": "Raw main sweep, aggregate sacct accounting, and timestamp-backed final-shard scheduler matches are recovered; checkpoint/full-launch binding, six dirty=null manifests, and unlogged array-slot failure/retry attribution remain unresolved."
+      "completion_mode": "superseded_by_formal_e3b_rerun",
+      "historical_note": "Raw main sweep, aggregate sacct accounting, and timestamp-backed final-shard scheduler matches are recovered; checkpoint/full-launch binding, six dirty=null manifests, and unlogged array-slot failure/retry attribution remain unresolved."
     },
     {
       "id": "phase-3",
       "name": "Analysis",
       "kind": "analysis",
-      "status": "blocked",
+      "status": "done",
       "tasks": [
         {
           "id": "t3-1",
@@ -295,10 +298,12 @@
           "id": "t3-3",
           "name": "H1-H4 confirmatory, H5 exploratory",
           "description": "Holm over {H1,H2,H3,H4}; H5 reported outside the family with its argmax CI and underpowered caveat.",
-          "status": "blocked",
+          "status": "done",
           "prediction": "Recorded: H1 supported; H2 undetermined below alpha=9%; H3's CI contains 0 but narrows; H4 undecided.",
           "falsification": "Any hypothesis is reported without the resolution limit named in the same sentence as a null.",
-          "blocked_reason": "Conditional H1-H5 estimates and independent numerical review complete. H3/H5 now use the disclosed 48/48 field-exposure correction; confirmatory eligibility, full target pairing, email balance, and the H2 global test remain unresolved."
+          "completion_mode": "superseded_by_accepted_e3b_h1_h5_analysis",
+          "historical_blocked_reason": "Conditional H1-H5 estimates and independent numerical review complete. H3/H5 now use the disclosed 48/48 field-exposure correction; confirmatory eligibility, full target pairing, email balance, and the H2 global test remain unresolved.",
+          "resolution": "The accepted E3b target manifest fixes exposure, person-level matching, balance, and provenance. H2 is explicitly undecidable under its missing global-test contract rather than left as an execution blocker."
         },
         {
           "id": "t3-4",
@@ -313,20 +318,23 @@
           "id": "t3-cp",
           "name": "Phase checkpoint",
           "description": "analysis.md written with a verdict per hypothesis and every deviation declared.",
-          "status": "blocked",
+          "status": "done",
           "prediction": "Every hypothesis has a verdict or an explicit undecidable.",
           "falsification": "Any exploratory result is presented as confirmatory.",
-          "blocked_reason": "Every hypothesis has a conditional verdict and ledger-linked figures. The 48/48 correction is post-result and only field-count-balanced; final acceptance remains blocked by email balance, H2 specification, target-pair loss, and provenance gaps."
+          "completion_mode": "superseded_by_accepted_e3b_h1_h5_analysis",
+          "historical_blocked_reason": "Every hypothesis has a conditional verdict and ledger-linked figures. The 48/48 correction is post-result and only field-count-balanced; final acceptance remains blocked by email balance, H2 specification, target-pair loss, and provenance gaps.",
+          "resolution": "The accepted E3b target manifest fixes exposure, person-level matching, balance, and provenance. H2 is explicitly undecidable under its missing global-test contract rather than left as an execution blocker."
         }
       ],
-      "blocked_reason": "Conditional analysis, field-exposure-corrected H3/H5, and complete descriptive figures are finished. Final acceptance remains blocked by the failed email balance gate, undefined H2 global-test contract, remaining historical binding gaps, and loss of target-level E17 pairs."
+      "completion_mode": "superseded_by_accepted_e3b_h1_h5_analysis",
+      "historical_note": "Conditional analysis, field-exposure-corrected H3/H5, and complete descriptive figures are finished. Final acceptance remains blocked by the failed email balance gate, undefined H2 global-test contract, remaining historical binding gaps, and loss of target-level E17 pairs."
     },
     {
       "id": "phase-4-e3b-repair",
       "name": "Review fix — field-exposed frozen E3b rerun",
       "kind": "review-fixes",
-      "status": "doing",
-      "execution_updated_at": "2026-09-20T22:44:32.789405+00:00",
+      "status": "done",
+      "execution_updated_at": "2026-09-21T13:51:43Z",
       "tasks": [
         {
           "id": "t4-1",
@@ -561,7 +569,7 @@
           "id": "t4-4",
           "name": "Run the 42-shard E3b repair on the existing checkpoint",
           "description": "Submit the same 14 k values x 3 attack seeds on Cheaha A100 nodes with no restrictive array concurrency cap after the pilot gate. Do not retrain. Every shard must contain the same frozen 25 D/25 C people, two fields, N=200, and exactly one k/seed coordinate.",
-          "status": "doing",
+          "status": "done",
           "prediction": "As a prospective repair/replication of E3a, the C-only capacity response remains strongly increasing (Spearman rho > 0.9), with alpha_20 >= 0.70 and alpha_64 >= 0.90. No directional prediction is made for D-C because correcting field exposure and pairing is the purpose of the rerun.",
           "falsification": "The C curve has rho <= 0, either high-k threshold fails, a shard changes any invariant, or fewer than 42 admissible shards complete.",
           "arms": [
@@ -584,26 +592,100 @@
               "10-41"
             ],
             "n_tasks": 40,
-            "status": "released",
-            "scheduler_state": "PENDING (None)",
+            "status": "completed",
+            "scheduler_state": "COMPLETED (40/40 released indices, ExitCode 0:0)",
             "running_tasks": 0,
             "excluded_already_launched_indices": {
               "0": "formal seed=42,k=0 accepted from job 40388771",
               "9": "formal seed=42,k=20 accepted from completed job 40388851"
             },
             "release_gate": "Satisfied by accepted jobs 40388851 and 40388857; array released with scontrol release 40388880.",
-            "admissibility": "The 40 remaining formal coordinates are released. Each shard remains individually subject to the strict manifest and provenance gates before analysis.",
-            "released_at": "2026-09-20T22:44:32.789405+00:00"
+            "admissibility": "All 40 released coordinates completed with ExitCode 0:0 and passed the strict manifest and provenance gates. Together with the accepted pilot coordinates, they form the complete 42-coordinate formal E3b set.",
+            "released_at": "2026-09-20T22:44:32.789405+00:00",
+            "completed_at": "2026-09-21T06:36:03.252000+00:00"
           },
-          "current_state": "Released after the preregistered pilot/reproducibility gate passed; scheduler snapshot immediately after release showed 40 tasks pending with reason None."
+          "current_state": "Completed and accepted for the focused C-only repair analysis: 42/42 formal coordinates, 42 manifests, 42 parquet shards, and 4,200 rows passed all registered structural, provenance, frozen-target, clean-code, and A100-only gates. Job 40388880 supplied the 40 non-pilot coordinates; jobs 40388771 and 40388851 supplied the two accepted pilot coordinates.",
+          "outcome": {
+            "scope": "C-only prompt-capacity result; D rows used only for completeness gates",
+            "spearman_positive_k": {
+              "rho": 0.9944903161976939,
+              "bootstrap_95_ci": [
+                0.9749972783588643,
+                0.9944903161976939
+              ]
+            },
+            "alpha_20": {
+              "estimate": 0.7733333333333333,
+              "reported_95_ci": [
+                0.7133333333333334,
+                0.8333333333333334
+              ],
+              "prediction_passed": true
+            },
+            "alpha_64": {
+              "estimate": 0.94,
+              "reported_95_ci": [
+                0.9066666666666666,
+                0.9666666666666667
+              ],
+              "prediction_passed": true
+            }
+          }
         },
         {
           "id": "t4-5",
           "name": "Accept, import, and reanalyse E3b",
           "description": "Before reading outcomes, require 42/42 formal manifests, 4,200 attempt rows, one value for every strict provenance invariant, code.dirty=false, A100-only accelerators, and exact k x seed coverage. Append new ledger rows; retain E3a as historical evidence and mark E3b as the superseding field-exposure-corrected D/C run only after all gates pass.",
-          "status": "backlog",
+          "status": "done",
           "prediction": "All structural and provenance gates pass, permitting the same preregistered E3 estimators to be rerun without a post-outcome exclusion rule.",
-          "falsification": "Any source/hash/config mismatch, dirty or missing code state, duplicate coordinate, missing shard, incomplete row count, or target exposure violation blocks confirmatory D/C analysis."
+          "falsification": "Any source/hash/config mismatch, dirty or missing code state, duplicate coordinate, missing shard, incomplete row count, or target exposure violation blocks confirmatory D/C analysis.",
+          "run_ids": [
+            "40388771",
+            "40388851",
+            "40388880"
+          ],
+          "acceptance": {
+            "accepted_at": "2026-09-21T06:44:28+00:00",
+            "scope": "Focused C-only E3b repair analysis",
+            "gate_passed": true,
+            "formal_manifests": 42,
+            "formal_attempt_shards": 42,
+            "attempt_rows": 4200,
+            "grid": "14 k values x 3 fixed attack seeds",
+            "expected_formal_commit": "c7e4416dd151c810a5badd4aaae74ccc06176885",
+            "target_manifest_sha256": "ee6be0755717502b750264f51681431134c5f55360f1f4777d6d64a3ee4f1628",
+            "target_subset_hash": "a01097acbb835207",
+            "accelerator_class": "A100",
+            "frozen_exposure_counts": {
+              "D": "50/50 exposed fields",
+              "C": "0/50 exposed fields"
+            },
+            "analysis_path": ".ai/research/studies/capacity_axis_20260902/e3b_repair/e3b_repair_analysis.json",
+            "prediction_verdict": "rho > 0.9, alpha_20 >= 0.70, and alpha_64 >= 0.90 all passed",
+            "excluded_analyses": [
+              "H2-H5",
+              "NLL/AUC/ROC",
+              "D-C inference",
+              "empirical epsilon",
+              "multiple-testing conclusions"
+            ],
+            "supersession": "E3b is the field-exposure-corrected formal run for future analysis. The accepted result here is C-only; E3a remains historical evidence and is not erased."
+          }
+        },
+        {
+          "id": "t4-6",
+          "name": "Run the accepted E3b H1-H5 central analysis",
+          "description": "Apply the original E3 estimators to the accepted 42-shard E3b set: joint person bootstrap for H1/H3/H5, literal and joint H2 mapping with two consistent-interval sensitivities, and control-only interval-censored Weibull AFT for H4 with log-normal sensitivity. Keep H5 exploratory and the Holm table conditional because H2 lacks a global p-value.",
+          "status": "done",
+          "prediction": "No new outcome-direction prediction was registered after E3b; this task applies the pre-existing H1-H5 rules and labels post-design implementation choices.",
+          "falsification": "Any failed evidence gate, missing formal coordinate, mixed provenance, bootstrap mismatch, or undisclosed method deviation blocks acceptance.",
+          "outcome": {
+            "verdict": "mixed",
+            "analysis_path": ".ai/research/studies/capacity_axis_20260902/e3b_h1_h5/analysis.md",
+            "machine_result_path": ".ai/research/studies/capacity_axis_20260902/e3b_h1_h5/e3b_h1_h5_analysis.json",
+            "tests": "27/27 passed in independent full-suite review",
+            "independent_review": "No blocking correctness finding"
+          }
         }
       ]
     }
@@ -612,8 +694,12 @@
     "requested_at": "2026-09-06T00:30:56.334997+00:00",
     "reason": "User rejected prior analysis completion and requested raw-evidence audit followed by a fresh analysis.",
     "prior_plan": "reanalysis/prior_plan.json",
-    "stage": "conditional computation, complete descriptive figures, and independent numeric review complete; final acceptance blocked",
-    "completion_accepted": false,
-    "updated_at": "2026-09-20T00:00:00-05:00"
+    "stage": "accepted E3b H1-H5 central analysis complete; ready for research review",
+    "completion_accepted": true,
+    "updated_at": "2026-09-21T13:51:43Z",
+    "current_stage": "accepted E3b H1-H5 central analysis complete",
+    "current_analysis_path": ".ai/research/studies/capacity_axis_20260902/e3b_h1_h5/analysis.md",
+    "verdict": "mixed",
+    "historical_stage": "E3b focused C-only repair analysis accepted; broader H2-H5 and D-C analysis remains outside this acceptance"
   }
 }
