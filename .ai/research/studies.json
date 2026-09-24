@@ -155,18 +155,18 @@
       ],
       "progress": {
         "total_tasks": 4,
-        "completed_tasks": 0,
-        "percentage": 0
+        "completed_tasks": 1,
+        "percentage": 25.0
       },
       "compute": {
-        "runs_completed": 0,
-        "accelerator_hours": 0,
+        "runs_completed": 1,
+        "accelerator_hours": 0.10555555555555556,
         "est_cost_usd": 0,
         "budget_accelerator_hours": 4.0,
         "budget_status": "provisional; measured pilot gate pending"
       },
       "created_at": "2026-09-24T00:59:39.879838+00:00",
-      "updated_at": "2026-09-24T00:59:39.880049+00:00"
+      "updated_at": "2026-09-24T01:07:46.570057+00:00"
     }
   ]
 }

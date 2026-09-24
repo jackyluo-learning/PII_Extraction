@@ -16,19 +16,22 @@
         {
           "id": "pilot-a",
           "name": "Two-pair pilot on original GPT-2",
-          "status": "doing",
+          "status": "done",
           "prediction": "All eight frozen-target attempts run with the E3b attack contract on one A100; base C success need not be positive.",
           "falsification": "Any target, model, tokenizer, hardware, source, or attack invariant differs, or the shard is incomplete.",
           "job_id": "40460942",
-          "run_ids": ["e3b_base_pilot_a"]
+          "run_ids": [
+            "e3b_base_pilot_a"
+          ]
         },
         {
           "id": "pilot-repro",
           "name": "Repeat pilot coordinate from frozen pins",
-          "status": "pending",
+          "status": "doing",
           "prediction": "The repeated pilot reproduces the exact target set and comparable exact-match outcomes.",
           "falsification": "Input pins differ, run fails, or observed drift exceeds a measured and accepted tolerance.",
-          "run_ids": []
+          "run_ids": [],
+          "job_id": "40461115"
         }
       ]
     },
