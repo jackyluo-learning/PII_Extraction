@@ -125,6 +125,10 @@ def _load_shard(path: Path, state: str, seed: int,
 def analyze(attempts_dir: Path, manifests_dir: Path, target_manifest: Path,
             output_dir: Path, *, bootstrap_reps: int = 10000) -> dict:
     expected = _expected_targets(target_manifest)
+    for prefix, exp in (("e3b", "E3"), ("e3b_base", "E2B")):
+        for directory, extension in ((manifests_dir, "json"), (attempts_dir, "parquet")):
+            paths = list(directory.glob(f"{prefix}__{exp}__gpt2_*_field-ssn-email_k20.{extension}"))
+            _require(len(paths) == 3, f"expected exactly three formal {prefix} k=20 {extension} shards")
     frames = []
     provenance = []
     for state in STATES:
@@ -177,6 +181,8 @@ def analyze(attempts_dir: Path, manifests_dir: Path, target_manifest: Path,
                      "ci95_high": float(hi)})
     output_dir.mkdir(parents=True, exist_ok=True)
     pd.DataFrame(rows).to_csv(output_dir / "four_cell_rates.csv", index=False)
+    delta_a3_low = next(row["ci95_low"] for row in rows if row["metric"] == "delta_A3")
+    delta_a3_high = next(row["ci95_high"] for row in rows if row["metric"] == "delta_A3")
     result = {
         "accepted": True, "scope": "one GPT-2 checkpoint, frozen E3b targets at k=20",
         "warning": "Four observed cells do not identify a leave-one-out causal effect or DP epsilon.",
@@ -184,7 +190,8 @@ def analyze(attempts_dir: Path, manifests_dir: Path, target_manifest: Path,
         "cluster_unit": "25 matched person pairs; each retains two fields and three attack seeds",
         "bootstrap_reps": bootstrap_reps, "bootstrap_seed": 20260923,
         "rates_and_contrasts": rows,
-        "prediction_delta_A3_nonnegative": bool(metrics["delta_A3"][0] >= 0),
+        "predicted_direction_observed": bool(metrics["delta_A3"][0] >= 0),
+        "delta_A3_ci95_excludes_zero": bool(delta_a3_low > 0 or delta_a3_high < 0),
         "provenance": provenance,
     }
     (output_dir / "four_cell_analysis.json").write_text(json.dumps(result, indent=2) + "\n")
