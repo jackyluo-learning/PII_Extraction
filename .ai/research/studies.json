@@ -123,7 +123,7 @@
     {
       "study_id": "e3b_base_sandwich_20260923",
       "type": "experiment",
-      "status": "doing",
+      "status": "done",
       "question": "At k=20 on the frozen E3b targets, how do original GPT-2 base and fine-tuned GPT-2 trained/control success rates compare?",
       "description": "Focused single-checkpoint base-model arm for the E3b four-cell diagnostic; not a leave-one-out causal sandwich or the archived four-model E2 design.",
       "design_path": ".ai/research/studies/e3b_base_sandwich_20260923/design.md",
@@ -142,36 +142,43 @@
           "id": "main",
           "name": "Three formal base-model seeds at k=20",
           "kind": "main",
-          "status": "doing",
+          "status": "done",
           "tasks": 1
         },
         {
           "id": "analysis",
           "name": "Four-cell diagnostic and manuscript scope decision",
           "kind": "analysis",
-          "status": "pending",
+          "status": "done",
           "tasks": 1
         }
       ],
       "progress": {
         "total_tasks": 4,
-        "completed_tasks": 2,
-        "percentage": 50.0
+        "completed_tasks": 4,
+        "percentage": 100.0
       },
       "compute": {
-        "runs_completed": 2,
-        "accelerator_hours": 0.19555555555555557,
+        "runs_completed": 5,
+        "accelerator_hours": 2.911388888888889,
         "est_cost_usd": 0,
         "budget_accelerator_hours": 5.0,
-        "budget_status": "three formal jobs submitted with 01:35:00 per-job cap; user requested no monitoring",
+        "budget_status": "all three formal jobs COMPLETED 0:0; total new spend including pilots below approved 5.0 A100 hours",
         "formal_job_ids": [
           "40461513",
           "40461514",
           "40461515"
-        ]
+        ],
+        "formal_base_shards_completed": 3,
+        "reused_finetuned_shards": 3,
+        "formal_base_accelerator_hours": 2.7158333333333333
       },
       "created_at": "2026-09-24T00:59:39.879838+00:00",
-      "updated_at": "2026-09-24T01:31:31.441578+00:00"
+      "updated_at": "2026-09-24T02:51:26.995991+00:00",
+      "verdict": "direction supported on one checkpoint; causal sandwich not identified",
+      "analysis_path": ".ai/research/studies/e3b_base_sandwich_20260923/analysis.md",
+      "analysis_artifacts_path": ".ai/research/studies/e3b_base_sandwich_20260923/analysis_artifacts",
+      "statistics_review_path": ".ai/research/studies/e3b_base_sandwich_20260923/statistics_review.md"
     }
   ]
 }

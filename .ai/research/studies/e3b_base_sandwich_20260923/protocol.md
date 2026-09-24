@@ -9,9 +9,10 @@ three seeds are specified in
 Pilot: two D/C person pairs, both fields, seed 42, one A100. Jobs 40460942
 and 40461115 both completed `0:0` in 00:06:20 and 00:05:24. All eight
 formatted targets, outcomes, prompts, generations, step counts, and NLL values
-matched exactly; observed drift is zero. User confirmation of the proposed
-0.001 relative tolerance and 5.0 A100-hour ceiling is pending. The three
-formal jobs each use all 25 D/C pairs; submit only after both gates pass.
+matched exactly; observed drift is zero. The proposed 0.001 relative
+tolerance and 5.0 A100-hour ceiling were authorized before formal submission.
+The three formal jobs each used all 25 D/C pairs and completed successfully;
+their identities and outcomes are recorded in `results.json`.
 
 Formal acceptance requires three complete base manifests and parquets, 300
 rows total, exact frozen targets, 100 rows per seed, and matching attack and

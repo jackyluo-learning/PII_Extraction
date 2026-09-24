@@ -170,6 +170,8 @@ def analyze(attempts_dir: Path, manifests_dir: Path, target_manifest: Path,
         "tau_mod": (rates[0, 0] - rates[1, 0], boot[:, 0, 0] - boot[:, 1, 0]),
         "delta_A3": (rates[0, 1] - rates[1, 1], boot[:, 0, 1] - boot[:, 1, 1]),
         "tau_base": (rates[1, 0] - rates[1, 1], boot[:, 1, 0] - boot[:, 1, 1]),
+        "tau_mod_minus_tau_rec": (rates[0, 1] - rates[1, 0],
+                                  boot[:, 0, 1] - boot[:, 1, 0]),
     }
     _require(abs(metrics["tau_mod"][0] - metrics["tau_rec"][0] -
                  metrics["delta_A3"][0] + metrics["tau_base"][0]) < 1e-12,
@@ -178,7 +180,12 @@ def analyze(attempts_dir: Path, manifests_dir: Path, target_manifest: Path,
     for name, (point, samples) in metrics.items():
         lo, hi = np.quantile(samples, [0.025, 0.975])
         rows.append({"metric": name, "estimate": float(point), "ci95_low": float(lo),
-                     "ci95_high": float(hi)})
+                     "ci95_high": float(hi),
+                     "hits": int(round(point * 150)) if name in
+                     ("ft_D", "ft_C", "base_D", "base_C") else None,
+                     "n_attempts_per_cell": 150 if name in
+                     ("ft_D", "ft_C", "base_D", "base_C") else None,
+                     "n_matched_pair_clusters": 25})
     output_dir.mkdir(parents=True, exist_ok=True)
     pd.DataFrame(rows).to_csv(output_dir / "four_cell_rates.csv", index=False)
     delta_a3_low = next(row["ci95_low"] for row in rows if row["metric"] == "delta_A3")

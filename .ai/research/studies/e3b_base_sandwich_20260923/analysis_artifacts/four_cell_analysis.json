@@ -1,0 +1,146 @@
+{
+  "accepted": true,
+  "scope": "one GPT-2 checkpoint, frozen E3b targets at k=20",
+  "warning": "Four observed cells do not identify a leave-one-out causal effect or DP epsilon.",
+  "formal_shards": 6,
+  "formal_attempts": 600,
+  "base_attempts": 300,
+  "cluster_unit": "25 matched person pairs; each retains two fields and three attack seeds",
+  "bootstrap_reps": 10000,
+  "bootstrap_seed": 20260923,
+  "rates_and_contrasts": [
+    {
+      "metric": "ft_D",
+      "estimate": 0.8133333333333334,
+      "ci95_low": 0.7466666666666667,
+      "ci95_high": 0.88,
+      "hits": 122,
+      "n_attempts_per_cell": 150,
+      "n_matched_pair_clusters": 25
+    },
+    {
+      "metric": "ft_C",
+      "estimate": 0.7733333333333333,
+      "ci95_low": 0.7133333333333334,
+      "ci95_high": 0.8333333333333334,
+      "hits": 116,
+      "n_attempts_per_cell": 150,
+      "n_matched_pair_clusters": 25
+    },
+    {
+      "metric": "base_D",
+      "estimate": 0.5266666666666666,
+      "ci95_low": 0.47333333333333333,
+      "ci95_high": 0.58,
+      "hits": 79,
+      "n_attempts_per_cell": 150,
+      "n_matched_pair_clusters": 25
+    },
+    {
+      "metric": "base_C",
+      "estimate": 0.5733333333333334,
+      "ci95_low": 0.52,
+      "ci95_high": 0.6266666666666667,
+      "hits": 86,
+      "n_attempts_per_cell": 150,
+      "n_matched_pair_clusters": 25
+    },
+    {
+      "metric": "tau_rec",
+      "estimate": 0.040000000000000036,
+      "ci95_low": -0.06666666666666665,
+      "ci95_high": 0.14,
+      "hits": null,
+      "n_attempts_per_cell": null,
+      "n_matched_pair_clusters": 25
+    },
+    {
+      "metric": "tau_mod",
+      "estimate": 0.28666666666666674,
+      "ci95_low": 0.20666666666666667,
+      "ci95_high": 0.3733333333333333,
+      "hits": null,
+      "n_attempts_per_cell": null,
+      "n_matched_pair_clusters": 25
+    },
+    {
+      "metric": "delta_A3",
+      "estimate": 0.19999999999999996,
+      "ci95_low": 0.1333333333333333,
+      "ci95_high": 0.2666666666666667,
+      "hits": null,
+      "n_attempts_per_cell": null,
+      "n_matched_pair_clusters": 25
+    },
+    {
+      "metric": "tau_base",
+      "estimate": -0.046666666666666745,
+      "ci95_low": -0.11333333333333329,
+      "ci95_high": 0.020000000000000018,
+      "hits": null,
+      "n_attempts_per_cell": null,
+      "n_matched_pair_clusters": 25
+    },
+    {
+      "metric": "tau_mod_minus_tau_rec",
+      "estimate": 0.2466666666666667,
+      "ci95_low": 0.16666666666666663,
+      "ci95_high": 0.3266666666666666,
+      "hits": null,
+      "n_attempts_per_cell": null,
+      "n_matched_pair_clusters": 25
+    }
+  ],
+  "predicted_direction_observed": true,
+  "delta_A3_ci95_excludes_zero": true,
+  "provenance": [
+    {
+      "state": "finetuned",
+      "seed": 42,
+      "manifest": "results/manifests/e3b__E3__gpt2_42_field-ssn-email_k20.json",
+      "manifest_sha256": "d2d79e3261034668ba6dc215c2a31b5e9f7b61f40827b8a45021dcca54adfc5c",
+      "attempts": "results/attempts/e3b__E3__gpt2_42_field-ssn-email_k20.parquet",
+      "attempts_sha256": "9deb9328529671edd41494f58a1780c03213bb4010d317b33dbfa69ea15be63b"
+    },
+    {
+      "state": "finetuned",
+      "seed": 1337,
+      "manifest": "results/manifests/e3b__E3__gpt2_1337_field-ssn-email_k20.json",
+      "manifest_sha256": "33e3ed18881ab2bf779040b161871b9c0369f69db5edacdcfe034abeba6ce760",
+      "attempts": "results/attempts/e3b__E3__gpt2_1337_field-ssn-email_k20.parquet",
+      "attempts_sha256": "721ca43c7618e11a8687e7a4fba549312954ae7d65ec050202358e28572df23f"
+    },
+    {
+      "state": "finetuned",
+      "seed": 2024,
+      "manifest": "results/manifests/e3b__E3__gpt2_2024_field-ssn-email_k20.json",
+      "manifest_sha256": "ff7b9a2c774cd3f4cb7fb09e2b8254249e8abe10add4cebd0fb9672484d5c53d",
+      "attempts": "results/attempts/e3b__E3__gpt2_2024_field-ssn-email_k20.parquet",
+      "attempts_sha256": "5681c703f8851447d59fde723d625b1d36161ea93ca8569fdc40186e14d965e3"
+    },
+    {
+      "state": "base",
+      "seed": 42,
+      "manifest": "results/manifests/e3b_base__E2B__gpt2_42_field-ssn-email_k20.json",
+      "manifest_sha256": "9ce291d5b3761945e976d8317232fc08b1e176b313df736b8c97e58a2fbc9910",
+      "attempts": "results/attempts/e3b_base__E2B__gpt2_42_field-ssn-email_k20.parquet",
+      "attempts_sha256": "8e716def017532f466062e0fd634191d63dc7aa5ed649172c43eb30f9e1bc68d"
+    },
+    {
+      "state": "base",
+      "seed": 1337,
+      "manifest": "results/manifests/e3b_base__E2B__gpt2_1337_field-ssn-email_k20.json",
+      "manifest_sha256": "faad795c7e44e1df8e5b05d6c021daba6d130b1075d26fe318bf46c2fddf5545",
+      "attempts": "results/attempts/e3b_base__E2B__gpt2_1337_field-ssn-email_k20.parquet",
+      "attempts_sha256": "853398d17ddae80a12c0dea2e54838a064fe87df286980d28e01255c7432fae4"
+    },
+    {
+      "state": "base",
+      "seed": 2024,
+      "manifest": "results/manifests/e3b_base__E2B__gpt2_2024_field-ssn-email_k20.json",
+      "manifest_sha256": "f108653245200bfbe614a49b50aaa53fa9e1534ea5d41efa489fd520178246cb",
+      "attempts": "results/attempts/e3b_base__E2B__gpt2_2024_field-ssn-email_k20.parquet",
+      "attempts_sha256": "a4230091c60c3006fc68b87ad7b14e3c0fafe2edac044a0ddc0153807374a28c"
+    }
+  ]
+}

@@ -42,15 +42,19 @@
       "id": "main",
       "name": "Three formal base-model seeds at k=20",
       "kind": "main",
-      "status": "doing",
+      "status": "done",
       "tasks": [
         {
           "id": "formal-base",
           "name": "Complete 42/1337/2024 base shards",
-          "status": "doing",
+          "status": "done",
           "prediction": "The fine-tuned control success rate minus base control success rate is nonnegative at k=20.",
           "falsification": "The completed base-control rate exceeds the fine-tuned control rate; a null result also weakens the predicted direction.",
-          "run_ids": [],
+          "run_ids": [
+            "e3b_base__E2B__gpt2_42_field-ssn-email_k20",
+            "e3b_base__E2B__gpt2_1337_field-ssn-email_k20",
+            "e3b_base__E2B__gpt2_2024_field-ssn-email_k20"
+          ],
           "job_ids": {
             "42": "40461513",
             "1337": "40461514",
@@ -65,15 +69,23 @@
       "id": "analysis",
       "name": "Four-cell diagnostic and manuscript scope decision",
       "kind": "analysis",
-      "status": "pending",
+      "status": "done",
       "tasks": [
         {
           "id": "analyze-four-cells",
           "name": "Validate pins and estimate four rates with clustered uncertainty",
-          "status": "pending",
+          "status": "done",
           "prediction": "The four-cell table will show whether the proposed sandwich ordering is empirically plausible on this checkpoint.",
           "falsification": "The observed ordering reverses or remains too imprecise to assess.",
-          "run_ids": []
+          "run_ids": [
+            "e3b__E3__gpt2_42_field-ssn-email_k20",
+            "e3b__E3__gpt2_1337_field-ssn-email_k20",
+            "e3b__E3__gpt2_2024_field-ssn-email_k20",
+            "e3b_base__E2B__gpt2_42_field-ssn-email_k20",
+            "e3b_base__E2B__gpt2_1337_field-ssn-email_k20",
+            "e3b_base__E2B__gpt2_2024_field-ssn-email_k20"
+          ],
+          "result": "Accepted complete 2-by-2 diagnostic; positive control-model difference on this checkpoint; no per-record causal sandwich identified."
         }
       ]
     }

@@ -88,7 +88,9 @@
           "sha256": "ec8f48841444e3a7ec8f90148459a06f1e90b4853b096bce8851091b1f3dae5f"
         }
       ],
-      "notes": "Slurm COMPLETED 0:0 on A100; eight frozen formatted-target hashes match; no missing keys or duplicates; technical pilot prediction held. Not used for hypothesis inference."
+      "notes": "Slurm COMPLETED 0:0 on A100; eight frozen formatted-target hashes match; no missing keys or duplicates; technical pilot prediction held. Not used for hypothesis inference.",
+      "excluded": true,
+      "exclusion_reason": "Prospectively limited two-pair pilot; excluded from formal four-cell inference."
     },
     {
       "run_id": "e3b_base_pilot_b",
@@ -174,7 +176,951 @@
           "sha256": "d93a700b1a726bc3080afa0b67c13efaa47c49866cf3434a309fb4ae2f14141c"
         }
       ],
-      "notes": "Slurm COMPLETED 0:0 on A100; all eight targets and all exact-match, generated-text, prompt, step-count, and final-NLL outcomes matched pilot A exactly. Repro tolerance confirmation pending; no formal inference."
+      "notes": "Slurm COMPLETED 0:0 on A100; all eight targets and all exact-match, generated-text, prompt, step-count, and final-NLL outcomes matched pilot A exactly. Reproducibility gate accepted at 0.001 relative tolerance; excluded from formal inference.",
+      "excluded": true,
+      "exclusion_reason": "Prospectively limited two-pair pilot; excluded from formal four-cell inference."
+    },
+    {
+      "run_id": "e3b__E3__gpt2_42_field-ssn-email_k20",
+      "original_run_id": "e3b",
+      "task_id": "reused-e3b-reference",
+      "run_status": "completed",
+      "job_id": "40388851",
+      "scheduler_state": "COMPLETED",
+      "scheduler_exit_code": "0:0",
+      "arm": "both",
+      "seed": 42,
+      "model_state": "finetuned",
+      "reused_from_study": "capacity_axis_20260902",
+      "config": {
+        "target_set_id": "e3b",
+        "target_manifest_sha256": "ee6be0755717502b750264f51681431134c5f55360f1f4777d6d64a3ee4f1628",
+        "model_name": "gpt2",
+        "model_state": "finetuned",
+        "fields": [
+          "ssn",
+          "email"
+        ],
+        "k_grid": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          6,
+          8,
+          12,
+          16,
+          20,
+          24,
+          32,
+          48,
+          64
+        ],
+        "seeds": [
+          42,
+          1337,
+          2024
+        ],
+        "gcg_iters": 200,
+        "candidates_per_position_B": 256,
+        "candidate_evaluations_per_step": 512,
+        "candidate_minibatch": 64,
+        "early_stop_on_exact_match": true,
+        "extraction_check_interval": 10,
+        "decision_rule": "field-normalized substring exact_match"
+      },
+      "pins": {
+        "code_commit": "c7e4416dd151c810a5badd4aaae74ccc06176885",
+        "code_dirty": false,
+        "config_sha256": "fad74e4bcf8429aa0b7ca94ea3b0275555e142b6c39814404512a40c74be9b0e",
+        "env": {
+          "python": "3.11.5",
+          "pip_freeze_sha256_16": "b7516b82b8f38c90",
+          "faker": null,
+          "torch": "2.6.0+cu124",
+          "transformers": "5.16.1",
+          "lifelines": "0.30.0"
+        },
+        "dataset_version": "ee6be0755717502b750264f51681431134c5f55360f1f4777d6d64a3ee4f1628",
+        "split_hash": "48fab4bf6013dbce7c8043f89e5e7b874189c0794362720bda7d735f1778935e",
+        "target_values_sha256": "d0b81c7226c797e478269836598b8587484675cf02ee8d2e436787a0b5348cee",
+        "target_subset_hash": "a01097acbb835207",
+        "source_fingerprints": {
+          "registry": {
+            "sha256": "91901119f342d7d4ff9e052ceb7fce53bebacfe3fb593a7c1d7ff83a2e2978c6",
+            "bytes": 65170
+          },
+          "corpus": {
+            "sha256": "7a059fc04ae21665a464a5cb68eb87d2fae597d736f82869c24866e21d0e1acf",
+            "bytes": 57979000
+          },
+          "checkpoint": {
+            "files": {
+              "config.json": {
+                "sha256": "b0457be0f27b82ba744a0ef9a3d0ad03fbe7db9664537572c96edb5ec2f42555",
+                "bytes": 961
+              },
+              "generation_config.json": {
+                "sha256": "2e352d17c39026d25fd7994c102f94879e9047b348bfdd503a180c41f90f2b8c",
+                "bytes": 119
+              },
+              "model.safetensors": {
+                "sha256": "1cefaa4922d3e2474cf27a0e75a58b72447d1ef2742528972112b4dc89963b7a",
+                "bytes": 497774208
+              },
+              "tokenizer.json": {
+                "sha256": "9fe733f259ca91b0cfce8719f4c9c2d60a5fa57091ccb4855ddcaeb1981707a7",
+                "bytes": 3557778
+              },
+              "tokenizer_config.json": {
+                "sha256": "2ec6e8751bff5617ea5f342d96c69b50fba71826c0b2b9449c34fb55253432f4",
+                "bytes": 326
+              },
+              "train_meta.json": {
+                "sha256": "35188b0ae6dfebe0bf002702fa892e1a4d1203fb195d0c23280ffe06e45ee3d6",
+                "bytes": 367
+              }
+            },
+            "sha256": "53f223a44462e11d674c57d6ac65c9dd8c31e06c30955deb5870a74b14c310a0",
+            "bytes": 501333759
+          }
+        },
+        "base_fingerprint_sha256": null
+      },
+      "arm_sizes": {
+        "D": 25,
+        "C": 25
+      },
+      "metrics": {
+        "n_rows": 100,
+        "trained_exact_matches": 42,
+        "trained_total": 50,
+        "control_exact_matches": 36,
+        "control_total": 50,
+        "by_membership_field": {
+          "control_email": {
+            "hits": 25,
+            "n": 25
+          },
+          "control_ssn": {
+            "hits": 11,
+            "n": 25
+          },
+          "trained_email": {
+            "hits": 25,
+            "n": 25
+          },
+          "trained_ssn": {
+            "hits": 17,
+            "n": 25
+          }
+        }
+      },
+      "metric_split": "formal frozen E3b targets, k=20, two fields, 25 people per arm; one attack seed",
+      "wall_clock_s": 2087,
+      "accelerator": {
+        "device": "cuda",
+        "name": "NVIDIA A100 80GB PCIe",
+        "total_mem_gb": 79.1,
+        "count": 1
+      },
+      "accelerator_hours": 0.5797222222222222,
+      "new_accelerator_hours_charged_to_followup": 0.0,
+      "est_cost_usd": 0,
+      "tuning_trials": 0,
+      "artifacts": [
+        {
+          "path": "results/attempts/e3b__E3__gpt2_42_field-ssn-email_k20.parquet",
+          "sha256": "9deb9328529671edd41494f58a1780c03213bb4010d317b33dbfa69ea15be63b"
+        },
+        {
+          "path": "results/manifests/e3b__E3__gpt2_42_field-ssn-email_k20.json",
+          "sha256": "d2d79e3261034668ba6dc215c2a31b5e9f7b61f40827b8a45021dcca54adfc5c"
+        }
+      ],
+      "notes": "Validated complete formal shard; fine-tuned row is reused accepted E3b evidence, not newly run."
+    },
+    {
+      "run_id": "e3b__E3__gpt2_1337_field-ssn-email_k20",
+      "original_run_id": "e3b",
+      "task_id": "reused-e3b-reference",
+      "run_status": "completed",
+      "job_id": "40394475",
+      "scheduler_state": "COMPLETED",
+      "scheduler_exit_code": "0:0",
+      "arm": "both",
+      "seed": 1337,
+      "model_state": "finetuned",
+      "reused_from_study": "capacity_axis_20260902",
+      "config": {
+        "target_set_id": "e3b",
+        "target_manifest_sha256": "ee6be0755717502b750264f51681431134c5f55360f1f4777d6d64a3ee4f1628",
+        "model_name": "gpt2",
+        "model_state": "finetuned",
+        "fields": [
+          "ssn",
+          "email"
+        ],
+        "k_grid": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          6,
+          8,
+          12,
+          16,
+          20,
+          24,
+          32,
+          48,
+          64
+        ],
+        "seeds": [
+          42,
+          1337,
+          2024
+        ],
+        "gcg_iters": 200,
+        "candidates_per_position_B": 256,
+        "candidate_evaluations_per_step": 512,
+        "candidate_minibatch": 64,
+        "early_stop_on_exact_match": true,
+        "extraction_check_interval": 10,
+        "decision_rule": "field-normalized substring exact_match"
+      },
+      "pins": {
+        "code_commit": "c7e4416dd151c810a5badd4aaae74ccc06176885",
+        "code_dirty": false,
+        "config_sha256": "fad74e4bcf8429aa0b7ca94ea3b0275555e142b6c39814404512a40c74be9b0e",
+        "env": {
+          "python": "3.11.5",
+          "pip_freeze_sha256_16": "b7516b82b8f38c90",
+          "faker": null,
+          "torch": "2.6.0+cu124",
+          "transformers": "5.16.1",
+          "lifelines": "0.30.0"
+        },
+        "dataset_version": "ee6be0755717502b750264f51681431134c5f55360f1f4777d6d64a3ee4f1628",
+        "split_hash": "48fab4bf6013dbce7c8043f89e5e7b874189c0794362720bda7d735f1778935e",
+        "target_values_sha256": "d0b81c7226c797e478269836598b8587484675cf02ee8d2e436787a0b5348cee",
+        "target_subset_hash": "a01097acbb835207",
+        "source_fingerprints": {
+          "registry": {
+            "sha256": "91901119f342d7d4ff9e052ceb7fce53bebacfe3fb593a7c1d7ff83a2e2978c6",
+            "bytes": 65170
+          },
+          "corpus": {
+            "sha256": "7a059fc04ae21665a464a5cb68eb87d2fae597d736f82869c24866e21d0e1acf",
+            "bytes": 57979000
+          },
+          "checkpoint": {
+            "files": {
+              "config.json": {
+                "sha256": "b0457be0f27b82ba744a0ef9a3d0ad03fbe7db9664537572c96edb5ec2f42555",
+                "bytes": 961
+              },
+              "generation_config.json": {
+                "sha256": "2e352d17c39026d25fd7994c102f94879e9047b348bfdd503a180c41f90f2b8c",
+                "bytes": 119
+              },
+              "model.safetensors": {
+                "sha256": "1cefaa4922d3e2474cf27a0e75a58b72447d1ef2742528972112b4dc89963b7a",
+                "bytes": 497774208
+              },
+              "tokenizer.json": {
+                "sha256": "9fe733f259ca91b0cfce8719f4c9c2d60a5fa57091ccb4855ddcaeb1981707a7",
+                "bytes": 3557778
+              },
+              "tokenizer_config.json": {
+                "sha256": "2ec6e8751bff5617ea5f342d96c69b50fba71826c0b2b9449c34fb55253432f4",
+                "bytes": 326
+              },
+              "train_meta.json": {
+                "sha256": "35188b0ae6dfebe0bf002702fa892e1a4d1203fb195d0c23280ffe06e45ee3d6",
+                "bytes": 367
+              }
+            },
+            "sha256": "53f223a44462e11d674c57d6ac65c9dd8c31e06c30955deb5870a74b14c310a0",
+            "bytes": 501333759
+          }
+        },
+        "base_fingerprint_sha256": null
+      },
+      "arm_sizes": {
+        "D": 25,
+        "C": 25
+      },
+      "metrics": {
+        "n_rows": 100,
+        "trained_exact_matches": 41,
+        "trained_total": 50,
+        "control_exact_matches": 37,
+        "control_total": 50,
+        "by_membership_field": {
+          "control_email": {
+            "hits": 25,
+            "n": 25
+          },
+          "control_ssn": {
+            "hits": 12,
+            "n": 25
+          },
+          "trained_email": {
+            "hits": 25,
+            "n": 25
+          },
+          "trained_ssn": {
+            "hits": 16,
+            "n": 25
+          }
+        }
+      },
+      "metric_split": "formal frozen E3b targets, k=20, two fields, 25 people per arm; one attack seed",
+      "wall_clock_s": 1908,
+      "accelerator": {
+        "device": "cuda",
+        "name": "NVIDIA A100 80GB PCIe",
+        "total_mem_gb": 79.1,
+        "count": 1
+      },
+      "accelerator_hours": 0.53,
+      "new_accelerator_hours_charged_to_followup": 0.0,
+      "est_cost_usd": 0,
+      "tuning_trials": 0,
+      "artifacts": [
+        {
+          "path": "results/attempts/e3b__E3__gpt2_1337_field-ssn-email_k20.parquet",
+          "sha256": "721ca43c7618e11a8687e7a4fba549312954ae7d65ec050202358e28572df23f"
+        },
+        {
+          "path": "results/manifests/e3b__E3__gpt2_1337_field-ssn-email_k20.json",
+          "sha256": "33e3ed18881ab2bf779040b161871b9c0369f69db5edacdcfe034abeba6ce760"
+        }
+      ],
+      "notes": "Validated complete formal shard; fine-tuned row is reused accepted E3b evidence, not newly run."
+    },
+    {
+      "run_id": "e3b__E3__gpt2_2024_field-ssn-email_k20",
+      "original_run_id": "e3b",
+      "task_id": "reused-e3b-reference",
+      "run_status": "completed",
+      "job_id": "40397191",
+      "scheduler_state": "COMPLETED",
+      "scheduler_exit_code": "0:0",
+      "arm": "both",
+      "seed": 2024,
+      "model_state": "finetuned",
+      "reused_from_study": "capacity_axis_20260902",
+      "config": {
+        "target_set_id": "e3b",
+        "target_manifest_sha256": "ee6be0755717502b750264f51681431134c5f55360f1f4777d6d64a3ee4f1628",
+        "model_name": "gpt2",
+        "model_state": "finetuned",
+        "fields": [
+          "ssn",
+          "email"
+        ],
+        "k_grid": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          6,
+          8,
+          12,
+          16,
+          20,
+          24,
+          32,
+          48,
+          64
+        ],
+        "seeds": [
+          42,
+          1337,
+          2024
+        ],
+        "gcg_iters": 200,
+        "candidates_per_position_B": 256,
+        "candidate_evaluations_per_step": 512,
+        "candidate_minibatch": 64,
+        "early_stop_on_exact_match": true,
+        "extraction_check_interval": 10,
+        "decision_rule": "field-normalized substring exact_match"
+      },
+      "pins": {
+        "code_commit": "c7e4416dd151c810a5badd4aaae74ccc06176885",
+        "code_dirty": false,
+        "config_sha256": "fad74e4bcf8429aa0b7ca94ea3b0275555e142b6c39814404512a40c74be9b0e",
+        "env": {
+          "python": "3.11.5",
+          "pip_freeze_sha256_16": "b7516b82b8f38c90",
+          "faker": null,
+          "torch": "2.6.0+cu124",
+          "transformers": "5.16.1",
+          "lifelines": "0.30.0"
+        },
+        "dataset_version": "ee6be0755717502b750264f51681431134c5f55360f1f4777d6d64a3ee4f1628",
+        "split_hash": "48fab4bf6013dbce7c8043f89e5e7b874189c0794362720bda7d735f1778935e",
+        "target_values_sha256": "d0b81c7226c797e478269836598b8587484675cf02ee8d2e436787a0b5348cee",
+        "target_subset_hash": "a01097acbb835207",
+        "source_fingerprints": {
+          "registry": {
+            "sha256": "91901119f342d7d4ff9e052ceb7fce53bebacfe3fb593a7c1d7ff83a2e2978c6",
+            "bytes": 65170
+          },
+          "corpus": {
+            "sha256": "7a059fc04ae21665a464a5cb68eb87d2fae597d736f82869c24866e21d0e1acf",
+            "bytes": 57979000
+          },
+          "checkpoint": {
+            "files": {
+              "config.json": {
+                "sha256": "b0457be0f27b82ba744a0ef9a3d0ad03fbe7db9664537572c96edb5ec2f42555",
+                "bytes": 961
+              },
+              "generation_config.json": {
+                "sha256": "2e352d17c39026d25fd7994c102f94879e9047b348bfdd503a180c41f90f2b8c",
+                "bytes": 119
+              },
+              "model.safetensors": {
+                "sha256": "1cefaa4922d3e2474cf27a0e75a58b72447d1ef2742528972112b4dc89963b7a",
+                "bytes": 497774208
+              },
+              "tokenizer.json": {
+                "sha256": "9fe733f259ca91b0cfce8719f4c9c2d60a5fa57091ccb4855ddcaeb1981707a7",
+                "bytes": 3557778
+              },
+              "tokenizer_config.json": {
+                "sha256": "2ec6e8751bff5617ea5f342d96c69b50fba71826c0b2b9449c34fb55253432f4",
+                "bytes": 326
+              },
+              "train_meta.json": {
+                "sha256": "35188b0ae6dfebe0bf002702fa892e1a4d1203fb195d0c23280ffe06e45ee3d6",
+                "bytes": 367
+              }
+            },
+            "sha256": "53f223a44462e11d674c57d6ac65c9dd8c31e06c30955deb5870a74b14c310a0",
+            "bytes": 501333759
+          }
+        },
+        "base_fingerprint_sha256": null
+      },
+      "arm_sizes": {
+        "D": 25,
+        "C": 25
+      },
+      "metrics": {
+        "n_rows": 100,
+        "trained_exact_matches": 39,
+        "trained_total": 50,
+        "control_exact_matches": 43,
+        "control_total": 50,
+        "by_membership_field": {
+          "control_email": {
+            "hits": 25,
+            "n": 25
+          },
+          "control_ssn": {
+            "hits": 18,
+            "n": 25
+          },
+          "trained_email": {
+            "hits": 25,
+            "n": 25
+          },
+          "trained_ssn": {
+            "hits": 14,
+            "n": 25
+          }
+        }
+      },
+      "metric_split": "formal frozen E3b targets, k=20, two fields, 25 people per arm; one attack seed",
+      "wall_clock_s": 2092,
+      "accelerator": {
+        "device": "cuda",
+        "name": "NVIDIA A100 80GB PCIe",
+        "total_mem_gb": 79.1,
+        "count": 1
+      },
+      "accelerator_hours": 0.5811111111111111,
+      "new_accelerator_hours_charged_to_followup": 0.0,
+      "est_cost_usd": 0,
+      "tuning_trials": 0,
+      "artifacts": [
+        {
+          "path": "results/attempts/e3b__E3__gpt2_2024_field-ssn-email_k20.parquet",
+          "sha256": "5681c703f8851447d59fde723d625b1d36161ea93ca8569fdc40186e14d965e3"
+        },
+        {
+          "path": "results/manifests/e3b__E3__gpt2_2024_field-ssn-email_k20.json",
+          "sha256": "ff7b9a2c774cd3f4cb7fb09e2b8254249e8abe10add4cebd0fb9672484d5c53d"
+        }
+      ],
+      "notes": "Validated complete formal shard; fine-tuned row is reused accepted E3b evidence, not newly run."
+    },
+    {
+      "run_id": "e3b_base__E2B__gpt2_42_field-ssn-email_k20",
+      "original_run_id": "e3b_base",
+      "task_id": "formal-base",
+      "run_status": "completed",
+      "job_id": "40461513",
+      "scheduler_state": "COMPLETED",
+      "scheduler_exit_code": "0:0",
+      "arm": "both",
+      "seed": 42,
+      "model_state": "base",
+      "reused_from_study": null,
+      "config": {
+        "target_set_id": "e3b",
+        "target_manifest_sha256": "ee6be0755717502b750264f51681431134c5f55360f1f4777d6d64a3ee4f1628",
+        "base_revision": "607a30d783dfa663caf39e06633721c8d4cfcd7e",
+        "base_fingerprint_sha256": "90265451371a973b9e890f08e56100447117fe838d1b037f0ba8d0c3f48c017b",
+        "model_name": "gpt2",
+        "model_state": "base",
+        "fields": [
+          "ssn",
+          "email"
+        ],
+        "capacity_k": 20,
+        "seed": 42,
+        "n_pairs": 25,
+        "gcg_iters": 200,
+        "candidates_per_position_B": 256,
+        "candidate_evaluations_per_step": 512,
+        "candidate_minibatch": 64,
+        "early_stop_on_exact_match": true,
+        "extraction_check_interval": 10,
+        "decision_rule": "field-normalized substring exact_match"
+      },
+      "pins": {
+        "code_commit": "7d95b22e2bb4b8357d6be027141675c8f86c811e",
+        "code_dirty": false,
+        "config_sha256": "fb83e50c5d1b2d70284ec351a140cae2e2ff26bec1eb2de50303d70a43786c67",
+        "env": {
+          "python": "3.11.5",
+          "pip_freeze_sha256_16": "b7516b82b8f38c90",
+          "faker": null,
+          "torch": "2.6.0+cu124",
+          "transformers": "5.16.1",
+          "lifelines": "0.30.0"
+        },
+        "dataset_version": "ee6be0755717502b750264f51681431134c5f55360f1f4777d6d64a3ee4f1628",
+        "split_hash": "48fab4bf6013dbce7c8043f89e5e7b874189c0794362720bda7d735f1778935e",
+        "target_values_sha256": "d0b81c7226c797e478269836598b8587484675cf02ee8d2e436787a0b5348cee",
+        "target_subset_hash": "a01097acbb835207",
+        "source_fingerprints": {
+          "registry": {
+            "sha256": "91901119f342d7d4ff9e052ceb7fce53bebacfe3fb593a7c1d7ff83a2e2978c6",
+            "bytes": 65170
+          },
+          "corpus": {
+            "sha256": "7a059fc04ae21665a464a5cb68eb87d2fae597d736f82869c24866e21d0e1acf",
+            "bytes": 57979000
+          },
+          "checkpoint": {
+            "files": {
+              "config.json": {
+                "sha256": "b0457be0f27b82ba744a0ef9a3d0ad03fbe7db9664537572c96edb5ec2f42555",
+                "bytes": 961
+              },
+              "generation_config.json": {
+                "sha256": "2e352d17c39026d25fd7994c102f94879e9047b348bfdd503a180c41f90f2b8c",
+                "bytes": 119
+              },
+              "model.safetensors": {
+                "sha256": "1cefaa4922d3e2474cf27a0e75a58b72447d1ef2742528972112b4dc89963b7a",
+                "bytes": 497774208
+              },
+              "tokenizer.json": {
+                "sha256": "9fe733f259ca91b0cfce8719f4c9c2d60a5fa57091ccb4855ddcaeb1981707a7",
+                "bytes": 3557778
+              },
+              "tokenizer_config.json": {
+                "sha256": "2ec6e8751bff5617ea5f342d96c69b50fba71826c0b2b9449c34fb55253432f4",
+                "bytes": 326
+              },
+              "train_meta.json": {
+                "sha256": "35188b0ae6dfebe0bf002702fa892e1a4d1203fb195d0c23280ffe06e45ee3d6",
+                "bytes": 367
+              }
+            },
+            "sha256": "53f223a44462e11d674c57d6ac65c9dd8c31e06c30955deb5870a74b14c310a0",
+            "bytes": 501333759
+          }
+        },
+        "base_fingerprint_sha256": "90265451371a973b9e890f08e56100447117fe838d1b037f0ba8d0c3f48c017b"
+      },
+      "arm_sizes": {
+        "D": 25,
+        "C": 25
+      },
+      "metrics": {
+        "n_rows": 100,
+        "trained_exact_matches": 26,
+        "trained_total": 50,
+        "control_exact_matches": 29,
+        "control_total": 50,
+        "by_membership_field": {
+          "control_email": {
+            "hits": 24,
+            "n": 25
+          },
+          "control_ssn": {
+            "hits": 5,
+            "n": 25
+          },
+          "trained_email": {
+            "hits": 24,
+            "n": 25
+          },
+          "trained_ssn": {
+            "hits": 2,
+            "n": 25
+          }
+        }
+      },
+      "metric_split": "formal frozen E3b targets, k=20, two fields, 25 people per arm; one attack seed",
+      "wall_clock_s": 3184,
+      "accelerator": {
+        "device": "cuda",
+        "name": "NVIDIA A100 80GB PCIe",
+        "total_mem_gb": 79.1,
+        "count": 1
+      },
+      "accelerator_hours": 0.8844444444444445,
+      "new_accelerator_hours_charged_to_followup": 0.8844444444444445,
+      "est_cost_usd": 0,
+      "tuning_trials": 0,
+      "artifacts": [
+        {
+          "path": "results/attempts/e3b_base__E2B__gpt2_42_field-ssn-email_k20.parquet",
+          "sha256": "8e716def017532f466062e0fd634191d63dc7aa5ed649172c43eb30f9e1bc68d"
+        },
+        {
+          "path": "results/manifests/e3b_base__E2B__gpt2_42_field-ssn-email_k20.json",
+          "sha256": "9ce291d5b3761945e976d8317232fc08b1e176b313df736b8c97e58a2fbc9910"
+        },
+        {
+          "path": "slurm/logs/pii-e3b-base-40461513.out",
+          "sha256": "28201b7473221dfc19e6db17399104dfe80236734f083246f2b0dbf749e42be9"
+        },
+        {
+          "path": "slurm/logs/pii-e3b-base-40461513.err",
+          "sha256": "e23cd870a523611d333b670fecbe2d1d2eb63af223d3d9102db9e90032214a71"
+        }
+      ],
+      "notes": "Validated completed new base-model formal shard."
+    },
+    {
+      "run_id": "e3b_base__E2B__gpt2_1337_field-ssn-email_k20",
+      "original_run_id": "e3b_base",
+      "task_id": "formal-base",
+      "run_status": "completed",
+      "job_id": "40461514",
+      "scheduler_state": "COMPLETED",
+      "scheduler_exit_code": "0:0",
+      "arm": "both",
+      "seed": 1337,
+      "model_state": "base",
+      "reused_from_study": null,
+      "config": {
+        "target_set_id": "e3b",
+        "target_manifest_sha256": "ee6be0755717502b750264f51681431134c5f55360f1f4777d6d64a3ee4f1628",
+        "base_revision": "607a30d783dfa663caf39e06633721c8d4cfcd7e",
+        "base_fingerprint_sha256": "90265451371a973b9e890f08e56100447117fe838d1b037f0ba8d0c3f48c017b",
+        "model_name": "gpt2",
+        "model_state": "base",
+        "fields": [
+          "ssn",
+          "email"
+        ],
+        "capacity_k": 20,
+        "seed": 1337,
+        "n_pairs": 25,
+        "gcg_iters": 200,
+        "candidates_per_position_B": 256,
+        "candidate_evaluations_per_step": 512,
+        "candidate_minibatch": 64,
+        "early_stop_on_exact_match": true,
+        "extraction_check_interval": 10,
+        "decision_rule": "field-normalized substring exact_match"
+      },
+      "pins": {
+        "code_commit": "7d95b22e2bb4b8357d6be027141675c8f86c811e",
+        "code_dirty": false,
+        "config_sha256": "c1a6c7591c5f86678d2ea430c3ca14340db88263e76d11c8f653bdaadc0f9329",
+        "env": {
+          "python": "3.11.5",
+          "pip_freeze_sha256_16": "b7516b82b8f38c90",
+          "faker": null,
+          "torch": "2.6.0+cu124",
+          "transformers": "5.16.1",
+          "lifelines": "0.30.0"
+        },
+        "dataset_version": "ee6be0755717502b750264f51681431134c5f55360f1f4777d6d64a3ee4f1628",
+        "split_hash": "48fab4bf6013dbce7c8043f89e5e7b874189c0794362720bda7d735f1778935e",
+        "target_values_sha256": "d0b81c7226c797e478269836598b8587484675cf02ee8d2e436787a0b5348cee",
+        "target_subset_hash": "a01097acbb835207",
+        "source_fingerprints": {
+          "registry": {
+            "sha256": "91901119f342d7d4ff9e052ceb7fce53bebacfe3fb593a7c1d7ff83a2e2978c6",
+            "bytes": 65170
+          },
+          "corpus": {
+            "sha256": "7a059fc04ae21665a464a5cb68eb87d2fae597d736f82869c24866e21d0e1acf",
+            "bytes": 57979000
+          },
+          "checkpoint": {
+            "files": {
+              "config.json": {
+                "sha256": "b0457be0f27b82ba744a0ef9a3d0ad03fbe7db9664537572c96edb5ec2f42555",
+                "bytes": 961
+              },
+              "generation_config.json": {
+                "sha256": "2e352d17c39026d25fd7994c102f94879e9047b348bfdd503a180c41f90f2b8c",
+                "bytes": 119
+              },
+              "model.safetensors": {
+                "sha256": "1cefaa4922d3e2474cf27a0e75a58b72447d1ef2742528972112b4dc89963b7a",
+                "bytes": 497774208
+              },
+              "tokenizer.json": {
+                "sha256": "9fe733f259ca91b0cfce8719f4c9c2d60a5fa57091ccb4855ddcaeb1981707a7",
+                "bytes": 3557778
+              },
+              "tokenizer_config.json": {
+                "sha256": "2ec6e8751bff5617ea5f342d96c69b50fba71826c0b2b9449c34fb55253432f4",
+                "bytes": 326
+              },
+              "train_meta.json": {
+                "sha256": "35188b0ae6dfebe0bf002702fa892e1a4d1203fb195d0c23280ffe06e45ee3d6",
+                "bytes": 367
+              }
+            },
+            "sha256": "53f223a44462e11d674c57d6ac65c9dd8c31e06c30955deb5870a74b14c310a0",
+            "bytes": 501333759
+          }
+        },
+        "base_fingerprint_sha256": "90265451371a973b9e890f08e56100447117fe838d1b037f0ba8d0c3f48c017b"
+      },
+      "arm_sizes": {
+        "D": 25,
+        "C": 25
+      },
+      "metrics": {
+        "n_rows": 100,
+        "trained_exact_matches": 26,
+        "trained_total": 50,
+        "control_exact_matches": 31,
+        "control_total": 50,
+        "by_membership_field": {
+          "control_email": {
+            "hits": 25,
+            "n": 25
+          },
+          "control_ssn": {
+            "hits": 6,
+            "n": 25
+          },
+          "trained_email": {
+            "hits": 21,
+            "n": 25
+          },
+          "trained_ssn": {
+            "hits": 5,
+            "n": 25
+          }
+        }
+      },
+      "metric_split": "formal frozen E3b targets, k=20, two fields, 25 people per arm; one attack seed",
+      "wall_clock_s": 3267,
+      "accelerator": {
+        "device": "cuda",
+        "name": "NVIDIA A100 80GB PCIe",
+        "total_mem_gb": 79.1,
+        "count": 1
+      },
+      "accelerator_hours": 0.9075,
+      "new_accelerator_hours_charged_to_followup": 0.9075,
+      "est_cost_usd": 0,
+      "tuning_trials": 0,
+      "artifacts": [
+        {
+          "path": "results/attempts/e3b_base__E2B__gpt2_1337_field-ssn-email_k20.parquet",
+          "sha256": "853398d17ddae80a12c0dea2e54838a064fe87df286980d28e01255c7432fae4"
+        },
+        {
+          "path": "results/manifests/e3b_base__E2B__gpt2_1337_field-ssn-email_k20.json",
+          "sha256": "faad795c7e44e1df8e5b05d6c021daba6d130b1075d26fe318bf46c2fddf5545"
+        },
+        {
+          "path": "slurm/logs/pii-e3b-base-40461514.out",
+          "sha256": "6996c3a8a2e778d4518442d5a712b920fe34c4fb1603d1a0a03f7cf6758451ef"
+        },
+        {
+          "path": "slurm/logs/pii-e3b-base-40461514.err",
+          "sha256": "200a602b99d35731c2603cc66dfa95a305eb1fd7568e8905118b184c98e4cdd8"
+        }
+      ],
+      "notes": "Validated completed new base-model formal shard."
+    },
+    {
+      "run_id": "e3b_base__E2B__gpt2_2024_field-ssn-email_k20",
+      "original_run_id": "e3b_base",
+      "task_id": "formal-base",
+      "run_status": "completed",
+      "job_id": "40461515",
+      "scheduler_state": "COMPLETED",
+      "scheduler_exit_code": "0:0",
+      "arm": "both",
+      "seed": 2024,
+      "model_state": "base",
+      "reused_from_study": null,
+      "config": {
+        "target_set_id": "e3b",
+        "target_manifest_sha256": "ee6be0755717502b750264f51681431134c5f55360f1f4777d6d64a3ee4f1628",
+        "base_revision": "607a30d783dfa663caf39e06633721c8d4cfcd7e",
+        "base_fingerprint_sha256": "90265451371a973b9e890f08e56100447117fe838d1b037f0ba8d0c3f48c017b",
+        "model_name": "gpt2",
+        "model_state": "base",
+        "fields": [
+          "ssn",
+          "email"
+        ],
+        "capacity_k": 20,
+        "seed": 2024,
+        "n_pairs": 25,
+        "gcg_iters": 200,
+        "candidates_per_position_B": 256,
+        "candidate_evaluations_per_step": 512,
+        "candidate_minibatch": 64,
+        "early_stop_on_exact_match": true,
+        "extraction_check_interval": 10,
+        "decision_rule": "field-normalized substring exact_match"
+      },
+      "pins": {
+        "code_commit": "7d95b22e2bb4b8357d6be027141675c8f86c811e",
+        "code_dirty": false,
+        "config_sha256": "cff87c5b4cffd53b9b66d5032a32820b6f3c4a371c7fa5e9d82dbec74507d520",
+        "env": {
+          "python": "3.11.5",
+          "pip_freeze_sha256_16": "b7516b82b8f38c90",
+          "faker": null,
+          "torch": "2.6.0+cu124",
+          "transformers": "5.16.1",
+          "lifelines": "0.30.0"
+        },
+        "dataset_version": "ee6be0755717502b750264f51681431134c5f55360f1f4777d6d64a3ee4f1628",
+        "split_hash": "48fab4bf6013dbce7c8043f89e5e7b874189c0794362720bda7d735f1778935e",
+        "target_values_sha256": "d0b81c7226c797e478269836598b8587484675cf02ee8d2e436787a0b5348cee",
+        "target_subset_hash": "a01097acbb835207",
+        "source_fingerprints": {
+          "registry": {
+            "sha256": "91901119f342d7d4ff9e052ceb7fce53bebacfe3fb593a7c1d7ff83a2e2978c6",
+            "bytes": 65170
+          },
+          "corpus": {
+            "sha256": "7a059fc04ae21665a464a5cb68eb87d2fae597d736f82869c24866e21d0e1acf",
+            "bytes": 57979000
+          },
+          "checkpoint": {
+            "files": {
+              "config.json": {
+                "sha256": "b0457be0f27b82ba744a0ef9a3d0ad03fbe7db9664537572c96edb5ec2f42555",
+                "bytes": 961
+              },
+              "generation_config.json": {
+                "sha256": "2e352d17c39026d25fd7994c102f94879e9047b348bfdd503a180c41f90f2b8c",
+                "bytes": 119
+              },
+              "model.safetensors": {
+                "sha256": "1cefaa4922d3e2474cf27a0e75a58b72447d1ef2742528972112b4dc89963b7a",
+                "bytes": 497774208
+              },
+              "tokenizer.json": {
+                "sha256": "9fe733f259ca91b0cfce8719f4c9c2d60a5fa57091ccb4855ddcaeb1981707a7",
+                "bytes": 3557778
+              },
+              "tokenizer_config.json": {
+                "sha256": "2ec6e8751bff5617ea5f342d96c69b50fba71826c0b2b9449c34fb55253432f4",
+                "bytes": 326
+              },
+              "train_meta.json": {
+                "sha256": "35188b0ae6dfebe0bf002702fa892e1a4d1203fb195d0c23280ffe06e45ee3d6",
+                "bytes": 367
+              }
+            },
+            "sha256": "53f223a44462e11d674c57d6ac65c9dd8c31e06c30955deb5870a74b14c310a0",
+            "bytes": 501333759
+          }
+        },
+        "base_fingerprint_sha256": "90265451371a973b9e890f08e56100447117fe838d1b037f0ba8d0c3f48c017b"
+      },
+      "arm_sizes": {
+        "D": 25,
+        "C": 25
+      },
+      "metrics": {
+        "n_rows": 100,
+        "trained_exact_matches": 27,
+        "trained_total": 50,
+        "control_exact_matches": 26,
+        "control_total": 50,
+        "by_membership_field": {
+          "control_email": {
+            "hits": 22,
+            "n": 25
+          },
+          "control_ssn": {
+            "hits": 4,
+            "n": 25
+          },
+          "trained_email": {
+            "hits": 21,
+            "n": 25
+          },
+          "trained_ssn": {
+            "hits": 6,
+            "n": 25
+          }
+        }
+      },
+      "metric_split": "formal frozen E3b targets, k=20, two fields, 25 people per arm; one attack seed",
+      "wall_clock_s": 3326,
+      "accelerator": {
+        "device": "cuda",
+        "name": "NVIDIA A100 80GB PCIe",
+        "total_mem_gb": 79.1,
+        "count": 1
+      },
+      "accelerator_hours": 0.9238888888888889,
+      "new_accelerator_hours_charged_to_followup": 0.9238888888888889,
+      "est_cost_usd": 0,
+      "tuning_trials": 0,
+      "artifacts": [
+        {
+          "path": "results/attempts/e3b_base__E2B__gpt2_2024_field-ssn-email_k20.parquet",
+          "sha256": "a4230091c60c3006fc68b87ad7b14e3c0fafe2edac044a0ddc0153807374a28c"
+        },
+        {
+          "path": "results/manifests/e3b_base__E2B__gpt2_2024_field-ssn-email_k20.json",
+          "sha256": "f108653245200bfbe614a49b50aaa53fa9e1534ea5d41efa489fd520178246cb"
+        },
+        {
+          "path": "slurm/logs/pii-e3b-base-40461515.out",
+          "sha256": "8f1be9944e68a9886333bfd23d6ba4800e07a18e740acab64e11c1c9459372d9"
+        },
+        {
+          "path": "slurm/logs/pii-e3b-base-40461515.err",
+          "sha256": "abec3a3e8db0166f6529e571283d20c2fdced3c2cf24f38f9b1a14af75b24548"
+        }
+      ],
+      "notes": "Validated completed new base-model formal shard."
     }
   ],
   "repro_check": {
@@ -201,20 +1147,121 @@
     {
       "seed": 42,
       "job_id": "40461513",
-      "state": "submitted",
-      "time_limit": "01:35:00"
+      "state": "COMPLETED",
+      "time_limit": "01:35:00",
+      "exit_code": "0:0"
     },
     {
       "seed": 1337,
       "job_id": "40461514",
-      "state": "submitted",
-      "time_limit": "01:35:00"
+      "state": "COMPLETED",
+      "time_limit": "01:35:00",
+      "exit_code": "0:0"
     },
     {
       "seed": 2024,
       "job_id": "40461515",
-      "state": "submitted",
-      "time_limit": "01:35:00"
+      "state": "COMPLETED",
+      "time_limit": "01:35:00",
+      "exit_code": "0:0"
     }
-  ]
+  ],
+  "analysis_result": {
+    "status": "accepted",
+    "analysis_path": ".ai/research/studies/e3b_base_sandwich_20260923/analysis_artifacts/four_cell_analysis.json",
+    "analysis_sha256": "0fd0bcc6999e216b3a33bf511c7ea4d3292f6ecfab8f61dc0ae423566b190237",
+    "analysis_report_path": ".ai/research/studies/e3b_base_sandwich_20260923/analysis.md",
+    "independent_statistics_review_path": ".ai/research/studies/e3b_base_sandwich_20260923/statistics_review.md",
+    "scope": "one GPT-2 checkpoint, frozen E3b targets at k=20",
+    "formal_shards": 6,
+    "formal_attempts": 600,
+    "bootstrap_unit": "25 matched person pairs; each retains two fields and three attack seeds",
+    "bootstrap_reps": 10000,
+    "bootstrap_seed": 20260923,
+    "rates_and_contrasts": [
+      {
+        "metric": "ft_D",
+        "estimate": 0.8133333333333334,
+        "ci95_low": 0.7466666666666667,
+        "ci95_high": 0.88,
+        "hits": 122,
+        "n_attempts_per_cell": 150,
+        "n_matched_pair_clusters": 25
+      },
+      {
+        "metric": "ft_C",
+        "estimate": 0.7733333333333333,
+        "ci95_low": 0.7133333333333334,
+        "ci95_high": 0.8333333333333334,
+        "hits": 116,
+        "n_attempts_per_cell": 150,
+        "n_matched_pair_clusters": 25
+      },
+      {
+        "metric": "base_D",
+        "estimate": 0.5266666666666666,
+        "ci95_low": 0.47333333333333333,
+        "ci95_high": 0.58,
+        "hits": 79,
+        "n_attempts_per_cell": 150,
+        "n_matched_pair_clusters": 25
+      },
+      {
+        "metric": "base_C",
+        "estimate": 0.5733333333333334,
+        "ci95_low": 0.52,
+        "ci95_high": 0.6266666666666667,
+        "hits": 86,
+        "n_attempts_per_cell": 150,
+        "n_matched_pair_clusters": 25
+      },
+      {
+        "metric": "tau_rec",
+        "estimate": 0.040000000000000036,
+        "ci95_low": -0.06666666666666665,
+        "ci95_high": 0.14,
+        "hits": null,
+        "n_attempts_per_cell": null,
+        "n_matched_pair_clusters": 25
+      },
+      {
+        "metric": "tau_mod",
+        "estimate": 0.28666666666666674,
+        "ci95_low": 0.20666666666666667,
+        "ci95_high": 0.3733333333333333,
+        "hits": null,
+        "n_attempts_per_cell": null,
+        "n_matched_pair_clusters": 25
+      },
+      {
+        "metric": "delta_A3",
+        "estimate": 0.19999999999999996,
+        "ci95_low": 0.1333333333333333,
+        "ci95_high": 0.2666666666666667,
+        "hits": null,
+        "n_attempts_per_cell": null,
+        "n_matched_pair_clusters": 25
+      },
+      {
+        "metric": "tau_base",
+        "estimate": -0.046666666666666745,
+        "ci95_low": -0.11333333333333329,
+        "ci95_high": 0.020000000000000018,
+        "hits": null,
+        "n_attempts_per_cell": null,
+        "n_matched_pair_clusters": 25
+      },
+      {
+        "metric": "tau_mod_minus_tau_rec",
+        "estimate": 0.2466666666666667,
+        "ci95_low": 0.16666666666666663,
+        "ci95_high": 0.3266666666666666,
+        "hits": null,
+        "n_attempts_per_cell": null,
+        "n_matched_pair_clusters": 25
+      }
+    ],
+    "prediction_direction_held": true,
+    "causal_sandwich_identified": false
+  }
 }
