@@ -178,9 +178,9 @@
     }
   ],
   "repro_check": {
-    "passed": false,
-    "tolerance": null,
-    "status": "awaiting_user_confirmation",
+    "passed": true,
+    "tolerance": 0.001,
+    "status": "passed",
     "observed_relative_drift": 0.0,
     "proposed_relative_tolerance": 0.001,
     "checked_fields": [
@@ -194,6 +194,7 @@
     "run_ids": [
       "e3b_base_pilot_a",
       "e3b_base_pilot_b"
-    ]
+    ],
+    "confirmation": "User instruction to start the formal experiment after the proposed tolerance and 5.0 A100-hour ceiling were presented."
   }
 }

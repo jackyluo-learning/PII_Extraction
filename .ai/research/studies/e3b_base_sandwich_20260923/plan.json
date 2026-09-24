@@ -2,17 +2,19 @@
   "$schema": "research-plan-v1",
   "study_id": "e3b_base_sandwich_20260923",
   "compute_budget": {
-    "accelerator_hours": 4.0,
+    "accelerator_hours": 5.0,
     "est_cost_usd": 0,
-    "status": "awaiting user approval; no formal job submitted",
-    "requested_accelerator_hours": 5.0
+    "status": "approved",
+    "requested_accelerator_hours": 5.0,
+    "approved_at": "2026-09-24T01:29:56.985701+00:00",
+    "authorization": "User instructed: 开始实验, after the 0.001 tolerance and 5.0 A100-hour ceiling were proposed."
   },
   "phases": [
     {
       "id": "pilot",
       "name": "Frozen-target base-model pilot and reproducibility",
       "kind": "pilot",
-      "status": "blocked",
+      "status": "done",
       "tasks": [
         {
           "id": "pilot-a",
@@ -28,12 +30,11 @@
         {
           "id": "pilot-repro",
           "name": "Repeat pilot coordinate from frozen pins",
-          "status": "blocked",
+          "status": "done",
           "prediction": "The repeated pilot reproduces the exact target set and comparable exact-match outcomes.",
           "falsification": "Input pins differ, run fails, or observed drift exceeds a measured and accepted tolerance.",
           "run_ids": [],
-          "job_id": "40461115",
-          "blocked_reason": "Measured drift is zero; user confirmation of 0.001 relative reproducibility tolerance is pending. Formal launch also awaits approval of a 5.0 A100-hour total ceiling."
+          "job_id": "40461115"
         }
       ]
     },
@@ -41,12 +42,12 @@
       "id": "main",
       "name": "Three formal base-model seeds at k=20",
       "kind": "main",
-      "status": "pending",
+      "status": "doing",
       "tasks": [
         {
           "id": "formal-base",
           "name": "Complete 42/1337/2024 base shards",
-          "status": "pending",
+          "status": "doing",
           "prediction": "The fine-tuned control success rate minus base control success rate is nonnegative at k=20.",
           "falsification": "The completed base-control rate exceeds the fine-tuned control rate; a null result also weakens the predicted direction.",
           "run_ids": []

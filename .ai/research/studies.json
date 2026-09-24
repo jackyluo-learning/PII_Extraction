@@ -123,7 +123,7 @@
     {
       "study_id": "e3b_base_sandwich_20260923",
       "type": "experiment",
-      "status": "blocked",
+      "status": "doing",
       "question": "At k=20 on the frozen E3b targets, how do original GPT-2 base and fine-tuned GPT-2 trained/control success rates compare?",
       "description": "Focused single-checkpoint base-model arm for the E3b four-cell diagnostic; not a leave-one-out causal sandwich or the archived four-model E2 design.",
       "design_path": ".ai/research/studies/e3b_base_sandwich_20260923/design.md",
@@ -135,14 +135,14 @@
           "id": "pilot",
           "name": "Frozen-target base-model pilot and reproducibility",
           "kind": "pilot",
-          "status": "blocked",
+          "status": "done",
           "tasks": 2
         },
         {
           "id": "main",
           "name": "Three formal base-model seeds at k=20",
           "kind": "main",
-          "status": "pending",
+          "status": "doing",
           "tasks": 1
         },
         {
@@ -155,18 +155,18 @@
       ],
       "progress": {
         "total_tasks": 4,
-        "completed_tasks": 1,
-        "percentage": 25.0
+        "completed_tasks": 2,
+        "percentage": 50.0
       },
       "compute": {
         "runs_completed": 2,
         "accelerator_hours": 0.19555555555555557,
         "est_cost_usd": 0,
-        "budget_accelerator_hours": 4.0,
-        "budget_status": "awaiting user confirmation of 0.001 tolerance and 5.0 A100-hour ceiling; no formal job submitted"
+        "budget_accelerator_hours": 5.0,
+        "budget_status": "approved for three formal base shards; 0.1956 GPU-hours already spent on pilots"
       },
       "created_at": "2026-09-24T00:59:39.879838+00:00",
-      "updated_at": "2026-09-24T01:19:12.956852+00:00"
+      "updated_at": "2026-09-24T01:29:56.986080+00:00"
     }
   ]
 }
