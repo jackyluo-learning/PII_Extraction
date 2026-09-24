@@ -1,4 +1,4 @@
-# Prospective E3b base-model follow-up (not launched)
+# Prospective E3b base-model follow-up (pilot not launched)
 
 ## Question and scope
 
@@ -89,13 +89,17 @@ substituted for this focused E3b follow-up.
 ## Current execution state
 
 The manuscript clarification is complete. The base-model job has **not** been
-submitted. The user restored an authenticated SSH master connection; new
-commands work through `/tmp/cheaha-codex.sock` without a password. On Cheaha,
-the clean accepted E3b checkout is
+submitted. An authenticated SSH master connection briefly worked through
+`/tmp/cheaha-codex.sock`. The pinned code bundle was transferred to Cheaha and
+an isolated clone was started at `/data/user/jluo/PII_Extraction_e3b_base`,
+but its checkout stalled in filesystem I/O; the SSH master then disconnected.
+The checkout is **not accepted or known complete**. Before any submission,
+restore authenticated SSH, inspect that directory, verify its HEAD and clean
+status, finish the symlinks and preflight, and confirm no pilot job already
+exists. The clean accepted E3b checkout is
 `/data/user/jluo/PII_Extraction_e3b_fast` at commit
 `c7e4416dd151c810a5badd4aaae74ccc06176885`. Its target manifest matches
 the frozen SHA-256 above, the original corpus and fine-tuned checkpoint are
 present through symlinks, and the original GPT-2 base snapshot is cached at
 revision `607a30d783dfa663caf39e06633721c8d4cfcd7e` in the shared HF cache.
-An unrelated attempted remote-desktop access path was rejected by automatic
-approval review; no remote desktop access is needed because SSH is available.
+No pilot or formal result has been produced by this follow-up.
