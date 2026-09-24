@@ -196,5 +196,25 @@
       "e3b_base_pilot_b"
     ],
     "confirmation": "User instruction to start the formal experiment after the proposed tolerance and 5.0 A100-hour ceiling were presented."
-  }
+  },
+  "submitted_formal_jobs": [
+    {
+      "seed": 42,
+      "job_id": "40461513",
+      "state": "submitted",
+      "time_limit": "01:35:00"
+    },
+    {
+      "seed": 1337,
+      "job_id": "40461514",
+      "state": "submitted",
+      "time_limit": "01:35:00"
+    },
+    {
+      "seed": 2024,
+      "job_id": "40461515",
+      "state": "submitted",
+      "time_limit": "01:35:00"
+    }
+  ]
 }

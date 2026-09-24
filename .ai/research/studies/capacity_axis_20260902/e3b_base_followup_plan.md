@@ -1,4 +1,4 @@
-# Prospective E3b base-model follow-up (pilots complete; formal gated)
+# Prospective E3b base-model follow-up (formal jobs submitted)
 
 ## Question and scope
 
@@ -107,14 +107,20 @@ estimate. The identical-coordinate repeat, `run_id=e3b_base_pilot_b`,
 finished as job **40461115**, `COMPLETED/0:0` on the same A100 class in
 **00:05:24** (0.0900 GPU-hours). All eight target strings, exact-match
 outcomes, generations, prompts, step counts, and recorded NLL values match
-the first pilot exactly; observed relative drift is zero. Confirmation of a
-0.001 relative repro tolerance remains pending. The mean pilot time projects
+the first pilot exactly; observed relative drift is zero. The mean pilot time projects
 **3.67 A100-hours** for three 100-row formal shards, or **3.86 hours**
 including both completed pilots. The slower pilot alone projects **4.15
 total hours**; a 20% margin on the formal projection plus pilots is about
-**4.60 hours**. The concrete budget request is a **5.0 A100-hour ceiling**,
-with no formal submission before user approval. No formal base-model job has
-been submitted. The clean accepted E3b checkout is
+**4.60 hours**. The user instructed the experiment to start after receiving
+the proposed 0.001 reproducibility tolerance and **5.0 A100-hour ceiling**;
+both gates were recorded as approved. Three formal jobs were then submitted
+from the clean pinned checkout: seed 42 = **40461513**, seed 1337 =
+**40461514**, seed 2024 = **40461515**. Each has a 01:35:00 walltime cap,
+limiting their combined maximum to 4.75 A100-hours, or 4.95 hours including
+both completed pilots. Submission does not imply completion or acceptance.
+The user requested no monitoring; the one-shot status script is
+`/data/user/jluo/check_e3b_base_followup.sh` on Cheaha. The clean accepted
+E3b checkout is
 `/data/user/jluo/PII_Extraction_e3b_fast` at commit
 `c7e4416dd151c810a5badd4aaae74ccc06176885`. Its target manifest matches
 the frozen SHA-256 above, the original corpus and fine-tuned checkpoint are

@@ -50,7 +50,14 @@
           "status": "doing",
           "prediction": "The fine-tuned control success rate minus base control success rate is nonnegative at k=20.",
           "falsification": "The completed base-control rate exceeds the fine-tuned control rate; a null result also weakens the predicted direction.",
-          "run_ids": []
+          "run_ids": [],
+          "job_ids": {
+            "42": "40461513",
+            "1337": "40461514",
+            "2024": "40461515"
+          },
+          "formal_code_commit": "7d95b22e2bb4b8357d6be027141675c8f86c811e",
+          "job_time_limit": "01:35:00"
         }
       ]
     },

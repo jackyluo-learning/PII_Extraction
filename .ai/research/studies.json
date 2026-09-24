@@ -163,10 +163,15 @@
         "accelerator_hours": 0.19555555555555557,
         "est_cost_usd": 0,
         "budget_accelerator_hours": 5.0,
-        "budget_status": "approved for three formal base shards; 0.1956 GPU-hours already spent on pilots"
+        "budget_status": "three formal jobs submitted with 01:35:00 per-job cap; user requested no monitoring",
+        "formal_job_ids": [
+          "40461513",
+          "40461514",
+          "40461515"
+        ]
       },
       "created_at": "2026-09-24T00:59:39.879838+00:00",
-      "updated_at": "2026-09-24T01:29:56.986080+00:00"
+      "updated_at": "2026-09-24T01:31:31.441578+00:00"
     }
   ]
 }
