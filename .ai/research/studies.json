@@ -119,6 +119,54 @@
           "attempt_rows": 4200
         }
       }
+    },
+    {
+      "study_id": "e3b_base_sandwich_20260923",
+      "type": "experiment",
+      "status": "doing",
+      "question": "At k=20 on the frozen E3b targets, how do original GPT-2 base and fine-tuned GPT-2 trained/control success rates compare?",
+      "description": "Focused single-checkpoint base-model arm for the E3b four-cell diagnostic; not a leave-one-out causal sandwich or the archived four-model E2 design.",
+      "design_path": ".ai/research/studies/e3b_base_sandwich_20260923/design.md",
+      "protocol_path": ".ai/research/studies/e3b_base_sandwich_20260923/protocol.md",
+      "plan_path": ".ai/research/studies/e3b_base_sandwich_20260923/plan.json",
+      "results_path": ".ai/research/studies/e3b_base_sandwich_20260923/results.json",
+      "phases_summary": [
+        {
+          "id": "pilot",
+          "name": "Frozen-target base-model pilot and reproducibility",
+          "kind": "pilot",
+          "status": "doing",
+          "tasks": 2
+        },
+        {
+          "id": "main",
+          "name": "Three formal base-model seeds at k=20",
+          "kind": "main",
+          "status": "pending",
+          "tasks": 1
+        },
+        {
+          "id": "analysis",
+          "name": "Four-cell diagnostic and manuscript scope decision",
+          "kind": "analysis",
+          "status": "pending",
+          "tasks": 1
+        }
+      ],
+      "progress": {
+        "total_tasks": 4,
+        "completed_tasks": 0,
+        "percentage": 0
+      },
+      "compute": {
+        "runs_completed": 0,
+        "accelerator_hours": 0,
+        "est_cost_usd": 0,
+        "budget_accelerator_hours": 4.0,
+        "budget_status": "provisional; measured pilot gate pending"
+      },
+      "created_at": "2026-09-24T00:59:39.879838+00:00",
+      "updated_at": "2026-09-24T00:59:39.880049+00:00"
     }
   ]
 }

@@ -1,4 +1,4 @@
-# Prospective E3b base-model follow-up (pilot not launched)
+# Prospective E3b base-model follow-up (pilot running)
 
 ## Question and scope
 
@@ -88,18 +88,24 @@ substituted for this focused E3b follow-up.
 
 ## Current execution state
 
-The manuscript clarification is complete. The base-model job has **not** been
-submitted. An authenticated SSH master connection briefly worked through
-`/tmp/cheaha-codex.sock`. The pinned code bundle was transferred to Cheaha and
-an isolated clone was started at `/data/user/jluo/PII_Extraction_e3b_base`,
-but its checkout stalled in filesystem I/O; the SSH master then disconnected.
-The checkout is **not accepted or known complete**. Before any submission,
-restore authenticated SSH, inspect that directory, verify its HEAD and clean
-status, finish the symlinks and preflight, and confirm no pilot job already
-exists. The clean accepted E3b checkout is
+The manuscript clarification is complete. The user restored authenticated SSH
+after an interrupted checkout. The isolated base-follow-up checkout at
+`/data/user/jluo/PII_Extraction_e3b_base` was repaired and verified clean at
+commit `7d95b22e2bb4b8357d6be027141675c8f86c811e`; data, models, the
+Python environment, and Hugging Face cache are linked from the existing
+workspace. The no-GPU preflight passed with frozen target manifest SHA-256
+`ee6be0755717502b750264f51681431134c5f55360f1f4777d6d64a3ee4f1628`,
+base snapshot fingerprint
+`90265451371a973b9e890f08e56100447117fe838d1b037f0ba8d0c3f48c017b`,
+and the registered optimizer parameters. The two-pair pilot, seed 42,
+`run_id=e3b_base_pilot_a`, was submitted as Slurm job **40460942** with a
+one-hour limit; it was RUNNING on c0238 at the first queue check. Do not infer
+success from submission: inspect `sacct`, the log, the manifest, and all eight
+attempt rows before accepting the pilot. No formal base-model job has been
+submitted. The clean accepted E3b checkout is
 `/data/user/jluo/PII_Extraction_e3b_fast` at commit
 `c7e4416dd151c810a5badd4aaae74ccc06176885`. Its target manifest matches
 the frozen SHA-256 above, the original corpus and fine-tuned checkpoint are
 present through symlinks, and the original GPT-2 base snapshot is cached at
 revision `607a30d783dfa663caf39e06633721c8d4cfcd7e` in the shared HF cache.
-No pilot or formal result has been produced by this follow-up.
+No pilot or formal result has been accepted yet.

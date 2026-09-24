@@ -1,0 +1,12 @@
+{
+  "$schema": "research-results-v1",
+  "study_id": "e3b_base_sandwich_20260923",
+  "headline_metric": "Delta_A3 = EMR_finetuned(C) - EMR_base(C) at k=20",
+  "determinism_level": "statistical",
+  "runs": [],
+  "repro_check": {
+    "passed": false,
+    "tolerance": null,
+    "status": "pending"
+  }
+}

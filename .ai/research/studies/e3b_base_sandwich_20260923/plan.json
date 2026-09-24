@@ -1,0 +1,68 @@
+{
+  "$schema": "research-plan-v1",
+  "study_id": "e3b_base_sandwich_20260923",
+  "compute_budget": {
+    "accelerator_hours": 4.0,
+    "est_cost_usd": 0,
+    "status": "provisional; formal launch gated on measured pilot cost"
+  },
+  "phases": [
+    {
+      "id": "pilot",
+      "name": "Frozen-target base-model pilot and reproducibility",
+      "kind": "pilot",
+      "status": "doing",
+      "tasks": [
+        {
+          "id": "pilot-a",
+          "name": "Two-pair pilot on original GPT-2",
+          "status": "doing",
+          "prediction": "All eight frozen-target attempts run with the E3b attack contract on one A100; base C success need not be positive.",
+          "falsification": "Any target, model, tokenizer, hardware, source, or attack invariant differs, or the shard is incomplete.",
+          "job_id": "40460942",
+          "run_ids": ["e3b_base_pilot_a"]
+        },
+        {
+          "id": "pilot-repro",
+          "name": "Repeat pilot coordinate from frozen pins",
+          "status": "pending",
+          "prediction": "The repeated pilot reproduces the exact target set and comparable exact-match outcomes.",
+          "falsification": "Input pins differ, run fails, or observed drift exceeds a measured and accepted tolerance.",
+          "run_ids": []
+        }
+      ]
+    },
+    {
+      "id": "main",
+      "name": "Three formal base-model seeds at k=20",
+      "kind": "main",
+      "status": "pending",
+      "tasks": [
+        {
+          "id": "formal-base",
+          "name": "Complete 42/1337/2024 base shards",
+          "status": "pending",
+          "prediction": "The fine-tuned control success rate minus base control success rate is nonnegative at k=20.",
+          "falsification": "The completed base-control rate exceeds the fine-tuned control rate; a null result also weakens the predicted direction.",
+          "run_ids": []
+        }
+      ]
+    },
+    {
+      "id": "analysis",
+      "name": "Four-cell diagnostic and manuscript scope decision",
+      "kind": "analysis",
+      "status": "pending",
+      "tasks": [
+        {
+          "id": "analyze-four-cells",
+          "name": "Validate pins and estimate four rates with clustered uncertainty",
+          "status": "pending",
+          "prediction": "The four-cell table will show whether the proposed sandwich ordering is empirically plausible on this checkpoint.",
+          "falsification": "The observed ordering reverses or remains too imprecise to assess.",
+          "run_ids": []
+        }
+      ]
+    }
+  ]
+}
