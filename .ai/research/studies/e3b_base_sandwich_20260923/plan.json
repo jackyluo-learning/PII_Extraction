@@ -4,14 +4,15 @@
   "compute_budget": {
     "accelerator_hours": 4.0,
     "est_cost_usd": 0,
-    "status": "provisional; formal launch gated on measured pilot cost"
+    "status": "awaiting user approval; no formal job submitted",
+    "requested_accelerator_hours": 5.0
   },
   "phases": [
     {
       "id": "pilot",
       "name": "Frozen-target base-model pilot and reproducibility",
       "kind": "pilot",
-      "status": "doing",
+      "status": "blocked",
       "tasks": [
         {
           "id": "pilot-a",
@@ -27,11 +28,12 @@
         {
           "id": "pilot-repro",
           "name": "Repeat pilot coordinate from frozen pins",
-          "status": "doing",
+          "status": "blocked",
           "prediction": "The repeated pilot reproduces the exact target set and comparable exact-match outcomes.",
           "falsification": "Input pins differ, run fails, or observed drift exceeds a measured and accepted tolerance.",
           "run_ids": [],
-          "job_id": "40461115"
+          "job_id": "40461115",
+          "blocked_reason": "Measured drift is zero; user confirmation of 0.001 relative reproducibility tolerance is pending. Formal launch also awaits approval of a 5.0 A100-hour total ceiling."
         }
       ]
     },
