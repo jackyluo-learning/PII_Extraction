@@ -1,4 +1,4 @@
-# Prospective E3b base-model follow-up (pilot running)
+# Prospective E3b base-model follow-up (pilots complete; formal gated)
 
 ## Question and scope
 
@@ -98,14 +98,26 @@ workspace. The no-GPU preflight passed with frozen target manifest SHA-256
 base snapshot fingerprint
 `90265451371a973b9e890f08e56100447117fe838d1b037f0ba8d0c3f48c017b`,
 and the registered optimizer parameters. The two-pair pilot, seed 42,
-`run_id=e3b_base_pilot_a`, was submitted as Slurm job **40460942** with a
-one-hour limit; it was RUNNING on c0238 at the first queue check. Do not infer
-success from submission: inspect `sacct`, the log, the manifest, and all eight
-attempt rows before accepting the pilot. No formal base-model job has been
-submitted. The clean accepted E3b checkout is
+`run_id=e3b_base_pilot_a`, ran as Slurm job **40460942** on A100 node c0238 and
+finished `COMPLETED`, `ExitCode 0:0`, in **00:06:20** (0.1056 GPU-hours). Its
+clean code pin, base-weight fingerprint, frozen target hash, all eight attempt
+rows, exact target-string hashes, and artifact checksums passed local
+verification. The four attempts per arm are pilot evidence only, not a formal
+estimate. The identical-coordinate repeat, `run_id=e3b_base_pilot_b`,
+finished as job **40461115**, `COMPLETED/0:0` on the same A100 class in
+**00:05:24** (0.0900 GPU-hours). All eight target strings, exact-match
+outcomes, generations, prompts, step counts, and recorded NLL values match
+the first pilot exactly; observed relative drift is zero. Confirmation of a
+0.001 relative repro tolerance remains pending. The mean pilot time projects
+**3.67 A100-hours** for three 100-row formal shards, or **3.86 hours**
+including both completed pilots. The slower pilot alone projects **4.15
+total hours**; a 20% margin on the formal projection plus pilots is about
+**4.60 hours**. The concrete budget request is a **5.0 A100-hour ceiling**,
+with no formal submission before user approval. No formal base-model job has
+been submitted. The clean accepted E3b checkout is
 `/data/user/jluo/PII_Extraction_e3b_fast` at commit
 `c7e4416dd151c810a5badd4aaae74ccc06176885`. Its target manifest matches
 the frozen SHA-256 above, the original corpus and fine-tuned checkpoint are
 present through symlinks, and the original GPT-2 base snapshot is cached at
 revision `607a30d783dfa663caf39e06633721c8d4cfcd7e` in the shared HF cache.
-No pilot or formal result has been accepted yet.
+No formal result has been produced by this follow-up.

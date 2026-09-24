@@ -159,14 +159,14 @@
         "percentage": 25.0
       },
       "compute": {
-        "runs_completed": 1,
-        "accelerator_hours": 0.10555555555555556,
+        "runs_completed": 2,
+        "accelerator_hours": 0.19555555555555557,
         "est_cost_usd": 0,
         "budget_accelerator_hours": 4.0,
-        "budget_status": "provisional; measured pilot gate pending"
+        "budget_status": "pilot complete; user confirmation of tolerance and 5-GPU-hour ceiling pending"
       },
       "created_at": "2026-09-24T00:59:39.879838+00:00",
-      "updated_at": "2026-09-24T01:07:46.570057+00:00"
+      "updated_at": "2026-09-24T01:14:32.867776+00:00"
     }
   ]
 }

@@ -6,16 +6,21 @@ target manifest, original GPT-2 snapshot, GCG settings, exact-match rule, and
 three seeds are specified in
 [`../capacity_axis_20260902/e3b_base_followup_plan.md`](../capacity_axis_20260902/e3b_base_followup_plan.md).
 
-Pilot: two D/C person pairs, both fields, seed 42, one A100, job 40460942.
-Accept only with scheduler `COMPLETED`/`0:0`, eight attempt rows, clean commit,
-frozen hashes, and A100 manifest. Repeat that coordinate with a new pilot run
-ID for the reproducibility check. The three formal jobs each use all 25 D/C
-pairs; submit only after measured pilot cost and reproducibility gates. If the
-measured projected cost exceeds four accelerator-hours, obtain explicit budget
-approval before formal submission.
+Pilot: two D/C person pairs, both fields, seed 42, one A100. Jobs 40460942
+and 40461115 both completed `0:0` in 00:06:20 and 00:05:24. All eight
+formatted targets, outcomes, prompts, generations, step counts, and NLL values
+matched exactly; observed drift is zero. User confirmation of the proposed
+0.001 relative tolerance and 5.0 A100-hour ceiling is pending. The three
+formal jobs each use all 25 D/C pairs; submit only after both gates pass.
 
 Formal acceptance requires three complete base manifests and parquets, 300
 rows total, exact frozen targets, 100 rows per seed, and matching attack and
 scoring settings against the accepted fine-tuned E3b `k=20` shards. Failed
 jobs and retries remain in the ledger. No formal result is inferred from pilot
 data.
+
+The fail-closed analysis entrypoint is `analyze_e3b_base_followup.py`. It
+requires three base and three accepted E3b manifests/parquets, all 600 exact
+targets and outcomes, the fixed code and checkpoint pins, and A100 hardware.
+It clusters uncertainty by matched person pair across two fields and three
+attack seeds; it does not estimate a leave-one-out causal effect.
